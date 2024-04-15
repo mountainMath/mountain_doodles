@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jens von Bergmann">
+<meta name="dcterms.date" content="2019-12-09">
+<meta name="description" content="Looking for excuses to showcase my {VancouvR} R package to access Vancouver Open Data.">
+
+<title>Mountain Doodles - Fun with parking tickets</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54516567-1', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <meta property="og:title" content="Mountain Doodles - Fun with parking tickets">
+<meta property="og:description" content="Looking for excuses to showcase my {VancouvR} R package to access Vancouver Open Data.">
+<meta property="og:image" content="https://doodletest.netlify.app/posts/2019-12-09-fun-with-parking-tickets/index_files/figure-html/fire_hydrant_ticket_map-1.png">
+<meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="1344">
+<meta property="og:image:width" content="1536">
+<meta name="twitter:title" content="Mountain Doodles - Fun with parking tickets">
+<meta name="twitter:description" content="Looking for excuses to showcase my {VancouvR} R package to access Vancouver Open Data.">
+<meta name="twitter:image" content="https://doodletest.netlify.app/posts/2019-12-09-fun-with-parking-tickets/index_files/figure-html/fire_hydrant_ticket_map-1.png">
+<meta name="twitter:creator" content="@vb_jens">
+<meta name="twitter:image-height" content="1344">
+<meta name="twitter:image-width" content="1536">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-sidebar docked nav-fixed fullcontent">true
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../mm_stamp_small.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mountain Doodles</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mountainMath/mountaindoodles"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link active" href="https://twitter.com/vb_jens" aria-current="page"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vb-jens/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jens.mountainmath.ca"> <i class="bi bi-envelope-at-fill" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Fun with parking tickets</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Fun with parking tickets</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/mountainMath/mountaindoodles/blob/main/posts/2019-12-09-fun-with-parking-tickets/index.markdown"><i class="bi"></i></button></div></div>
+                  <div>
+        <div class="description">
+          Looking for excuses to showcase my {VancouvR} R package to access Vancouver Open Data.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Vancouver</div>
+                <div class="quarto-category">Transportation</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Jens von Bergmann </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 9, 2019</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><strong>Too much data, too little time</strong></p>
+</div></div>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../profile.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mountainMath" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/vb_jens" title="" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/vb-jens/" title="" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:jens.mountainmath.ca" title="" class="quarto-navigation-tool px-1" aria-label="Email"><i class="bi bi-envelope-at-fill"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Other Canadian data focused blogs:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://homefreesociology.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HomeFreeSociology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.dshkol.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dmitry Shkolnik’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.simoncoulombe.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simon Coulombe’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://financesofthenation.ca/category/commentary/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finances of the Nation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://deny.substack.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deny’s Substack</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://higheredstrategy.com/author/alex/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alex Usher’s blog</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at <a href="https://mountainmath.ca">MountainMath</a>.</p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Almost three years ago I ran the numbers to identify “Vancouver’s most lucrative fire hydrant”.</p>
+<blockquote class="twitter-tweet blockquote"><p lang="en" dir="ltr">Behold, Vancouver's most lucrative fire hydrant. 815 tickets issued in 7 years. Red curb markings might be advisable. Data via <a href="https://twitter.com/VanOpenData?ref_src=twsrc%5Etfw">@VanOpenData</a> <a href="https://t.co/j4Po9UpiCc">pic.twitter.com/j4Po9UpiCc</a></p>— Jens von Bergmann (@vb_jens) <a href="https://twitter.com/vb_jens/status/826883926614421507?ref_src=twsrc%5Etfw">February 1, 2017</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p><img src="https://raw.githubusercontent.com/mountainMath/VancouvR/master/images/VancouvR-sticker.png" style="float:right;width:40%;"> Being a card-carrying Shoupista it’s high time for me to do an update. And looking back I can’t help but realize how my approach to data analysis, even about such trivial things as parking tickets, has changed since then. Back then I scripted makeshift analysis in a general purpose language. Nowadays I work in R or Python and am much more structured in my approach, with emphasis on reproducibility and transparency. And this included the entire pipeline, from data acquisition, to data cleaning, data analysis and visualization.</p>
+<p>In this case, we are working with City of Vancouver Open Data, and data acquisition happens through my relatively new <a href="https://mountainmath.github.io/VancouvR/index.html"><code>VancouvR</code> package</a> that ties into the new City of Vancouver Open Data API and is now on CRAN. Usually I hide the code from the post but make it available on GitHub in case people are interested, but this time around I am leaving some of the code blocks visible to showcase the <code>VancouvR</code> package and give people an idea what it looks like, and as advertisement for more people to come work with Vancouver data.</p>
+<p>First up, let’s check for parking ticket related datasets.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VancouvR)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ticket_datasets <span class="ot">&lt;-</span> <span class="fu">search_cov_datasets</span>(<span class="st">"parking tickets"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ticket_datasets <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dataset_id,title) <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pretty_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">dataset_id</th>
+<th style="text-align: left;">title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">parking-tickets-2017-2019</td>
+<td style="text-align: left;">Parking tickets 2017-2019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">parking-tickets-2010-2013</td>
+<td style="text-align: left;">Parking tickets 2010-2013</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">parking-tickets-2014-2016</td>
+<td style="text-align: left;">Parking tickets 2014-2016</td>
+</tr>
+</tbody>
+</table>
+<p>Before accessing the data it’s often useful to take a peek at the metadata to get and overview of what to expect from the dataset.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_cov_metadata</span>(ticket_datasets<span class="sc">$</span>dataset_id <span class="sc">%&gt;%</span> first) <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pretty_table</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 84%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: left;">label</th>
+<th style="text-align: left;">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">block</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Block</td>
+<td style="text-align: left;">Block level of the street where the infraction occurred.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">street</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Street</td>
+<td style="text-align: left;">Name of the street where the infraction occurred</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">entrydate</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">EntryDate</td>
+<td style="text-align: left;">Date the infraction occurred</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bylaw</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Bylaw</td>
+<td style="text-align: left;">Specific parking bylaw which the parking ticket was issued under</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">section</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Section</td>
+<td style="text-align: left;">Specific section of the bylaw which the infraction pertains</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Status</td>
+<td style="text-align: left;">Status of the parking ticket. – CA = One time courtesy cancellation (no longer exists), IS = Issued, RA = Cancelled due to Paid by Phone, VA = Void, VR = Void request, VS = Auto-void, WR = Warning</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">infractiontext</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">InfractionText</td>
+<td style="text-align: left;">Description of the infraction</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">year</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Year</td>
+<td style="text-align: left;">Year the infraction occurred</td>
+</tr>
+</tbody>
+</table>
+<p>We are only interested in parking tickets related to fire hydrants. One great feature of the new City of Vancouver Open Data API is that we can do some basic summary statistics on their server, greatly simplifying and speeding up the analysis. The API accepts some SQL-like dialect that allows to specify basic <code>where</code> and <code>group_by</code> clauses, as well <code>select</code> statements that in our R package default to simply counting the number of rows.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>agg <span class="ot">&lt;-</span> <span class="fu">aggregate_cov_data</span>(<span class="st">"parking-tickets-2017-2019"</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">where =</span> <span class="st">"infractiontext LIKE 'FIRE'"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">group_by =</span> <span class="st">"bylaw,section,infractiontext,status"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>agg <span class="sc">%&gt;%</span> <span class="fu">pretty_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+infractiontext
+</th>
+<th style="text-align:left;">
+status
+</th>
+<th style="text-align:left;">
+section
+</th>
+<th style="text-align:right;">
+bylaw
+</th>
+<th style="text-align:right;">
+count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+STOP WITHIN 5 METRES OF A FIRE HYDRANT
+</td>
+<td style="text-align:left;">
+IS
+</td>
+<td style="text-align:left;">
+17.2(C)
+</td>
+<td style="text-align:right;">
+2849
+</td>
+<td style="text-align:right;">
+9510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STOP WITHIN 5 METRES OF A FIRE HYDRANT
+</td>
+<td style="text-align:left;">
+VA
+</td>
+<td style="text-align:left;">
+17.2(C)
+</td>
+<td style="text-align:right;">
+2849
+</td>
+<td style="text-align:right;">
+1765
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STOP WITHIN 5 METRES OF A FIRE HYDRANT
+</td>
+<td style="text-align:left;">
+WR
+</td>
+<td style="text-align:left;">
+17.2(C)
+</td>
+<td style="text-align:right;">
+2849
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+</tbody>
+</table>
+<p>We learn that 9510 non-voided or disputed tickets have been issued for “STOP WITHIN 5 METRES OF A FIRE HYDRANT”. Armed with that knowledge, we now query more detailed data on all these tickets. One hiccup is that the datasets for different time frames are inconsistently formatted, turning off automatic type-casting based on the inconsistent metadata makes it easier to work with the data.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fire_hydrant_tickets <span class="ot">&lt;-</span> ticket_datasets<span class="sc">$</span>dataset_id <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="cf">function</span>(ds)<span class="fu">get_cov_data</span>(ds, <span class="at">where =</span> <span class="st">"section = '17.2(C)' and status = 'IS'"</span>,<span class="at">cast_type=</span><span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  bind_rows </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>fire_hydrant_tickets <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill=</span><span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  plot_theme <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"City of Vancouver parking tickets"</span>,<span class="at">x=</span><span class="st">""</span>,<span class="at">y=</span><span class="st">"Number of issued tickets"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
+<p>So the City has issued around 3,000 tickets a year for parking within 5 metres of a fire hydrant. The last data entry we have for 2019 is from 2019-09-30, so there is still time for that number to grow. The <a href="https://bylaws.vancouver.ca/2849c.PDF">Parking Bylaw</a> calls for a $100 penalty for parking within 5 meteres of a fire hydrant, as measured along the curb from the closest point to the hydrant. So that comes out to about $300k a year in fines for blocking fire hydrants in the City of Vancouver.</p>
+<p>Next up, lets check the top 5 most heavily ticketed fire hydrants in our 9 year period.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fire_hydrant_tickets <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(block,street) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>)  <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>n) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pretty_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+block
+</th>
+<th style="text-align:left;">
+street
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+400
+</td>
+<td style="text-align:left;">
+Keefer St.&nbsp;
+</td>
+<td style="text-align:right;">
+707
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2100
+</td>
+<td style="text-align:left;">
+40th Ave W.
+</td>
+<td style="text-align:right;">
+683
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1100
+</td>
+<td style="text-align:left;">
+Haro St.&nbsp;
+</td>
+<td style="text-align:right;">
+671
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2100
+</td>
+<td style="text-align:left;">
+W 40TH AVE
+</td>
+<td style="text-align:right;">
+483
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6200
+</td>
+<td style="text-align:left;">
+Ash St.&nbsp;
+</td>
+<td style="text-align:right;">
+302
+</td>
+</tr>
+</tbody>
+</table>
+<p>Looking at the list we immediately notice something odd. Numbers 2 and 4 appear to be the same block and street, just written differently. The addresses aren’t properly normalized, we will have to do some data cleaning work first. 麻煩! We hide the code for that behind a function call.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>top_hydrants <span class="ot">&lt;-</span> fire_hydrant_tickets <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">normalize_addresses</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Address) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>)  </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>top_hydrants <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>n) <span class="sc">%&gt;%</span>  <span class="fu">pretty_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Address
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2100 W 40TH AV
+</td>
+<td style="text-align:right;">
+1166
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1100 HARO ST
+</td>
+<td style="text-align:right;">
+770
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+400 KEEFER ST
+</td>
+<td style="text-align:right;">
+717
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2100 PINE ST
+</td>
+<td style="text-align:right;">
+337
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5600 ORMIDALE ST
+</td>
+<td style="text-align:right;">
+332
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="images/W_40th_fire_hydrant.png" style="width:50%;float:right"> The clear winner is the one on the 2100 block of W 40TH AVE. Checking <a href="https://www.google.ca/maps/place/2150+W+40th+Ave,+Vancouver,+BC+V6M+1W5/@49.2355542,-123.155923,3a,75y,295.03h,84t/data=!3m6!1e1!3m4!1scoq6Uv8Vvi4qkn3j61Eb3Q!2e0!7i16384!8i8192!4m13!1m7!3m6!1s0x5486737a4fb01651:0xc469fd2de990469d!2s2150+W+40th+Ave,+Vancouver,+BC+V6M+1W5!3b1!8m2!3d49.2352754!4d-123.1566618!3m4!1s0x5486737a4fb01651:0xc469fd2de990469d!8m2!3d49.2352754!4d-123.1566618">Google Street View</a>, there is only one on the block. It was hard to find because – two cars blocked the view on it.</p>
+<p>Next up are the ones on the <a href="https://www.google.ca/maps/@49.2846472,-123.1270377,3a,75y,180.87h,89.92t/data=!3m7!1e1!3m5!1s0LfohWAkdxHFE8zeGx8xgg!2e0!5s20150501T000000!7i13312!8i6656">1100 block of Haro St</a>, closely followed by the <a href="https://www.google.ca/maps/@49.2846587,-123.1270505,3a,75y,180.87h,89.92t/data=!3m6!1e1!3m4!1sUxShPIv9pAxcFUerFjX6aw!2e0!7i16384!8i8192">400 block on Keefer St</a>.</p>
+<p>To see how things have evolved over time we can check how they fared over the years.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fire_hydrant_tickets <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">normalize_addresses</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Address,year) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year,<span class="sc">-</span>n) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pretty_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Address
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1100 HARO ST
+</td>
+<td style="text-align:left;">
+2011
+</td>
+<td style="text-align:right;">
+103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+400 KEEFER ST
+</td>
+<td style="text-align:left;">
+2012
+</td>
+<td style="text-align:right;">
+121
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+400 KEEFER ST
+</td>
+<td style="text-align:left;">
+2013
+</td>
+<td style="text-align:right;">
+129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+400 KEEFER ST
+</td>
+<td style="text-align:left;">
+2014
+</td>
+<td style="text-align:right;">
+163
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+400 KEEFER ST
+</td>
+<td style="text-align:left;">
+2015
+</td>
+<td style="text-align:right;">
+112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2100 W 40TH AV
+</td>
+<td style="text-align:left;">
+2016
+</td>
+<td style="text-align:right;">
+143
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2100 W 40TH AV
+</td>
+<td style="text-align:left;">
+2017
+</td>
+<td style="text-align:right;">
+237
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2100 W 40TH AV
+</td>
+<td style="text-align:left;">
+2018
+</td>
+<td style="text-align:right;">
+347
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5600 ORMIDALE ST
+</td>
+<td style="text-align:left;">
+2019
+</td>
+<td style="text-align:right;">
+168
+</td>
+</tr>
+</tbody>
+</table>
+<p>The winner each year is from our overall top 5 list. Current front runner for 2019 is the one on the 5600 block of Ormidale St, which deserves a closer look.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fire_hydrant_tickets <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">normalize_addresses</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Address<span class="sc">==</span><span class="st">"5600 ORMIDALE ST"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">strftime</span>(entrydate,<span class="st">"%m"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(year,<span class="st">"-"</span>,month,<span class="st">"-15"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Date)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill=</span><span class="st">"brown"</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  plot_theme <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Fire hydrant on the 5600 block of Ormidale St"</span>,<span class="at">x=</span><span class="st">"Month"</span>,<span class="at">y=</span><span class="st">"Number of tickets"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
+<p>It looks like the hydrant was a fairly low-key affair until 2014, when it dropped off the map and then took off around 2018. A <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.2332689,-123.0248187,3a,75y,66.64h,85.76t/data=!3m6!1e1!3m4!1susroxeU5VcCUA8FuH-KDvg!2e0!7i16384!8i8192!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">quick check with Google Street View</a> indicates that this sits in front of a new development. Checking through the timeline, the site <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.2332266,-123.0248471,3a,75y,66.64h,85.76t/data=!3m7!1e1!3m5!1sHjs5BZw_U3zbRxVIyNkOQg!2e0!5s20090501T000000!7i13312!8i6656!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">shows a house in May 2009</a>, which has been <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.2332058,-123.0248472,3a,75y,66.64h,85.76t/data=!3m7!1e1!3m5!1s_Can0hgwYMm21cA3YQ_nUg!2e0!5s20120601T000000!7i13312!8i6656!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">torn down by June 2012</a>, although it is still possible to illegally park in front of it. By <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.2332318,-123.0248536,3a,75y,69.26h,82.76t/data=!3m7!1e1!3m5!1sRR2gC_GphGkZ1mRsGop3gw!2e0!5s20140501T000000!7i13312!8i6656!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">May 2014</a> and <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.2332318,-123.0248536,3a,75y,69.26h,82.76t/data=!3m7!1e1!3m5!1sRR2gC_GphGkZ1mRsGop3gw!2e0!5s20140501T000000!7i13312!8i6656!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">July 2014</a> the neighbouring house is gone too and there is a hole in the ground with heavy machinery digging a foundation, but cars can still illegally park there. In <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.233219,-123.0248525,3a,75y,81.67h,81.35t/data=!3m7!1e1!3m5!1sUVboNiTGz8TFUBdb-dR-QQ!2e0!5s20150601T000000!7i13312!8i6656!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">June 2015</a> and <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.233219,-123.0248525,3a,75y,81.67h,81.35t/data=!3m7!1e1!3m5!1sUVboNiTGz8TFUBdb-dR-QQ!2e0!5s20160501T000000!7i13312!8i6656!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">May 2016</a> it’s a full-on construction site with no options to park illegally any more. <a href="https://www.google.ca/maps/place/5650+Ormidale+St,+Vancouver,+BC+V5R+4P9/@49.233219,-123.0248525,3a,75y,81.67h,81.35t/data=!3m7!1e1!3m5!1sUVboNiTGz8TFUBdb-dR-QQ!2e0!5s20170801T000000!7i13312!8i6656!4m5!3m4!1s0x5486768d71570e31:0xf10ee71183a0f600!8m2!3d49.233085!4d-123.0245468">August 2017</a> marks the end of construction and the first people seem to have moved in. And the parking tickets start ramping up, with many more people trying to park on the street now.</p>
+<p>Lastly, let’s get a high-level view on all the parking tickets issued throughout the city. But here things get a little ugly as we have to first geocode the blocks, and we will hide the code from now on.</p>
+<p><img src="index_files/figure-html/fire_hydrant_ticket_map-1.png" width="768"></p>
+<p>Especially the fire hydrants that are attracting lots of tickets should probably receive a review by the engineering department. While people should pay more attention to where they park, there are some straight-forward ways to make things easier. Simply paining the curb red will probably fix this for most hydrants and make sure they are free of obstructions and easy to access in case of a fire.</p>
+<section id="more-parking-tickets" class="level2">
+<h2 class="anchored" data-anchor-id="more-parking-tickets">More parking tickets</h2>
+<p>Fire hydrants are just one way to get a parking ticket. We can of course continue this and see what areas got the most overall tickets. And for what reason. We will concentrate on the tickets issued 2017 to 2019.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="768"></p>
+<p>The distribution of tickets across the city is fairly consistent across years, with total ticket counts peaking in downtown, as well as the central Broadway corridor and in Kits.</p>
+<p>To understand these patterns better, it is useful to look at the top reasons parking tickets have been issued.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="768"></p>
+<p>The presence of parking meters clearly plays a role in parking tickets with a total of 596,944 out of the 1,074,220 infractions referencing some kind of violation involving a parking meter.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="768"></p>
+<p>There seems to be a clear relationship between the number of tickets and the number of parking meters in each area. We can normalize the meter-related parking tickets by the number of meters in each area to give us a count on the average number of tickets per meter in each of the areas.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="768"></p>
+<p>This shows a much more uniform pattern, with a clear outlier in Strathcona which might be worth looking into further.</p>
+<p>Now that we have some understanding of meter-related tickets, we can take a look at the remaining non-meter related tickets.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" width="768"></p>
+<p>The remaining tickets distribute quite well over a range of categories.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" width="768"></p>
+<p>Geographically, highly ticketed blocks cluster in the downtown core and surrounding areas, and spill out along commercial corridors. One can’t help but notice the correlation with meter locations, possibly due to ticketing officers focusing their efforts on those areas.</p>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>That’s a wrap for tonight’s quick run-through on how to use our new-ish <code>VancouvR</code> package to easily access Vancouver Open Data. As usual, the code is <a href="https://github.com/mountainMath/doodles/blob/master/content/posts/2019-12-09-fun-with-parking-tickets.Rmarkdown">available for anyone to download and adapt for their own purposes</a>.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2019,
+  author = {von Bergmann, Jens},
+  title = {Fun with Parking Tickets},
+  date = {2019-12-09},
+  url = {https://doodletest.netlify.app/posts/2019-12-09-fun-with-parking-tickets},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2019" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bergmann, Jens von. 2019. <span>“Fun with Parking Tickets.”</span>
+<em>MountanDoodles</em> (blog). December 9, 2019. <a href="https://doodletest.netlify.app/posts/2019-12-09-fun-with-parking-tickets">https://doodletest.netlify.app/posts/2019-12-09-fun-with-parking-tickets</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/doodletest\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="https://platform.twitter.com/widgets.js"></script>
+</body></html>

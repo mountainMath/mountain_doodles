@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jens von Bergmann">
+<meta name="author" content="Nathan Lauster">
+<meta name="dcterms.date" content="2022-05-06">
+<meta name="description" content="Household formation is a complex process that is impacted by many factors. We explore the variation in household maintainer rates across Canada to estimate the CMA-level effects on household maintainer rates and suppressed household formation using Montréal as a counterfactual, paying attention to differences in age structure and cultural aspects.">
+
+<title>Mountain Doodles - Estimating Suppressed Household Formation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54516567-1', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Mountain Doodles - Estimating Suppressed Household Formation">
+<meta property="og:description" content="Household formation is a complex process that is impacted by many factors. We explore the variation in household maintainer rates across Canada to estimate the CMA-level effects on household maintainer rates and suppressed household formation using Montréal as a counterfactual, paying attention to differences in age structure and cultural aspects.">
+<meta property="og:image" content="https://doodletest.netlify.app/posts/2022-05-06-estimating-suppressed-household-formation/index_files/figure-html/effect_hmr_share-1.png">
+<meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1536">
+<meta name="twitter:title" content="Mountain Doodles - Estimating Suppressed Household Formation">
+<meta name="twitter:description" content="Household formation is a complex process that is impacted by many factors. We explore the variation in household maintainer rates across Canada to estimate the CMA-level effects on household maintainer rates and suppressed household formation using Montréal as a counterfactual, paying attention to differences in age structure and cultural aspects.">
+<meta name="twitter:image" content="https://doodletest.netlify.app/posts/2022-05-06-estimating-suppressed-household-formation/index_files/figure-html/effect_hmr_share-1.png">
+<meta name="twitter:creator" content="@vb_jens">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1536">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../mm_stamp_small.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mountain Doodles</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mountainMath/mountaindoodles"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link active" href="https://twitter.com/vb_jens" aria-current="page"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vb-jens/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jens.mountainmath.ca"> <i class="bi bi-envelope-at-fill" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Estimating Suppressed Household Formation</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Estimating Suppressed Household Formation</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/mountainMath/mountaindoodles/blob/main/posts/2022-05-06-estimating-suppressed-household-formation/index.markdown"><i class="bi"></i></button></div></div>
+                  <div>
+        <div class="description">
+          Household formation is a complex process that is impacted by many factors. We explore the variation in household maintainer rates across Canada to estimate the CMA-level effects on household maintainer rates and suppressed household formation using Montréal as a counterfactual, paying attention to differences in age structure and cultural aspects.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">affordability</div>
+                <div class="quarto-category">cancensus</div>
+                <div class="quarto-category">cmhc</div>
+                <div class="quarto-category">PUMF</div>
+                <div class="quarto-category">Toronto</div>
+                <div class="quarto-category">Vancouver</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Affiliations</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Jens von Bergmann </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              MountainMath
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">Nathan Lauster </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              UBC, Department of Sociology
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 6, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><strong>Too much data, too little time</strong></p>
+</div></div>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../profile.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mountainMath" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/vb_jens" title="" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/vb-jens/" title="" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:jens.mountainmath.ca" title="" class="quarto-navigation-tool px-1" aria-label="Email"><i class="bi bi-envelope-at-fill"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Other Canadian data focused blogs:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://homefreesociology.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HomeFreeSociology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.dshkol.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dmitry Shkolnik’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.simoncoulombe.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simon Coulombe’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://financesofthenation.ca/category/commentary/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finances of the Nation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://deny.substack.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deny’s Substack</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://higheredstrategy.com/author/alex/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alex Usher’s blog</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at <a href="https://mountainmath.ca">MountainMath</a>.</p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p style="text-align:center;">
+<i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/05/06/estimating-suppressed-household-formation/" target="_blank">HomeFreeSociology</a>)</i>
+</p>
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>We develop and elaborate a Montréal Method for estimating housing shortfalls related to constraints upon current residents who might wish to form independent households but are forced to share by local housing markets. Applying simple versions of the Montréal Method to Metro Areas across Canada suggests that Toronto has the biggest shortfall, which we estimate at 250,000 to 400,000 dwellings, depending upon assumptions. For Vancouver, the estimated shortfall range is narrower, from roughly 75,000 to 100,000 dwellings. But models suggest housing shortfalls remain widespread, and there is much room for further elaboration. Note: shortfalls estimated in this post only account for those due to suppressed household formation among residents and do not account for e.g.&nbsp;migration pressures, which means that overall housing shortfalls are likely much larger.</p>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In a <a href="https://doodles.mountainmath.ca/blog/2022/04/26/planning-for-scarcity/">previous post</a> we tried to explain what goes wrong with population and dwelling growth projections in planning. In this post we will examine household maintainer rates more closely, one of the two key places where implicit model assumptions perpetuate and amplify housing scarcity. We’ll also lay out adjustments to consider that we’ll call “The Montréal Method” for estimating housing needs based on suppressed household formation.</p>
+<p>Household maintainer rates, sometimes called headship rates, are the share of the population 15+, or within a specific age group, who are coded as <a href="https://www12.statcan.gc.ca/census-recensement/2016/ref/dict/households-menage020-eng.cfm">“primary household maintainer” in the census</a>. The concept draws upon an older &amp; occasionally patriarchal notion of household head, where the census was interested in identifying who was “in charge” of the household, and updates it by merely identifying the first person listed who pays the bills. Often, of course, as with most couples, there are two or more people paying the bills. But only one gets identified as the “primary” household maintainer in order to help identify a single link between households and the people they contain. Correspondingly, household maintainer rates serve as a sort of missing link in how we fit populations into dwellings. This missing link also contains information about household size. And as we <a href="https://homefreesociology.com/2022/04/26/planning-for-scarcity/">noted previously</a> with respect to <a href="http://www.metrovancouver.org/services/regional-planning/PlanningPublications/Metro_Vancouver_Growth_Projections_Methodology_Report.pdf#page=12">Metro population projections</a>, assumptions about household maintainer rates have a significant impact on housing needs and demand estimates.</p>
+<p>Often housing needs and demand projections assume household maintainer rates will follow past trends, but as explained in our previous post this assumption tends to enshrine and worsen past housing shortages. If in the past housing was scarce, and household maintainer rates have been suppressed by, e.g.&nbsp;delaying independent household formation of young adults, simply projecting past trends forward would bake these past shortages into plans for the future. In other words, normal planning processes, as with <a href="http://www.metrovancouver.org/services/regional-planning/PlanningPublications/Metro_Vancouver_Growth_Projections_Methodology_Report.pdf">Metro Vancouver’s growth projections</a>, can serve to systematically enshrine housing shortages.</p>
+<p>As a start, let’s estimate recent household maintainer rates in Canada for the population 15 years or older. Our figure comes out to 49%. That’s the factor we need to multiply the population 15 years or older by to get to our estimated number of private households. It tells us what to put into the ‘Household Maintainer Rate’ box on the diagram in the <a href="https://doodles.mountainmath.ca/blog/2022/04/26/planning-for-scarcity/">previous post</a>. In other words, in Canada the average household size is just over 2, if we don’t count children under the age of 15.</p>
+<p>We can think of this number as constituting <em>model zero</em> for how to integrate household maintainer rates into linking population to housing.</p>
+<p><img src="index_files/figure-html/model0-1.png" width="768"></p>
+</section>
+<section id="household-maintainer-rates-vary-across-cmas" class="level2">
+<h2 class="anchored" data-anchor-id="household-maintainer-rates-vary-across-cmas">Household maintainer rates vary across CMAs</h2>
+<p>Model zero provides a starting number to link population to dwellings. But household maintainer rates aren’t constant across the country; some CMAs have higher household maintainer rates than others. In fact, this is at the core of what we are interested in in this post. How should we understand this variation?</p>
+<p><img src="index_files/figure-html/crude_hmr_cma-1.png" width="768"></p>
+<p>The central question is what causes discrepancies between e.g.&nbsp;Toronto with a household maintainer rate of 45% and Montréal with a rate of 51%? One candidate that immediately comes to mind is the availability of housing. We can encode that in an extension of our Model 0 by explicitly acknowledging that CMA can impact household maintainer rates.</p>
+<p><img src="index_files/figure-html/model1-1.png" width="768"></p>
+<p>This is still somewhat simplistic, but if we assume that our Model 1 is complete, that CMA variation can be explained by housing constraints, and that there aren’t any other important factors linking CMAs to household maintainer rates, we can ask how much more housing each of these CMAs would need in order to achieve the same household maintainer rates as any other given Metro Area.</p>
+<p>Which metro area should we use as our counterfactual of unconstrained household formation? We could use Canada as a whole, of course, but that would just be balancing constrained and unconstrained areas (and there have recently been suggestions that the country as a whole should be understood as in housing deficit). Quebec City is tempting as the metro area with the highest household maintainer rate. But it’s also somewhat small and might be distinct for other reasons. By contrast, Montreal looks like a nice, big, reasonable counterfactual, enabling us to ask how much more housing would other metros need to reach the household maintainer rate of Montreal?</p>
+<p>To see if this is reasonable, let’s do a quick preliminary check-in on vacancy rates in the lead-up to our 2016 household maintainer rates as another measure of how they might plausibly have been influenced by housing conditions.</p>
+<p><img src="index_files/figure-html/vacancy_rates-1.png" width="768"></p>
+<p>Here we can see patterns that generally support, but might also complicate our understanding of household maintainer rates being linked to housing conditions. Toronto and Vancouver, of course, have notoriously low rental vacancy rates, which match well onto their low household maintainer rates. People can’t readily find apartments to rent, and it’s been that way for awhile. But Victoria’s vacancy rates are also quite low, despite the area having a high household maintainer rate. Québec’s vacancy rates climbed to a high just prior to the 2016 Census that might help explain its high household maintainer rate, but leave concerns about whether it was a temporary effect. Yet Edmonton and Calgary’s rental vacancy rates climbed even more dramatically, while their household maintainer rates aren’t much different from Vancouver’s. It may be the case that fluctuations in vacancy rates take some time to translate into household maintainer rates, but we’re not sure.</p>
+<p>This perhaps furthers the case for using Montréal as our counterfactual. Montréal is a big metro area with rental vacancy rates that have remained relatively stable within the 3%-4% range, with high household maintainer rates, if not the highest. So we’re going to go ahead and use Montréal as our baseline to provide estimates for how household formation might be suppressed elsewhere across Canada. And we’re going to call it The Montréal Method.</p>
+<p>How much more housing would other metro areas need to reach household maintainer rates matching Montréal’s?</p>
+<p><img src="index_files/figure-html/shortfall1-1.png" width="768"></p>
+<p>Interesting! But our initial results from The Montréal Method could easily be questioned. Toronto and Vancouver registering with a large housing shortfall seems in principle plausible, but what about Calgary? Does Toronto really need 18% more dwellings to accommodate all those desiring an independent household? And why do Québec City and Victoria appear to have an excess of housing? We might be missing something.</p>
+<p>It’s also a good time to remember that the housing shortfall estimated here is only the shortfall due to suppressed household formation, and it disregards housing shortfall due to other factors, for example suppressed in-migration or <a href="https://homefreesociology.com/2020/08/28/keeping-the-leavers/">forced out-migration</a>. Still, it’s a start.</p>
+</section>
+<section id="household-maintainer-rates-vary-by-age" class="level2">
+<h2 class="anchored" data-anchor-id="household-maintainer-rates-vary-by-age">Household maintainer rates vary by age</h2>
+<p>Time to get a bit more serious. Most household maintainer rate models, including the Metro Vancouver projection models, stratify by age groups. And for good reason! For any given year, age is the strongest predictor for household maintainer rates. The household maintainer rates for 15 year olds are essentially zero. But household maintainer rates generally increase with age and for seniors they rise well over 60%.</p>
+<p><img src="index_files/figure-html/canada_hmr_age-1.png" width="768"></p>
+<p>Correspondingly, if different CMAs have different age distributions, that might skew our estimates. This tells us we need to refine our Model 1 to account for Age. Here we think of people sorting into CMAs by age, with some CMAs skewing younger and others skewing older. Victoria, for instance, is regularly promoted as “<a href="https://www.retireinvictoria.com/">Canada’s Retirement Capital</a>.”</p>
+<p><img src="index_files/figure-html/model2-1.png" width="768"></p>
+<p>Part of the justification of using household maintainer rates to translate between population and dwellings is the recognition that in most situations all household maintainers in a given household are of similar age, and thus the choice of “primary” household maintainer does not impact these kind of estimates much. Based on this model we can estimate age-adjusted household maintainer rates for each CMA by weighting age specific rates by the overall age distribution in Canada.</p>
+<p><img src="index_files/figure-html/canada_hmr_age_adjusted-1.png" width="768"></p>
+<p>Adjusting by age highlights how some of the difference in household maintainer rates can be accounted for by difference in age distribution across municipalities. In particular, Toronto has a younger than average age distribution whereas Victoria is on average older, so the adjustments go in opposite directions. Nevertheless, the differences across CMA are quite stubborn, only Montréal and Victoria flipped positions in our lineup.</p>
+<p>In other words, adjusting for age reduces the variation in household maintainer rates across CMAs a little, by 27% to be precise, but there is still considerable variation left. We can again estimate how many more housing units we would need to achieve the same household maintainer rates as Montréal, after accounting for differences in the age distributions.</p>
+<p><img src="index_files/figure-html/shortfall_2-1.png" width="768"></p>
+<p>Assuming age offers our only important household maintainer determinant and Montréal makes a good counterfactual for where other metro areas could be, this offers us a nice estimate of how much housing we would need to reach Montréal levels of maintainer rates. The Age-Adjusted Montréal Method estimates Vancouver is short well over 10% and Toronto by well over 15%, but shortfalls still appear to be common across most Canadian metro areas, save for Québec.</p>
+</section>
+<section id="age-specific-metro-household-maintainer-rates-across-history" class="level2">
+<h2 class="anchored" data-anchor-id="age-specific-metro-household-maintainer-rates-across-history">Age-Specific Metro Household Maintainer Rates across History</h2>
+<p>Let’s examine our counterfactual a little more carefully by comparing age-specific household maintainer rates directly and taking them backward in time. History gives us another view into the differences in household maintainer rates across CMAs that we have observed above. Have these differences been stable over time, or have they changed significantly? Here we’ll just focus on the historical data we have on age-specific household maintainer rates from 1971-2016 PUMF data for Montréal, Toronto and Vancouver CMAs.</p>
+<p>Of note, we have to switch our data source to allow more flexibility. So far we have used data from census cross tabulations, going forward we need to cut data in more custom ways and will rely on PUMF data. In this overview we gloss over a couple of complications, we just use standard weights and don’t show confidence intervals for PUMF estimates, and we ignore that the geographic boundaries of CMAS, in particular Montréal, have changed over time. The broad effects we are trying to highlight here are large enough that they can’t be explained by variability in the PUMF, and we believe that the changing geography won’t have significant effects on the age-specific household maintainer rates in either direction. We talk about the different data sources more in our appendix.</p>
+<p>First we compare how age-specific household maintainer rates have changed over time in each of the CMAs.</p>
+<p><img src="index_files/figure-html/age_based_timelines_cma-1.png" width="768"></p>
+<p>What does Montréal offer as a counterfactual? Strikingly, age-specific household maintainer rates in Montréal have remained fairly constant over time. The most notable trend is for older age groups, especially age 75+, where we can see a rise in independent living during the 1970s and 1980s, as reflected in rising household maintainer rates.</p>
+<p>Comparing Montréal to Toronto and Vancouver, we can see that they had quite similar age-specific household maintainer rates in the 1970s. Then rates in Toronto and Vancouver began to plummet to quite a bit below Montréal’s rates from 2000 onward. These drops are most evident in the age ranges from 25-39, but they also show up in older ranges, with ages 75-79 most notable for Vancouver.</p>
+<p>We can slice the data differently and compare the CMAs next to each other over the years.</p>
+<p><img src="index_files/figure-html/age_based_timelines_year-1.png" width="768"></p>
+<p>This highlights how similar all three CMAs were in the 1970s, strengthening the case for Montréal as a reasonable counterfactual. Montréal didn’t pull ahead in the 1980s and 1990s so much as Toronto and Vancouver fell behind. The graphic effect is kind of like receding gums gradually leaving Montréal’s teeth exposed.</p>
+<p>Let’s leave dentistry behind and return to thinking about housing. Using our Montréal Method can provide estimates of how much housing would be needed to return Toronto and Vancouver to similar household maintainer rates as Montréal, and correspondingly to similar rates reflecting where they were in the 1970s. But is it reasonable to assume that the divergence between these three metro areas is entirely about housing constraints?</p>
+<p>Let’s add one more complicating factor: culture.</p>
+</section>
+<section id="cultural-differences" class="level2">
+<h2 class="anchored" data-anchor-id="cultural-differences">Cultural Differences?</h2>
+<p>Perhaps cultural differences emerging in Toronto and Vancouver have altered their trajectories away from their past patterns and away from Montréal’s. These could be associated with the quite different immigration patterns we’ve seen in Toronto and Vancouver. The important idea here is that maybe some of the variation in household maintainer rates has less to do with housing constraints than with different ideas about family and ideal living situations. Maybe some groups of young adults don’t want to live on their own? Maybe some groups of seniors similarly prefer to live with their children?</p>
+<p>This leads us to the next refinement of our household maintainer model. There is literature on large cultural differences, and those differences have complex fault lines. For example <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?oldid=494351">young adults leave home much later</a> in south and eastern European countries like Italy, Greece, or Spain than in north and western European countries. There are similar arguments to be made about various cultural differences across Asia. For instance, Statistics Canada estimates that South Asian Canadians are over three times as likely to live in <a href="https://www150.statcan.gc.ca/n1/pub/46-28-0001/2021001/article/00008-eng.htm">complex, multi-family households</a> compared to Canadians as a whole. So we should probably consider ethnic background, but also immigrant generation status. First generation immigrants may have few other options than forming households at high rates, as they often have no parents or support networks to fall back on. Second generation immigrants might stay longer living with their parents, whereas their third or higher generation counterparts may converge toward broader Canadian patterns. We will loosely refer to the intersections of these variables as potentially pointing out differences in <em>Culture</em>.</p>
+<p>This tells us that ethnic background, as well as immigrant generation, will likely have an impact on household maintainer rates. We also think of immigrants sorting by cultural background into CMAs, for example based on existing networks.</p>
+<p><img src="index_files/figure-html/model3-1.png" width="768"></p>
+<p>But this is where things get tricky for several reasons. For one, the concepts of ethnic background are somewhat fluid and hard to nail down. A more technical reason is that we are forced to move the analysis to PUMF data, which is roughly a 1:40 subsample of the population, and we are quickly running up against model complexity limits. The PUMF data is simply not thick enough to be able to expect robust estimates of counterfactual model when simultaneously accounting for CMA, Age, and Culture unless we distill <em>Culture&amp;</em> down to very broad categories. This is somewhat in keeping with our approach of successively refining our model.</p>
+<p>To derive broad categories of <em>Culture</em> we first recode generation status into three groups, First Generation (born outside of Canada), Second Generation (both parents first generation) and all other. Then we manually group the 49 ethnic origin categories that are split out in the PUMF into broader groups. After that we cross the ethnicity categories with the generation status, and collapse some categories further in order to ensure the categories are thick enough to yield somewhat robust estimates. Then we take data from Canada outside of Vancouver and Toronto (where we know housing is constrained) to estimate overall household maintainer rates for these categories and cluster them to arrive at three broad <em>Culture</em> categories (C1, C2, and C3) we will use in our model, the results of which are depicted here.</p>
+<p><img src="index_files/figure-html/culture_selection-1.png" width="768"></p>
+<p>We’re the first to admit that our C1, C2, and C3 “Cultural” groupings linked to different household maintainer patterns are rough. But they allow us to make another pass at understanding differences across metro areas and applying our Montréal Method. With this set up we now have three different models to estimate counter-factual household maintainer rates. The crude estimates, the age-adjusted model and the model adjusting for age and ethnic/immigration background.</p>
+<p>We can express this in terms of household maintainer rates as observed using Montréal as counterfactual.</p>
+<p><img src="index_files/figure-html/effect_hmr_rate-1.png" width="768"></p>
+<p>Or, following our Montréal Method, we can express this directly as housing shortfall relative to our counter-factual of Montréal. This corresponds to three different versions of our Montréal Method which we can use to estimate the housing shortfall in other metro areas. Results from the Montréal Method are interpretable as the number of extra dwellings we’d need to enable people to maintain independent households like they do in Montréal. We’ve now established a crude version, and age adjusted version, and a version adjusted for both age and ethnic/immigration background.</p>
+<p><img src="index_files/figure-html/effect_hmr_share-1.png" width="768"></p>
+<p>This shows how our successively refined models lead to adjustments in the counterfactual effect of CMA on household maintainer rates. We can see how each refinement of the model adjusts the rates of household suppression and associated housing shortfall relative to the counter-factual of Montréal. Adjusting additionally for ethnic background and immigration generation leads to noticeable shifts both up and down. In particular, Toronto’s counter-factual estimates decrease significantly, along with estimates for Vancouver and Calgary. By contrast, Hamilton remains roughly the same.</p>
+<p>Overall, in terms of enabling people to form independent households, large swathes of Canada appear to be constrained relative to Montréal. The Québec City CMA alone consistently comes out with a negative housing shortfall, perhaps hinting that even Montréal may experience some pressures that suppress household formation. Nevertheless, as we discuss above, Montréal appears to offer a pretty decent counterfactual for the rest of Canada to aspire to.</p>
+<p>Our estimates of constraints in Toronto and Vancouver are largely to be expected. That they begin to converge with other metro areas as we elaborate our model suggests more widespread constraints. The prominence of Calgary, in particular, is somewhat unexpected. We plan to return to this in another post where we will go beyond household maintainer rates and focus in on particular living arrangements. One hypothesis would be that this is due to Calgary, as well as Edmonton, having <a href="https://doodles.mountainmath.ca/blog/2017/12/01/what-s-a-household/">a lot of roommate households in the key household formation age groups</a>. This may be due to the particular dwelling stock, which <a href="https://censusmapper.ca/maps/3237#11/51.0867/-114.2036">has about half the share of 1-bedroom dwelling units compared to Vancouver or Toronto</a> and lends itself to roommate households. Another potential issue could arise because of how the census codes the residence of students, which hits CMAs with a higher share of parents harder.</p>
+</section>
+<section id="what-does-this-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-this-mean">What does this mean?</h2>
+<p>How should we make sense out of our Montréal Method estimates of housing shortfall related to constrained maintainer rates? To make them more interpretable, let’s translate translate the percentages into hard numbers. How many more dwellings are required to make up the housing shortfall due to suppressed household formation? Once again, this is only measuring part of our shortfall, so we’re assuming no change in migration patterns due to higher availability of housing.</p>
+<p><img src="index_files/figure-html/total_shortfall-1.png" width="768"></p>
+<p>For Toronto, the Montréal Method estimates a housing shortfall of 250,000 to 400,000 dwellings, depending upon assumptions. For Vancouver, the shortfall range is narrower, from roughly 75,000 to 100,000 dwellings. We should stress again that this is only trying to estimate the housing shortage due to suppressed household formation, if we were to actually make up the dwelling shortfall this would almost certainly also alter migration patterns and interfere with these estimates.</p>
+<p>At the national level we don’t have to worry about impacts of migration, if we are able to build the needed housing in all the right places. For all of Canada this housing shortfall comes out to around 890k units for our Model 2 and, if we are comfortable with our assumptions of adding culture into the model, 830k for our Model 3.</p>
+<p>This includes the negative shortfall in Québec, which reminds us that maybe Montréal was already experiencing housing pressures in 2016 (which have intensified in the meantime) and perhaps isn’t the only counterfactual we should consider, leading to possible under-estimates. Indeed, if we look back to the age-based household maintainer rate timelines for Montréal we can observe a drop in household maintainer rates in the 20 to 39 year old age groups in the 2016 census supporting this. Still, if nothing else, Montréal provides us a conservative estimate of what less constrained household formation could look like.</p>
+<p>How could our estimated housing shortfall be fixed? To provide one last means of interpretation, we can compare our numbers above to the prevailing pace of housing completions. If we scaled up to the development industry to <em>double</em> the number of new dwellings completed circa 2016 - without accounting for demolitions - how long would it take to address the shortfall in each metro area?</p>
+<p><img src="index_files/figure-html/construction_shortfall-1.png" width="768"></p>
+</section>
+<section id="how-robust-are-these-results" class="level2">
+<h2 class="anchored" data-anchor-id="how-robust-are-these-results">How robust are these results?</h2>
+<p>This is a good start, but how realistic is our Model 3, and what might a more realistic Model 4 look like? And how would that effect the estimates?</p>
+<p>We still have some concerns about Model 3. In particular, people are different both within and between any cultural groupings; hence assumptions about cultural groupings are tricky to get right. It’s difficult to adjust for possible differences in culture and living preferences between groups that also distribute themselves selectively across CMA. For example, people who move from places with large groups of co-ethnics to places with smaller groups may be distinct from those who stay in terms of their ideal living situations. This gets to a fundamental conundrum: the more realistic complexity we attempt to add to our model, the greater the risk we might make wrong assumptions about how that complexity actually works.</p>
+</section>
+<section id="possibly-more-realistic-models" class="level2">
+<h2 class="anchored" data-anchor-id="possibly-more-realistic-models">Possibly more realistic models</h2>
+<p>Given that we’ve laid out these risks, we can at least think through this a little more systematically and point at some other important factors we might want to consider if we want to add further complexity. We don’t have to worry about factors impacting just household maintainer rates as long as we think they don’t also impact, or are impacted by CMA in some way, and we will omit those. For example, we know that Gender impacts household maintainer rates, but we don’t believe CMA and Gender are strongly related, so for now we omit Gender from our model. We could model a set of important relationships as per below.</p>
+<p><img src="index_files/figure-html/model4-1.png" width="768"></p>
+<p>This model aims to capture the main effects impacting the relationship between CMA and Household Maintainer Rates, but still remains incomplete. It is still missing several factors that impact or confound the relationship between CMA and Household Maintainer Rates. For example, parental wealth likely interferes with household formation of young adults (e.g.&nbsp;the “<a href="https://journals.sagepub.com/doi/full/10.1177/0038038518798761">gilded cage</a>” effect) in ways that are not independent of CMA. The young adults in Vancouver and Toronto who don’t have help from parents in meeting their housing needs may choose at an increased rate to relocate to other CMAs and form households there. This kind of effect of people self-selecting into CMAs based on affordability issues would be captured broadly under CMA effects (and might increase noise).</p>
+<p>Though there are factors missing, we don’t believe that they are necessarily correlated with the other factors, Age, Income, School/Work/Neither status, or Culture in our model. We’d certainly be interested in seeing how the factors we attempt to include might shift, e.g.&nbsp;the model hints at how adjusting for <em>culture</em> in our Model 3 may well soak up some income effects. Armed with a model like this we could use census data to estimate the effect of CMA on household maintainer rates. Two effects actually, the total effect, including the effect mediated through differences in the income distribution which we assume to be partially caused by CMA level variables, and the direct effect (in red) that is not mediated through CMA-induced differences in the income distribution.</p>
+<p>But there’s a further problem. While this model probably does a better job at capturing the complexities, we can’t expect PUMF data to produce reasonable estimates. The PUMF’s 1:40 subsample is simply not deep enough for the complexity of the model. To stand a fighting chance to estimate this model we might need to use the full census data at the RDC. Having access to the census in the RDC would also allow to explore further linkages in the data and add features of parents into the model that might interact with CMA, for example type of dwelling the parents live in.</p>
+</section>
+<section id="upshot" class="level2">
+<h2 class="anchored" data-anchor-id="upshot">Upshot</h2>
+<p>We develop and elaborate the Montréal Method for estimating constrained household formation. Taken together, we interpret our results from applying the Method as evidence that housing shortage is likely constraining household formation quite a bit, especially in Toronto, but also Vancouver and elsewhere across Canada. Montréal makes for a decent and fun counterfactual, enabling us to estimate housing shortage. While it might have some cultural idiosyncrasies that limit its applicability as counterfactual, Montréal’s relatively stable and accessible (for Canada) vacancy rates; the fact that Halifax has similar overall household maintainer rates; and the fact that Montréal’s maintainer rates were quite similar to Toronto and Vancouver in the 1970s, all suggest the Montréal Method does its job ok.</p>
+<p>We open up many more questions with our analysis so far. Returning to history, why did household maintainer rates change so much outside of Montréal, and how has this related to the housing market of other CMAs. While household maintainer rates remain useful, we may want to look at distinct lifecourse factors and situations to work this out in detail. For instance, we would like to spend more time observing the living arrangements of young adults at the ages 20 or 25 through 39 where the bulk of the household formation happens. Some transitions, e.g leaving home, tend to increase household formation, while others, e.g.&nbsp;coupling, reduce it. Connecting transitions to housing stock availability can offer deeper insight into the mechanisms by which household maintainer rates differ across regions, which can sometimes work in opposing ways. For example, Calgary has a lower rates of young adults living with their parents compared to Montreal, but a higher rate of young adults living as roommates. While these details are secondary to linking population to households, they offer important insights into the mechanisms behind household formation in different regions in Canada.</p>
+<p>Another possibly fruitful angle of attack to identify the CMA effects in a more robust way in the face of our models getting entangled in complex revealed (constrained) preferences is to explicitly introduce prevailing levels of rent as a mediator between CMA and household maintainer rates and try to identify the effect mediated through rents.</p>
+<p>We will explore some of this in a future blog post.</p>
+<p>As usual, the code for this post is <a href="https://github.com/mountainMath/doodles/blob/master/content/posts/2022-05-06-estimating-suppressed-household-formation/index.Rmarkdown">available on GitHub</a> for anyone to replicate or adapt for their own purposes.</p>
+</section>
+<section id="appendix" class="level1">
+<h1>Appendix</h1>
+<section id="pumf-data" class="level2">
+<h2 class="anchored" data-anchor-id="pumf-data">PUMF data</h2>
+<p>Public use micro data (PUMF) is a (roughly) 1:40 representative subsample of individual level census responses, somewhat altered to preserve anonymity. This allows to generate flexible CMA level cross tabulations that we will need for more complex models, like the one including <em>Culture</em>. It is a good idea to do a cross-check to see how well the PUMF data lines up with the cross tabulation when just accounting for age to get a better understanding of the uncertainties and challenges when working with PUMF data.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
+<p>To get a feel for how PUMF data compares to the full (25%) census data we compare the age-adjusted household maintainer rates by CMA estimated from the two different sources.</p>
+<p><img src="index_files/figure-html/hmr_comparison_pumf-1.png" width="768"></p>
+<p>Generally they line up well. Here we pooled the 15-17 and 17-19 age groups in the PUMF to match the ones in the cross tabulation and added in the estimate based on standard weights in red. We do not that especially with the smaller CMAs we see wider confidence intervals from the PUMF estimates and some deviation.</p>
+<details>
+<summary>
+Reproducibility receipt
+</summary>
+<pre><code>## [1] "2022-05-12 14:11:24 PDT"</code></pre>
+<pre><code>## Local:    master /Users/jens/Documents/R/mountaindoodles
+## Remote:   master @ origin (https://github.com/mountainMath/doodles.git)
+## Head:     [69a5324] 2022-05-12: sp, thanks Nathan</code></pre>
+<pre><code>## R version 4.2.0 (2022-04-22)
+## Platform: aarch64-apple-darwin20 (64-bit)
+## Running under: macOS Monterey 12.3.1
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_CA.UTF-8/en_CA.UTF-8/en_CA.UTF-8/C/en_CA.UTF-8/en_CA.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] cmhc_0.1.0         cancensus_0.5.1    statcanXtabs_0.1.1 forcats_0.5.1     
+##  [5] stringr_1.4.0      dplyr_1.0.8        purrr_0.3.4        readr_2.1.2       
+##  [9] tidyr_1.2.0        tibble_3.1.7       ggplot2_3.3.6      tidyverse_1.3.1   
+## 
+## loaded via a namespace (and not attached):
+##  [1] lubridate_1.8.0           assertthat_0.2.1         
+##  [3] digest_0.6.29             utf8_1.2.2               
+##  [5] R6_2.5.1                  cellranger_1.1.0         
+##  [7] backports_1.4.1           reprex_2.0.1             
+##  [9] evaluate_0.15             httr_1.4.2               
+## [11] blogdown_1.9              pillar_1.7.0             
+## [13] rlang_1.0.2               curl_4.3.2               
+## [15] readxl_1.4.0              rstudioapi_0.13          
+## [17] jquerylib_0.1.4           rmarkdown_2.13           
+## [19] bit_4.0.4                 munsell_0.5.0            
+## [21] broom_0.8.0               compiler_4.2.0           
+## [23] modelr_0.1.8              xfun_0.30                
+## [25] pkgconfig_2.0.3           htmltools_0.5.2          
+## [27] tidyselect_1.1.2          bookdown_0.26            
+## [29] fansi_1.0.3               crayon_1.5.1             
+## [31] tzdb_0.3.0                dbplyr_2.1.1             
+## [33] withr_2.5.0               grid_4.2.0               
+## [35] jsonlite_1.8.0            gtable_0.3.0             
+## [37] lifecycle_1.0.1           DBI_1.1.2                
+## [39] git2r_0.30.1              magrittr_2.0.3           
+## [41] scales_1.2.0              vroom_1.5.7              
+## [43] cli_3.3.0                 stringi_1.7.6            
+## [45] fs_1.5.2                  xml2_1.3.3               
+## [47] bslib_0.3.1               ellipsis_0.3.2           
+## [49] generics_0.1.2            vctrs_0.4.1              
+## [51] tools_4.2.0               mountainmathHelpers_0.1.4
+## [53] bit64_4.0.5               glue_1.6.2               
+## [55] hms_1.1.1                 parallel_4.2.0           
+## [57] fastmap_1.1.0             yaml_2.3.5               
+## [59] colorspace_2.0-3          rvest_1.0.2              
+## [61] knitr_1.38                haven_2.5.0              
+## [63] sass_0.4.1</code></pre>
+</details>
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2022,
+  author = {von Bergmann, Jens and Lauster, Nathan},
+  title = {Estimating {Suppressed} {Household} {Formation}},
+  date = {2022-05-06},
+  url = {https://doodletest.netlify.app/posts/2022-05-06-estimating-suppressed-household-formation},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2022" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bergmann, Jens von, and Nathan Lauster. 2022. <span>“Estimating
+Suppressed Household Formation.”</span> <em>MountanDoodles</em> (blog).
+May 6, 2022. <a href="https://doodletest.netlify.app/posts/2022-05-06-estimating-suppressed-household-formation">https://doodletest.netlify.app/posts/2022-05-06-estimating-suppressed-household-formation</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/doodletest\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

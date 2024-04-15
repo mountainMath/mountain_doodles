@@ -1,0 +1,18 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/@vb_jens
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/@vb_jens
+    - icon: github
+      text: Github
+      href: https://github.com/mountainmath
+---
+
+Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at [MountainMath](https://mountainmath.ca).

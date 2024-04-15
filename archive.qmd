@@ -1,0 +1,15 @@
+---
+title: "Mountain Doodles Archive"
+listing:
+  contents: posts
+  feed: true
+  sort: "date desc"
+  type: table
+  categories: cloud 
+  sort-ui: true
+  filter-ui: true
+  page-size: 1000
+  fields: [date, title]
+page-layout: article
+title-block-banner: false
+---

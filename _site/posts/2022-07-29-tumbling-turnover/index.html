@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jens von Bergmann">
+<meta name="author" content="Nathan Lauster">
+<meta name="dcterms.date" content="2022-07-29">
+<meta name="description" content="Digging deeper into Canadian residential mobility, tracking changes in mobility over time, and comparing data sources.">
+
+<title>Mountain Doodles - Tumbling turnover</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54516567-1', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Mountain Doodles - Tumbling turnover">
+<meta property="og:description" content="Digging deeper into Canadian residential mobility, tracking changes in mobility over time, and comparing data sources.">
+<meta property="og:image" content="https://doodletest.netlify.app/posts/2022-07-29-tumbling-turnover/index_files/figure-html/residential-mobility-trend-comparison-1.png">
+<meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="1500">
+<meta property="og:image:width" content="2400">
+<meta name="twitter:title" content="Mountain Doodles - Tumbling turnover">
+<meta name="twitter:description" content="Digging deeper into Canadian residential mobility, tracking changes in mobility over time, and comparing data sources.">
+<meta name="twitter:image" content="https://doodletest.netlify.app/posts/2022-07-29-tumbling-turnover/index_files/figure-html/residential-mobility-trend-comparison-1.png">
+<meta name="twitter:creator" content="@vb_jens">
+<meta name="twitter:image-height" content="1500">
+<meta name="twitter:image-width" content="2400">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../mm_stamp_small.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mountain Doodles</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mountainMath/mountaindoodles"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link active" href="https://twitter.com/vb_jens" aria-current="page"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vb-jens/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jens.mountainmath.ca"> <i class="bi bi-envelope-at-fill" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Tumbling turnover</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Tumbling turnover</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/mountainMath/mountaindoodles/blob/main/posts/2022-07-29-tumbling-turnover/index.markdown"><i class="bi"></i></button></div></div>
+                  <div>
+        <div class="description">
+          Digging deeper into Canadian residential mobility, tracking changes in mobility over time, and comparing data sources.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">rental</div>
+                <div class="quarto-category">cmhc</div>
+                <div class="quarto-category">cancensus</div>
+                <div class="quarto-category">cansim</div>
+                <div class="quarto-category">affordability</div>
+                <div class="quarto-category">mobility</div>
+                <div class="quarto-category">PUMF</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Affiliations</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Jens von Bergmann </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              MountainMath
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">Nathan Lauster </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              UBC, Department of Sociology
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 29, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><strong>Too much data, too little time</strong></p>
+</div></div>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../profile.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mountainMath" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/vb_jens" title="" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/vb-jens/" title="" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:jens.mountainmath.ca" title="" class="quarto-navigation-tool px-1" aria-label="Email"><i class="bi bi-envelope-at-fill"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Other Canadian data focused blogs:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://homefreesociology.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HomeFreeSociology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.dshkol.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dmitry Shkolnik’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.simoncoulombe.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simon Coulombe’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://financesofthenation.ca/category/commentary/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finances of the Nation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://deny.substack.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deny’s Substack</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://higheredstrategy.com/author/alex/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alex Usher’s blog</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at <a href="https://mountainmath.ca">MountainMath</a>.</p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p style="text-align:center;">
+<i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/07/29/tumbling-turnover/" target="_blank">HomeFreeSociology</a>)</i>
+</p>
+<p>We’re increasingly gathering lots of different measures of residential mobility in Canada. Which is great! Especially insofar as we want up-to-date information about demographic response through the pandemic. Here we want to add the CMHC Rental Market Survey (RMS) to the mix, comparing to Census and CHS (Housing Survey) results. Adding it in reveals a general decline in tenant mobility only recently (and partially) reversed. But it also raises a mystery worth solving about divergent CHS results and points toward the value of triangulation.</p>
+<section id="the-cmhc-rental-market-survey" class="level2">
+<h2 class="anchored" data-anchor-id="the-cmhc-rental-market-survey">The CMHC Rental Market Survey</h2>
+<p>In CMHC’s <a href="https://www.cmhc-schl.gc.ca/en/professionals/housing-markets-data-and-research/market-reports/rental-market-reports-major-centres">Rental Market Survey</a> there are several bits of information that tell us about residential mobility, namely the vacancy rate, the availability rate, and the turnover rate.</p>
+<p>The vacancy rate tells us what share of units are currently not rented and are looking to get rented out. This measures how easy it is for tenants to find new accommodation. A very related metric is the availability rate (now discontinued), which on top of the vacancy rate also considers units where that are still rented out but the current tenant has given notice and it has not yet been rented out to a new tenant.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="1200"></p>
+<p>Vacancy rates, in particular, are familiar to most analysts, and <a href="https://homefreesociology.com/2019/06/12/simple-metrics-for-deciding-if-you-have-enough-housing/">we’ve written about them</a> <a href="https://doodles.mountainmath.ca/blog/2022/02/18/vacancy-rates-and-rent-change-2021-update/">a lot</a>. They’re particularly good at tracking whether we have <a href="https://www.lincolninst.edu/sites/default/files/pubfiles/empty-house-next-door-full.pdf#page=14">enough rental apartment stock</a>.</p>
+<p>Spoiler: we do not. And more broadly the primary and secondary rental market are to a large extend fungible as <a href="https://doodles.mountainmath.ca/blog/2022/02/18/vacancy-rates-and-rent-change-2021-update/">we have noted before when comparing vacancy rates across these markets</a>, even if the primary market generally provides better renter protection and services. Which means that secondary market rentals are also helpful in filling this gap, all housing helps.</p>
+</section>
+<section id="turnover-rates" class="level2">
+<h2 class="anchored" data-anchor-id="turnover-rates">Turnover rates</h2>
+<p>The turnover rate measures <a href="https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/housing-markets-data-and-research/market-reports/rental-market-report/rental-market-report-2021-en.pdf?rev=a5a0eaac-6f70-4058-8aa3-e6d307685910#page=155">how many new tenants</a> have moved into a unit during the past year. It is expressed as the total number of new tenants moved in during the past year divided by the total number of units. This measures residential mobility in the primary rental market.</p>
+<p>CMHC started measuring this in 2016 and has reported it for every Rental Market Survey (RMS) since then. Unfortunately we aren’t aware of a single clean data source for turnover rates, so we turn to Excel files for the 2019 through 2021 Market Rental Reports and scrape it from the tables in the PDF reports for the years 2016 through 2018. This only yields high-level data for metro areas. It would be good if CMHC could put this data out in more easily accessible form, preferably as part of the Housing Market Information Portal.</p>
+<p>Taking a comprehensive look at the CMA level data, ordered by mean turnover rate over our six years, we see a wide spread in turnover rate across CMAs and across years.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="1200"></p>
+<p>Unsurprisingly, tight rental markets like Toronto and Vancouver come out with very low turnover rates, indicating the lack of housing choices. This is in line with data from the Canadian Housing Survey <a href="https://doodles.mountainmath.ca/blog/2021/03/29/forced-out-in-canada-new-data-from-chs/">showing a low propensity of choice moves for overall (primary and secondary market) renters in these regions</a>. This is likely amplified by long term renters benefiting from rent control, which enables choice stability but also discourages choice mobility by accumulating a <a href="https://doodles.mountainmath.ca/blog/2018/11/28/moving-penalty/">moving penalty</a> due to market rents increasing significantly faster than in-place rent-controlled rents. Provinces with more stringent rent control - at least on the books - include BC, MB, ON, QC, and PEI (<a href="https://loanscanada.ca/rent/rent-control-laws-rules-and-regulations-across-canada/">handy abbreviated guide here</a>).</p>
+<p>Of course, 2020 was a special year in this regard, with moratoria on evictions and rent freezes widespread through the early months of the pandemic. We might expect many tenants to have largely hunkered down in place. On the other hand, we might expect other tenants to have moved, following disruptions to workplace and lifestyle. Indeed, we have <a href="https://homefreesociology.com/2021/11/29/first-peek-at-population-and-household-data-during-covid-caveats/">preliminary evidence</a> that young adults moved back in with their parents during the early months of the pandemic. More recently, pandemic protections for tenants have expired at the same time that rental markets appear to have <a href="https://doodles.mountainmath.ca/blog/2022/02/18/vacancy-rates-and-rent-change-2021-update/">tightened again</a>.</p>
+<p>Looking more closely at turnover rates allows us to peek at how they’ve evolved over time, both up to and through the pandemic. Eyeballing the graph it looks like turnover rates were higher in the early years and lower later, with 2021 possibly breaking from this trend. To understand this in more detail we zoom in on several CMAs and plot the trend over time, treating 2021 separately.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="1200"></p>
+<p>Overall, trends for Calgary, Vancouver and Montreal seem largely unaffected by the pandemic, but Toronto, Halifax and Edmonton show significant recent increases in mobility. Is this evidence of recent differences in residential sorting processes across metro areas?</p>
+<p>There are several plausible factors that can impact turnover rates, ranging from physical like unit mix and location, to demographics like age and share of students, non-permanent residents and recent immigrants which tend to have higher mobility rates. Moreover, mobility rates may be impacted by the mixture of primary and secondary rental market housing stock, with people with higher mobility rates sorting into the less stable secondary market and people looking for more stability more willing to pay the premium of renting in the primary sector.</p>
+<p>That said, none of these factors seem obviously consistent with the data shown above. More work might be needed to sort out what’s going on. We should probably start by checking on how turnover data stacks up to our other measures of residential mobility for tenants.</p>
+</section>
+<section id="cross-check-with-other-data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="cross-check-with-other-data-sources">Cross check with other data sources</h2>
+<p>To better understand the primary rental apartment mobility rates we can compare them to two other data sources that (roughly) intersect our time frame, the 2016 census and the 2018 Canadian Housing Survey (CHS). We start with the census, which <a href="https://doodles.mountainmath.ca/blog/2022/05/27/residential-mobility-in-canada/">we just recently used</a> to understand overall mobility rates, and how they depend on CMA, age and tenure.</p>
+<p>Importantly, our mobility rates are constructed differently as we switch data sources. In our numerator, we shift from all new tenants moving through primary rental apartment stock within the past year to examining currently resident tenant households of similar structures (see below) who’ve moved in the last year. So the Census and the CHS capture a similar, but slightly different group of tenant households, but record no more than a single move per household. In our denominator, we shift from dividing by total primary rental apartment stock (i.e.&nbsp;including vacant apartments) to dividing by total currently resident tenant households of similar structures (i.e.&nbsp;excluding vacant apartments). In short, these are slightly different measures. But if carried out correctly, they ought to line up pretty well with one another.</p>
+<section id="census-data" class="level3">
+<h3 class="anchored" data-anchor-id="census-data">Census data</h3>
+<p>To find similar structures to those recorded as primary rental apartments in the CMHC survey, we will focus on households in non-subsidized apartment rentals that aren’t part of a condominium development. In absence of suitable cross tabulations we default to using PUMF data. Wanting to filter by dwelling type forces us to use the hierarchical PUMF, and even there we don’t have the ability to distinguish people in “duplex” apartments from non-stratified apartments that are closer to what the Rms might capture.</p>
+<p>Before we do this we want to get an overview how mobility rates depend on different types of housing.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="1200"></p>
+<p>These are pretty interesting results in their own right. They show a clear hierarchy of tenures in relation to residential mobility. It stands to reason that non-condo renter rates are somewhat higher than what the RMS finds in the purpose-built rental stock because it also includes secondary suite rentals. We can compare the data from the Census, which was held in May 2016, to the RMS data from October 2016, understanding the problem with counting secondary suites in the census data; counting possible multiple turnovers in the RMS data; and dropping tenants recorded as resident elsewhere in the Census. The census will also count renters in newly built units, which should show 100% mobility rates, whereas the RMS turnover rate will exclude those.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="1200"></p>
+<p>This shows that for Vancouver, Toronto and Montreal the census comes out with higher mobility rates while Edmonton and Calgary show lower rates compared to the RMS (Rental Market Survey). With Calgary and Edmonton showing very high mobility in the census of upward of 30%, it is quite reasonable to assume that the difference may be driven by multiple turnovers within a year, using the naive heuristic that if about one third of the units turned over at least once, then a little under one third of the units that turned over turned over more than once, with total turnover roughly matching the RMS numbers.</p>
+<p>On the other hand, the higher census mobility rates in Vancouver and Toronto may well be explained by secondary suite rentals slipping into the non-condo apartment mix. In summary, the turnover rates of the two data sources are plausibly consistent.</p>
+</section>
+<section id="chs-data" class="level3">
+<h3 class="anchored" data-anchor-id="chs-data">CHS data</h3>
+<p>Let’s take a look at the CHS data. The definitions are a little different here than in the census data: apartments don’t include secondary suites in this case and subsidized units are tied to the type of housing and can’t be cash subsidies like in the census. We also get information on whether tenancies are “arm’s length” between tenant and landlord (e.g.&nbsp;not one family member renting to another).</p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="1200"></p>
+<p>Again, we notice a strong dependence on the type of unit, but it’s less clear-cut across CMA. Three other things stand out. First it’s remarkable that in Toronto mobility in subsidized units is extraordinarily low. Second, Vancouver stands out with a high share of people moving into non-arms length rentals, which we define here as rentals not rented by “a government” or “a private company or individual”, but instead by “a relative, an employer or other”. Third, and most notable in context, overall mobility rates look quite a bit lower than what we would expect from looking at the census.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="1200"></p>
+<p>This is a bit baffling, the differences are quite large, the CHS shows implausibly low mobility rates. We can plot all three data sources on the same graph.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="1200"></p>
+<p>Again, the CHS mobility rates are implausibly low. Even though Census to CHS drops match the trend line from RMS over time, they look too low relative to those trend lines. What’s going on? It’s a mystery!</p>
+</section>
+</section>
+<section id="cross-checks-with-5-year-mobility-and-overall-mobility-rates" class="level2">
+<h2 class="anchored" data-anchor-id="cross-checks-with-5-year-mobility-and-overall-mobility-rates">Cross-checks with 5-year mobility and overall mobility rates</h2>
+<p>Let’s check in on 5-year mobility rates and cross-check with the Census. These should be less sensitive to short-term variation, and also plausibly to undersampling recent movers. Here we can even add in the just-released 2021 CHS comparison (though we can’t yet match it up to Census 2021).</p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="1200"></p>
+<p>There’s differences here, but none are especially notable, and they could be explained by sampling and/or historical variation. Census 5-year mobility rates match relatively well both with StatCan tabulated results from the CHS for both 2018 and 2021, and with the Public Use Microdata File (PUMF) results. In other words, we don’t appear to be missing or undersampling movers across the 5-year survey frame.</p>
+<p>Let’s go back to the Census to CHS comparison for 1-year mobility rates. Below we can really see just how stark the differences are between Census results and CHS.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" width="1200"></p>
+<p>Clearly there’s an issue emerging only for recent movers, those moving within the past year in the CHS data. Are they being undersampled? This seems possible… but there’s another intriguing potential explanation.</p>
+<p>Data collection for the CHS was carried out between November 2018 and March 2019. This is different from the Census, which was carried out from May through July of 2016. Is it possible that spreading data collection across two years mattered? Let’s compare questions asked.</p>
+<p>The <a href="https://www12.statcan.gc.ca/nhs-enm/2016/ref/questionnaires/questions-eng.cfm">2016 Census long-form questionnaire</a> asks about where people lived on a specific date one year or five years prior to when data collection begins (May 10th, 2015), e.g.</p>
+<p>Question identifier 22: Where did this person live 1 year ago, that is, on May 10, 2015?</p>
+<p>The <a href="https://www23.statcan.gc.ca/imdb/p3Instr.pl?Function=assembleInstr&amp;a=1&amp;&amp;lang=en&amp;Item_Id=1197668#qb119973">2018 CHS questionnaire</a> asks about most recent move.</p>
+<p>Question identifier: PAC_Q05</p>
+<p>When did you move to your current dwelling?</p>
+<p>Would you say:</p>
+<pre><code>01: Less than 1 year ago
+02: 1 year to less than 2 years ago
+03: 2 years to less than 3 years ago
+04: 3 years to less than 4 years ago
+05: 4 years to less than 5 years ago
+06: 5 years to less than 10 years ago
+07: 10 or more years ago
+08: Always lived here</code></pre>
+<p>There are at least two ways these different questions could result in different estimates of the timing of a recent move for the same person. Given that Census data collection runs from May through July, they may be picking up between 12-14 months of moving risk in their estimates of one-year mover rates. By contrast, the CHS question specifies exactly one year as its cut-off for estimating one-year mover rates. But the CHS data collection also crosses a threshold from one year to the next. This makes it entirely possible that people benchmark their move not from the time of survey, but what year they moved. So those moving in, say, June of 2018, but surveyed in February of 2019, might declare their move as occurring “1 year to less than 2 years ago” - because it occurred last year - rather than “Less than 1 year ago,” which is what we’d want them to choose to get our one-year mover rates. In short, the different questions and procedures of the Census might be systematically overestimating one-year mover rates while the CHS underestimates them.</p>
+<p>If some respondents benchmarked their responses to calendar year in the CHS instead of estimating backward in months from survey date, it could systematically push the reported timing of their last moves backward. Do we see this kind of movement in the CHS data? Since the CHS breaks down the timing of most recent move in yearly intervals, we can take a look!</p>
+<p>By way of a primer, we might expect our one-year mobility rates to remain constant for each year prior to the survey, assuming people had the same risk of moving for each year in their past. Or, more accurately given the selectivity of movers (movers tend to move more often), we might expect that mobility rates tend to be highest for the most time period, which catch the most frequent movers, then decline for moves further in the past, where frequent movers are less represented. But if enough people are benchmarking to calendar year for past moves instead of indexing by month, then our estimated mobility rates will systematically shift those people backward, growing higher if we go back further, until the effect of frequent movers takes over.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" width="1200"></p>
+<p>Sure enough, our one-year mobility rates climb the further back we go, mostly peaking somewhere in the middle. In many regions it looks like the 1-2 year mobility picks up the slack left by the 0-1 year mobility shares, providing some possible supporting evidence that there may be issues with how people benchmark their responses to the CHS timing of last move survey question. Definitely worth looking into further.</p>
+<p>Another way to look at this is to convert the data to 1-year equivalent mobility rates based on aggregate movers up to <code>\(n\)</code> years back. This attempts to account for frequent movers and is a cleaner way to view mobility rates.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" width="1200"></p>
+<p>Again we see similar patterns, and the “Less than 2 years ago” bracket looks in line with the other brackets, again suggesting that the 0-1 and 1-2 year mobility rates are impacted by how people understand the question. This is of course overplayed with possible changes in overall mobility, where e.g.&nbsp;Halifax looks fairly stable of this timeframe and some other regions showing drops in (estimated) mobility rates. We also observe a drop in the much larger range (up to 10 years ago) bracket, which likely reflects the effect of frequent movers.</p>
+<p>One takeaway from this is that maybe Canadian Housing Survey results should be “adjusted” for comparability. 1-year mobility rates using 1-year equivalent mobility rates (as per above) based on the cumulative movers in the past two years might be an acceptable proxy for actual 1-year mobility rates. We can try that out by plugging those into our previous graph comparing mobility rates over time.</p>
+<p><img src="index_files/figure-html/residential-mobility-trend-comparison-1.png" width="1200"></p>
+<p>Better! There are still noticeable differences between the sources, especially for Edmonton and Calgary which see much lower “adjusted” mobility rates in the CHS than in the RMS, but this moves us in the right direction for enabling comparisons across data sources.</p>
+</section>
+<section id="takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
+<p>Are different questions and procedures (along with trends over time) enough to account for the different estimates of one-year mobility rates between Census and CHS? Maybe. We don’t know. But returning to the CMHC’s Rental Market Survey Data we can see that its results more closely line up with the Census. And that’s part of why we’re so glad to have another source of data on mobility!</p>
+<p>Our last takeaway returns us to the trends at hand. Including turnover data, we can clearly see a pattern operating across data sources where tenant mobility in purpose-built apartments seems to be generally on the decline, with evidence of some recent bounceback. As we’ve <a href="https://homefreesociology.com/2021/03/29/forced-out-in-canada-new-data-from-chs/">noted in the past</a>, declines are only good insofar as they reflects declines in forced moves, but they’re mostly bad insofar as they reflect declines in choice moves. Protections against eviction generally increased through the pandemic, just as vacancy rates rose in many big cities. Both of which should lead to more choices. Unfortunately, these trends have since reversed in many places. That leaves our worrisome longer-term evidence of tumbling turnovers, which we’ve also seen linked to <a href="https://twitter.com/ProfDowellMyers/status/1409304130758209540">negative trends in the USA</a>. Worth keeping an eye on!</p>
+<p>As usual, the code for this post is <a href="https://github.com/mountainMath/doodles/blob/master/content/posts/2022-07-29-tumbling-turnover/index.Rmarkdown">available on GitHub</a>.</p>
+<details>
+<summary>
+Reproducibility receipt
+</summary>
+<pre><code>## [1] "2022-09-12 12:26:27 PDT"</code></pre>
+<pre><code>## Local:    master /Users/jens/Documents/R/mountaindoodles
+## Remote:   master @ origin (https://github.com/mountainMath/doodles.git)
+## Head:     [162f6c3] 2022-08-19: fix link to nathan's blog</code></pre>
+<pre><code>## R version 4.2.1 (2022-06-23)
+## Platform: aarch64-apple-darwin20 (64-bit)
+## Running under: macOS Monterey 12.5.1
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_CA.UTF-8/en_CA.UTF-8/en_CA.UTF-8/C/en_CA.UTF-8/en_CA.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] canpumf_0.1.6             mountainmathHelpers_0.1.4
+##  [3] ggblend_0.0.0.9000        cancensus_0.5.3          
+##  [5] cmhc_0.2.1                forcats_0.5.1            
+##  [7] stringr_1.4.1             dplyr_1.0.9              
+##  [9] purrr_0.3.4               readr_2.1.2              
+## [11] tidyr_1.2.0               tibble_3.1.8             
+## [13] ggplot2_3.3.6             tidyverse_1.3.2          
+## 
+## loaded via a namespace (and not attached):
+##  [1] lubridate_1.8.0     assertthat_0.2.1    digest_0.6.29      
+##  [4] utf8_1.2.2          R6_2.5.1            cellranger_1.1.0   
+##  [7] backports_1.4.1     reprex_2.0.1        evaluate_0.15      
+## [10] httr_1.4.4          blogdown_1.10       pillar_1.8.1       
+## [13] rlang_1.0.4         googlesheets4_1.0.0 readxl_1.4.0       
+## [16] rstudioapi_0.14     jquerylib_0.1.4     rmarkdown_2.14     
+## [19] googledrive_2.0.0   munsell_0.5.0       broom_1.0.0        
+## [22] compiler_4.2.1      modelr_0.1.8        xfun_0.31          
+## [25] pkgconfig_2.0.3     htmltools_0.5.3     tidyselect_1.1.2   
+## [28] bookdown_0.27       fansi_1.0.3         crayon_1.5.1       
+## [31] tzdb_0.3.0          dbplyr_2.2.1        withr_2.5.0        
+## [34] grid_4.2.1          jsonlite_1.8.0      gtable_0.3.0       
+## [37] lifecycle_1.0.1     DBI_1.1.3           git2r_0.30.1       
+## [40] magrittr_2.0.3      scales_1.2.0        cli_3.3.0          
+## [43] stringi_1.7.8       cachem_1.0.6        fs_1.5.2           
+## [46] xml2_1.3.3          bslib_0.4.0         ellipsis_0.3.2     
+## [49] generics_0.1.3      vctrs_0.4.1         tools_4.2.1        
+## [52] glue_1.6.2          hms_1.1.2           fastmap_1.1.0      
+## [55] yaml_2.3.5          colorspace_2.0-3    gargle_1.2.0       
+## [58] rvest_1.0.3         knitr_1.39          haven_2.5.0        
+## [61] sass_0.4.2</code></pre>
+</details>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2022,
+  author = {von Bergmann, Jens and Lauster, Nathan},
+  title = {Tumbling Turnover},
+  date = {2022-07-29},
+  url = {https://doodletest.netlify.app/posts/2022-07-29-tumbling-turnover},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2022" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bergmann, Jens von, and Nathan Lauster. 2022. <span>“Tumbling
+Turnover.”</span> <em>MountanDoodles</em> (blog). July 29, 2022. <a href="https://doodletest.netlify.app/posts/2022-07-29-tumbling-turnover">https://doodletest.netlify.app/posts/2022-07-29-tumbling-turnover</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/doodletest\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

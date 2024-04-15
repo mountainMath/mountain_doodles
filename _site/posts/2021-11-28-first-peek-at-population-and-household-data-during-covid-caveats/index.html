@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jens von Bergmann">
+<meta name="author" content="Nathan Lauster">
+<meta name="dcterms.date" content="2021-11-28">
+<meta name="description" content="A deeper look at population and hosehold estimates, how thes estimates are made and what early data can tell us about shifts during COVID times.">
+
+<title>Mountain Doodles - First Peek at Population and Household Data During COVID &amp; Caveats</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54516567-1', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Mountain Doodles - First Peek at Population and Household Data During COVID &amp; Caveats">
+<meta property="og:description" content="A deeper look at population and hosehold estimates, how thes estimates are made and what early data can tell us about shifts during COVID times.">
+<meta property="og:image" content="https://doodletest.netlify.app/posts/2021-11-28-first-peek-at-population-and-household-data-during-covid-caveats/index_files/figure-html/population_change_with_prelim-1.png">
+<meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="1800">
+<meta property="og:image:width" content="2400">
+<meta name="twitter:title" content="Mountain Doodles - First Peek at Population and Household Data During COVID &amp; Caveats">
+<meta name="twitter:description" content="A deeper look at population and hosehold estimates, how thes estimates are made and what early data can tell us about shifts during COVID times.">
+<meta name="twitter:image" content="https://doodletest.netlify.app/posts/2021-11-28-first-peek-at-population-and-household-data-during-covid-caveats/index_files/figure-html/population_change_with_prelim-1.png">
+<meta name="twitter:creator" content="@vb_jens">
+<meta name="twitter:image-height" content="1800">
+<meta name="twitter:image-width" content="2400">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../mm_stamp_small.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mountain Doodles</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mountainMath/mountaindoodles"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link active" href="https://twitter.com/vb_jens" aria-current="page"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vb-jens/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jens.mountainmath.ca"> <i class="bi bi-envelope-at-fill" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">First Peek at Population and Household Data During COVID &amp; Caveats</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">First Peek at Population and Household Data During COVID &amp; Caveats</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/mountainMath/mountaindoodles/blob/main/posts/2021-11-28-first-peek-at-population-and-household-data-during-covid-caveats/index.markdown"><i class="bi"></i></button></div></div>
+                  <div>
+        <div class="description">
+          A deeper look at population and hosehold estimates, how thes estimates are made and what early data can tell us about shifts during COVID times.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">cancensus</div>
+                <div class="quarto-category">cansim</div>
+                <div class="quarto-category">cmhc</div>
+                <div class="quarto-category">covid-19</div>
+                <div class="quarto-category">geeky</div>
+                <div class="quarto-category">Vancouver</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Affiliations</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Jens von Bergmann </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              MountainMath
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">Nathan Lauster </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              UBC, Department of Sociology
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 28, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><strong>Too much data, too little time</strong></p>
+</div></div>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../profile.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mountainMath" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/vb_jens" title="" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/vb-jens/" title="" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:jens.mountainmath.ca" title="" class="quarto-navigation-tool px-1" aria-label="Email"><i class="bi bi-envelope-at-fill"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Other Canadian data focused blogs:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://homefreesociology.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HomeFreeSociology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.dshkol.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dmitry Shkolnik’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.simoncoulombe.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simon Coulombe’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://financesofthenation.ca/category/commentary/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finances of the Nation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://deny.substack.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deny’s Substack</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://higheredstrategy.com/author/alex/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alex Usher’s blog</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at <a href="https://mountainmath.ca">MountainMath</a>.</p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p style="text-align:center;">
+<i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/11/29/first-peek-at-population-and-household-data-during-covid-caveats/" target="_blank">HomeFreeSociology</a>)</i>
+</p>
+<p>In this post we look at the most recent population (and household) estimates to see if we can detect any signals concerning how the COVID-19 pandemic may have impacted how (and where) we live. This is inherently tricky; lots of things changed during COVID times, including how well our normal methods of estimation work. That makes time series less reliable, even as we’re especially concerned with how conditions have changed. So in this post we attempt to pay special attention to what we can and can’t glean from the signals we’re receiving so far.</p>
+<section id="population-estimates" class="level2">
+<h2 class="anchored" data-anchor-id="population-estimates">Population estimates</h2>
+<p>Population is the most basic unit of measurement for demographic data. But how do we know how many people live in a region at a given point in time? The short answer is: we don’t know exactly how many, unless we are talking about a highly regulated environment like a prison. Population is floating, constantly in motion, moving, getting born, or dying. But we generally don’t need exact counts insofar as good estimates will work just fine for most purposes.</p>
+<p>So how do we estimate the population in a given region at a specific point in time? The simplest way is we count, and we do that every 5 years in the census. We’ll be getting estimates from 2021 soon! But even the census misses people (who are mostly asked to count themselves). And it occasionally counts people twice. Ultimately, it’s only an estimate. Which leads us to the question: how good of an estimate is it?</p>
+<section id="census-population-coverage-error" class="level3">
+<h3 class="anchored" data-anchor-id="census-population-coverage-error">Census population coverage error</h3>
+<p>By how much does the census under or over-count people? We’ve got ways to estimate that. It starts with the <a href="https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&amp;SDDS=3902">Reverse Record Check</a>. This is a post-census survey that aims to estimate over and undercoverage errors. Next the Record Check gets combined with the results from the <a href="https://www12.statcan.gc.ca/census-recensement/2016/ref/98-303/chap8-eng.cfm">Census Overcoverage Study</a> that uses census responses to find possible instances where people have been counted multiple times. Administrative data from CRA tax returns aid in this process. The result is census under and overcoverage estimates. So far undercoverage always exceeds overcoverage, and so combining the two we can get a net undercoverage estimate.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="1200"></p>
+<p>Statistics Canada works hard to get better at its job, and there have been changes in methods over time, continuously refining how to estimate these errors. Statistics Canada also breaks out reasons for overcoverage, the largest of which is that some kids live in and get reported as members of more than one household (hello dual custody!) But there are all kinds of reasons that it’s tricky to keep track of counting everyone once and only once as they move around.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="1200"></p>
+</section>
+<section id="annual-population-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="annual-population-estimates">Annual population estimates</h3>
+<p>What do we do in years when we don’t have a census? This was a major problem making it difficult to <a href="https://twitter.com/paulkrugman/status/1464683273951617024">judge the effects of the 1918 pandemic</a>; it occurred between censuses, along with a major Depression and World War. Sure would’ve been nice to have annual population estimates! Now we do. Basically, we use tax records to extrapolate forward from the census. When people file their taxes they give their address, and the T1 taxfiler data allows the count of taxfilers per census geography. Sort of… the details of assigning taxfiler address to census geographies are messy. Tax data also has information on family structure. For example, people with children may claim child benefits. This gets compiled into a richer dataset that contains information on “taxfilers and dependants”, called the T1FF taxfiler data.</p>
+</section>
+<section id="t1-and-t1ff-data" class="level3">
+<h3 class="anchored" data-anchor-id="t1-and-t1ff-data">T1 and T1FF data</h3>
+<p>In Canada everyone aged 15 and over is supposed to file a tax return. But not everyone does, and legal obligation is relaxed for those without taxes owing. The T1 and T1FF coverage <a href="https://www150.statcan.gc.ca/n1/pub/72-212-x/2021001/sect1-eng.htm">gets estimated by comparing with demographic estimates (that again use T1FF tax data) anchored around the census</a>. We can tell that over time the rate of people (of all ages) filing a tax return has increased.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="1200"></p>
+<p>Despite the rise in tax-filing, it’s worth noting that there are still a lot of people missed (a problem, for instance, in <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3822626">redesigning the CRA system to deliver benefits to those in need</a>). Once the T1 data is processed to identify children and other dependants that did not file a return, we arrive at the T1FF file.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="1200"></p>
+<p>Now we notice a slight overcoverage of children, likely reflecting multiple people filing the same children as dependants (“That’s what we get when we use this denominator”). We also notice a persistent under-coverage for other age groups, especially young adults around university age. We can also assess provincial and territorial variation in T1FF coverage, where Yukon appears the farthest off the grid administratively speaking.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="1200"></p>
+</section>
+<section id="annual-population-estimates-for-real-now" class="level3">
+<h3 class="anchored" data-anchor-id="annual-population-estimates-for-real-now">Annual population estimates (for real now)</h3>
+<p>We have seen that T1 and T1FF data give us a pretty good idea how many people live in an area, but it’s not really good enough to use that as population estimates, with the possible exception of well-claimed children. But how do we know that? What are the coverage estimates based on? This is where things get slightly tricky and might seem circular at first sight.</p>
+<p>For census years, we know how to measure the T1 and T1FF coverage by using census counts plus the census coverage estimates. To get population estimates for the in-between years we might be tempted to use the T1FF data, but instead of using the counts directly StatCan looks at the change of population in T1FF data, and estimates the population the year after the census by multiplying it with the growth rate of the T1FF population. This assumes that coverage is roughly constant in each region. Then there are a whole bunch of quality control steps that look at births, deaths, immigration and other records to round things off, using standard demographic accounting formulae (subtract deaths, add births and net immigration), but these typically happen at census district or higher level geography.</p>
+<p>The basic assumption that makes things work is that population changes gradually, and the composition of population changes slowly too. So any kind of errors in the T1FF data change slowly and divide out when looking at rates of change of T1FF data year over year. But as we get further and further out from the last census our estimates get worse. Fortunately we have a census every 5 years in Canada to anchor things again, and the StatCan population estimate time series gets updated retroactively to reflect that. We can see the echo of this in the estimates of the components of population change that contains the “Residual deviation” component, which distributes the difference of the original population estimates and the post-censual population estimates over the last 5 years. For example, by the time the 2016 census rolled around the population estimate for Metro Vancouver was 50,296 people short (an error of about 2%), so these extra people were retroactively distributed as population growth of unknown source over the five year over year growth periods between 2011 and 2016.</p>
+</section>
+</section>
+<section id="show-me-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="show-me-the-data">Show me the data</h2>
+<p>Let’s take a look at the population estimates. As we have seen, they aren’t perfect. And the smaller the areas we choose the more error-prone they become. The finest geography that StatCan publishes population estimates on is census subdivisions, i.e.&nbsp;municipalities. This data informs municipal planning. There may be some quality issues at times, but hopefully not too bad.</p>
+<p>To add some fun, StatCan just released provisional population estimates for BC municipalities for 2021 to aid with disaster response. T1FF taxfiler data for the 2020 tax year, which are used as a population growth proxy for their filing date in spring 2021, are not yet available, so this is based off of projecting forward the growth rate of 2019 tax year T1 data vs the preliminary 2020 T1 data. In effect, it’s a bit more funky than usual, but let’s throw that into the mix.</p>
+<p>To better see how the population changes over the years we compute the year over year growth rate, essentially reverse-engineering the process used to derive the population estimates in the first place (i.e.&nbsp;looking at change in tax-filers).</p>
+<p><img src="index_files/figure-html/population_change_with_prelim-1.png" width="1200"></p>
+<p>We see that for the most part population does indeed change slowly, we don’t see huge jumps year over year. However, the smaller municipalities do see rapid changes in population growth at various times. For example, Port Moody was growing fast until 2010, when the growth dropped and stayed relatively flat from 2015 on. This can be explained nicely with construction activity; completions dropped dramatically after 2009. Population growth goes <a href="https://doodles.mountainmath.ca/blog/2020/05/25/projections-and-self-fulfilling-prophecies/">where housing allows it to go</a>.</p>
+<p>The real outliers are the preliminary 2021 estimates, likely due to two reasons. First, the methods changed. Now we’re using preliminary T1 data instead of T1FF data to estimate the population change. And the other and possibly more important factor is the COVID-19 pandemic, the effects of which have not really been visible in the 2020 data. And the 2021 data is quite remarkable! City of Vancouver shows a population drop relative to 2020, while West Vancouver shows a strong increase!</p>
+<p>At this point it is good to remember that the estimates are pegged to July 1st, but derived from tax data filed (mostly) earlier in the year (generally April 30th) based upon income and household situations for the previous year (ending December 31st). Extrapolating to July 1st works reasonably well in normal years that follow predictable patterns. But that assumption is questionable during COVID times, where lots of things changed. Universities being closed and students moving back in with parents, remote work giving people more freedoms where to reside, and other factors. Even people’s propensity to file their taxes may have changed! The 2020 T1FF data probably mostly captured what happened either pre-pandemic or during the initial more static phase of the pandemic, with the full effect hitting with the 2021 T1-derived estimates. But by July 2021 many things had already changed again. Universities were preparing for in-person classes, employers were calling people back to in-person work and immigration was ramping up again. All of that will be missed in the 2021 T1 data.</p>
+<p>In short, preliminary estimates based on T1 filers suggest we’re seeing some pandemic effects, but it’s still hard to separate out the precise timing of when they occurred and how much they represent real effects versus methodological artifacts.</p>
+<p>Is there other data we can look at?</p>
+</section>
+<section id="household-estimates" class="level2">
+<h2 class="anchored" data-anchor-id="household-estimates">Household estimates</h2>
+<p>On this blog we are often interested in the intersection of people and housing. What links those to together is households. Can we also estimate households? Yes, but not as well. The <em>household economic accounts</em> gives us rough estimates at the national and the provincial level derived from an <a href="https://www150.statcan.gc.ca/n1/pub/13-607-x/2016001/858-eng.htm">interesting and complicated mix of reporting</a>. Let’s take a look. In particular, let’s see if we can glean if anything has changed in our most recent data. In this case, our most recent data is for 2020 rather than 2021. But the 2020 household accounts data likely reflects the entirety of 2020, rather than a particular moment early in the year (as seems to be the case for the population estimates). As before, one general caveat with data in COVID times is that lots of things have changed. In particular we should expect survey response bias that is different from normal years, so everything should be taken with a grain of salt.</p>
+<p>Before we get into this we need to take a closer look at what a <em>household</em> is. The answer of course is: It depends! In the census a household is simply defined as an <em>occupied dwelling unit</em>, which can further be divided into household types and give rise to <a href="https://doodles.mountainmath.ca/blog/2017/12/01/what-s-a-household/">an interesting variety of household types</a>. For the household economic accounts a <em>household</em> is defined to conform with OECD standards as</p>
+<blockquote class="blockquote">
+<p>either an individual person or a group of persons who live together under the same housing arrangement and who combine to provide themselves with food and possibly other essentials of living.</p>
+</blockquote>
+<p>This is a refinement of the census household category, for example census roommate households aren’t OECD households unless they share food and possibly other essentials of living. Thus we expect the household estimate from the household economic accounts to be higher than census households. At the same time we expect the estimate of OECD households to be lower than the number of economic families and unattached individuals as e.g.&nbsp;derived from tax data. Those would count all individuals in roommate households as separate units, and also separate out other unrelated people living in the same dwelling unit.</p>
+<p>With the basic definition cleared up, let’s look at the data. Estimates come mostly at the national level, with provincial breakdowns for household estimates. Before jumping into details let’s see how it fairs against census household counts and economic families and unattached individuals from T1FF data as a cross-check.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="1200"></p>
+<p>As expected, the households economic accounts estimate of OECD households falls between the census household estimates and the number of economic families and unattached individuals. Eyeballing it the growth rates are quite similar, which allows us to use the growth rate of one of these concepts as a proxy for the other. Let’s check how close the growth rates are when aggregated over the inter-census periods.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="1200"></p>
+<p>The correspondence is relatively good overall, with Alberta showing the largest divergence. We have at least some confidence that the concepts and estimations are fairly interchangeable when looking at growth rates. Knowing that, let’s take a more detailed look at the year over year growth rates of households form the household economic accounts.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="1200"></p>
+<p>There is quite a bit of variation in the data, probably at least partially due to noise in the survey. But generally the growth rates of households does align with census estimates, even if the level can be off by a bit. We added a trend line to smooth out some of that, and deliberately removed the last data point for 2020.</p>
+<p>The 2020 data point is dramatically lower for all provinces, and almost certainly due to COVID. Part of it may well be a change in survey response behaviour, but at least a good portion is likely real, due to net outflow of non-permanent resident workers and students, as well as students moving back in with parents or other mechanisms resulting in lower households, like singles coupling up and moving in together. This matches with observations including increased slack in the rental market, stats about lower NPRs, as well as anecdotal evidence of students moving back in with parents.</p>
+<p>Some of these effects will likely be temporary, and the rental market has tightened up again as immigration and in-migration of non-permanent residents has returned and Universities are back to in-person teaching. But some effects may prove sticky. It will be interesting to watch how the timeline continues for the next couple of years.</p>
+<p>We can also take a look at how, across Canada, households have changed by generation status of major income earner (as defined by Statistics Canada, with Gen X born between 1965 and 1980, and millennials thereafter).</p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="1200"></p>
+<p>The 2020 data points looks roughly in line for all generations except the Millennial generation. Here the Millennial generation also contains a small number of younger people that aren’t broken out separately. To judge if the 2020 data point is an anomaly or just a sign of the millennial generation peaking, just like Generation X did, we can fold in population data and convert this to household maintainer rates.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="1200"></p>
+<p>This suggests that household maintainer rates for Millennials (or younger) actually dropped a bit in 2020, which is consistent with the narrative of millennials moving back in with parents, but also an outflow of the non-permanent resident population which skews younger.</p>
+<p>We can also check on changes in household size by separating out single and multiple person households.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="1200"></p>
+<p>Multi-person households have continued to grow, whereas the number of single-person actually dropped significantly, below 2018 levels, again consistent with interpretations above.</p>
+<p>Lastly we can look at households by tenure.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="1200"></p>
+<p>Renter households have roughly flatlined over the past year, whereas owner households have grown. But we do see a shift from owner households with mortgage to owner households without a mortgage. However, the data looks quite volatile and we should be careful not to over-interpret these one-year shifts.</p>
+<section id="the-rental-market" class="level3">
+<h3 class="anchored" data-anchor-id="the-rental-market">The Rental Market</h3>
+<p>Let’s circle back to the rental market. Did it provide a foreshadowing of what we’re now observing with population data? We first got our fist systematic look at the pandemic rental market back in <a href="https://www.cmhc-schl.gc.ca/en/blog/2021/2020-rental-market-report">January of 2021</a>, based on the results of CMHC’s annual <a href="https://www.cmhc-schl.gc.ca/en/professionals/housing-markets-data-and-research/market-reports/rental-market-reports-major-centres">Rental Market Survey</a> in the field in October of 2020. By October we already saw a dramatic rise in rental vacancy rates within major Metro Areas. And the rise was most pronounced within central cities.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" width="1200"> Here we see the vacancy rate rises corresponding to population loss within central cities and young adults moving back home. In effect, it certainly looks like our rental market data was the first data in suggesting the population and household data that would arrive much later in 2021. The next round of rental market data should be coming out early in 2022, and should give us a foretaste of where we’re heading population-wise. At the same time, vacancy rates can rise due to population loss and household consolidation (as we saw in 2020) or due to increases in rental stock, which we’re hoping to see in years to come as new construction comes on-line.</p>
+</section>
+<section id="takeaway" class="level3">
+<h3 class="anchored" data-anchor-id="takeaway">Takeaway</h3>
+<p>Again, the takeaway here is suggestive of notable pandemic-related changes in population and population distribution, both geographically and within households. A consistent theme emerging is that many young adults likely moved back home during the early days of the pandemic, as seemingly reflected in preliminary population data for municipalities in 2021; and household data and rental market data for 2020. That these, our most recent data points in each case, seem to converge is useful and interesting. But that the convergence comes attached to slightly different chronologies is also notable. The question remains how much has already changed since our most recent estimates. And there we just don’t know, and probably won’t know for a little while longer. But we’ll be paying close attention to rental market data when it comes out. As we’ve noted before, those vacancy rates are a <a href="https://homefreesociology.com/2019/06/12/simple-metrics-for-deciding-if-you-have-enough-housing/">really useful metric</a>!</p>
+</section>
+</section>
+<section id="appendix" class="level2">
+<h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<p>We make the effort to make our analysis transparent, reproducible and highly adaptable by <a href="https://github.com/mountainMath/doodles/blob/master/content/posts/2021-11-28-first-peek-at-population-and-household-data-during-covid-caveats/index.Rmarkdown">publishing the code</a>. For example, someone interested in repeating parts of the analysis for a different region can simple download the code and change a line or two to point it to their region of interest. However, there are still barriers to actually doing this, from having an R installation or the rudimentary familiarity with R required to make the necessary tweaks. So we have resolved to start adding some graphs in appendices that offer a view into other relevant regions, if appropriate.</p>
+<p>For this post, looking at Metro Victoria population growth estimates and preliminary 2021 population growth offers another useful view. (StatCan only released preliminary population estimates for BC, but not for other provinces.)</p>
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" width="1200"></p>
+<p>Here we see and interesting pattern for the central city, Victoria, that looks different from Vancouver. Victoria shows a decline in population in 2020, followed by an increase in 2021, whereas the situation in Vancouver was reversed. This speaks further to the diversity of changes during COVID times, but likely also to the difficulty of measuring this. Victoria’s population <a href="https://censusmapper.ca/maps/2057?index=3#9/48.9423/-123.1924">skews older than the population in the City of Vancouver</a>, have a <a href="https://censusmapper.ca/maps/919?index=3#8/49.228/-123.085">higher share of non-permanent residents</a>, and a <a href="https://censusmapper.ca/maps/2953#9/48.8756/-123.1897">higher share of recent immigrants</a>, all factors that we would expect to shape the impact of COVID on population growth.</p>
+</section>
+<section id="update-2021-11-29" class="level2">
+<h2 class="anchored" data-anchor-id="update-2021-11-29">Update (2021-11-29)</h2>
+<p>The day after we published this post StatCan revised their 2021 preliminary population estimates for BC, one more indication that these stats need to be treated carefully. This data release was produced to aid emergency response efforts of the BC flooding, and produced with very short lead time. It is good to see StatCan rising to the challenge and push their analysis methods to meet needs like this,</p>
+<p>We have replaced data underlying the graphs above with the updated estimates, for comparison and increased transparency we include the original (and now outdated) graphs based on the first round of released data below.</p>
+<p><img src="index_files/figure-html/population_change_with_prelim-outdated-1.png" width="1200"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" width="1200"></p>
+<details>
+<summary>
+Reproducibility receipt
+</summary>
+<pre><code>## [1] "2021-11-29 09:24:04 PST"</code></pre>
+<pre><code>## Local:    master /Users/jens/Documents/R/mountaindoodles
+## Remote:   master @ origin (https://github.com/mountainMath/doodles.git)
+## Head:     [687c9d7] 2021-11-29: fix legend in T1FF graph</code></pre>
+<pre><code>## R version 4.1.2 (2021-11-01)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Big Sur 10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_CA.UTF-8/en_CA.UTF-8/en_CA.UTF-8/C/en_CA.UTF-8/en_CA.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] cmhc_0.1.0      httr_1.4.2      digest_0.6.28   cancensus_0.4.8
+##  [5] cansim_0.3.10   forcats_0.5.1   stringr_1.4.0   dplyr_1.0.7    
+##  [9] purrr_0.3.4     readr_2.1.0     tidyr_1.1.4     tibble_3.1.6   
+## [13] ggplot2_3.3.5   tidyverse_1.3.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] sass_0.4.0       bit64_4.0.5      vroom_1.5.6      jsonlite_1.7.2  
+##  [5] here_1.0.1       modelr_0.1.8     bslib_0.3.1      assertthat_0.2.1
+##  [9] highr_0.9        blob_1.2.2       cellranger_1.1.0 yaml_2.2.1      
+## [13] pillar_1.6.4     RSQLite_2.2.8    backports_1.3.0  glue_1.5.0      
+## [17] rvest_1.0.2      colorspace_2.0-2 htmltools_0.5.2  pkgconfig_2.0.3 
+## [21] broom_0.7.10     haven_2.4.3      bookdown_0.24    scales_1.1.1    
+## [25] tzdb_0.2.0       git2r_0.29.0     farver_2.1.0     generics_0.1.1  
+## [29] ellipsis_0.3.2   cachem_1.0.6     withr_2.4.2      cli_3.1.0       
+## [33] magrittr_2.0.1   crayon_1.4.2     readxl_1.3.1     memoise_2.0.0   
+## [37] evaluate_0.14    fs_1.5.0         fansi_0.5.0      xml2_1.3.2      
+## [41] blogdown_1.6     tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 
+## [45] munsell_0.5.0    reprex_2.0.1     compiler_4.1.2   jquerylib_0.1.4 
+## [49] rlang_0.4.12     grid_4.1.2       rstudioapi_0.13  labeling_0.4.2  
+## [53] rmarkdown_2.11   gtable_0.3.0     codetools_0.2-18 DBI_1.1.1       
+## [57] curl_4.3.2       R6_2.5.1         lubridate_1.8.0  knitr_1.36      
+## [61] fastmap_1.1.0    bit_4.0.4        utf8_1.2.2       rprojroot_2.0.2 
+## [65] stringi_1.7.5    parallel_4.1.2   Rcpp_1.0.7       vctrs_0.3.8     
+## [69] dbplyr_2.1.1     tidyselect_1.1.1 xfun_0.28</code></pre>
+</details>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2021,
+  author = {von Bergmann, Jens and Lauster, Nathan},
+  title = {First {Peek} at {Population} and {Household} {Data} {During}
+    {COVID} \&amp; {Caveats}},
+  date = {2021-11-28},
+  url = {https://doodletest.netlify.app/posts/2021-11-28-first-peek-at-population-and-household-data-during-covid-caveats},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2021" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bergmann, Jens von, and Nathan Lauster. 2021. <span>“First Peek at
+Population and Household Data During COVID &amp; Caveats.”</span>
+<em>MountanDoodles</em> (blog). November 28, 2021. <a href="https://doodletest.netlify.app/posts/2021-11-28-first-peek-at-population-and-household-data-during-covid-caveats">https://doodletest.netlify.app/posts/2021-11-28-first-peek-at-population-and-household-data-during-covid-caveats</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/doodletest\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

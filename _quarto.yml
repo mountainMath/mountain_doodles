@@ -1,0 +1,98 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "*.markdown"
+
+website:
+  title: "Mountain Doodles"
+  site-url: https://doodletest.netlify.app
+  repo-url: https://github.com/mountainMath/mountaindoodles
+  description: "Thoughts on housing, demographics and random things"
+  reader-mode: true
+  open-graph: true
+  twitter-card: 
+    creator: "@vb_jens"
+  navbar:
+    logo: mm_stamp_small.png
+    right:
+      - about.qmd
+      - text: Archive
+        href: archive.qmd
+      - icon: github
+        href: https://github.com/mountainMath/mountaindoodles
+        aria-label: GitHub
+      - icon: twitter
+        href: https://twitter.com/vb_jens
+        aria-label: Twitter
+      - icon: linkedin
+        href: https://www.linkedin.com/in/vb-jens/
+        aria-label: LinkedIn
+      - icon: envelope-at-fill
+        href: mailto:jens.mountainmath.ca
+        aria-label: Email
+      - icon: rss
+        href: index.xml
+        aria-label: RSS
+  sidebar:
+      style: "docked"
+      search: false
+      tools:
+      - icon: github
+        href: https://github.com/mountainMath
+        aria-label: GitHub
+      - icon: twitter
+        href: https://twitter.com/vb_jens
+        aria-label: Twitter
+      - icon: linkedin
+        href: https://www.linkedin.com/in/vb-jens/
+        aria-label: LinkedIn
+      - icon: envelope-at-fill
+        href: mailto:jens.mountainmath.ca
+        aria-label: Email
+      # title: "Mountain Doodles"
+      logo: profile.jpg
+      header: "**Too much data, too little time**"
+      footer: Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at [MountainMath](https://mountainmath.ca).
+      contents:
+        - section: "Other Canadian data focused blogs:"
+          contents:
+            - text: "HomeFreeSociology"
+              href: "https://homefreesociology.com"
+            - text: "Dmitry Shkolnik's blog"
+              href: "https://www.dshkol.com"
+            - text: "Simon Coulombe's blog"
+              href: "https://www.simoncoulombe.com"
+            - text: "Finances of the Nation"
+              href: "https://financesofthenation.ca/category/commentary/"
+            - text: "Deny’s Substack"
+              href: "https://deny.substack.com"
+            - text: "Alex Usher's blog"
+              href: "https://higheredstrategy.com/author/alex/"
+
+  google-analytics: "UA-54516567-1"
+  cookie-consent: true
+# filters:
+#   - code-filename
+
+format:
+  html:
+    theme: 
+      light: mountainmath_light.scss
+      dark: mountainmath_dark.scss
+    css: styles.css
+    page-layout: article
+    mainfont: "Roboto"
+    code-overflow: wrap
+    code-fold: true
+    code-folding: hide
+    code-summary: "Show the code"
+    code-copy: hover
+    code-tools: 
+      source: repo
+      toggle: false
+      caption: none
+    grid:
+      sidebar-width: 400px
+editor: visual
+

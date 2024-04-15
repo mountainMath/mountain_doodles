@@ -1,0 +1,15 @@
+---
+title: "Mountain Doodles"
+listing:
+  contents: posts
+  feed: true
+  sort: "date desc"
+  type: default
+  categories: cloud 
+  sort-ui: true
+  filter-ui: true
+  page-size: 10
+  fields: [image, date, title, subtitle, author, reading-time,categories,description]
+page-layout: article
+title-block-banner: false
+---

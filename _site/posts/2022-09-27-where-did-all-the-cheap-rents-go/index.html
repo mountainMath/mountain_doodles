@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jens von Bergmann">
+<meta name="author" content="Nathan Lauster">
+<meta name="dcterms.date" content="2022-09-27">
+<meta name="description" content="An investigation into the 320k “lost” units renting below $750.">
+
+<title>Mountain Doodles - Where did all the cheap rents go?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54516567-1', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Mountain Doodles - Where did all the cheap rents go?">
+<meta property="og:description" content="An investigation into the 320k “lost” units renting below $750.">
+<meta property="og:image" content="https://doodletest.netlify.app/posts/2022-09-27-where-did-all-the-cheap-rents-go/index_files/figure-html/cheap-rent-region-change-1.png">
+<meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="1800">
+<meta property="og:image:width" content="2400">
+<meta name="twitter:title" content="Mountain Doodles - Where did all the cheap rents go?">
+<meta name="twitter:description" content="An investigation into the 320k “lost” units renting below $750.">
+<meta name="twitter:image" content="https://doodletest.netlify.app/posts/2022-09-27-where-did-all-the-cheap-rents-go/index_files/figure-html/cheap-rent-region-change-1.png">
+<meta name="twitter:creator" content="@vb_jens">
+<meta name="twitter:image-height" content="1800">
+<meta name="twitter:image-width" content="2400">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../mm_stamp_small.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mountain Doodles</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mountainMath/mountaindoodles"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link active" href="https://twitter.com/vb_jens" aria-current="page"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vb-jens/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jens.mountainmath.ca"> <i class="bi bi-envelope-at-fill" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Where did all the cheap rents go?</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Where did all the cheap rents go?</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/mountainMath/mountaindoodles/blob/main/posts/2022-09-27-where-did-all-the-cheap-rents-go/index.markdown"><i class="bi"></i></button></div></div>
+                  <div>
+        <div class="description">
+          An investigation into the 320k “lost” units renting below $750.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">affordability</div>
+                <div class="quarto-category">cansim</div>
+                <div class="quarto-category">cmhc</div>
+                <div class="quarto-category">rental</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Affiliations</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Jens von Bergmann </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              MountainMath
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">Nathan Lauster </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              UBC, Department of Sociology
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 27, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><strong>Too much data, too little time</strong></p>
+</div></div>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../profile.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mountainMath" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/vb_jens" title="" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/vb-jens/" title="" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:jens.mountainmath.ca" title="" class="quarto-navigation-tool px-1" aria-label="Email"><i class="bi bi-envelope-at-fill"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Other Canadian data focused blogs:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://homefreesociology.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HomeFreeSociology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.dshkol.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dmitry Shkolnik’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.simoncoulombe.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simon Coulombe’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://financesofthenation.ca/category/commentary/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finances of the Nation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://deny.substack.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deny’s Substack</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://higheredstrategy.com/author/alex/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alex Usher’s blog</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at <a href="https://mountainmath.ca">MountainMath</a>.</p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p style="text-align:center;">
+<i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/09/28/where-did-all-the-cheap-rents-go/" target="_blank">HomeFreeSociology</a>)</i>
+</p>
+<p>It can be really useful to count things, but sometimes numbers end up causing confusion and misunderstanding rather than helping. Often this has to do with how the number is presented and attached to claims. Other times it has to do with problematic procedures used to obtain the number. Here we want to explore these problems more in detail concerning a claim that <a href="https://www.theglobeandmail.com/real-estate/vancouver/article-even-as-housing-plans-progress-truly-affordable-housing-is-being-lost/">“Canada lost 322,000 affordable homes” between 2011 and 2016</a>. This stat is generally made in reference to “private” rentals, and is contrasted to the number of non-market units built between 2011 and 2016, pegged at 60k units.</p>
+<p>At its best, the claim has been used to advocate for more non-profit housing. This is a great thing to advocate for, and something we support. At its worst, the claim has been made to look like a popular NIMBY talking point: that development of new housing, including non-profit, is directly resulting in the loss of older more affordable housing stock, resulting in worse overall affordability. While this can occur in specific cases (especially when we only allow new apartment buildings to be developed on top of old apartment buildings), as a general claim it’s wrong and misleading on multiple levels. So let’s walk through where the number is coming from and how it’s being presented.</p>
+<p>The headline number is based on <a href="https://www.focus-consult.com/why-canada-needs-a-non-market-rental-acquisition-strategy/">an estimation by Steve Pomeroy</a>:</p>
+<blockquote class="blockquote">
+<p>The erosion of “naturally occurring affordable housing” (NOAH) units is the most serious threat to Canada’s supply of affordable housing. Between 2011 and 2016 the number of private rental units affordable to households earning less than $30,000 per year (rents below $750) declined by 322,600 units — a trend that appears to be continuing.</p>
+</blockquote>
+<p>We will temporarily set aside the problematic term “naturally occurring affordable housing,” except to link to this <a href="https://cityobservatory.org/the-myth-of-naturally-occurring-affordable-housing/">critical history of the term</a> and note that left to nature, <a href="https://www.loveproperty.com/gallerylist/65542/homes-that-lost-the-fight-with-mother-nature">housing invariably decays</a> (something that can also be <a href="https://vimeo.com/151753760">observed in parts of Vancouver where zoning bylaws force unproductive land use</a>). Let’s dive into the number. In the report referenced, this stat is only broadly sourced to the 2016 Census and 2011 NHS with no indication how it was estimated. But <a href="https://pub-hamilton.escribemeetings.com/filestream.ashx?DocumentId=256198">this document outlines one way that does line up with the headline number</a>. It takes a <a href="https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/dt-td/Rp-eng.cfm?TABID=2&amp;LANG=E&amp;APATH=3&amp;DETAIL=0&amp;DIM=0&amp;FL=A&amp;FREE=0&amp;GC=0&amp;GK=0&amp;GRP=1&amp;PID=110571&amp;PRID=10&amp;PTYPE=109445&amp;S=0&amp;SHOWALL=0&amp;SUB=0&amp;Temporal=2017&amp;THEME=121&amp;VID=0&amp;VNAMEE=&amp;VNAMEF=">data table from the 2016 census that enumerates non-subsidized rental households paying below $750 in rent and utilities</a>, and a <a href="https://www12.statcan.gc.ca/nhs-enm/2011/dp-pd/dt-td/Rp-eng.cfm?LANG=E&amp;APATH=7&amp;DETAIL=0&amp;DIM=0&amp;FL=S&amp;FREE=0&amp;GC=0&amp;GID=0&amp;GK=0&amp;GRP=0&amp;PID=106661&amp;PRID=0&amp;PTYPE=105277&amp;S=0&amp;SHOWALL=0&amp;SUB=0&amp;Temporal=2013&amp;THEME=94&amp;VID=0&amp;VNAMEE=Shelter%20cost%20groups%20%2811%29&amp;VNAMEF=Tranches%20de%20coûts%20d%27habitation%20%2811%29">data table from the 2011 NHS</a> with slightly different cutoffs where the $750 cutoff was estimated by linear interpolation between the rent cutoffs in the table.</p>
+<p>Using linear interpolation assumes that shelter costs are uniformly distributed in the $600-$800 range, which is tenuous at best. Shelter costs will skew high within this band, which would under-estimate the “loss”. At the same time one has to ask why nominal shelter cost levels should be used for this instead of adjusting for inflation or income growth.</p>
+<p>Setting these questions aside, a quick cross-check with this method shows a net loss of 322,700 households in non-subsidized rental housing paying $750 or less on rent and utilities, matching the number cited in the research report (assuming the report truncated instead of rounded to the nearest 100). We will assume that this is how the number was constructed, as the estimated difference between 2011 to 2016 in households not living in subsidized housing or receiving rent subsidies paying at most $750 in rent and utilities. (If one were to adjust for inflation, using $701 as the starting rents in 2011, then the loss would amount to 103,000 households, adjusting in the other direction using $802 in 2016 this method comes out with a gain of 654,100 units, which is absurd and highlights the issue of using linear interpolation, in this case to estimate households below the $802 cutoff in the $750-$1000 band.)</p>
+<p>Now with the newest 2021 census data, we don’t need to interpolate using standard tables and can read off that between 2016 and 2021 another 230,500 fewer non-subsidized renter households were paying less than $750 in rent and utilities. So we can extend the claim forward. We can also push the claim back to 1996, although at the cost of grouping subsidized and non-subsidized rental housing and losing households with zero income in 2006 and earlier, to see a longer timeline of the number of units renting below $750.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="1200"></p>
+<p>In short, the number of tenant households in subsidized or market rental &amp; paying rents below $750 has been declining for quite some time now.</p>
+<section id="how-should-we-interpret-this-320k-statistic" class="level2">
+<h2 class="anchored" data-anchor-id="how-should-we-interpret-this-320k-statistic">How should we interpret this 320k statistic?</h2>
+<p>The research note that introduced this loss of “322,600 units” interprets it in the following way:</p>
+<blockquote class="blockquote">
+<p>These losses are driven chiefly by the financialization of rental housing – an asset class attracting investment from both large capital funds, as well as smaller investors, both seeking to capitalize on dramatically rising rents). A further contributor is the intensification and redevelopment of sites with older low-moderate rent properties.</p>
+</blockquote>
+<p>Unfortunately no argument is made to fully define or support these claims. And they’re pretty big claims involving a variety of potential processes and lots of room for confusion. Perhaps the biggest generator of confusion is that rents in Canada are generally not tied to units. Instead they’re mostly tied to rental contracts between landlords and tenant households. Here these rents are reported by tenant households. Rental contracts can provide stability and protect tenants from rent increases - especially in places like BC that have rent control. But they disappear when tenants move, resulting in turnover for units and new contracts offered to new tenants. And <a href="https://homefreesociology.com/2022/07/29/tumbling-turnover/">tenants move a lot</a>.</p>
+<p>Overall, the decline in households reporting rents below $750 generally doesn’t reflect a loss of units, but rather turnover in rental contracts. Labeling our number properly as tied to tenancies, as we attempt to do above, may help ward off a lot of confusion. When tenants move out, landlords tend to set new rents for their units. In a remarkably predictable dynamic, these <a href="https://doodles.mountainmath.ca/blog/2022/02/18/vacancy-rates-and-rent-change-2021-update/">rents go up when vacancy rates are low, and go down when vacancy rates are high</a>. Landlords setting higher rents on units that have turned over in conditions of scarcity probably explains most of the decline in rental contracts paying below $750 in rent. You could term this process “financialization” if you want to, but it’s not clear how it helps explain the underlying dynamic. “Filtering” is likely a better name for the process, reflecting how units tend to “filter down,” becoming cheaper as they age in places where housing is abundant, but can instead <a href="https://www.researchgate.net/profile/Tsur-Somerville-2/publication/239823323_Dynamics_of_the_Affordable_Housing_Stock_Microdata_Analysis_of_Filtering/links/53ea282c0cf2fb1b9b6766e3/Dynamics-of-the-Affordable-Housing-Stock-Microdata-Analysis-of-Filtering.pdf">“filter up,”</a> becoming more expensive, in places where housing is scarce.</p>
+<p>But let’s get back to the number.</p>
+</section>
+<section id="affordability" class="level2">
+<h2 class="anchored" data-anchor-id="affordability">Affordability</h2>
+<p>The stated motivation for this statistic is to understand “naturally occurring affordable housing”, and the $750 shelter cost threshold was chosen because this level is “affordable to households earning less than $30,000 per year.” This relies on the standard affordability criterion of spending no more than 30% of total income on shelter costs. The change in the number of households paying less than $750 on rent and utilities is one side of the affordability equation, the change in the humber of households earning less than $30k is the other. We could reasonably improve housing affordability either by working to keep rents low or by providing better income supports to people. So far we’ve only looked at rents, so let’s take a peek at households below $30,000 in income. In 2016 there were 128,500 fewer households in this income band than in 2011 living in non-subsidized housing. And by 2021 there were another 363,600 fewer households in that income range.</p>
+<p>Again, if we look at all renter households, including those in subsidized housing, we can extend that timeframe back to 1996 (again dropping households with zero income in 2006 or earlier) and tally up how many households had income below $30k in the year preceding each census year.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="1200"></p>
+<p>The bump between 1996 and 2001 likely reflects simple household growth through a time period when $30,000 was still a decent income, but it could also result in part from a methods change in how households and incomes were counted. Regardless, since 2001 there’s been a strong decline in tenant households reporting less than $30,000 in income. It doesn’t fully match the more steady decline in rents less than $750, and may also be complicated by recent pandemic-related income supports, which together with methods changes make income harder to track than rents, but we can see real change. In other words, the decline in households paying low rents (&lt;$750) roughly tracked the decline in households with low incomes (&lt;$30,000). Nevertheless, there remain more of the latter than the former, suggesting real rent burdens.</p>
+<p>Rather than examining changing rents and incomes in isolation, another approach is to look directly at rent burdens, i.e.&nbsp;what proportion of income is going toward rent for households with income below $30,000. Here we’ll only look at those in non-subsidized housing. We’ll also keep in mind that there’s an important lag between reporting of incomes (mostly drawn from tax records for the year prior to the Census) and rents (estimated as contemporaneous with the Census). As a result, some situations where it looks like people are paying a very high proportion of their incomes on rent may arise simply because they just graduated or moved to Canada and started a new job (with income not yet recorded) at the same time as they moved into a new place (where we get their new rent). We’ll come back to this point. But for now, keeping this caveat in mind, let’s take a look at the data!</p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="1200"></p>
+<p>Overall, the most common situation for low-income households without subsidies is to be paying 30%-50% of incomes on rent. This doesn’t leave a lot of room for other expenses. On the bright side, we can see the decline in unsubsidized households with incomes below $30k, and we can also see that the low-income households remaining in 2021 are less and less likely to be paying more than half their income in rent, continuing a pattern of decline observable since 2011. So from that perspective, that’s an improvement. But we shouldn’t overstate it. Overall, looked at distributionally, little has changed concerning the rent burden for those households making under $30,000.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="1200"></p>
+<p>The relative lack of movement in this metric fits pretty well with the observable decline in both the number of households paying less than $750 in rent and the number of households making less than $30,000 in annual income. We’d like to see more improvement, but it’s not clear that things are getting noticeably worse.</p>
+</section>
+<section id="the-geography-of-cheap-rent" class="level2">
+<h2 class="anchored" data-anchor-id="the-geography-of-cheap-rent">The Geography of Cheap Rent</h2>
+<p>Let’s take a look at the geography of cheap rent. Where are the tenant households with shelter cost below $750, and where are we seeing the most losses of these kinds of rental contracts? We can pull this data from the cross tabulation we have used above. To reduce clutter we will break out the 20 biggest Metro Areas (CMAs) in Canada, and lump everything else together.</p>
+<p><img src="index_files/figure-html/cheap-rent-region-1.png" width="1200"></p>
+<p>We see that cheap rent is most common outside of Metropolitan Canada (as represented by the top 20 CMAs), though Montréal also still retains a lot of tenant households paying less than $750 in rent. Correspondingly, Montréal and more rural parts of Canada are also where we’ve seen the biggest recent declines in low-rent households. Strange, then, that the focus on <a href="https://www.theglobeandmail.com/real-estate/vancouver/article-even-as-housing-plans-progress-truly-affordable-housing-is-being-lost/">reporting</a> about these losses often shifts to Vancouver or Toronto, where there are very few such rental contracts remaining. This speaks to a broader problem with the potential for any headline number for Canada to mislead insofar as it combines data from very different housing markets across the country.</p>
+<p>We can look at this more directly by showing the loss of renter households with shelter cost less that $750 in each region and inter-census period.</p>
+<p><img src="index_files/figure-html/cheap-rent-region-change-1.png" width="1200"></p>
+<p>This again highlights that most of the losses were in Montréal and regions outside of the main metro areas. The number of households with shelter cost below $750 in Calgary and Edmonton increasing 2016-2021 shows that this isn’t necessarily a one-way street. Units renting below $750 at any given point in time aren’t separate from the rest of the housing market, and their asking rents can go up or down depending upon what’s going on elsewhere in the market.</p>
+</section>
+<section id="further-exploration-into-low-rent" class="level2">
+<h2 class="anchored" data-anchor-id="further-exploration-into-low-rent">Further exploration into Low Rent</h2>
+<p>Let’s dig a little deeper, drawing upon public use micro file (PUMF) data. Unfortunately this hasn’t been released yet for the 2021 Census, so we’ll only be able to look at 2011 and 2016 data, coming from the long-form NHS and Census samples. For 2016, these samples come in both individual and hierarchical form (including complete households), and we’ll include both here for reference. Using PUMF data adds uncertainty due to lower sample size, but adds much greater flexibility. First let’s look at a simple distribution of what rents those paying less than $750 a month are paying for each sample.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="1200"></p>
+<p>We can see that most rents are (perhaps not surprisingly) at the upper end of the distribution, with $700 a month being the most common. This suggests that there’s nothing intrinsically separating market housing renting under $750 from the rest of the housing market. There’s nothing “natural” about its affordability except that its on the low end of the overall distribution of rents. As the overall distribution shifts rightward, its affordable tail at the left end gets smaller and smaller.</p>
+<p>Other noticeable issues include the difference in results when using the individuals vs the hierarchical PUMF data, with only minimal overlap in the confidence intervals. This is a good reminder of the inherent difficulties when working with PUMF data. Another interesting observation is that renters renting below $300 have increased 2011-2016. These are likely non-arms length rentals, which we’ve yet to discuss another issue complicating analysis. <a href="https://doodles.mountainmath.ca/blog/2021/08/13/commodity-and-keeping-it-in-the-family/">Not all of these “market rentals” actually represent market processes.</a></p>
+<p>Let’s use our flexibility to break down tenancies with rents below $750 by age of primary household maintainer.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="1200"></p>
+<p>The zigzag (or double hump) pattern here is fascinating, with concentrations in both the early Millennial (born 1986-1991) and late Boomer (born 1956-1966). This may reflect simple demographics (these were larger cohorts than the intervening Gen Xers), but may also be picking up on other patterns, with variation in both quality and geographic distribution of low rent tenancies by age (keeping in mind that most of these renters are in more rural parts of Canada and bigger metros in Quebec). We’ll circle back to look at these patterns in a moment, but first let’s take a look at what was renting for less than $750 in 2016 by number of bedrooms.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="1200"></p>
+<p>No surprise, mostly 1BR and 2BR dwellings. We can also look at the type of dwelling households paying less than $750 in rent tend to live in.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="1200"></p>
+<p>The vast majority of low rent situations seem to involve non-condo apartments, representing both purpose-built rental buildings and secondary suites in homes. Once again, it’s worth keeping in mind that these are mostly showing up in Quebec and more rural parts of Canada.</p>
+<p>Checking by period of construction of the building we see that most of these households live in buildings constructed between 1946 and 1980 or 1990.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="1200"></p>
+<p>Most low rent situations involve older buildings. But this age distribution also generally fits the age-distribution of our purpose-built rental stock in Canada, largely constructed during a mid-Twentieth Century build-out prior to the rise of the condominium (where we see far fewer being rented out at below $750). Aging stock is also more likely to be in poor condition, drawing a clear connection between rents and quality of housing. A fair amount of preventive maintenance is needed to keep old buildings habitable, and the more they fall into disrepair, the cheaper their rents tend to go relative to surrounding alternatives. There’s nothing “natural” about keeping older housing inhabitable.</p>
+</section>
+<section id="time-lag-bias-in-shelter-cost-to-income-ratios" class="level2">
+<h2 class="anchored" data-anchor-id="time-lag-bias-in-shelter-cost-to-income-ratios">Time Lag Bias in Shelter Cost to Income Ratios</h2>
+<p>Let’s exploit the flexibility of our microdata to return to our exploration of those on the other side of the low rent affordability issue: households with incomes below $30k. As we noted before, some of the particularly high ratios, where it seems like tenants are paying extraordinary portions of their incomes on rents, may be accounted for by time lags between reporting incomes and rents. This can especially be an issue for recent immigrants and new graduates who might have landed both a good job and new apartment prior to the census, but lack income records from the year prior to the census. We can help account for this by pulling out recent movers (those moving in the last year). What do their shelter cost to income ratios look like if we actually separate non-movers from recent movers?</p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="1200"></p>
+<p>We can see that when we separate them out, non-movers in the past year with low household incomes (&lt;$30,000) reported for the year prior are mostly concentrated in the range of those paying between 30% to 50% of their income on rent. By contrast, the highest category for movers with low incomes is those paying 100% or more of their income on rent. This likely reflects the lag effect, where movers current incomes (at least within Canada) are likely much higher when they fill out Census forms about their rents, than in the year prior, when the Census attempts to assign their income.</p>
+<p>Computing the ratio of households that moved in the past year for each shelter cost to income band makes this relationship even more clear. The time lag between reported incomes and reported rents likely produces a real upward bias in shelter cost to income ratios. We can partly account for this bias by separating out mobility, but it’s imperfect, and analysts drawing upon this metric - including for the construction of <a href="https://www.cmhc-schl.gc.ca/en/professionals/housing-markets-data-and-research/housing-research/core-housing-need">Core Housing Needs measures</a>! - should really keep this bias in mind.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="1200"></p>
+</section>
+<section id="rents-in-the-primary-rental-market" class="level2">
+<h2 class="anchored" data-anchor-id="rents-in-the-primary-rental-market">Rents in the Primary Rental Market</h2>
+<p>Let’s draw in one more source of data to keep triangulating our exploration of low rents. In particular, let’s look at the primary rental market. This gets surveyed annually by CMHC through their <a href="https://www.cmhc-schl.gc.ca/en/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables">Rental Market Survey (RMS)</a> and looking at rent bands by quartile gives some indication how this market has changed. Deeper access to CMHC data could answer the question how rent has changed in individual buildings, and how many of these have gotten torn down or received deep renovations. But publicly available data can give a broad overview.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" width="1200"></p>
+<p>Our broadest overview of the primary rental market shows that the percentile bands of rent levels have continuously increased between 2006 and 2021. If we assume that the rents are evenly distributed between these 25th and 50th percentile we can estimate what share of the rental stock rented below $750 in 2011 and 2016, and folding in data on the total stock of purpose built rental housing we can estimate the loss of such units.</p>
+<p>This method gives a rough estimate of 125,500 fewer primary market rental units in 2016 renting below $750 compared to 2011. This is based on rent, which may include some utilities, but generally not all of them, so it’s a slightly different estimate than what we used above.</p>
+<p>In the purpose-built market the RMS estimated a total of around 842,864 units renting below $750 in 2011, compared to the census estimate of 1,408,306 households with shelter cost below $750 in 2011. As we noted those two aren’t directly comparable because the RMS rent does not include all utilities, but also because the RMS coverage has gaps outside of census metropolitan areas. But it’s probably fair to say that somewhere between half to maybe 60% of all households with shelter cost below $750 were renting in the primary market. Adding to that that some of the households with shelter cost below $750 were in non-arms length rentals, understanding what happened in the primary market can probably provide good context.</p>
+<p>As noted above, housing markets are decidedly regional, so it might be useful to see how this pans out across different metropolitan areas.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" width="1200"></p>
+<p>Matching our census-based analysis, the RMS data shows that Montréal has a high share of purpose-built rental units renting below $750 both in 2011 and 2016, whereas e.g.&nbsp;Toronto doesn’t. We can also see that in Winnipeg and Halifax about half of the units were renting below $750 in 2011, dropping to 25% in 2016 and likely very few left by 2021, whereas in Montréal about 75% of units were renting below $750 in 2011, with still a little over 50% renting below that cutoff in 2016 and over a quarter in 2021.</p>
+<p>But how should one interpret this? That’s where things get tricky. RMS data alone does not answer why there are fewer units below this rent cutoff over the years. Or across metro areas. There are many different processes at play, from the location and state of repair/quality of rental units to the bedroom mix and size of units, and overall market conditions with scarcity disrupting filtering processes. But there’s no “natural” cut-off between apartments renting below $750 and the rest of the rental market. Instead, we can see that different price points in the distribution of rental contracts tend to move up and down together. In other words, we don’t see strong segmentation of the rental market, and instead see evidence of upward and downward filtering at work. So where there’s high demand, halting the addition of new apartments will place increased price pressure on old apartments, shifting their rents further upward.</p>
+<p>Analyzing this in more detail unfortunately goes beyond the scope of this post, but we do want to quickly highlight how bedroom mix and change in overall purpose-built rental units vary across metro areas.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" width="1200"></p>
+<p>Montreal and Québec have a relatively high share of of 2 and 3 bedroom units, which makes their high share of units renting below $750 even more impressive. They also have a high share of overall purpose-built rental units in their CMAs, and they have been adding on that over the years. Toronto and Vancouver, on the other hand, have been relatively flat in their overall stock of purpose-built rental units due to a mixture of modest additions and some loss due to conversion and demolitions.</p>
+<p>To round this off we can narrow down to look specifically at the rent distribution of 2-bedroom purpose-built rental units across metro regions.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" width="1200"></p>
+<p>Only Montréal has a good share of their 2-bedroom purpose-built rental units renting below $750, with a little over 25% of them still renting below that cutoff in 2021. In Toronto and Vancouver 2-bedroom apartments renting below $750 have been exceedingly rare since at least 2006.</p>
+</section>
+<section id="takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
+<p>What happens in the cheaper portions of the housing market is really important, demonstrating where the greatest risk of homelessness lies, and where the greatest need for non-market housing can be found. The headline number of 322,000 “lost units” renting below $750 calls useful attention to this portion of the housing market, but unfortunately it’s often misleading on multiple levels. To review just a few of the ways it can mislead:</p>
+<ul>
+<li>The statistic is mostly about changes in contracts between tenants and landlords, specifying rents below $750, and is not generally otherwise tied to units of housing</li>
+<li>The statistic refers to shelter cost of households, rather than referring directly to rents.</li>
+<li>The $750 figure is nominal dollars, not adjusted for inflation or for growth in incomes.</li>
+<li>Without consideration of incomes, the stat says little about change in affordability.</li>
+<li>Interpretations frequently advanced to explain the “loss” don’t hold up, there is no indication that this losses in rental contracts below $750 are driven by REITs or by demolitions of old rental buildings.</li>
+</ul>
+<p>The much more immediate interpretation is that scarcity is driving up rents, leading to older units filtering up. This leads to the opposite implications of common NIMBY talking points that old housing is “naturally” affordable. It’s only affordable if enough new housing is built to soak up demand that would otherwise draw up the lower portions of the housing market into higher overall rents.</p>
+<p>Additionally, using nominal rents is not very useful. We could adjust for inflation to (crudely) account for increased costs to build and operate rental buildings. Or adjust for income growth to account for people’s ability to pay. Instead of focusing on rent or shelter costs we should probably focus on affordability, as measured by shelter cost to income ratios. When looking at the impacts of “financialization” and/or REITs on the rental market we need to do better to support our arguments with data. (We will discuss this more in a separate post.)</p>
+<p>Non of this negates the dire need we have for more housing. The need to dramatically expand our non-market housing options was already clear in 2011, and it is still urgently needed in 2021. Acquiring old purpose-built rental housing is a fine stop-gap strategy to assist in stabilizing rents for current tenants, but by itself the strategy does little to add badly needed housing stock and often comes with outsized maintenance costs and accessibility concerns. We can and should build a lot more new non-market housing. We also need a dramatic expansion of our market housing, especially in high-demand areas, to slow or even reverse the growth in rents and prices beyond the increases in construction costs. Housing abundance, distributed both within and outside of market processes, probably offers our best shot at finding more cheap rent.</p>
+<p>As usual, the code for this post is <a href="https://github.com/mountainMath/doodles/blob/master/content/posts/2022-09-27-where-did-all-the-cheap-rents-go/index.Rmarkdown">available on GitHub</a>.</p>
+<details>
+<summary>
+Reproducibility receipt
+</summary>
+<pre><code>## [1] "2022-10-01 11:44:19 PDT"</code></pre>
+<pre><code>## Local:    master /Users/jens/Documents/R/mountaindoodles
+## Remote:   master @ origin (https://github.com/mountainMath/doodles.git)
+## Head:     [63c0f3b] 2022-10-01: fix authors</code></pre>
+<pre><code>## R version 4.2.1 (2022-06-23)
+## Platform: aarch64-apple-darwin20 (64-bit)
+## Running under: macOS Monterey 12.6
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_CA.UTF-8/en_CA.UTF-8/en_CA.UTF-8/C/en_CA.UTF-8/en_CA.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] cancensus_0.5.3           cansim_0.3.12            
+##  [3] cmhc_0.2.3                mountainmathHelpers_0.1.4
+##  [5] statcanXtabs_0.1.2        forcats_0.5.1            
+##  [7] stringr_1.4.1             dplyr_1.0.9              
+##  [9] purrr_0.3.4               readr_2.1.2              
+## [11] tidyr_1.2.0               tibble_3.1.8             
+## [13] ggplot2_3.3.6             tidyverse_1.3.2          
+## 
+## loaded via a namespace (and not attached):
+##  [1] lubridate_1.8.0     assertthat_0.2.1    digest_0.6.29      
+##  [4] utf8_1.2.2          R6_2.5.1            cellranger_1.1.0   
+##  [7] backports_1.4.1     reprex_2.0.1        evaluate_0.15      
+## [10] httr_1.4.4          blogdown_1.10       pillar_1.8.1       
+## [13] rlang_1.0.5         googlesheets4_1.0.0 readxl_1.4.0       
+## [16] rstudioapi_0.14     jquerylib_0.1.4     rmarkdown_2.14     
+## [19] googledrive_2.0.0   munsell_0.5.0       broom_1.0.0        
+## [22] compiler_4.2.1      modelr_0.1.8        xfun_0.33          
+## [25] pkgconfig_2.0.3     htmltools_0.5.3     tidyselect_1.1.2   
+## [28] bookdown_0.27       fansi_1.0.3         crayon_1.5.1       
+## [31] tzdb_0.3.0          dbplyr_2.2.1        withr_2.5.0        
+## [34] grid_4.2.1          jsonlite_1.8.0      gtable_0.3.1       
+## [37] lifecycle_1.0.2     DBI_1.1.3           git2r_0.30.1       
+## [40] magrittr_2.0.3      scales_1.2.1        cli_3.4.0          
+## [43] stringi_1.7.8       cachem_1.0.6        fs_1.5.2           
+## [46] xml2_1.3.3          bslib_0.4.0         ellipsis_0.3.2     
+## [49] generics_0.1.3      vctrs_0.4.1         tools_4.2.1        
+## [52] glue_1.6.2          hms_1.1.2           fastmap_1.1.0      
+## [55] yaml_2.3.5          colorspace_2.0-3    gargle_1.2.0       
+## [58] rvest_1.0.3         knitr_1.39          haven_2.5.0        
+## [61] sass_0.4.2</code></pre>
+</details>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2022,
+  author = {von Bergmann, Jens and Lauster, Nathan},
+  title = {Where Did All the Cheap Rents Go?},
+  date = {2022-09-27},
+  url = {https://doodletest.netlify.app/posts/2022-09-27-where-did-all-the-cheap-rents-go},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2022" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bergmann, Jens von, and Nathan Lauster. 2022. <span>“Where Did All the
+Cheap Rents Go?”</span> <em>MountanDoodles</em> (blog). September 27,
+2022. <a href="https://doodletest.netlify.app/posts/2022-09-27-where-did-all-the-cheap-rents-go">https://doodletest.netlify.app/posts/2022-09-27-where-did-all-the-cheap-rents-go</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/doodletest\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

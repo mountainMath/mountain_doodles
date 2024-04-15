@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jens von Bergmann">
+<meta name="dcterms.date" content="2018-10-28">
+<meta name="description" content="Some thoughts on income distributions and labelling neighbrourhoods as low, middle, or high income: Most of our neighbourhoods are neither, they are truely mixed-income.">
+
+<title>Mountain Doodles - Understanding income distributions across geographies and time</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54516567-1', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Mountain Doodles - Understanding income distributions across geographies and time">
+<meta property="og:description" content="Some thoughts on income distributions and labelling neighbrourhoods as low, middle, or high income: Most of our neighbourhoods are neither, they are truely mixed-income.">
+<meta property="og:image" content="https://doodletest.netlify.app/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time/index_files/figure-html/vancouver_income_map-1.png">
+<meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1536">
+<meta name="twitter:title" content="Mountain Doodles - Understanding income distributions across geographies and time">
+<meta name="twitter:description" content="Some thoughts on income distributions and labelling neighbrourhoods as low, middle, or high income: Most of our neighbourhoods are neither, they are truely mixed-income.">
+<meta name="twitter:image" content="https://doodletest.netlify.app/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time/index_files/figure-html/vancouver_income_map-1.png">
+<meta name="twitter:creator" content="@vb_jens">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1536">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../mm_stamp_small.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mountain Doodles</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mountainMath/mountaindoodles"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link active" href="https://twitter.com/vb_jens" aria-current="page"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vb-jens/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jens.mountainmath.ca"> <i class="bi bi-envelope-at-fill" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Understanding income distributions across geographies and time</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Understanding income distributions across geographies and time</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/mountainMath/mountaindoodles/blob/main/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time/index.markdown"><i class="bi"></i></button></div></div>
+                  <div>
+        <div class="description">
+          Some thoughts on income distributions and labelling neighbrourhoods as low, middle, or high income: Most of our neighbourhoods are neither, they are truely mixed-income.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">cancensus</div>
+                <div class="quarto-category">CensusMapper</div>
+                <div class="quarto-category">cansim</div>
+                <div class="quarto-category">Vancouver</div>
+                <div class="quarto-category">Toronto</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Jens von Bergmann </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 28, 2018</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><strong>Too much data, too little time</strong></p>
+</div></div>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../profile.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mountainMath" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/vb_jens" title="" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/vb-jens/" title="" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:jens.mountainmath.ca" title="" class="quarto-navigation-tool px-1" aria-label="Email"><i class="bi bi-envelope-at-fill"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Other Canadian data focused blogs:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://homefreesociology.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HomeFreeSociology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.dshkol.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dmitry Shkolnik’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.simoncoulombe.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simon Coulombe’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://financesofthenation.ca/category/commentary/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finances of the Nation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://deny.substack.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deny’s Substack</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://higheredstrategy.com/author/alex/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alex Usher’s blog</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at <a href="https://mountainmath.ca">MountainMath</a>.</p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>When trying to understand the income makeup of regions in Canada we need to take the income distribution and simplify in a way that is accessible. This is no easy task. Simplification is an essential part of this, but we need to take care not to over-simplify but instead still retain the essential parts.</p>
+<section id="how-to-measure-income" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-measure-income">How to measure income?</h2>
+<p>To start we have to select an income measure. Partially this is constrained by data availability, but there are choices. If we are interested in the income distribution for large geographic areas we can consult annual tax filer data. There are a couple of choices we need to make.</p>
+<p>Most income data, including in the newest census, comes down to CRA tax filer data. It is available from the CRA or CANSIM on an annual basis for broad geographies and a few demographic indicators. Census data is available every 5 years on fine geographies and rich demographic indicators. With frequency and geography having a major impact on our choices, let’s see what we can get from both of these sources.</p>
+<section id="cansimcra-data" class="level3">
+<h3 class="anchored" data-anchor-id="cansimcra-data">CANSIM/CRA data</h3>
+<p>Individual income is recorded for all tax filers, so most people above the age of 14. It counts the teenager with their paper-run income at the same time as the full-time full-year income earner. Lumping these two groups together can lead to very misleading information. One way around this is to look at “family income” (e.g.&nbsp;CANSIM 11-10-0012), and maybe focusing on couple-family incomes only as they are less prone to compositional problems. We can further filter by age group to exclude (or focus on) senior households or households below 25 years old at the very start of their careers.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="768"></p>
+<p>Here we used a composite link model assuming an underlying Poisson distribution to estimate a continuous income distribution from discrete bins.</p>
+<p>Some CANSIM data is inflation adjusted, but finer income bands are generally not. Including in the source we chose, so we adjusted the incomes manually to 2016 dollars using Canadian CPI. There may be a case for using metro-specific CPIs. The graphs show clearly how the distributions shift upward in real terms over time.</p>
+<p>It helps to view different geographies in relation to one another, so here is a view that emphasizes this comparison.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="768"></p>
+<p>We can see how Calgary, and to a lesser extent Toronto, have fairly fat tails of high income earners. Comparing Vancouver to Toronto we see how Vancouver’s tail has fattened up quite a bit, although it is still not at Toronto levels. At the same time, Vancouver’s main mode used to be lower than Toronto’s, but it came out higher in 2016.</p>
+<p>Another interesting data source is CANIM tables 11-10-0193, which looks at <em>adjusted</em> income deciles and 11-10-0192, which looks at family income deciles by economic family type. Just like the above data, these offer consistent time series, but are only available at the Provincial and not the metropolitan area geography. Here is an example of an <a href="https://beta.observablehq.com/@mountainmath/british-columnbia-adjusted-after-tax-family-income">observable notebook visualizing average adjusted after-tax income by decile for BC over time</a>.</p>
+</section>
+</section>
+<section id="census" class="level2">
+<h2 class="anchored" data-anchor-id="census">Census</h2>
+<p>The census comes with several income distributions out of the box, others can be obtained from custom tabulations or micro data. Standard census profile tables are individual total and after-tax income distribution, household total and after-tax income distribution and adjusted after-tax family income distribution. Further we have custom tabulations available at the metropolitan level that look at a wide variety of income distributions.</p>
+<section id="adjusted-after-tax-family-income" class="level3">
+<h3 class="anchored" data-anchor-id="adjusted-after-tax-family-income">Adjusted (after-tax) family income</h3>
+<p>Adjusted after-tax family income probably gives the simplest way to compare income data across time and geographies. After-tax income measures how much income people have available after taxes and government transfers, and thus also accounts for differences in provincial taxes and benefits. Adjusted means that it’s scaled by (the square root of) the number of people in the family unit. It does not lump roommates into the same category like household income does, but treats each non-family unit on it’s own. And the census is much better in telling apart families than the CRA-based CANSIM data that we mentioned above. The concept also does not suffer as much from compositional issues, where for example median household income in the City of Vancouver is lower than that in the City of Toronto <a href="https://doodles.mountainmath.ca/blog/2017/11/01/medians/">solely because Vancouver has a higher share of 1-person households</a>, which leads to the popular misconception that median incomes in the City of Toronto are higher than in the City of Vancouver. One still has to be aware of confounders like a high share of university students, or retired people, in an area, which may make interpreting low-income results difficult.</p>
+<p>Moreover, the unit of adjusted family income is people, not households or family units, which makes the data very comparable. The data comes grouped into income deciles, based on the national distribution, which makes it easy to compare nation wide, as well as relative changes across time.</p>
+<p>The advantage of using census data is that we have it for small geographies and can explore spatial variations. Standard census releases have this data since 2011, although 2011 income data, especially when mixed with demographic data, becomes somewhat suspect due to the voluntary NHS. We have <a href="https://doodles.mountainmath.ca/blog/2017/09/29/a-retrospective-look-at-nhs-income-data/">written about this before</a> and generally the NHS income data has gotten a worse reputation than it deserves, with critics often not properly understanding the post-processing of income data by StatCan, and running afoul the ecological fallacy when trying to pinpoint biases. 2016 income data on the other hand has been automatically linked from tax returns to the vast majority of census respondents, which, together with post-processing, allows us to have fairly high confidence in data quality even at dissemination area geographies. We should still treat individual areas with some caution as one must expect a few outliers based on sampling and matching issues.</p>
+<p>To get an idea how this works, here are the distributions of adjusted after-tax family income by deciles for the four most populous CMAs in Canada.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
+<p>We see that in Calgary the share of the population in Canada’s top two income deciles is about the same as the share in the top three income deciles in Toronto and Vancouver, and the top 4 income deciles in Montréal. Similarly, the share of the population in the bottom four or five income deciles in Calgary is about the same as the share in the bottom three deciles in the other three metropolitan areas.</p>
+</section>
+<section id="mapping-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="mapping-distributions">Mapping distributions</h3>
+<p>For mapping purposes we need to find a way to code distributions. Medians or averages are simple, but often over-simplify the problem to the extent that the graphical representation can become meaningless. Take average income, there is no way to distinguish a bi-modal distribution where almost nobody earns the average income from a distribution that is tightly bunched around the average income. That’s why I have a hard time extracting meaningful information from <a href="http://neighbourhoodchange.ca/homepage/vancouver-1970-2015/">labelling a region as “middle income” using the average individual income</a>, especially when using individual income that is heavily confounded by demographics.</p>
+<p>What are alternative ways to label neighbourhoods? At CensusMapper we have been a fan of tri-colour mixing to to show relative sizes of a distribution partitioned into three brackets. For <a href="https://censusmapper.ca/maps/1010">adjusted family income</a> we partition the data into top 30%, middle 40% and bottom 30% of the Canadian adjusted after-tax family income distribution and map this Canada-wide at all census geographies. Recently <a href="https://twitter.com/jschoeley">Jonas Schöley</a> built a nice R package that uses a similar approach, but allows for better colour choices with the legend pulling double-duty as a scatter plot.</p>
+<p>We could proceed and use the same methods as in CensusMapper and map relative sizes of the Canadian adjusted family income distribution. But as we have seen above, the income distribution can vary greatly between CMAs. If we are interested in concepts like income segregation within a CMA, we should choose our groups relative to the CMA-specific income distribution for each CMA instead of using the Canada-wide distribution.</p>
+<p>This gets a little more complex than just aggregating up deciles, but nothing that can’t be easily dealt with in a couple of lines of code.</p>
+<p>To understand income segregation within a metropolitan area we bin people into the bottom 30%, middle 40% and top 30% of the adjusted family income distribution, where the percentile cutoffs are chosen relative to the overall CMA income distribution (and not the overall Canadian distribution like we did on CensusMapper). This requires a bit of estimation, but we expect the estimates to be quite robust for our purposes. <a href="https://github.com/mountainMath/doodles/blob/master/content/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time.Rmarkdown">Check the code</a> if you are interested in the details. In this approach we are not bound to deciles any more and could have chosen other cutoffs, for example bottom third, middle third and top third, but we felt that having a little fatter middle income group probably more accurately reflects the common understanding of what it means to be in the bottom, middle or top portion of the income distribution.</p>
+<p>To label geographies, we choose to condense the data into 4 distinct labels. If at least 50% of the population falls into one of our three incomes groups, high, middle, or low, we label the geography as high, middle, or low, respectively. If not, we label the area as “mixed income”.</p>
+</section>
+</section>
+<section id="vancouver" class="level2">
+<h2 class="anchored" data-anchor-id="vancouver">Vancouver</h2>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
+<p>Vancouver distinguishes itself as being mostly “mixed income”, with some high-income areas in the low-density parts of the North Shore and a cluster of middle-income ares in Surrey. Among our four CMAs, it’s the one with the lowest share of areas dominated by low-income people.</p>
+</section>
+<section id="toronto" class="level2">
+<h2 class="anchored" data-anchor-id="toronto">Toronto</h2>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
+<p>Toronto paints a different picture. It’s still dominated by mixed-income neighbourhoods, but less so than Vancouver. It has about double the share of low, middle and high income areas compared to Vancouver, so is overall much more segregated. And it has the highest share of areas dominated by middle income people among our four CMAs.</p>
+</section>
+<section id="montréal" class="level2">
+<h2 class="anchored" data-anchor-id="montréal">Montréal</h2>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
+<p>Montréal has the highest share of predominantly low-income areas, although not by a large margin. If we had based this on the overall Canadian income distribution and not rescaled the income bins relative to the overall metropolitan area of Montréal, we would see a pattern dominated by “middle income” areas, with about 1 in 5 areas with over half the population in the middle 40% of the Canadian adjusted after-tax family income distribution.</p>
+</section>
+<section id="calgary" class="level2">
+<h2 class="anchored" data-anchor-id="calgary">Calgary</h2>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="768"></p>
+<p>Even after rescaling to the overall Calgary income distribution, Calgary still has the highest share of areas dominated by high-income people. It also has the lowest share of areas dominated by middle-income people.</p>
+<p>Had we used the overall Canadian income distribution to bin our categories, Calgary would show two in five areas dominated by high-income people and almost no areas that are predominantly low-income.</p>
+<p>To compare the amount of income segregation across regions we can plot the share of labels on a common graph.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="768"></p>
+<p>This shows that the differences between these regions on our scale are not large, but Vancouver stands out as a mostly mixed-income CMA.</p>
+<p>We can also try to understand how the segregated labels are distribution among municipalities within a CMA. As an example, we look at Vancouver.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="768"></p>
+<p>This confirms that most of the regions predominantly middle-income areas are located in Surrey, and the District of North Vancouver picking up the most predominantly high-income areas, and labelling 12 out of it’s 19 census tracks as such.</p>
+</section>
+<section id="refinements" class="level2">
+<h2 class="anchored" data-anchor-id="refinements">Refinements</h2>
+<p>There is a number of way how we could refine this. A key aspect of data visualization is to simplify the data in just the right way. Removing non-essential nuance and focusing on the essential parts. We could look at other ways to slice the income distribution, maybe using different percentile cutoffs, or using more than just three categories.</p>
+<p>Another way is to refine our “neighbourhoods”, census tracts in the above case. We could use dissemination areas for finer grained neighbourhoods to understand segregation at that level. With income now being part of the 100% data of the census this makes sense for the first time with the 2016 census.</p>
+<p>A third way is to add more labels. Especially in the “mixed” income areas, may want to distinguish if a mixed income neighbourhood is tending toward being a high income or a low income neighbourhood.</p>
+<p>As an example, we will re-run the analysis for dissemination areas with more labels, but focusing in on the City of Vancouver to reduce overall clutter and make allow us to still process the information. We still stick with Metro Vancouver as a reference on how to normalize our income bins.</p>
+<p>For reference, we start with just looking at our original four categories at the census tract level.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="768"></p>
+<p>Refining the geographies to dissemination areas lends more geographic nuance to the representation, it is fine enough to pick up some areas dominated my middle-income people.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="768"></p>
+<p>This reveals that West Point Grey was mixed income because it was made up of a high-income area reaching west of Blanca and a low income area around the non-profit housing project by Jericho.</p>
+<p>Alternatively we could have kept the geographic aggregation level fixed and allowed for more variation in the binning of income groups by quadrupling the number of categories.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" width="768"></p>
+<p>This reveals an important category that the broader categorization entirely missed, the olive band from Second Narrows down to Marpole, as well as the West End, indicating an even mixture of middle and low income people. West Point Grey is now more precisely defined as mixing high and low income. We could make out the reason for this when looking at finer geographies, but this remains hidden when aggregating up to census tracts.</p>
+<p>Lastly we refine both the geographies as well as the categories.</p>
+<p><img src="index_files/figure-html/vancouver_income_map-1.png" width="768"></p>
+<p>This reveals a lot of nuance, the band of Middle/Bottom income mixture ranging from the Second Narrows down to Marpole through East Vancouver, as well as the West End, is still clearly visible, occasionally punctuate by regions pulling more towards lower and middle income. Just to the west of that East Vancouver band we see a band of greyish-purple that sits between the high and middle income bands. The West Side is dominated by pinkish colours, at turning purplish when adding more middle-income people or brownish when adding more low-income people. Low income pockets are strong around the Downtown Eastside, with occasional pockets popping up elsewhere, in particular the triangle at Arbutus and 33rd. The non-profit housing project at Jericho also leaves a visible imprint.</p>
+<p>Each of these representations have value, adding nuance in either geography or categorization adds additional information, but also makes it harder to process it. This points back to CensusMapper, where this can be built as an interactive tool that allows for interactive explorations. Starting for simple categories and geographies one could tweak the parameters and dive into more details in areas one might be interested in. Maybe I will have to sit down and refine my three-colour mixing CensusMapper maps to allow for discrete colour categories and add a scatter-plot to the triangle legend.</p>
+</section>
+<section id="upshot" class="level2">
+<h2 class="anchored" data-anchor-id="upshot">Upshot</h2>
+<p>These explorations make clear that we have been paying far too little attention to the fact that census tracts within our largest CMAs don’t segregate by income, the vast majority of census tracts are not dominated by low, medium or high income people relative to the CMA distribution. In particular in Vancouver, there are relatively few areas with over half of the population falling into one of these three categories. This invites to take more time and refine the analysis using fine geographic areas or finer income categories, or adding in other demographic factors to help understand the landscape of income in Canadian CMAs.</p>
+<p>The code for the analysis is <a href="https://github.com/mountainMath/doodles/blob/master/content/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time.Rmarkdown">available on GitHub</a> for anyone to reproduce, adapt or extend this. In particular it only requires minimal adjustments to reproduce this for any other region in Canada.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2018,
+  author = {von Bergmann, Jens},
+  title = {Understanding Income Distributions Across Geographies and
+    Time},
+  date = {2018-10-28},
+  url = {https://doodletest.netlify.app/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2018" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bergmann, Jens von. 2018. <span>“Understanding Income Distributions
+Across Geographies and Time.”</span> <em>MountanDoodles</em> (blog).
+October 28, 2018. <a href="https://doodletest.netlify.app/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time">https://doodletest.netlify.app/posts/2018-10-28-understanding-income-distributions-across-geographies-and-time</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/doodletest\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
