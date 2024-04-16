@@ -105,5 +105,5 @@ format:
     code-copy: hover
     grid:
       sidebar-width: 400px
-editor: visual
+editor: source
 
