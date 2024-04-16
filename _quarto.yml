@@ -11,10 +11,11 @@ website:
   description: "Thoughts on housing, demographics and random things"
   reader-mode: true
   open-graph: true
+  favicon: images/favicon.ico
   twitter-card: 
     creator: "@vb_jens"
   navbar:
-    logo: mm_stamp_small.png
+    logo: images/mm_stamp_small.png
     right:
       - about.qmd
       - text: Archive
@@ -51,7 +52,7 @@ website:
         href: mailto:jens.mountainmath.ca
         aria-label: Email
       # title: "Mountain Doodles"
-      logo: profile.jpg
+      logo: images/profile.jpg
       header: "**Too much data, too little time**"
       footer: Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at [MountainMath](https://mountainmath.ca).
       contents:
@@ -70,8 +71,10 @@ website:
             - text: "Alex Usher's blog"
               href: "https://higheredstrategy.com/author/alex/"
 
-  google-analytics: "UA-54516567-1"
-  cookie-consent: true
+  google-analytics: 
+    tracking-id: "UA-54516567-1"
+    anonymize-ip: true
+  cookie-consent: false
   comments:
     giscus:
       theme:
@@ -93,9 +96,9 @@ website:
 format:
   html:
     theme: 
-      light: mountainmath_light.scss
-      dark: mountainmath_dark.scss
-    css: styles.css
+      light: css/mountainmath_light.scss
+      dark: css/mountainmath_dark.scss
+    css: css/styles.css
     page-layout: article
     mainfont: "Roboto"
     code-overflow: wrap
