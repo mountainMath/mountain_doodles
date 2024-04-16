@@ -145,11 +145,17 @@ cookieconsent.run({
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Mountain Doodles - Migrating to quarto">
 <meta property="og:description" content="Some overdue housekeeping and a new look for the blog.">
+<meta property="og:image" content="https://doodles.mountainmath.ca/posts/2024-04-15-migrating-to-quarto/images/blog_preview.png">
 <meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="1940">
+<meta property="og:image:width" content="2798">
 <meta name="twitter:title" content="Mountain Doodles - Migrating to quarto">
 <meta name="twitter:description" content="Some overdue housekeeping and a new look for the blog.">
+<meta name="twitter:image" content="https://doodles.mountainmath.ca/posts/2024-04-15-migrating-to-quarto/images/blog_preview.png">
 <meta name="twitter:creator" content="@vb_jens">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="1940">
+<meta name="twitter:image-width" content="2798">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-sidebar docked nav-fixed fullcontent">
@@ -367,7 +373,7 @@ cookieconsent.run({
 <section id="whats-next" class="level1">
 <h1>What’s next?</h1>
 <p>Other than the look and feel, quarto has the ability to much more easily add interactives by leveraging <a href="https://observablehq.com">Observable</a>. Quarto also has great support for code folding, for this blog we hide code by default but now show a marker that allows it expand the code if desired. This makes it easier to check in on the details of how things are done without having to navigate to the underlying notebook on GitHub. It makes it much easier to quickly grab a code chunk and modify it.</p>
-<p>Here is a simple example that pulls in all item and rent CPI time series directly from the StatCan NDM API into the browser and plots them interactively, taken from <a href="https://observablehq.com/@mountainmath/year-over-year-change-in-rent-cpi">our interactive ObservableHQ notebook</a>.</p>
+<p>Here is a simple example that pulls in all item and rent CPI time series directly from the StatCan NDM API into the browser and plots them interactively, taken from <a href="https://observablehq.com/@mountainmath/year-over-year-change-in-rent-cpi">our interactive ObservableHQ notebook</a>. Live and auto-updating data is great, but this of course also means that the code will fail when StatCan servers are down.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell">
 <details class="code-fold">
 <summary>&lt;code&gt;</summary>
@@ -528,16 +534,22 @@ cookieconsent.run({
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2024,
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Of course the StatCan servers for the data used here went down on the evening this post was written ahead of the next day’s release of the March CPI data…<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2024,
   author = {von Bergmann, Jens},
   title = {Migrating to Quarto},
   date = {2024-04-11},
-  url = {https://doodletest.netlify.app/posts/2024-04-15-migrating-to-quarto},
+  url = {https://doodles.mountainmath.ca/posts/2024-04-15-migrating-to-quarto},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 Bergmann, Jens von. 2024. <span>“Migrating to Quarto.”</span>
-<em>MountanDoodles</em> (blog). April 11, 2024. <a href="https://doodletest.netlify.app/posts/2024-04-15-migrating-to-quarto">https://doodletest.netlify.app/posts/2024-04-15-migrating-to-quarto</a>.
+<em>MountanDoodles</em> (blog). April 11, 2024. <a href="https://doodles.mountainmath.ca/posts/2024-04-15-migrating-to-quarto">https://doodles.mountainmath.ca/posts/2024-04-15-migrating-to-quarto</a>.
 </div></div></section></div></main> <!-- /main -->
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZlZ2FsaXRlKHtcbiAgZGF0YToge3ZhbHVlczogdHJhbnNmb3JtZWREYXRhfSxcbiAgdmNvbmNhdDpbe1xuICAgIHdpZHRoOiA2MDAsXG4gICAgaGVpZ2h0OiAyMDAsXG4gICAgdGl0bGU6IFwiWWVhciBvdmVyIHllYXIgY2hhbmdlIGluIENQSVwiLFxuICAgIGNvbmZpZzoge1xuICAgICAgYXhpczoge3Nob3J0VGltZUxhYmVsczogdHJ1ZX1cbiAgICB9LFxuICAgIGxheWVyOiBbe1xuICAgIG1hcms6IHt0eXBlOiAnbGluZSd9LFxuICAgIGVuY29kaW5nOiB7XG4gICAgICB4OiB7ZmllbGQ6ICdyZWZQZXInLCB0eXBlOiAndGVtcG9yYWwnLCB0aW1lVW5pdDogJ3llYXJtb250aGRhdGUnLHRpdGxlOlwiXCIsXG4gICAgICAgICBzY2FsZToge2RvbWFpbjoge3NlbGVjdGlvbjogXCJicnVzaFwifX19LFxuICAgICAgZHg6IHsgIFxuICAgICAgICBmaWVsZDogXCJTZXJpZXNcIiwgXCJ0eXBlXCI6IFwibm9taW5hbFwiLFxuICAgICAgICBzY2FsZToge1wicmFuZ2VTdGVwXCI6IDZ9IFxuICAgICAgfSxcbiAgICAgIGNvbG9yOiB7ZmllbGQ6IFwiU2VyaWVzXCIsIHR5cGU6ICdub21pbmFsJyxcInNjYWxlXCI6IHtcInNjaGVtZVwiOiBcIkRhcmsyXCJ9fSwgXG4gICAgICB5OiB7dHlwZTogJ3F1YW50aXRhdGl2ZScsIGZpZWxkOiAncGN0X2NoYW5nZScsYXhpczoge2Zvcm1hdDogXCIuMSVcIn0sdGl0bGU6XCJcIiwgXCJncmlkXCI6IGZhbHNlfVxuICAgIH1cbiAgfSxcbiAgICB7XG4gICAgICBcImRhdGFcIjoge1widmFsdWVzXCI6IFt7XCJndWlkZVwiOiAwfV19LFxuICAgICAgXCJtYXJrXCI6IFwicnVsZVwiLFxuICAgICAgXCJlbmNvZGluZ1wiOiB7XG4gICAgICAgIFwieVwiOiB7XCJmaWVsZFwiOiBcImd1aWRlXCIsXCJ0eXBlXCI6IFwicXVhbnRpdGF0aXZlXCJ9LFxuICAgICAgICBcImNvbG9yXCI6IHtcInZhbHVlXCI6IFwiYmxhY2tcIn1cbiAgICAgIH1cbiAgICB9XG4gIF19LCB7XG4gICAgd2lkdGg6IDYwMCxcbiAgICBtYXJrOiB7dHlwZTogJ2xpbmUnfSxcbiAgICB0aXRsZTogXCJcIixcbiAgICBoZWlnaHQ6IDYwLFxuICAgIGVuY29kaW5nOiB7XG4gICAgICB4OiB7ZmllbGQ6ICdyZWZQZXInLCB0eXBlOiAndGVtcG9yYWwnLCB0aW1lVW5pdDogJ3llYXJtb250aGRhdGUnLHRpdGxlOlwiXCJ9LFxuICAgICAgY29sb3I6IHtmaWVsZDogXCJTZXJpZXNcIiwgdHlwZTogJ25vbWluYWwnLFwic2NhbGVcIjoge1wic2NoZW1lXCI6IFwiRGFyazJcIn19LCBcbiAgICAgIHk6IHt0eXBlOiAncXVhbnRpdGF0aXZlJywgZmllbGQ6ICdwY3RfY2hhbmdlJyxheGlzOiB7Zm9ybWF0OiBcIi4xJVwifSx0aXRsZTpcIlwifVxuICAgIH0sXG4gICAgY29uZmlnOiB7XG4gICAgICBiYWNrZ3JvdW5kOiBcIiM4MDgwODBcIixcbiAgICAgIGF4aXM6IHtzaG9ydFRpbWVMYWJlbHM6IHRydWV9XG4gICAgfSxcbiAgICBzZWxlY3Rpb246IHtcbiAgICAgIGJydXNoOiB7dHlwZTogXCJpbnRlcnZhbFwiLCBlbmNvZGluZ3M6IFtcInhcIl19XG4gICAgfVxuICB9XX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2ZWN0b3JzID0ge3JldHVybiB7XG4gIDQxNjkwOTczOiBcIkFsbCBpdGVtc1wiLFxuICA0MTY5MTA1MjogXCJSZW50XCIsXG59fVxuXG5kYXRhID0gZDMuanNvbihcImh0dHBzOi8vd3d3MTUwLnN0YXRjYW4uZ2MuY2EvdDEvd2RzL3Jlc3QvZ2V0RGF0YUZyb21WZWN0b3JzQW5kTGF0ZXN0TlBlcmlvZHNcIix7XG4gICAgICAgIG1ldGhvZDpcIlBPU1RcIixcbiAgICAgIGJvZHk6IEpTT04uc3RyaW5naWZ5KE9iamVjdC5rZXlzKHZlY3RvcnMpLm1hcChmdW5jdGlvbih2KXtyZXR1cm4ge1widmVjdG9ySWRcIjp2LCBcImxhdGVzdE5cIjoyMDAwfX0pKSxcbiAgaGVhZGVyczoge1wiQ29udGVudC10eXBlXCI6IFwiYXBwbGljYXRpb24vanNvbjsgY2hhcnNldD1VVEYtOFwifVxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZlZ2FsaXRlID0gcmVxdWlyZShcIkBvYnNlcnZhYmxlaHEvdmVnYS1saXRlQDAuMVwiKVxuZDMgPSByZXF1aXJlKFwiaHR0cHM6Ly9kM2pzLm9yZy9kMy52NS5taW4uanNcIilcblxudHJhbnNmb3JtZWREYXRhID0gW10uY29uY2F0LmFwcGx5KFtdLCBkYXRhLm1hcChmdW5jdGlvbihkKXtcbiAgdmFyIHJvd3MgPSBkLm9iamVjdC52ZWN0b3JEYXRhUG9pbnQubWFwKGZ1bmN0aW9uKHJvdyl7XG4gICAgcm93LlNlcmllcz12ZWN0b3JzW2Qub2JqZWN0LnZlY3RvcklkXTtcblxuICAgIHZhciB5ZWFyPXBhcnNlSW50KHJvdy5yZWZQZXIuc2xpY2UoMCw0KSk7XG4gICAgdmFyIG1vbnRoPXBhcnNlSW50KHJvdy5yZWZQZXIuc2xpY2UoNSw3KSk7XG4gICAgLy9pZiAobW9udGg9PTEpIHtcbiAgICAvLyAgeWVhci09MTtcbiAgICAvLyAgbW9udGg9MTI7XG4gICAgLy99IGVsc2UgbW9udGgtPTE7XG4gICAgeWVhci09MTtcbiAgICByb3cub2xkUGVyPScnK3llYXIrJy0nKyhtb250aCsnJykucGFkU3RhcnQoMiwgJzAnKStyb3cucmVmUGVyLnNsaWNlKDcsMTApO1xuICAgIC8vZGVidWdnZXJcbiAgICByb3cuVmFsdWU9cm93LnZhbHVlKk1hdGgucG93KDEwLHJvdy5zY2FsYXJGYWN0b3JDb2RlKTtcbiAgICB2YXIgcmVzdWx0ID0gZC5vYmplY3QudmVjdG9yRGF0YVBvaW50LmZpbHRlcihmdW5jdGlvbihyKSB7XG4gICAgICByZXR1cm4gci5yZWZQZXIgPT09IHJvdy5vbGRQZXI7XG4gICAgfSk7XG4gICAgcm93Lm9sZFZhbCA9IChyZXN1bHRbMF0gIT09IHVuZGVmaW5lZCkgPyByZXN1bHRbMF0uVmFsdWUgOiBudWxsO1xuICAgIHJvdy5jaGFuZ2U9cm93LlZhbHVlLXJvdy5vbGRWYWw7XG4gICAgcm93LnBjdF9jaGFuZ2U9cm93LmNoYW5nZS9yb3cub2xkVmFsO1xuICAgIHJvdy55ZWFyPXllYXI7XG4gICAgcmV0dXJuIHJvdztcbiAgfSk7XG4gIHJldHVybiByb3dzO1xufSkpLmZpbHRlcihmdW5jdGlvbihyb3cpe1xuICByZXR1cm4ocm93Lm9sZFZhbCE9bnVsbCAmIHJvdy55ZWFyPj0xOTg5KVxufSlcbiJ9XX0=
@@ -826,7 +838,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/doodletest\.netlify\.app");
+      var filterRegex = new RegExp("https:\/\/doodles\.mountainmath\.ca");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

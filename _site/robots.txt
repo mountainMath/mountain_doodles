@@ -1,1 +1,1 @@
-Sitemap: https://doodletest.netlify.app/sitemap.xml
+Sitemap: https://doodles.mountainmath.ca/sitemap.xml

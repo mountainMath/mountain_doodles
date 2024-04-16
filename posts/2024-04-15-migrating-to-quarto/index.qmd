@@ -8,7 +8,7 @@ slug: migrating-to-quarto
 categories:
   - geeky
 description: 'Some overdue housekeeping and a new look for the blog.'
-images: "images/blog_preview.png"
+image: "images/blog_preview.png"
 freeze: false
 ---
 
@@ -31,7 +31,7 @@ At the same time I decided to keep the Rmarkdown files for reference, although a
 # What's next?
 Other than the look and feel, quarto has the ability to much more easily add interactives by leveraging [Observable](https://observablehq.com). Quarto also has great support for code folding, for this blog we hide code by default but now show a marker that allows it expand the code if desired. This makes it easier to check in on the details of how things are done without having to navigate to the underlying notebook on GitHub. It makes it much easier to quickly grab a code chunk and modify it.
 
-Here is a simple example that pulls in all item and rent CPI time series directly from the StatCan NDM API into the browser and plots them interactively, taken from [our interactive ObservableHQ notebook](https://observablehq.com/@mountainmath/year-over-year-change-in-rent-cpi).
+Here is a simple example that pulls in all item and rent CPI time series directly from the StatCan NDM API into the browser and plots them interactively, taken from [our interactive ObservableHQ notebook](https://observablehq.com/@mountainmath/year-over-year-change-in-rent-cpi). Live and auto-updating data is great, but this of course also means that the code will fail when StatCan servers are down.^[Of course the StatCan servers for the data used here went down on the evening this post was written ahead of the next day's release of the March CPI data...]
 
 ```{ojs}
 vegalite({
