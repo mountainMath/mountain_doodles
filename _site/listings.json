@@ -1,7 +1,8 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/archive.html",
     "items": [
+      "/posts/2024-04-15-migrating-to-quarto/index.html",
       "/posts/2024-04-11-what-if-recent-apartment-buildings-in-vancouver-were-20-taller/index.html",
       "/posts/2024-01-16-first-time-buyer-lorenz-curves-revisited/index.html",
       "/posts/2023-08-17-housing-outcomes/index.html",
@@ -237,8 +238,9 @@
     ]
   },
   {
-    "listing": "/archive.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/2024-04-15-migrating-to-quarto/index.html",
       "/posts/2024-04-11-what-if-recent-apartment-buildings-in-vancouver-were-20-taller/index.html",
       "/posts/2024-01-16-first-time-buyer-lorenz-curves-revisited/index.html",
       "/posts/2023-08-17-housing-outcomes/index.html",

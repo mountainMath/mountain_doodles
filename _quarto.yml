@@ -7,7 +7,7 @@ project:
 website:
   title: "Mountain Doodles"
   site-url: https://doodletest.netlify.app
-  repo-url: https://github.com/mountainMath/mountaindoodles
+  repo-url: https://github.com/mountainMath/mountain_doodles
   description: "Thoughts on housing, demographics and random things"
   reader-mode: true
   open-graph: true
@@ -20,7 +20,7 @@ website:
       - text: Archive
         href: archive.qmd
       - icon: github
-        href: https://github.com/mountainMath/mountaindoodles
+        href: https://github.com/mountainMath/mountain_doodles
         aria-label: GitHub
       - icon: twitter
         href: https://twitter.com/vb_jens
@@ -72,6 +72,21 @@ website:
 
   google-analytics: "UA-54516567-1"
   cookie-consent: true
+  comments:
+    giscus:
+      theme:
+        light: "light"
+        dark: "dark_dimmed"
+      repo: mountainmath/mountain_doodles
+      repo-id: R_kgDOLuoDtA
+      category: "Blog posts"
+      category-id: "DIC_kwDOLuoDtM4Cetfc"
+      loading: "lazy"
+      language: "en"
+      input-position: "bottom"
+      reactions-enabled: true
+#      strict: "0"
+      mapping: "pathname"
 # filters:
 #   - code-filename
 
@@ -86,12 +101,8 @@ format:
     code-overflow: wrap
     code-fold: true
     code-folding: hide
-    code-summary: "Show the code"
+    code-summary: "\\<code\\>"
     code-copy: hover
-    code-tools: 
-      source: repo
-      toggle: false
-      caption: none
     grid:
       sidebar-width: 400px
 editor: visual

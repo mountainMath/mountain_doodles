@@ -12,4 +12,5 @@ listing:
   fields: [date, title]
 page-layout: article
 title-block-banner: false
+comments: false
 ---

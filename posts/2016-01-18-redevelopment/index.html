@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jens von Bergmann">
+<meta name="dcterms.date" content="2016-01-18">
+<meta name="description" content="Digging into teardowns">
+
+<title>Mountain Doodles - On Teardowns</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54516567-1', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Mountain Doodles - On Teardowns">
+<meta property="og:description" content="Digging into teardowns">
+<meta property="og:image" content="https://doodles.mountainmath.ca/posts/2016-01-18-redevelopment/images/teardowns.png">
+<meta property="og:site_name" content="Mountain Doodles">
+<meta property="og:image:height" content="1560">
+<meta property="og:image:width" content="2678">
+<meta name="twitter:title" content="Mountain Doodles - On Teardowns">
+<meta name="twitter:description" content="Digging into teardowns">
+<meta name="twitter:image" content="https://doodles.mountainmath.ca/posts/2016-01-18-redevelopment/images/teardowns.png">
+<meta name="twitter:creator" content="@vb_jens">
+<meta name="twitter:image-height" content="1560">
+<meta name="twitter:image-width" content="2678">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../mm_stamp_small.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mountain Doodles</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mountainMath/mountain_doodles"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link active" href="https://twitter.com/vb_jens" aria-current="page"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vb-jens/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jens.mountainmath.ca"> <i class="bi bi-envelope-at-fill" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">On Teardowns</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">On Teardowns</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/mountainMath/mountain_doodles/blob/main/posts/2016-01-18-redevelopment/index.markdown"><i class="bi"></i></button></div></div>
+                  <div>
+        <div class="description">
+          Digging into teardowns
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Vancouver</div>
+                <div class="quarto-category">zoning</div>
+                <div class="quarto-category">teardowns</div>
+                <div class="quarto-category">geeky</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Jens von Bergmann </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 18, 2016</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><strong>Too much data, too little time</strong></p>
+</div></div>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../profile.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mountainMath" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/vb_jens" title="" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/vb-jens/" title="" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:jens.mountainmath.ca" title="" class="quarto-navigation-tool px-1" aria-label="Email"><i class="bi bi-envelope-at-fill"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Other Canadian data focused blogs:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://homefreesociology.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HomeFreeSociology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.dshkol.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dmitry Shkolnik’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.simoncoulombe.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simon Coulombe’s blog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://financesofthenation.ca/category/commentary/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finances of the Nation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://deny.substack.com" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deny’s Substack</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://higheredstrategy.com/author/alex/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alex Usher’s blog</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at <a href="https://mountainmath.ca">MountainMath</a>.</p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>On the heels of the <a href="http://doodles.mountainmath.ca/blog/2016/01/17/updated-vancouver-assessment-data/">new assessment data</a> we can start to slice the data in different ways to understand various aspects of the real estate landscape in Vancouver. The fact that <a href="http://vancouver.ca/your-government/open-data-catalogue.aspx">Vancouver Open Data</a> makes historic data available gives the ability to look for changes over time.</p>
+<p><a href="https://mountainmath.ca/map/assessment">Our maps</a> explore this by visualizing some aspects of these changes for all properties, but it might also be useful to filter the properties we show to focus in on specific criteria.</p>
+<p>“Teardowns” always triggers lots of emotions in Vancouver. Without looking at the emotional side and trying to avoid any judgement we will investigate the data to understand what buildings have been torn down recently and predict which buildings will get torn down next. And map them. Long story short, we predict that 1 in 6 buildings <a href="https://mountainmath.ca/map/special/17?layer=4">on this map</a> (and then some more with lower teardown probability) will get torn down and rebuilt by 2026.</p>
+<section id="building-age-temporal-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="building-age-temporal-distribution">Building age temporal distribution</h2>
+<!-- more -->
+<p>To start understanding teardowns and rebuilds let’s look at the <a href="https://mountainmath.ca/map/assessment?layer=7">age of the building stock</a>.</p>
+<p>To get a better overview of the building stock through time we can graph the number of buildings by age. We look at buildings, not units. So a stratified building with 100 units would still count as one building in our graph. And it is not looking at how many buildings were built in each year, but how many buildings that were built in a given year are still standing today.</p>
+We still have 7 buildings in Vancouver that were built before 1900 (the earliest from 1800). Skipping these we graph the rest to get:
+<div style="margin:10px 50px;padding:5px;border: 1px solid black;border-radius:5px;">
+<div id="graph_age" style="height:200px;max-width:640px;" data-url="/data/building_age.json">
+
+</div>
+<div class="legend no-margin">
+<p>
+<i style="background:steelblue"></i> Number of Buildings by Building Age <span id="building_age_value" style="float:right;margin-right:10px;"></span>
+</p>
+</div>
+</div>
+<p>Starting with 1950 the distribution of buildings by age is quite uniform, with a short peak around the early 1990s.</p>
+<p>The dip at the end is due to some lag in new buildings showing up in the property dataset. Looking at the more recent history it is safe to assume that the number of buildings still standing corresponds well to the buildings of units built in that year. So the pace of new buildings right now seems to fit in quite well with the recent history and is a little lower than the peak in the early 1990s.</p>
+</section>
+<section id="recent-building-stock-and-recent-teardowns-spatial-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="recent-building-stock-and-recent-teardowns-spatial-distribution">Recent Building stock (and recent teardowns) spatial distribution</h2>
+<p><a href="https://mountainmath.ca/map/special/15"><img src="images/rebuilds.png" style="width:50%;float:right"></a> The next question is to focus on the spatial distribution of recent redevelopment by filtering out older buildings. Being too lazy to add a bush for dynamic selection of time ranges I just made a static (in time) view only showing the <a href="https://mountainmath.ca/map/special/15?zoom=13">6883 properties built after 2006</a>. It is quite safe to assume that most of those new buildings replaced older ones that were torn down. So this map of new buildings is also a map of locations of buildings that were torn down in the last 10 years.</p>
+<p>What’s interesting is when selecting <a href="https://mountainmath.ca/map/special/15?zoom=16&amp;lat=49.2341&amp;lng=-123.1824&amp;layer=4">relative building value view</a> that there are some properties that have been recently re-developed with increadibly low building value, like the property at 5649 Dunbar St.&nbsp;<strike>This gives a window into some of the imperfections of the BC Assessment process where the building value after re-development is not properly reflected in their dataset.</strike> In this case it seems to be <a href="https://www.google.ca/maps/@49.2351182,-123.1853038,3a,75y,264.36h,81.1t/data=!3m6!1e1!3m4!1s_weW4bEWpmcKGA-Ppk0d_Q!2e0!7i13312!8i6656">a property whose only “improvement” seems to be the pavement on it</a>.</p>
+<p>It also shows that recent building (or teardown) activity is fairly uniform across the city, with only some areas standing out as having little development like the West End, parts of Kitsilano and Strathcona.</p>
+</section>
+<section id="what-gets-torn-down-and-rebuilt-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-gets-torn-down-and-rebuilt-next">What gets torn down and rebuilt next?</h2>
+<p>The big question is of course where new buildings get built next. In a built up space like Vancouver there are few sites left where building a new building does not mean tearing down an old one. So another way to ask that question is: What gets torn down next?</p>
+</section>
+<section id="teardown-probability" class="level2">
+<h2 class="anchored" data-anchor-id="teardown-probability">Teardown Probability</h2>
+<p>Predicting which building will get torn down next is of course impossible. So what we try to do is assign a “teardown probability” to each building.</p>
+<p>Let’s first try to understand why a particular building might get torn down as opposed to the one next door. Typically buildings get torn down at the time when they change ownership. So if a building is not sold, it is far less likely to get torn down. So what makes a building more likely to get torn down when it is sold? One hypothesis would be that the value of the building relative to the land should play an important factor. Let’s test this hypothesis using the data.</p>
+<p>We take the 2006 tax dataset as a baseline and check how many of the buildings have been torn down by 2016. Refer to the Methodology and Data section at the botton for the messy details. We only count buildings, so we count a strata lot with 100 units in the same building as one building. Then we use the 2016 dataset to check how many of them are still around, identifying them by their tax coordinate and again asking they be marked as being built no later than 2006.</p>
+<p>These criteria capture well what we are looking for, but they are not perfect. As a predictive variable we use the</p>
+<div style="padding:5px;border: 1px solid grey;border-radius:4px;width:80%;margin:0 auto;">
+<h5 style="text-align:center;" class="anchored">
+Teardown Coefficient
+</h5>
+<p>The <em>teardown coefficient</em> is the percentage of the total assessed value that is attributed to the building. More formally it’s the ratio of the building value by the sum of the building and land values.</p>
+</div>
+<p>So we sort the properties by their <em>teardown coefficient</em> using the 2006 tax assessment data and we check how each group fares.</p>
+First up a graph of the distribution of buildigs in 2006 by their <em>teardown coefficient</em>.
+<div style="margin:10px 50px;padding:5px;border: 1px solid black;border-radius:5px;">
+<div id="graph_buildings_by_teardown" style="height:200px;max-width:640px;" data-url="/data/buildings_by_teardown.json">
+
+</div>
+<div class="legend no-margin">
+<p>
+<i style="background:steelblue"></i> Number of Buildings by <em>teardown coefficient</em> <span id="buildings_by_teardown_value" style="float:right;margin-right:10px;"></span>
+</p>
+</div>
+</div>
+Next up the number of buildings in each category that got torn down and rebuilt by 2016:
+<div style="margin:10px 50px;padding:5px;border: 1px solid black;border-radius:5px;">
+<div id="graph_teardowns" style="height:200px;max-width:640px;" data-url="/data/teardowns.json">
+
+</div>
+<div class="legend no-margin">
+<p>
+<i style="background:steelblue"></i> Number of Torn Down Buildings by <em>teardown coefficient</em> <span id="teardowns_value" style="float:right;margin-right:10px;"></span>
+</p>
+</div>
+</div>
+<p>We see that our initial hypothesis seems to hold up quite well. The number of buildings that got torn down and rebuilt decreases as the <em>teardown coefficient</em> increases. Remember that we defined the <em>teardown coefficient</em> to be the percentage of the building value out of the total value of the property.</p>
+<p>Refer to the methodology and data section for further information on how these numbers were extracted.</p>
+To explore this further let’s graph the frequency with which a building in a given <em>teardown coefficeint</em> range gets torn down. To keep things cleaner where we only plot up to a <em>teardown coefficient</em> of 50%:
+<div style="margin:10px 50px;padding:5px;border: 1px solid black;border-radius:5px;">
+<div id="graph_teardown_probability" style="height:200px;max-width:640px;" data-url="/data/teardown_probability.json">
+
+</div>
+<div class="legend no-margin">
+<p>
+<i style="background:steelblue"></i> Probability of Building being torn down<span id="teardown_probability_value" style="float:right;margin-right:10px;"></span>
+</p>
+</div>
+</div>
+<p>We see that the <em>teardown coefficient</em> has high predictive value for a building to be torn down and being rebuilt in the following 10 years. Buildings with a <em>teardown coefficient</em> below 5% have about an 18% chance, and the probability declines exponentially down to zero at a <em>teardown coefficient</em> of about 50%.</p>
+<p>If we were more serious about this we would fit and exponential curve to the data and compute how well it fits the data, repeat the computation for other time frames, run it on individual neighbourhoods and maybe also on <a href="https://data.surrey.ca">data from other municipalities</a> to properly validate our model. We could also refine the model by refining our filters, see the methodology and data section for more details.</p>
+<p>And we could add other factors that likely effect the teardown probability, like building age, proximity to arterials and others. Of course these are not independent factors, so this kind of analysis requires more time.</p>
+</section>
+<section id="predicting-teardowns" class="level2">
+<h2 class="anchored" data-anchor-id="predicting-teardowns">Predicting Teardowns</h2>
+<p>Now to the main part: Predicting teardowns. How many buildings will get torn down and rebuilt in the next 10 years? Let’s use what we have just learned to extrapolate.</p>
+First up the graph of the 2016 building stock by <em>teardown coefficient</em>:
+<div style="margin:10px 50px;padding:5px;border: 1px solid black;border-radius:5px;">
+<div id="graph_buildings_by_teardown_2" style="height:200px;max-width:640px;" data-url="/data/buildings_by_teardown_2.json">
+
+</div>
+<div class="legend no-margin">
+<p>
+<i style="background:steelblue"></i> 2016 Building stock by <em>teardown coefficient</em> <span id="buildings_by_teardown_2_value" style="float:right;margin-right:10px;"></span>
+</p>
+</div>
+</div>
+To estimate how many buildings will get torn down and rebuilt in each category we simply multiply each bin with the teardown probability from the frequency graph above:
+<div style="margin:10px 50px;padding:5px;border: 1px solid black;border-radius:5px;">
+<div id="graph_teardowns_2" style="height:200px;max-width:640px;" data-url="/data/teardowns_2.json">
+
+</div>
+<div class="legend no-margin">
+<p>
+<i style="background:steelblue"></i> Estimate of Buildings rebuilt by 2026 <span id="teardowns_2_value" style="float:right;margin-right:10px;"></span>
+</p>
+</div>
+</div>
+<p>Bottom line, we predict around 8,000 buildings to be torn down and rebuilt by 2026. That’s significantly more than the around 5,900 buildings that we identified as going through this process during the prior 10 years.</p>
+</section>
+<section id="open-question" class="level2">
+<h2 class="anchored" data-anchor-id="open-question">Open Question</h2>
+<p>There are lots of assumptions that went into this estimate. While we are confident in our analysis that properties with low <em>teardown coefficient</em> are the ones most likely to be torn down, it is less clear if the number of properties being torn down grows linearly as the properties with low <em>teardown coefficient</em> grow. In our case the number of properties with <em>teardown coefficient</em> below 5% grew from 20492 (21% of the 2006 stock) to 32509 (33.5% of the 2016) stock, which may be out of the range where our simplistic extrapolation holds. One could try to understand this by carefully analyzing all available tax years, and not just the two extremes of the available spectrum.</p>
+<p>###Mapping Teardowns <a href="https://mountainmath.ca/map/special/17"><img src="images/teardowns.png" style="width:50%;float:right"></a>Now that we understand how to assign a teardown probability to buildings, let’s map them! To keep things as simple as possible let’s focus in on the homes with a <em>teardown coefficient</em> below 5%. They make up the bulk in our prediction and have the simple interpretation that a little more than 1 in 6 of these will get replaced by something else by 2026. So <a href="https://mountainmath.ca/map/special/17">here is the interactive map</a> of just these 31301 buildings, where we have filtered out some parks, marinas and rail lines. And this only accounts for the 5,700 buildings predicted to be torn down with a <em>teardown coefficient</em> below 5% cutoff and neglects the roughly 2,000 more that are predicted to be torn down that have a <em>teardown coefficient</em> above 5%.</p>
+</section>
+<section id="methodology-and-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-and-data">Methodology and Data</h2>
+<p>Only for people who love getting their hands dirty or who want to reproduce or expand on the analysis.</p>
+<p>First thing to note is that there is no way to detect “teardowns” in the dataset, the only way is to look at what has been rebuilt and what has ‘dropped off’. To be more precise, there data fields to look at is the “land coordinate”, which links a taxable property to a physical structure, and the “year built”. And both fields have problems.</p>
+<p>The “land coordinate” gets de-commissioned and re-assigned during certain re-develpments. And the city dataset provides no way to link the old one to the new one. One way to do that is through the polygons that mark the property boundaries, that would allow tracking of complex re-assemblies of land. But the city does not publish historic records of property polygons.</p>
+<p>The “year built” also has lots of issues. Sometimes it is blank even though it records the value of the building as greater than zero. Sometimes the “year built” will be set to a date later than the date of the dataset, for example the 2006 tax dataset has buildings with “year built” all they way up to 2013.</p>
+<p>Then comes the issue of filtering. We decided to filter out parks, rail lines and marinas without structures on them. The algorithm is somewhat simplistic, it’s the same one that was used to filter properties for the maps. Additionally we filter out properties from the heritage dataset. There is definitely room for improvement here, but without a clear question of what exactly to measure (only single family homes, or also condos or apartments, treat commercial separately, …) it does not make much sense to invest energy into this. After all, this is just looking for a rough model.</p>
+<p>So how do we detect rebuilds? We take the land coordinates from properties identified as park or heritage and sieve through the 2006 tax data to retrieve all records that don’t match these land coordinates and have a “year built” column set as 2006 or earlier or don’t have a “year built” set at all but change from zero to non-zero building value from 2006 to 2016.</p>
+<p>Pretty messy. We mapped <a href="https://mountainmath.ca/map/special/15">about 6,900 buildings were built after 2006</a>, but only traced 5,869 buildings in the 2006 tax dataset as being torn down and rebuilt. That difference is largely explained by different selection criteria. The map only considers properties with a “year built” field set, but for the analysis we also added properties that don’t have that field set but go from zero building value in 2006 to non-zero building value in 2016 which gets us to 7,784 “rebuilds”. On the other hand in the analysis we don’t consder the roughly 140 heritage buildings that would pass our filter of being built after 2006, and the 2016 tax dataset has 2,422 more buildings than the 2006 dataset, some of which can be seen <a href="https://mountainmath.ca/map/special/13">on this map</a> and are due to subdivisions being split off of the original property.</p>
+<p>Anyway, if you want to get your hand dirty on this shoot me a message and I will hook you up with my scripts.</p>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="../../lib/jquery.min.js" charset="utf-8"></script>
+<script>
+
+
+function bar_graph(div,shiftAxis,domainFormatter,rangeFormatter,domainLabelFormatter){
+    if (!domainFormatter) domainFormatter=d3.format("d")
+    if (!rangeFormatter)
+     rangeFormatter = function (y) {
+        return y;
+     };
+     if (!domainLabelFormatter) domainLabelFormatter=domainFormatter;
+
+var margin = {top: 20, right: 20, bottom: 40, left: 70},
+    width = parseInt(div.style("width")) - margin.left - margin.right,
+    height = parseInt(div.style("height")) - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .tickFormat(domainFormatter)
+    .orient("bottom");
+
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(rangeFormatter)
+    .ticks(5, rangeFormatter);
+
+var svg = div.append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var data_url=div[0][0].dataset.url;
+
+d3.json(data_url, function(error, json) {
+  if (error) throw error;
+  var graphData=json[0];
+  var data=graphData.data;
+  x.domain(data.map(function(d) { return d.date }));
+  y.domain([0, d3.max(data, function(d) { return d.count; })]);
+  
+  var domainTickValues=[];
+  var skip=Math.round(40/x.rangeBand());
+  if (skip<=0) skip=1;
+  for (var i=0;i<x.domain().length;i++) {
+    if (i % skip==0) domainTickValues.push(x.domain()[i]);
+  }
+  if (x.domain().length % 5 !=0) domainTickValues.push(x.domain()[x.domain().length-1]);
+  xAxis.tickValues(domainTickValues);
+
+  var xShift=shiftAxis ?  x.rangeBand()/2.0 * 1.1 : 0;
+  
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(" + xShift + "," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+//    .append("text")
+//      .attr("transform", "rotate(-90)")
+//      .attr("y", 6)
+//      .attr("dy", ".71em")
+//      .style("text-anchor", "end")
+//      .text("Probability");
+
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", graphData.class + " bar")
+      .attr("fill", graphData.color)
+      .attr("x", function(d) { return x(d.date); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.count); })
+      .attr("height", function(d) { return height - y(d.count); })
+      .on('mouseover',function(d){
+         d3.select('#'+this.classList[0]+'_value').text(domainLabelFormatter(d.date) + ': ' + rangeFormatter(d.count)) 
+      }).on('click',function(d){
+       d3.select('#'+this.classList[0]+'_value').text(domainLabelFormatter(d.date) + ': ' + rangeFormatter(d.count)) 
+      }).on('touch',function(d){
+         d3.select('#'+this.classList[0]+'_value').text(domainLabelFormatter(d.date) + ': ' + rangeFormatter(d.count)) 
+      }).on('mouseout',function(){d3.select('#'+this.classList[0]+'_value').text('')});
+
+      
+});
+
+}
+
+var percentageFormatter=d3.format(".1%");
+var binFormatter=function(d){return percentageFormatter(d-0.025) + ' - ' + percentageFormatter(d);}
+//ready_for_graph(d3.select("#graph"));
+bar_graph(d3.select("#graph_age"),false);
+//ready_for_graph(d3.select("#graph_buildings_by_teardown"),percentageFormatter);
+//ready_for_graph(d3.select("#graph_teardowns"),percentageFormatter);
+bar_graph(d3.select("#graph_buildings_by_teardown"),true,percentageFormatter,null,binFormatter);
+bar_graph(d3.select("#graph_teardowns"),true,percentageFormatter,null,binFormatter);
+bar_graph(d3.select("#graph_teardown_probability"),true,percentageFormatter,percentageFormatter,binFormatter);
+bar_graph(d3.select("#graph_buildings_by_teardown_2"),true,percentageFormatter,null,binFormatter);
+bar_graph(d3.select("#graph_teardowns_2"),true,percentageFormatter,null,binFormatter);
+</script>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{von bergmann2016,
+  author = {von Bergmann, Jens},
+  title = {On {Teardowns}},
+  date = {2016-01-18},
+  url = {https://doodles.mountainmath.ca/posts/2016-01-18-redevelopment},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-von bergmann2016" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bergmann, Jens von. 2016. <span>“On Teardowns.”</span>
+<em>MountanDoodles</em> (blog). January 18, 2016. <a href="https://doodles.mountainmath.ca/posts/2016-01-18-redevelopment">https://doodles.mountainmath.ca/posts/2016-01-18-redevelopment</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/doodles\.mountainmath\.ca");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="mountainmath/mountain_doodles" data-repo-id="R_kgDOLuoDtA" data-category="Blog posts" data-category-id="DIC_kwDOLuoDtM4Cetfc" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark_dimmed">
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

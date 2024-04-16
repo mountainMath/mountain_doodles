@@ -30,6 +30,7 @@ $green:   #00bc8c !default;
 $teal:    #20c997 !default;
 $cyan:    #3498db !default;
 $darkred: #410000 !default;
+$midred: #812020 !default;
 $lightred: #f08080 !default;
 
 // Body
@@ -122,16 +123,16 @@ $navbar-light-toggler-border-color: rgba($body-bg, .1) !default;
 // Pagination
 
 $pagination-color:                  $body-color !default;
-$pagination-bg:                     $success !default;
+$pagination-bg:                     $midred !default;
 $pagination-border-width:           0 !default;
 $pagination-border-color:           transparent !default;
 $pagination-hover-color:            $body-color !default;
-$pagination-hover-bg:               lighten($success, 10%) !default;
+$pagination-hover-bg:               lighten($midred, 10%) !default;
 $pagination-hover-border-color:     transparent !default;
 $pagination-active-bg:              $pagination-hover-bg !default;
 $pagination-active-border-color:    transparent !default;
 $pagination-disabled-color:         $body-color !default;
-$pagination-disabled-bg:            darken($success, 15%) !default;
+$pagination-disabled-bg:            darken($midred, 15%) !default;
 $pagination-disabled-border-color:  transparent !default;
 
 // Cards

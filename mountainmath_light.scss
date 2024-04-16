@@ -30,6 +30,7 @@ $green:   #18bc9c !default;
 $teal:    #20c997 !default;
 $cyan:    #3498db !default;
 $darkred: #410000 !default;
+$midred: #812020 !default;
 $lightred: #f08080 !default;
 $theme_mm: #F8F4F0 !default;
 
@@ -54,7 +55,7 @@ $min-contrast-ratio:   2.05 !default;
 
 // Links
 
-$link-color:                $darkred !default;
+$link-color:                $midred !default;
 
 // Fonts
 
@@ -103,16 +104,16 @@ $navbar-dark-brand-hover-color:           $navbar-dark-brand-color !default;
 // Pagination
 
 $pagination-color:                  $white !default;
-$pagination-bg:                     $success !default;
+$pagination-bg:                     $midred !default;
 $pagination-border-width:           0 !default;
 $pagination-border-color:           transparent !default;
 $pagination-hover-color:            $white !default;
-$pagination-hover-bg:               darken($success, 15%) !default;
+$pagination-hover-bg:               darken($midred, 15%) !default;
 $pagination-hover-border-color:     transparent !default;
 $pagination-active-bg:              $pagination-hover-bg !default;
 $pagination-active-border-color:    transparent !default;
 $pagination-disabled-color:         $gray-200 !default;
-$pagination-disabled-bg:            lighten($success, 15%) !default;
+$pagination-disabled-bg:            lighten($midred, 15%) !default;
 $pagination-disabled-border-color:  transparent !default;
 
 // List group
