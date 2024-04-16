@@ -114,7 +114,7 @@ The (pseudo) p-values are cut off by our choice of 10,000 Monte Carlo simulation
 
 <img src="index_files/figure-html/unnamed-chunk-9-1.png" width="768" />
 
-Here `\(\lambda\)` is the coefficient of the autoregressive term in our autoregressive error model. As expected, there is no evidence of spatial autocorrelation in the residuals.
+Here $\lambda$ is the coefficient of the autoregressive term in our autoregressive error model. As expected, there is no evidence of spatial autocorrelation in the residuals.
 
 
 

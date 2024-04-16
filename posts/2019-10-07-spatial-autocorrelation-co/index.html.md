@@ -74,7 +74,7 @@ One can think of this as correlating e.g. air contamination with density of fact
 <img src="index_files/figure-html/unnamed-chunk-4-1.png" width="768" />
 
 
-Visual inspection shows this not to be true. More precisely we get a strong and highly significant correlation between these variables, with low but significant adjusted `\(R^2\)` of 0.15.
+Visual inspection shows this not to be true. More precisely we get a strong and highly significant correlation between these variables, with low but significant adjusted $R^2$ of 0.15.
 
 
 |            |Estimate |Std. Error |t value |Pr(>&#124;t&#124;) |
@@ -112,7 +112,7 @@ For our case at hand, we choose a spatial error model of the form,
 $$
 y = X \beta + u, \hspace{1cm} u = \lambda W u + \epsilon
 $$
-where `\(w\)` is the spatial weights term. The model picks up `\(\lambda\)` of 0.68 and an overall superior (AIC) fit compared to our previous naive linear model with pseudo `\(R^2\)` of 0.58. The coefficients however aren't statistically different from zero.
+where $w$ is the spatial weights term. The model picks up $\lambda$ of 0.68 and an overall superior (AIC) fit compared to our previous naive linear model with pseudo $R^2$ of 0.58. The coefficients however aren't statistically different from zero.
 
 
 |            |Estimate |Std. Error |z value |Pr(>&#124;z&#124;) |
@@ -191,7 +191,7 @@ Using 4-fold spatial partitioning we can look at the performance of linear model
 |mae    |0.19   |0.22   |0.35   |0.37   |
 |slope  |-0.58  |-0.72  |-0.68  |-0.26  |
 
-We notice significantly higher errors and lower (pseudo) `\(R^2\)` in all but one of the runs. There is a sizable variation in the correlation slope across the runs. When using spatial partitioning of train and test data, the spatial autocorrelation manifests itself in form of increased discrepancy between train and test data, and gives a more accurate picture of overall model performance. In our case, the pseudo `\(R^2\)` tells us that the models generated from the test data are non-informative at best.
+We notice significantly higher errors and lower (pseudo) $R^2$ in all but one of the runs. There is a sizable variation in the correlation slope across the runs. When using spatial partitioning of train and test data, the spatial autocorrelation manifests itself in form of increased discrepancy between train and test data, and gives a more accurate picture of overall model performance. In our case, the pseudo $R^2$ tells us that the models generated from the test data are non-informative at best.
 
 ## Upshot
 It is difficult to evaluate the validity of analysis based on spatial data without checking for spatial autocorrelation, and properly dealing with it if necessary. Despite this, I keep coming across studies in economics, planning, geography and other social sciences that don't check for spatial autocorrelation despite relying heavily on spatial data. 

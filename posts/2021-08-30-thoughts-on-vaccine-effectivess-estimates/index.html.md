@@ -35,7 +35,7 @@ To turn this data into useful information we need to specify what question we ar
 Despite all this uncertainty, one thing is clear: **Vaccines are effective and everyone should get vaccinated as soon as possible.** We are aiming to transition to "endemic mode", which means, for better or worse (I have opinions), we are planning on COVID spreading through the population and everyone should expect to be either vaccinated, or contract COVID, or both.
 
 ## Vaccine effectiveness (and efficacy)
-First we need to clear up some terminology. Generally we are interested in the **causal effect** of vaccines, that is by how much the act of getting vaccinated causally lowers the risk of symptomatic COVID or hospitalization or death. The easiest way to ascertain this is through randomized controlled trials, as has been done as part of the vaccine accreditation process. Formally, **vaccine efficacy** against symptomatic COVID (or hospitalization) `\(Y\in\{0,1\}\)`, where `\(Y=1\)` means being a case or being hospitalized, depending on vaccine status `\(V\in\{v_0,v_1,v_2\}\)`, where `\(V=v_i\)` means being vaccinated with `\(i\)` doses, is given by the risk ratio
+First we need to clear up some terminology. Generally we are interested in the **causal effect** of vaccines, that is by how much the act of getting vaccinated causally lowers the risk of symptomatic COVID or hospitalization or death. The easiest way to ascertain this is through randomized controlled trials, as has been done as part of the vaccine accreditation process. Formally, **vaccine efficacy** against symptomatic COVID (or hospitalization) $Y\in\{0,1\}$, where $Y=1$ means being a case or being hospitalized, depending on vaccine status $V\in\{v_0,v_1,v_2\}$, where $V=v_i$ means being vaccinated with $i$ doses, is given by the risk ratio
 
 $$
 VE_i = 1-\frac{P(Y=1|do(V=v_i))}{P(Y=1|do(V=v_0))},\qquad v_i\in\{v_1,v_2\}.
@@ -44,7 +44,7 @@ A similar and more intuitive measure is the factor by which vaccinations offer p
 $$
 PF_i=\frac{1}{1-VE_i}=\frac{P(Y=1|do(V=v_0))}{P(Y=1|do(V=v_i))},\qquad v_i\in\{v_1,v_2\}.
 $$
-We will generally present results in terms of the **protective factor** `\(PF\)` instead of `\(VE\)`.
+We will generally present results in terms of the **protective factor** $PF$ instead of $VE$.
 
 In contrast, **vaccine effectiveness** is a much more vague concept. [Generally it is defined as follows:](https://www.who.int/news-room/feature-stories/detail/vaccine-efficacy-effectiveness-and-protection)
 
@@ -95,7 +95,7 @@ We will refer to this as the **naive model**.
 
 ## Estimating vaccine effectiveness in the naive model
 
-Under the assumptions of this model we can estimate several effects of interest: The effect of of vaccines on cases, the total effect of vaccines on hospitalizations, as well as the direct and indirect effects due to hospitalizations being mediated through cases. Formally we estimate the total vaccine effectiveness against symptomatic COVID or hospitalization `\(Y=1\)` using
+Under the assumptions of this model we can estimate several effects of interest: The effect of of vaccines on cases, the total effect of vaccines on hospitalizations, as well as the direct and indirect effects due to hospitalizations being mediated through cases. Formally we estimate the total vaccine effectiveness against symptomatic COVID or hospitalization $Y=1$ using
 
 $$
 P(Y=1|do(V=v_i)) = \sum_a P(Y=1|V=v_i,A=a)P(A=a).
@@ -117,7 +117,7 @@ To get a feel for the data we first compute simple case and hospitalization rate
 
 <img src="index_files/figure-html/ve-frequency-1.png" width="672" />
 
-As expected this shows that the frequency of cases and hospital admissions strongly depends on both age and vaccination status. We can interpret each bar in this table as giving `\(P(Y=1|V=v_i,A=a)\)`, where `\(Y\)` denotes the outcome of either cases or hospitalizations. Dividing the expressions for vaccination status `\(V=v_1\)` and `\(V=v_2\)` (1 or two dose) by the one for vaccination status `\(V=v_0\)` (no vaccination) gives the risk ratio in each category.
+As expected this shows that the frequency of cases and hospital admissions strongly depends on both age and vaccination status. We can interpret each bar in this table as giving $P(Y=1|V=v_i,A=a)$, where $Y$ denotes the outcome of either cases or hospitalizations. Dividing the expressions for vaccination status $V=v_1$ and $V=v_2$ (1 or two dose) by the one for vaccination status $V=v_0$ (no vaccination) gives the risk ratio in each category.
 
 What we are interested in is the causal (given our model) total effect of vaccinations on cases and hospitalizations. We can show the vaccine effectiveness for each age group separately, and also estimate the overall vaccine effectiveness by utilizing the adjustment formulas from above.
 

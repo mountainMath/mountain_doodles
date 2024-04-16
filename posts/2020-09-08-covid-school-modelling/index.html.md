@@ -150,7 +150,7 @@ We need to set some basic covid-related parameters that govern the spread. These
 
 <img src="index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
-The distribution of `\(R_0\)` sets the general infectiousness of the virus, and we will draw from this distribution to assign each person how infectious they are in our model.
+The distribution of $R_0$ sets the general infectiousness of the virus, and we will draw from this distribution to assign each person how infectious they are in our model.
 
 
 ```
@@ -171,7 +171,7 @@ Hospitalization (and death) is not a critical parameter for our model as childre
 
 
 
-Lastly we need to tell the model how to go from a general `\(R_0\)` to individual level pairwise transmission probabilities. We depart from the standard implementation of the model and replace the normalization by node degree by 6, essentially assuming that on average people have 6 close contacts a day outside of their home. This is a bit of a fudge factor, and the main reason that the estimates should not be used as predictions, but that we should look at relative usefulness of interventions. 
+Lastly we need to tell the model how to go from a general $R_0$ to individual level pairwise transmission probabilities. We depart from the standard implementation of the model and replace the normalization by node degree by 6, essentially assuming that on average people have 6 close contacts a day outside of their home. This is a bit of a fudge factor, and the main reason that the estimates should not be used as predictions, but that we should look at relative usefulness of interventions. 
 
 ## Testing and quarantine protocol
 Finally, we need to settle on the TTI protocol. Unfortunately we don't have details on how BC will do this. If what happened at Long Term Care centres can be a guide we won't be testing non-symptomatic contacts or classmates, and will be conservative in quarantining students. In the recent Metro Vancouver school exposure some students and staff were asked to self-quarantine for two weeks. The school was not told if the index case was a student or staff, or if students were exposed to an outside index case. This makes it hard to gain insight in how exactly TTI is handled in BC, but it does appear that BC is not employing broad testing like what has been done in Germany. But again, it is hard to draw too many conclusions from this since the details of the recent school exposure aren't known.

@@ -7,3 +7,4 @@
 /.quarto/
 _publish.yml
 _freeze/*
+_site/

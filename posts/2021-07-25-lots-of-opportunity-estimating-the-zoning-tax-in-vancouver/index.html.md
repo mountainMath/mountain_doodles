@@ -85,7 +85,7 @@ Next we need to estimate the extensive and intensive margins of land. To do this
 $$
 LV = c\cdot A^\beta,
 $$
-where `\(LV\)` is the land value, `\(A\)` is the lot area, `\(c\)` is a constant depending on the group of parcels, and `\(\beta\)` is the scaling exponent that describes the relationship. The choice of using log land value and log area is informed by general considerations of how people value things, we will have to check in the data how well it fits these model assumptions.
+where $LV$ is the land value, $A$ is the lot area, $c$ is a constant depending on the group of parcels, and $\beta$ is the scaling exponent that describes the relationship. The choice of using log land value and log area is informed by general considerations of how people value things, we will have to check in the data how well it fits these model assumptions.
 
 
 
@@ -108,7 +108,7 @@ To understand how the land values relate to lot areas within these groups we tak
 
 <img src="index_files/figure-html/analysis-test-1.png" width="768" />
 
-The fits aren't perfect, but generally pretty good. Some groups have their lot areas cluster at the extreme values, others have them distributed throughout. The slopes of these lines, the exponent `\(\beta\)` in our model, are generally quite similar, which is encouraging. This indicates that our model seems to make sense and fits the data reasonably well. The big caveat here is that this may well just be recovering assumptions baked into the BC Assessment model that estimates the land values in the first place, we will have to validate this against actual transaction prices further down in this post.
+The fits aren't perfect, but generally pretty good. Some groups have their lot areas cluster at the extreme values, others have them distributed throughout. The slopes of these lines, the exponent $\beta$ in our model, are generally quite similar, which is encouraging. This indicates that our model seems to make sense and fits the data reasonably well. The big caveat here is that this may well just be recovering assumptions baked into the BC Assessment model that estimates the land values in the first place, we will have to validate this against actual transaction prices further down in this post.
 
 
 

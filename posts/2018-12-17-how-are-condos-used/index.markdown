@@ -108,7 +108,7 @@ With the exception of Hamilton, the census condominium rental estimates are high
 We looked at two separate census estimates: the occupied (by permanent residents) units that come straight from the census by filtering occupied units for apartments that are stratified, and the overall condo estimate that we derived by adding in vacant and temporary units. With the exception of Montréal the census estimate of occupied units only comes quite close to the CMHC condominium universe estimate. The differences are worth looking into in more detail at some point.
 
 ### Waffle graphs
-To communicate the makeup of condominium apartments we settled on a custom version of a waffle graph. Displaying proportions on a square grid makes it easier to read them compared to pie charts or tree graphs. The 10x10 layout rounds numbers to percentage points, which is the appropriate level of accuracy given the uncertainty in the data and is intuitive to understand. When rounding to the nearest percentage, the numbers don’t always add up to 100. So we don’t do traditional rounding but round with the constraint that the total adds up to 100 while minimizing the `\(l_\infty\)` error.
+To communicate the makeup of condominium apartments we settled on a custom version of a waffle graph. Displaying proportions on a square grid makes it easier to read them compared to pie charts or tree graphs. The 10x10 layout rounds numbers to percentage points, which is the appropriate level of accuracy given the uncertainty in the data and is intuitive to understand. When rounding to the nearest percentage, the numbers don’t always add up to 100. So we don’t do traditional rounding but round with the constraint that the total adds up to 100 while minimizing the $l_\infty$ error.
 
 
 

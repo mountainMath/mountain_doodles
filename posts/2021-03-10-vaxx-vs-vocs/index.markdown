@@ -49,11 +49,11 @@ The other part we need to understand is the growth rate advantage that variants 
 
 
 
-Denmark does a lot of whole genome sequencing and is probably the cleanest data to look at the B.1.1.7 growth rate advantage. To estimate the growth rate advantage we note that over short time periods where behaviour and the susceptible population is relatively constant, the number of cases `\(C_0(t)\)` and `\(C_v(t)\)` for regular and variant cases is well approximated by
+Denmark does a lot of whole genome sequencing and is probably the cleanest data to look at the B.1.1.7 growth rate advantage. To estimate the growth rate advantage we note that over short time periods where behaviour and the susceptible population is relatively constant, the number of cases $C_0(t)$ and $C_v(t)$ for regular and variant cases is well approximated by
 $$
 C_0(t) = C_0 e^{r_0t}, \qquad C_v(t) = C_v e^{(r_a+r_0)t},
 $$
-where `\(C_0\)` and `\(C_v\)` are the number of regular and variant COVID-19 cases at time 0, `\(r_0\)` is the base growth rate for regular COVID-19 and `\(r_a\)` is the growth rate advantage of the B.1.1.7 variant. Taking the ratio of variant to non-variant cases
+where $C_0$ and $C_v$ are the number of regular and variant COVID-19 cases at time 0, $r_0$ is the base growth rate for regular COVID-19 and $r_a$ is the growth rate advantage of the B.1.1.7 variant. Taking the ratio of variant to non-variant cases
 
 $$
 \kappa = \frac{C_v(t)}{C_0(t)} = \frac{C_v}{C_0} e^{r_at}, \qquad\qquad \log(\kappa) = \hat c + r_a\cdot t

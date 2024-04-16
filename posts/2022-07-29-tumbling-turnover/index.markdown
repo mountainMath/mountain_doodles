@@ -167,7 +167,7 @@ By way of a primer, we might expect our one-year mobility rates to remain consta
 
 Sure enough, our one-year mobility rates climb the further back we go, mostly peaking somewhere in the middle. In many regions it looks like the 1-2 year mobility picks up the slack left by the 0-1 year mobility shares, providing some possible supporting evidence that there may be issues with how people benchmark their responses to the CHS timing of last move survey question. Definitely worth looking into further.
 
-Another way to look at this is to convert the data to 1-year equivalent mobility rates based on aggregate movers up to `\(n\)` years back. This attempts to account for frequent movers and is a cleaner way to view mobility rates.
+Another way to look at this is to convert the data to 1-year equivalent mobility rates based on aggregate movers up to $n$ years back. This attempts to account for frequent movers and is a cleaner way to view mobility rates.
 
 <img src="index_files/figure-html/unnamed-chunk-17-1.png" width="1200" />
 

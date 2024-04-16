@@ -52,6 +52,7 @@ fixup_latex <- function(pp){
       pp[latex_ends] <- gsub("\\\\\\)\\`","$",pp[latex_ends])
     }
   }
+  pp
 }
 
 fixup_author_info <- function(pp) {
@@ -160,7 +161,8 @@ fixup_metadata <- function(pp){
   pp |>
     fixup_author_info() |>
     fixup_key_image() |>
-    fixup_categories()
+    fixup_categories() |>
+    fixup_latex()
 }
 
 get_new_link <- function(link,bp){
@@ -266,66 +268,69 @@ for (post in old_markdown_posts) {
     lapply(as.data.frame) |> 
     bind_rows() |> 
     setNames(c("full","shortcode")) |>
-    as_tibble() |>
-    mutate(new_shortcode = case_when(
-      #grepl("tweet",shortcode) ~ paste0("tweet user=",user_lookup[str_extract(shortcode,"\\d+\\s*$") |> gsub("\\s","",x=_)]," id=",str_extract(shortcode,"\\d+\\s*$")),
-      TRUE ~ shortcode
-    ))
-
-  unhandled_short_codes <- short_codes |> filter(!grepl("img-post|tweet|figure|youtube",shortcode))
-  if (nrow(unhandled_short_codes)>0) print(unhandled_short_codes$full)
-  
-  img_post_codes <- short_codes |>
-    filter(grepl("img-post",shortcode)) |>
-    mutate(path=str_match(shortcode,"path=\"([^\"]+)\" ")[,2],
-           file=str_match(shortcode,"file=\"([^\"]+)\" ")[,2],
-           alt=str_match(shortcode,"alt=\"([^\"]+)\" ")[,2],
-           type=str_match(shortcode,"type=\"([^\"]+)\" ")[,2]) |>
-    mutate(image_path=file.path(path,file)) |>
-    rowwise() |>
-    mutate(new_image_path=get_new_link(image_path,new_post_path)) |>
-    ungroup() |>
-    mutate(new_shortcode = case_when(
-      type=="left" ~ paste0("<img src=\"",new_image_path,"\" alt=\"",alt,"\" style=\"width:45%;margin:0 5% 4px 0;float:left;\" />"),
-      type=="right" ~ paste0("<img src=\"",new_image_path,"\" alt=\"",alt,"\" style=\"width:45%;margin:0 0 4px 5%;float:right;\" />"),
-      TRUE ~ "xxxx"
-    ))
-
-  if (nrow(img_post_codes |> filter(new_shortcode=="xxxx"))>0) {
-    stop("unknown image type in shortcodes")
-  }
-  if (nrow(img_post_codes)>0) for (i in 1:nrow(img_post_codes)) {
-    pp <- str_replace_all(pp,img_post_codes$full[i] |>
-                            gsub("\\{","\\\\{",x=_) |>
-                            gsub("\\}","\\\\}",x=_),
-                          img_post_codes$new_shortcode[i])
-  }
-  
-
-    
-  figure_codes <- short_codes |>
-    filter(grepl("\\<\\s*figure",shortcode)) |>
-    mutate(image_path=str_match(shortcode,"src=\"([^\"]+)\"")[,2],
-           link=str_match(shortcode,"link=\"([^\"]+)\"")[,2],
-           title=str_match(shortcode,"title=\"([^\"]+)\"")[,2],
-           class=str_match(shortcode,"class=\"([^\"]+)\"")[,2])  |>
-    #mutate(class=strsplit(class," ") |> lapply(\(x)paste0(".",x) |> paste0(collapse=" ")) |> unlist()) |>
-    mutate(new_shortcode = case_when(
-      is.na(link) ~ paste0("![](",image_path,")"),
-      TRUE ~ paste0("[![](",image_path,")](",link,")"),
-    )) |>
-    mutate(new_shortcode = case_when(
-      is.na(class) ~ paste0("<figure> ",new_shortcode," <figcaption>",title,"</figcaption></figure>"),
-      TRUE ~ paste0("<figure class=\"",class,"\"> ",new_shortcode," <figcaption>",title,"</figcaption></figure>"),
+    as_tibble()
+  if (nrow(short_codes)>0) {
+    short_codes <- short_codes |>
+      mutate(new_shortcode = case_when(
+        #grepl("tweet",shortcode) ~ paste0("tweet user=",user_lookup[str_extract(shortcode,"\\d+\\s*$") |> gsub("\\s","",x=_)]," id=",str_extract(shortcode,"\\d+\\s*$")),
+        TRUE ~ shortcode
       ))
-  
-  if (nrow(figure_codes)>0) for (i in 1:nrow(figure_codes)) {
-    pp <- str_replace_all(pp,figure_codes$full[i] |>
-                            gsub("\\{","\\\\{",x=_) |>
-                            gsub("\\}","\\\\}",x=_),
-                          figure_codes$new_shortcode[i])
+    
+    unhandled_short_codes <- short_codes |> filter(!grepl("img-post|tweet|figure|youtube",shortcode))
+    if (nrow(unhandled_short_codes)>0) print(unhandled_short_codes$full)
+    
+    img_post_codes <- short_codes |>
+      filter(grepl("img-post",shortcode)) |>
+      mutate(path=str_match(shortcode,"path=\"([^\"]+)\" ")[,2],
+             file=str_match(shortcode,"file=\"([^\"]+)\" ")[,2],
+             alt=str_match(shortcode,"alt=\"([^\"]+)\" ")[,2],
+             type=str_match(shortcode,"type=\"([^\"]+)\" ")[,2]) |>
+      mutate(image_path=file.path(path,file)) |>
+      rowwise() |>
+      mutate(new_image_path=get_new_link(image_path,new_post_path)) |>
+      ungroup() |>
+      mutate(new_shortcode = case_when(
+        type=="left" ~ paste0("<img src=\"",new_image_path,"\" alt=\"",alt,"\" style=\"width:45%;margin:0 5% 4px 0;float:left;\" />"),
+        type=="right" ~ paste0("<img src=\"",new_image_path,"\" alt=\"",alt,"\" style=\"width:45%;margin:0 0 4px 5%;float:right;\" />"),
+        TRUE ~ "xxxx"
+      ))
+    
+    if (nrow(img_post_codes |> filter(new_shortcode=="xxxx"))>0) {
+      stop("unknown image type in shortcodes")
+    }
+    if (nrow(img_post_codes)>0) for (i in 1:nrow(img_post_codes)) {
+      pp <- str_replace_all(pp,img_post_codes$full[i] |>
+                              gsub("\\{","\\\\{",x=_) |>
+                              gsub("\\}","\\\\}",x=_),
+                            img_post_codes$new_shortcode[i])
+    }
+    
+    figure_codes <- short_codes |>
+      filter(grepl("\\<\\s*figure",shortcode)) |>
+      mutate(image_path=str_match(shortcode,"src=\"([^\"]+)\"")[,2],
+             link=str_match(shortcode,"link=\"([^\"]+)\"")[,2],
+             title=str_match(shortcode,"title=\"([^\"]+)\"")[,2],
+             class=str_match(shortcode,"class=\"([^\"]+)\"")[,2])  |>
+      #mutate(class=strsplit(class," ") |> lapply(\(x)paste0(".",x) |> paste0(collapse=" ")) |> unlist()) |>
+      mutate(new_shortcode = case_when(
+        is.na(link) ~ paste0("![](",image_path,")"),
+        TRUE ~ paste0("[![](",image_path,")](",link,")"),
+      )) |>
+      mutate(new_shortcode = case_when(
+        is.na(class) ~ paste0("<figure> ",new_shortcode," <figcaption>",title,"</figcaption></figure>"),
+        TRUE ~ paste0("<figure class=\"",class,"\"> ",new_shortcode," <figcaption>",title,"</figcaption></figure>"),
+      ))
+    
+    if (nrow(figure_codes)>0) for (i in 1:nrow(figure_codes)) {
+      pp <- str_replace_all(pp,figure_codes$full[i] |>
+                              gsub("\\{","\\\\{",x=_) |>
+                              gsub("\\}","\\\\}",x=_),
+                            figure_codes$new_shortcode[i])
+    }
+    
   }
-
+  
+  
   html_image_links <- str_match_all(pp,html_image_grep_string) |> 
     lapply(as.data.frame) |> 
     bind_rows() |> 
@@ -340,11 +345,11 @@ for (post in old_markdown_posts) {
   
   
   
-  link_table <- bind_rows(html_image_links,markdown_image_links) |> 
-    select(link) |>
-    distinct()
+  link_table <- bind_rows(html_image_links,markdown_image_links) 
   if (nrow(link_table)>0) {
     link_table <- link_table |>
+      select(link) |>
+      distinct() |>
       rowwise() |>
       mutate(new_link = get_new_link(link,new_post_path)) |>
       filter(new_link!=link)
@@ -408,9 +413,6 @@ for (post in new_posts) {
   pp <- c(pp[1:(end_of_yaml-1)], "aliases:", paste0("  - /blog/", gsub("-","/",date), "/",slug,"/"), pp[end_of_yaml:length(pp)])
   
   pp <- fixup_metadata(pp)
-
-  
- 
   
   pp <- pp |> str_replace_all("\\{\\{< blogdown/postref >\\}\\}","")
   
@@ -420,8 +422,10 @@ for (post in new_posts) {
     setNames(c("full","shortcode")) |>
     as_tibble()
   
-  unhandled_short_codes <- short_codes |> filter(!grepl("img-post|tweet|figure|youtube",shortcode))
-  if (nrow(unhandled_short_codes)>0) print(unhandled_short_codes$full)
+  if (nrow(short_codes)>0)  {
+    unhandled_short_codes <- short_codes |> filter(!grepl("img-post|tweet|figure|youtube",shortcode))
+    if (nrow(unhandled_short_codes)>0) print(unhandled_short_codes$full)
+  }
   
   
   html_image_links <- str_match_all(pp,html_image_grep_string) |> 
