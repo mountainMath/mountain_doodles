@@ -26,4 +26,4 @@ code-tools:
 
 keep-md: true
 downloads: [pdf, epub]
- 
+editor: source

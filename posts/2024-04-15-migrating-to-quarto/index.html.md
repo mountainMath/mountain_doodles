@@ -9,6 +9,8 @@ categories:
   - geeky
 description: 'Some overdue housekeeping and a new look for the blog.'
 image: "images/blog_preview.png"
+code-tools:
+  toggle: true
 ---
 
 
@@ -42,7 +44,7 @@ Here is a simple example that pulls in all item and rent CPI time series directl
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="38" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="40" source-offset="0"}
 vegalite({
   data: {values: transformedData},
   vconcat:[{
@@ -111,7 +113,7 @@ One fun part about observable is that the order of the code chunks does not matt
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="94" source-offset="-0"}
+```{.js .cell-code code-fold="undefined" startFrom="96" source-offset="-0"}
 vectors = {return {
   41690973: "All items",
   41691052: "Rent",
@@ -145,7 +147,7 @@ data = d3.json("https://www150.statcan.gc.ca/t1/wds/rest/getDataFromVectorsAndLa
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="107" source-offset="-0"}
+```{.js .cell-code code-fold="undefined" startFrom="109" source-offset="-0"}
 vegalite = require("@observablehq/vega-lite@0.1")
 d3 = require("https://d3js.org/d3.v5.min.js")
 

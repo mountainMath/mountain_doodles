@@ -9,6 +9,8 @@ categories:
   - geeky
 description: 'Some overdue housekeeping and a new look for the blog.'
 image: "images/blog_preview.png"
+code-tools:
+  toggle: true
 ---
 
 I started this blog 10 years ago, first using a jekyll setup. In 2017 I switched to [blogdown](https://bookdown.org/yihui/blogdown/), which linked the posts with the Rmarkdown notebook that generated the content. The setup aimed at maximum transparency, with the source living in a [public Github repository](https://github.com/mountainMath/mountaindoodles) that keeps all changes transparent, and deploys to the website via [Netlify](https://www.netlify.com) directly triggered from the GitHub repo when it changed. That means the website of the blog was always in sync with the repository, and the repository contained the entire history of the blog.

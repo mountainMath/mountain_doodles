@@ -56,6 +56,30 @@ website:
       header: "**Too much data, too little time**"
       footer: Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at [MountainMath](https://mountainmath.ca).
       contents:
+        - section: "**CensusMapper**"
+          contents:
+            - text: "View and create maps based on Canadian census data"
+              href: "https://censusmapper.ca"
+        - section: "**Book project**"
+          contents:
+            - text: "Analyzing Canadian Demographic and Housing Data"
+              href: "https://mountainmath.github.io/canadian_data/"
+        - section: "**R packages**"
+          contents:
+            - text: "**cancensus**: Access Canadian census data"
+              href: "https://mountainmath.github.io/cancensus/"
+            - text: "**cansim**: Access StatCan data tables"
+              href: "https://mountainmath.github.io/cansim/"
+            - text: "**tongfen**: Making fine-geography census data comparable across time"
+              href: "https://mountainmath.github.io/tongfen/"
+            - text: "**cmhc**: Accessing CMHC data"
+              href: "https://mountainmath.github.io/cmhc/"
+            - text: "**canbank**: Accessing Bank of Canda data"
+              href: "https://mountainmath.github.io/canbank/"
+            - text: "**VancouvR**: Accessing City of Vancouver Open Data"
+              href: "https://mountainmath.github.io/VancouvR/"
+            - text: "**canpumf**: Accessing and working with StatCan PUMF data"
+              href: "https://mountainmath.github.io/canpumf/"
         - section: "Other Canadian data focused blogs:"
           contents:
             - text: "HomeFreeSociology"

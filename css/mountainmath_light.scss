@@ -41,7 +41,7 @@ $body-color:                $black !default;
     @return mix($body-bg, $body-color, $weight);
 }
 
-$primary:       darkred !default;
+$primary:       $midred !default;
 $secondary:     body-mix(85%) !default;
 //$secondary:     $gray-600 !default;
 $success:       $green !default;
@@ -49,7 +49,7 @@ $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-200 !default;
-$dark:          $gray-700 !default;
+$dark:          $gray-700 !default; // $midred !default; //
 
 $min-contrast-ratio:   2.05 !default;
 
@@ -64,7 +64,7 @@ $font-family-sans-serif:      Lato, -apple-system, BlinkMacSystemFont, "Segoe UI
 $h1-font-size:                2.5rem !default;
 $h2-font-size:                2rem !default;
 $h3-font-size:                1.7rem !default;
-$text-muted:                  body-mix(75%) !default;
+// $text-muted:                  body-mix(75%) !default;
 
 // Tables
 
