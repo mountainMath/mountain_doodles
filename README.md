@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c6595a91-01fb-4d84-97be-6b8c27a34832/deploy-status)](https://app.netlify.com/sites/mountaindoodles/deploys)
+<!--[![Netlify Status](https://api.netlify.com/api/v1/badges/c6595a91-01fb-4d84-97be-6b8c27a34832/deploy-status)](https://app.netlify.com/sites/mountaindoodles/deploys)-->
 
 <!-- badges: end -->
 
