@@ -11,8 +11,8 @@ license: "CC BY"
 
 citation:
   type: post-weblog
-  container-title: MountanDoodles
-  #publisher: MountanDoodles
+  container-title: MountainDoodles
+  #publisher: MountainDoodles
   
 execute:
   echo: true
