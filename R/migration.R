@@ -91,6 +91,8 @@ fixup_author_info <- function(pp) {
             pp <- add_affiliation(pp,i,"UBC, Department of Dentistry")
           } else if (grepl("Lauster",pp[i])) {
             pp <- add_affiliation(pp,i,"UBC, Department of Sociology")
+          } else {
+            pp <- add_affiliation(pp,i,"\\quad") # empty placeholder
           }
         }
       }

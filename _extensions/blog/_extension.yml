@@ -1,0 +1,26 @@
+title: Blog
+author: Jens von Bergmann
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  format:
+    pdf:
+      filters:
+        - titlepage-theme.lua
+        - coverpage-theme.lua
+        - remove_code_blocks.lua
+        - remove_crosspost_text.lua
+      template-partials:
+        - "_coverpage.tex"
+        - "_author-affiliation-themes.tex"
+        - "_header-footer-date-themes.tex"
+        - "_title-themes.tex"
+        - "_titlepage.tex"
+        - "before-body.tex"
+        - "pandoc.tex"
+      toc: false
+      papersize: letter
+      include-in-header: header.tex
+  html:
+    filters:
+      - no_html_abstract.lua

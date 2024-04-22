@@ -13,17 +13,22 @@ categories:
   - cmhc
 tags: []
 description: 'We estimate that planning decisions preventing apartment buildings built in the past 5 years in Metro Vancouver from being on average 20% taller are resulting in an annual redistribution of income from renters to existing landlords on the order of half a billion dollars across the region via higher rents.'
+pdf_abstract: 'We estimate that planning decisions preventing apartment buildings built in the past 5 years in Metro Vancouver from being on average 20% taller are resulting in an annual redistribution of income from renters to existing landlords on the order of half a billion dollars across the region via higher rents.'
 featured: ''
 image: "images/larch56v.png"
 featuredalt: ""
 featuredpath: ""
 linktitle: ''
 type: "post"
+format:
+  html: default
+  blog-pdf:
+    output-file: 'what-if-recent-apartment-buildings-in-vancouver-were-20-taller'
 aliases:
   - /blog/2024/04/11/what-if-recent-apartment-buildings-in-vancouver-were-20-taller/
 ---
 
-<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/04/11/what-if-recent-apartment-buildings-in-vancouver-were-20-taller/" target="_blank">HomeFreeSociology</a>)</i></p> 
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/04/11/what-if-recent-apartment-buildings-in-vancouver-were-20-taller/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
 

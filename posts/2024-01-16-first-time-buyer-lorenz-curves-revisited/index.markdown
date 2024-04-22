@@ -2,6 +2,7 @@
 title: First time buyer Lorenz curves revisited
 author: 
   - name: "Keith Stewart"
+    affiliation: "\\quad"
   - name: "Jens von Bergmann"
     affiliation: "MountainMath"
 date: '2024-01-16'
@@ -22,6 +23,14 @@ linktitle: ''
 type: "post"
 aliases:
   - /blog/2024/01/16/first-time-buyer-lorenz-curves-revisited/
+pdf_abstract: |
+  This article expands on our [previous work](https://doodles.mountainmath.ca/posts/2020-09-28-first-time-buyer-lorenz-curves/index.html) on Lorenz curves and derived GINI index by adding in 2021 data, and adding the discretization into two metrics, the aggregate unaffordability that approximates the GINI index, and the high-income skew that captures the degree to which lower income earners do worse than higher income earners. We also included property taxes, as rates differ across metro areas and across time, and this makes a significant difference. Property tax rates were taken from the central municipalities, this could use refinement in future iterations.
+  
+  This could be expanded on by using higher frequency data like home transactions and the Canadian Income Survey to allow closer monitoring of first time buyer affordability.
+format:
+  html: default
+  blog-pdf:
+    output-file: first-time-buyer-lorenz-curves-revisited
 ---
 
 

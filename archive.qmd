@@ -13,4 +13,5 @@ listing:
 page-layout: article
 title-block-banner: false
 comments: false
+sidebar: sidebar-main
 ---

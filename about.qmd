@@ -2,6 +2,7 @@
 title: "About"
 image: profile.jpg
 comments: false
+sidebar: sidebar-main
 about:
   template: jolla
   links:

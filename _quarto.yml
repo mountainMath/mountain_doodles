@@ -3,6 +3,8 @@ project:
   render:
     - "*.qmd"
     - "*.markdown"
+  post-render: 
+    - R/copy_images_html_data.R
 
 website:
   title: "Mountain Doodles"
@@ -36,6 +38,7 @@ website:
         href: index.xml
         aria-label: RSS
   sidebar:
+    - id: sidebar-main
       style: "docked"
       search: false
       tools:
@@ -64,7 +67,7 @@ website:
           contents:
             - text: "Analyzing Canadian Demographic and Housing Data"
               href: "https://mountainmath.github.io/canadian_data/"
-        - section: "**R packages**"
+        - section: "**R packages (CRAN)**"
           contents:
             - text: "**cancensus**: Access Canadian census data"
               href: "https://mountainmath.github.io/cancensus/"
@@ -74,12 +77,18 @@ website:
               href: "https://mountainmath.github.io/tongfen/"
             - text: "**cmhc**: Accessing CMHC data"
               href: "https://mountainmath.github.io/cmhc/"
-            - text: "**canbank**: Accessing Bank of Canda data"
-              href: "https://mountainmath.github.io/canbank/"
             - text: "**VancouvR**: Accessing City of Vancouver Open Data"
               href: "https://mountainmath.github.io/VancouvR/"
+        - section: "**R packages (GitHub)**"
+          contents:
+            - text: "**canbank**: Accessing Bank of Canda data"
+              href: "https://mountainmath.github.io/canbank/"
             - text: "**canpumf**: Accessing and working with StatCan PUMF data"
               href: "https://mountainmath.github.io/canpumf/"
+        - section: "**Archives**"
+          contents:
+            - text: "Previous version of Mountain Doodles"
+              href: "mountaindoodles-archived.netlify.app"
         - section: "Other Canadian data focused blogs:"
           contents:
             - text: "HomeFreeSociology"
@@ -94,6 +103,26 @@ website:
               href: "https://deny.substack.com"
             - text: "Alex Usher's blog"
               href: "https://higheredstrategy.com/author/alex/"
+    - id: sidebar-posts
+      style: "docked"
+      search: false
+      tools:
+      - icon: github
+        href: https://github.com/mountainMath
+        aria-label: GitHub
+      - icon: twitter
+        href: https://twitter.com/vb_jens
+        aria-label: Twitter
+      - icon: linkedin
+        href: https://www.linkedin.com/in/vb-jens/
+        aria-label: LinkedIn
+      - icon: envelope-at-fill
+        href: mailto:jens@mountainmath.ca
+        aria-label: Email
+      # title: "Mountain Doodles"
+      logo: images/profile.jpg
+      header: "**Too much data, too little time**"
+      footer: Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at [MountainMath](https://mountainmath.ca).
 
   google-analytics: 
     tracking-id: "UA-54516567-1"
@@ -125,6 +154,7 @@ format:
       dark: css/mountainmath_dark.scss
     css: css/styles.css
     page-layout: article
+    #toc-location: 'left'
     mainfont: "Roboto"
     code-overflow: wrap
     code-fold: true

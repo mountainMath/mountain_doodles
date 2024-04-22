@@ -27,3 +27,21 @@ code-tools:
 keep-md: true
 downloads: [pdf, epub]
 editor: source
+
+titlepage-header: "Mountain Doodles"
+titlepage-logo: "../../images/mm_stamp_small_alpha.png"
+titlepage: blog
+titlepage-theme:
+  logo-size: 1cm
+
+
+format:
+  html:
+    toc: true
+    toc-location: left
+    sidebar: sidebar-posts
+    grid:
+      margin-width:	50px
+
+
+
