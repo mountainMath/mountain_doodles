@@ -5,10 +5,11 @@ project:
     - "*.markdown"
   post-render: 
     - R/copy_images_html_data.R
+    - R/fixup_citations.R
 
 website:
   title: "Mountain Doodles"
-  site-url: https://doodletest.netlify.app
+  site-url: https://doodles.mountainmath.ca
   repo-url: https://github.com/mountainMath/mountain_doodles
   description: "Thoughts on housing, demographics and random things"
   reader-mode: true
@@ -163,5 +164,6 @@ format:
     code-copy: hover
     grid:
       sidebar-width: 400px
+      margin-width:	250px
 editor: source
 

@@ -265,7 +265,7 @@
         var legend = document.createElement('div');
         legend.id = "legend";
         var attribution = document.createElement('div');
-        attribution.innerHTML = '<b>Info/Details: <a href="https://doodles.mountainmath.ca" target="_blank">MountainDoodles</a></b>'
+        attribution.innerHTML = '<b>Info/Details: <a href="https://doodles.mountainmath.ca/posts/2024-04-23-population-timelines-update/" target="_blank">MountainDoodles</a></b>'
         this._container.appendChild(menu);
         this._container.appendChild(document.createElement('hr'));
         this._container.appendChild(legend);
@@ -529,7 +529,7 @@
       });
       noUiSlider.create(change_slider, {
         //start: [years.indexOf(year1),years.indexOf(year2)],
-        start: [0, 8],
+        start: [0, years.length-1],
         margin: 1,
         connect: true,
         step: 1,

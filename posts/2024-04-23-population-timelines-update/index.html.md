@@ -263,7 +263,7 @@ success <- sf_to_s3_gzip(geo_data %>% select(c(area,matches("^\\d{4}$"))),
 
 To better deal with the spikiness of the data we again turn to a separate interactive 3D visualization for the population data, showing both population density as well as change in population density.
 
-<a href="/html/yvr_pop_timeline_2021.html" target="_blank"><img src="/images/van_pop_timeline_2021.gif"/></a>
+<a href="/html/yvr_pop_timeline_2021.html" target="_blank"><img src="images/van_pop_timeline_2021.gif"/></a>
 
 <a class="btn btn-primary" href="/html/yvr_pop_timeline_2021.html" target="_blank">Explore interactive population change map</a>
 
@@ -290,7 +290,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-04-23 23:19:23 PDT"
+[1] "2024-04-24 12:44:00 PDT"
 ```
 
 
@@ -306,7 +306,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [e58dc20] 2024-04-24: fix references
+Head:     [5b8f6ac] 2024-04-24: add reference back in
 ```
 
 
