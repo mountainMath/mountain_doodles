@@ -29,3 +29,7 @@ img {
 .navbar-brand.navbar-brand-logo img.navbar-logo{
   max-height: 34px;
 }
+
+main.content {
+  max-width: 900px
+}

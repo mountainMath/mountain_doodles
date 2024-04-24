@@ -154,7 +154,7 @@ format:
       light: css/mountainmath_light.scss
       dark: css/mountainmath_dark.scss
     css: css/styles.css
-    page-layout: article
+    page-layout: full
     #toc-location: 'left'
     mainfont: "Roboto"
     code-overflow: wrap
@@ -164,6 +164,6 @@ format:
     code-copy: hover
     grid:
       sidebar-width: 400px
-      margin-width:	250px
+#      margin-width:	250px
 editor: source
 

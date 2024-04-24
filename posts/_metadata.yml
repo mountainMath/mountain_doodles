@@ -40,8 +40,8 @@ format:
     toc: true
     toc-location: left
     sidebar: sidebar-posts
-    grid:
-      margin-width:	50px
+    # grid:
+    #   margin-width:	50px
 
 
 

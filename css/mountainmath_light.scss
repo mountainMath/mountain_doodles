@@ -41,6 +41,15 @@ $body-color:                $black !default;
     @return mix($body-bg, $body-color, $weight);
 }
 
+.quarto-secondary-nav {
+   button i{
+    color: body-mix(60%);
+   }
+   .quarto-page-breadcrumbs .breadcrumb-item{
+    color: body-mix(60%);
+   }
+}
+
 $primary:       $midred !default;
 $secondary:     body-mix(85%) !default;
 //$secondary:     $gray-600 !default;
@@ -126,6 +135,7 @@ $list-group-disabled-bg:            $gray-200 !default;
 $breadcrumb-padding-y:              .375rem !default;
 $breadcrumb-padding-x:              .75rem !default;
 $breadcrumb-border-radius:          .25rem !default;
+//$breadcrumb-bg:                     body-mix(85%) !default;
 
 // Close
 
