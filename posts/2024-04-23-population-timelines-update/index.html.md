@@ -26,7 +26,7 @@ execute:
 
 
 
-Several years ago we did a post on long population timelines in Vancouver and Toronto. [@statcan_census_1971-2011] The underlying data came from a semi-custom tabulation of 1971 through 2011 census profile data on a uniform 2016 geography [@statisticscanada2018], which then could easily be joined with 2016 census data to map long timelines at fine geographies. For Vancouver we further refined this by mixing in [Metro Vancouver Land Use data](https://open-data-portal-metrovancouver.hub.arcgis.com/datasets/28de9170a9434974bffc24c119261310_1/explore?location=49.263389%2C-123.037293%2C15.72) to cut out underpopulated areas and make the map visually more appealing.
+Several years ago we did a post on long population timelines in Vancouver and Toronto. The underlying data came from a semi-custom tabulation of 1971 through 2011 census profile data on a uniform 2016 geography [@statcan_census_1971-2011], which then could easily be joined with 2016 census data to map long timelines at fine geographies. For Vancouver we further refined this by mixing in [Metro Vancouver Land Use data](https://open-data-portal-metrovancouver.hub.arcgis.com/datasets/28de9170a9434974bffc24c119261310_1/explore?location=49.263389%2C-123.037293%2C15.72) to cut out underpopulated areas and make the map visually more appealing.
 
 Since then we got new data from the 2021 census, and the Metro Vancouver land use data updated too. So we are overdue to update the post. One complication is that the 2021 data comes on 2021 geographies, but that problem is fairly easy to overcome using our TongFen package that automates the process to make geographic data comparable across census (and other) geographies. [@tongfen] And since in this case we are only looking at population data we can go a step further and use 2021 census blocks to match against 2016 dissemination areas.
 
@@ -287,7 +287,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-04-23 23:04:13 PDT"
+[1] "2024-04-23 23:11:08 PDT"
 ```
 
 
@@ -303,7 +303,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [abb8068] 2024-04-24: remove cached files
+Head:     [b392429] 2024-04-24: cleanup
 ```
 
 
@@ -334,37 +334,25 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] mountainmathHelpers_0.1.4 sf_1.0-14                
- [3] tongfen_0.3.6             lubridate_1.9.3          
- [5] forcats_1.0.0             stringr_1.5.1            
- [7] dplyr_1.1.4               purrr_1.0.2              
- [9] readr_2.1.4               tidyr_1.3.0              
-[11] tibble_3.2.1              ggplot2_3.5.0            
-[13] tidyverse_2.0.0           cancensus_0.5.8          
-
 loaded via a namespace (and not attached):
- [1] gtable_0.3.4        xfun_0.41           htmlwidgets_1.6.4  
- [4] lattice_0.21-9      tzdb_0.4.0          vctrs_0.6.5        
- [7] tools_4.3.2         generics_0.1.3      curl_5.2.0         
-[10] proxy_0.4-27        fansi_1.0.6         pkgconfig_2.0.3    
-[13] R.oo_1.25.0         KernSmooth_2.23-22  lifecycle_1.0.4    
-[16] git2r_0.33.0        compiler_4.3.2      munsell_0.5.0      
-[19] codetools_0.2-19    htmltools_0.5.7     class_7.3-22       
-[22] yaml_2.3.7          pillar_1.9.0        R.utils_2.12.3     
-[25] aws.s3_0.3.21       classInt_0.4-10     wk_0.9.1           
-[28] mime_0.12           tidyselect_1.2.0    digest_0.6.33      
-[31] stringi_1.8.3       fastmap_1.1.1       grid_4.3.2         
-[34] colorspace_2.1-0    cli_3.6.2           magrittr_2.0.3     
-[37] base64enc_0.1-3     utf8_1.2.4          aws.signature_0.6.0
-[40] e1071_1.7-14        withr_2.5.2         scales_1.3.0       
-[43] sp_2.1-2            timechange_0.2.0    httr_1.4.7         
-[46] rmarkdown_2.25      R.methodsS3_1.8.2   hms_1.1.3          
-[49] evaluate_0.23       knitr_1.45          rmapshaper_0.5.0   
-[52] V8_4.4.1            s2_1.1.4            rlang_1.1.3        
-[55] Rcpp_1.0.12         glue_1.7.0          DBI_1.1.3          
-[58] xml2_1.3.6          geojsonsf_2.0.3     rstudioapi_0.15.0  
-[61] jsonlite_1.8.8      R6_2.5.1            units_0.8-5        
+ [1] vctrs_0.6.5               cli_3.6.2                
+ [3] knitr_1.45                rlang_1.1.3              
+ [5] xfun_0.41                 generics_0.1.3           
+ [7] jsonlite_1.8.8            glue_1.7.0               
+ [9] colorspace_2.1-0          git2r_0.33.0             
+[11] htmltools_0.5.7           mountainmathHelpers_0.1.4
+[13] scales_1.3.0              fansi_1.0.6              
+[15] rmarkdown_2.25            grid_4.3.2               
+[17] munsell_0.5.0             evaluate_0.23            
+[19] tibble_3.2.1              fastmap_1.1.1            
+[21] yaml_2.3.7                lifecycle_1.0.4          
+[23] compiler_4.3.2            dplyr_1.1.4              
+[25] htmlwidgets_1.6.4         pkgconfig_2.0.3          
+[27] rstudioapi_0.15.0         digest_0.6.33            
+[29] R6_2.5.1                  tidyselect_1.2.0         
+[31] utf8_1.2.4                pillar_1.9.0             
+[33] magrittr_2.0.3            tools_4.3.2              
+[35] gtable_0.3.4              ggplot2_3.5.0            
 ```
 
 
