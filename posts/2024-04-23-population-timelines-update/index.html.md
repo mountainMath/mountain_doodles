@@ -26,7 +26,7 @@ execute:
 
 
 
-Several years ago we did a post on long population timelines in Vancouver and Toronto. The underlying data came from a semi-custom tabulation of 1971 through 2011 census profile data on a uniform 2016 geography [@statcan_census_1971-2011], which then could easily be joined with 2016 census data to map long timelines at fine geographies. For Vancouver we further refined this by mixing in [Metro Vancouver Land Use data](https://open-data-portal-metrovancouver.hub.arcgis.com/datasets/28de9170a9434974bffc24c119261310_1/explore?location=49.263389%2C-123.037293%2C15.72) to cut out underpopulated areas and make the map visually more appealing.
+Several years ago we did a post on long population timelines in Vancouver and Toronto. [@census-custom-timelines-2019] The underlying data came from a semi-custom tabulation of 1971 through 2011 census profile data on a uniform 2016 geography [@statcan_census_1971-2011], which then could easily be joined with 2016 census data to map long timelines at fine geographies. For Vancouver we further refined this by mixing in [Metro Vancouver Land Use data](https://open-data-portal-metrovancouver.hub.arcgis.com/datasets/28de9170a9434974bffc24c119261310_1/explore?location=49.263389%2C-123.037293%2C15.72) to cut out underpopulated areas and make the map visually more appealing.
 
 Since then we got new data from the 2021 census, and the Metro Vancouver land use data updated too. So we are overdue to update the post. One complication is that the 2021 data comes on 2021 geographies, but that problem is fairly easy to overcome using our TongFen package that automates the process to make geographic data comparable across census (and other) geographies. [@tongfen] And since in this case we are only looking at population data we can go a step further and use 2021 census blocks to match against 2016 dissemination areas.
 
@@ -275,7 +275,10 @@ The semi-custom tabulation we have been using solves a lot of these issues, at t
 
 As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2024-04-23-population-timelines-update/index.qmd) for anyone to reproduce or adapt for their own purposes.
 
-<details><summary>Reproducibility receipt</summary>
+<details>
+
+<summary>Reproducibility receipt</summary>
+
 
 ::: {.cell}
 
@@ -287,7 +290,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-04-23 23:11:08 PDT"
+[1] "2024-04-23 23:19:23 PDT"
 ```
 
 
@@ -303,7 +306,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [b392429] 2024-04-24: cleanup
+Head:     [e58dc20] 2024-04-24: fix references
 ```
 
 
@@ -358,5 +361,6 @@ loaded via a namespace (and not attached):
 
 :::
 :::
+
 
 </details>
