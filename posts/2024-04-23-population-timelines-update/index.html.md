@@ -4,11 +4,14 @@ authors:
   - name: Jens von Bergmann
     affiliation: MountainMath
 date: '2024-04-23'
-slug: migrating-to-quarto
+slug: population-timeline-updates
 categories:
-  - geeky
-description: 'A log overdue update on population timelines for Vancouver and Toronto, adding in 2021 data.'
-image: ""
+  - Vancouver
+  - Toronto
+  - density
+  - tongfen
+description: 'A long overdue update on population timelines for Vancouver and Toronto, adding in 2021 data for a 50 year fine geography population change timeline 1971 through 2021.'
+image: "index_files/figure-html/toronto_pop_change_1971_2021-1.png"
 bibliography: ../../common_literature.bib 
 code-tools:
   toggle: true
@@ -16,7 +19,7 @@ fig.width: 8
 execute:
   cache: true
   message: false
-  wanring: false
+  warning: false
 ---
 
 
@@ -41,65 +44,18 @@ labels <- c("Loss of over 100", "Loss of 50 to 100",
             "Gain of 5  to 10", "Gain of 10 to 25", "Gain of 25 to 50", "Gain of 50 to 100",
             "Gain over 100")
 colors <- RColorBrewer::brewer.pal(length(labels),"PiYG")
-toronto_city <- get_census("CA16",regions=list(CSD="3520005"),geo_format = 'sf')
-```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading geo data from local cache.
-```
-
-
-:::
-
-```{.r .cell-code}
+toronto_city <- get_census("CA16",regions=list(CSD="3520005"),geo_format = 'sf',quiet = TRUE)
 toronto_data <- get_census("CA16CT",regions=list(CMA="35535"),
                    vectors=c("1971"="v_CA1971x16_1","2016"="v_CA16_1"),
-                   level="DA",geo_format='sf') %>%
+                   level="DA",geo_format='sf',quiet = TRUE) %>%
   mutate(area=`Shape Area`*100) %>%
   mutate(change=`2016`-coalesce(`1971`,0)) %>%
   mutate(change_h=change/area) %>%
   mutate(change_d=cut(change_h,breaks=breaks,labels=labels))
-```
 
-::: {.cell-output .cell-output-stderr}
+toronto_2021 <- get_census("2021",regions=list(CMA="35535"),level="DB",quiet = TRUE)
+toronto_2016 <- get_census("2016",regions=list(CMA="35535"),level="DB",quiet = TRUE)
 
-```
-Reading vectors data from local cache.
-Reading geo data from local cache.
-```
-
-
-:::
-
-```{.r .cell-code}
-toronto_2021 <- get_census("2021",regions=list(CMA="35535"),level="DB")
-```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading vectors data from local cache.
-```
-
-
-:::
-
-```{.r .cell-code}
-toronto_2016 <- get_census("2016",regions=list(CMA="35535"),level="DB")
-```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading vectors data from local cache.
-```
-
-
-:::
-
-```{.r .cell-code}
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
   inner_join(toronto_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   inner_join(toronto_2016 |> select(DBUID2016=GeoUID,DAUID2016=DA_UID),by="DBUID2016") |>
@@ -128,7 +84,7 @@ bbox=sf::st_bbox(toronto_city %>% st_transform(st_crs(combined_data)))
 combined_data |>
   filter(`2021`>10|`1971`>10) |>
   ggplot() +
-  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf"),
+  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf",quiet = TRUE),
           fill="darkgrey") +
   geom_sf(linewidth=0.01,aes(fill=change_d)) +
   geom_water(tile_size_px=2048) +
@@ -139,15 +95,6 @@ combined_data |>
        fill="Change in ppl/ha") +
    coord_sf(datum=NA, xlim=c(bbox$xmin,bbox$xmax), ylim=c(bbox$ymin,bbox$ymax))
 ```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading geo data from local cache.
-```
-
-
-:::
 
 ::: {.cell-output-display}
 ![Toronto change in population density 1971-2021](index_files/figure-html/toronto_pop_change_1971_2021-1.png){width=672}
@@ -167,7 +114,7 @@ combined_data |>
   mutate(change_d=cut(change_h,breaks=breaks,labels=labels)) |>
   filter(`2021`>10|`2016`>10) |>
   ggplot() +
-  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf"),
+  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf",quiet = TRUE),
           fill="darkgrey") +
   geom_sf(linewidth=0.01,aes(fill=change_d)) +
   geom_water(tile_size_px=1024) +
@@ -178,15 +125,6 @@ combined_data |>
        fill="Change in ppl/ha") +
    coord_sf(datum=NA, xlim=c(bbox$xmin,bbox$xmax), ylim=c(bbox$ymin,bbox$ymax)) 
 ```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading geo data from local cache.
-```
-
-
-:::
 
 ::: {.cell-output-display}
 ![Toronto change in population density 2016-2021](index_files/figure-html/toronto_pop_change_2016_2021-1.png){width=672}
@@ -202,32 +140,9 @@ Next we turn to Vancouver. The population decline that's visible in Toronto's ce
 ::: {.cell}
 
 ```{.r .cell-code}
-data_2021 <- get_census("2021",regions=list(CMA="59933"),level="DB")
-```
+data_2021 <- get_census("2021",regions=list(CMA="59933"),level="DB",quiet = TRUE)
+data_2016 <- get_census("2016",regions=list(CMA="59933"),level="DB",quiet = TRUE)
 
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading vectors data from local cache.
-```
-
-
-:::
-
-```{.r .cell-code}
-data_2016 <- get_census("2016",regions=list(CMA="59933"),level="DB")
-```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading vectors data from local cache.
-```
-
-
-:::
-
-```{.r .cell-code}
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
   inner_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   inner_join(data_2016 |> select(DBUID2016=GeoUID,DAUID2016=DA_UID),by="DBUID2016") |>
@@ -235,43 +150,22 @@ db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB"
   tongfen:::get_tongfen_correspondence()
 
 tongfen_geos <- get_census("2016", regions=list(CMA="59933"), 
-                           level="DA", geo_format="sf") |>
+                           level="DA", geo_format="sf",quiet = TRUE) |>
   left_join(db_correspondence |>
               select(DAUID2016,TongfenID),by=c("GeoUID"="DAUID2016")) |>
   group_by(TongfenID) |>
   summarize(area_old=sum(`Shape Area`,na.rm=TRUE)*100,.groups="drop") 
-```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading geo data from local cache.
-```
 
 
-:::
-
-```{.r .cell-code}
 years=c(1971,seq(1981,2011,5))
 old_vectors <- years %>% map(function(y)paste0("v_CA",y,"x16_1")) %>% unlist %>% set_names(years)
 pop_data <- get_census("CA16CT",regions=list(CMA="59933"),
-                   vectors=c(old_vectors,c("2016"="v_CA16_1")),level="DA",labels = 'short') %>%
+                   vectors=c(old_vectors,c("2016"="v_CA16_1")),level="DA",quiet = TRUE) %>%
   select_at(c("GeoUID",years %>% as.character,"2016")) %>%
   mutate(GeoUID=recode(GeoUID,"59150062"="59153402")) |>
   group_by(GeoUID) %>%
   summarise_all(sum,na.rm=TRUE) 
-```
 
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading vectors data from local cache.
-```
-
-
-:::
-
-```{.r .cell-code}
 combined_data <- pop_data |>
   left_join(db_correspondence |> select(DAUID2016,TongfenID) |> unique(),by=c("GeoUID"="DAUID2016")) |>
   group_by(TongfenID) |>
@@ -298,7 +192,7 @@ tongfen_geos %>%
   mutate(change_d=cut(change_h,breaks=breaks,labels=labels)) |>
   filter(`2021`>10|`1971`>10) |>
   ggplot() +
-  geom_sf(data=get_census("2021",regions=list(CMA="59933"),geo_format="sf"),
+  geom_sf(data=get_census("2021",regions=list(CMA="59933"),geo_format="sf",quiet = TRUE),
           fill="darkgrey") +
   geom_sf(linewidth=0.01,aes(fill=change_d)) +
   geom_water(tile_size_px=1024) +
@@ -309,15 +203,6 @@ tongfen_geos %>%
        fill="Change in ppl/ha") +
   coord_bbox(metro_van_bbox('tight')) 
 ```
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Reading geo data from local cache.
-```
-
-
-:::
 
 ::: {.cell-output-display}
 ![Vancouver change in population density 1971-2021](index_files/figure-html/vancouver_pop_change_1971_2021-1.png){width=672}
@@ -362,48 +247,17 @@ tongfen_geos_lu <- tongfen_geos |>
   cut_to_land_use(lu_data |> filter(LU_Code %in% residential_land_uses))%>%
   mutate(area=st_area(.) |> as.numeric()) |>
   mutate(area=area/10000) 
-```
 
-::: {.cell-output .cell-output-stderr}
-
-```
-Warning in st_collection_extract.sfc(st_union(st_make_valid(land_uses)), : x is
-already of type POLYGON.
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-Warning: attribute variables are assumed to be spatially constant throughout
-all geometries
-```
-
-
-:::
-
-```{.r .cell-code}
 geo_data <- tongfen_geos_lu |>
   mutate(area=round(area,2)) |>
   rmapshaper::ms_simplify(keep = 0.75,keep_shapes = TRUE) %>%
   left_join(combined_data,by="TongfenID") 
 
 
-sf_to_s3_gzip(geo_data %>% select(c(area,matches("^\\d{4}$"))),
-              s3_bucket = "mountainmath",
-              s3_path = "yvr_timeline/yvr_pop_timeline_2021.geojson.gz")
+success <- sf_to_s3_gzip(geo_data %>% select(c(area,matches("^\\d{4}$"))),
+                         s3_bucket = "mountainmath",
+                         s3_path = "yvr_timeline/yvr_pop_timeline_2021.geojson.gz")
 ```
-
-::: {.cell-output .cell-output-stdout}
-
-```
-[1] TRUE
-```
-
-
-:::
 :::
 
 
@@ -418,3 +272,103 @@ To better deal with the spikiness of the data we again turn to a separate intera
 Unfortunately we only have the historic census data back to 1971 for the Vancouver and Toronto areas, there would be a lot of value in getting electronic census data at comparable geographies for all of Canada, or at least the major metropolitan areas. Using TongFen we can emulate that at a loss of geographic granularity, this is easy to do going back to 2001 and can be extended to 1996 which based on geographic matching with enumeration areas. StatCan now does make census data available in electronic form back to 1981, but 1976 and 1971 data is still not available. And census geographies in electronic form for the old censuses is also problematic.
 
 The semi-custom tabulation we have been using solves a lot of these issues, at this point it would probably be a lot more valuable if instead of continuing to release older census data on their original census geographies StatCan were to release the older census data on geographies based on the more modern system of geographies introduced with the 2001 census, or even better, just using 2021 geographies.
+
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2024-04-23-population-timelines-update/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+<details><summary>Reproducibility receipt</summary>
+
+::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "2024-04-23 23:04:13 PDT"
+```
+
+
+:::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Local:    main /Users/jens/R/mountain_doodles
+Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
+Head:     [abb8068] 2024-04-24: remove cached files
+```
+
+
+:::
+
+```{.r .cell-code}
+## Session info
+sessionInfo()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.4.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Vancouver
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] mountainmathHelpers_0.1.4 sf_1.0-14                
+ [3] tongfen_0.3.6             lubridate_1.9.3          
+ [5] forcats_1.0.0             stringr_1.5.1            
+ [7] dplyr_1.1.4               purrr_1.0.2              
+ [9] readr_2.1.4               tidyr_1.3.0              
+[11] tibble_3.2.1              ggplot2_3.5.0            
+[13] tidyverse_2.0.0           cancensus_0.5.8          
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.4        xfun_0.41           htmlwidgets_1.6.4  
+ [4] lattice_0.21-9      tzdb_0.4.0          vctrs_0.6.5        
+ [7] tools_4.3.2         generics_0.1.3      curl_5.2.0         
+[10] proxy_0.4-27        fansi_1.0.6         pkgconfig_2.0.3    
+[13] R.oo_1.25.0         KernSmooth_2.23-22  lifecycle_1.0.4    
+[16] git2r_0.33.0        compiler_4.3.2      munsell_0.5.0      
+[19] codetools_0.2-19    htmltools_0.5.7     class_7.3-22       
+[22] yaml_2.3.7          pillar_1.9.0        R.utils_2.12.3     
+[25] aws.s3_0.3.21       classInt_0.4-10     wk_0.9.1           
+[28] mime_0.12           tidyselect_1.2.0    digest_0.6.33      
+[31] stringi_1.8.3       fastmap_1.1.1       grid_4.3.2         
+[34] colorspace_2.1-0    cli_3.6.2           magrittr_2.0.3     
+[37] base64enc_0.1-3     utf8_1.2.4          aws.signature_0.6.0
+[40] e1071_1.7-14        withr_2.5.2         scales_1.3.0       
+[43] sp_2.1-2            timechange_0.2.0    httr_1.4.7         
+[46] rmarkdown_2.25      R.methodsS3_1.8.2   hms_1.1.3          
+[49] evaluate_0.23       knitr_1.45          rmapshaper_0.5.0   
+[52] V8_4.4.1            s2_1.1.4            rlang_1.1.3        
+[55] Rcpp_1.0.12         glue_1.7.0          DBI_1.1.3          
+[58] xml2_1.3.6          geojsonsf_2.0.3     rstudioapi_0.15.0  
+[61] jsonlite_1.8.8      R6_2.5.1            units_0.8-5        
+```
+
+
+:::
+:::
+
+</details>

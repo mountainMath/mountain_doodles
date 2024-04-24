@@ -19,7 +19,7 @@ fig.width: 8
 execute:
   cache: true
   message: false
-  wanring: false
+  warning: false
 ---
 
 ```{r setup, include=FALSE}
@@ -49,17 +49,17 @@ labels <- c("Loss of over 100", "Loss of 50 to 100",
             "Gain of 5  to 10", "Gain of 10 to 25", "Gain of 25 to 50", "Gain of 50 to 100",
             "Gain over 100")
 colors <- RColorBrewer::brewer.pal(length(labels),"PiYG")
-toronto_city <- get_census("CA16",regions=list(CSD="3520005"),geo_format = 'sf')
+toronto_city <- get_census("CA16",regions=list(CSD="3520005"),geo_format = 'sf',quiet = TRUE)
 toronto_data <- get_census("CA16CT",regions=list(CMA="35535"),
                    vectors=c("1971"="v_CA1971x16_1","2016"="v_CA16_1"),
-                   level="DA",geo_format='sf') %>%
+                   level="DA",geo_format='sf',quiet = TRUE) %>%
   mutate(area=`Shape Area`*100) %>%
   mutate(change=`2016`-coalesce(`1971`,0)) %>%
   mutate(change_h=change/area) %>%
   mutate(change_d=cut(change_h,breaks=breaks,labels=labels))
 
-toronto_2021 <- get_census("2021",regions=list(CMA="35535"),level="DB")
-toronto_2016 <- get_census("2016",regions=list(CMA="35535"),level="DB")
+toronto_2021 <- get_census("2021",regions=list(CMA="35535"),level="DB",quiet = TRUE)
+toronto_2016 <- get_census("2016",regions=list(CMA="35535"),level="DB",quiet = TRUE)
 
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
   inner_join(toronto_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
@@ -89,7 +89,7 @@ bbox=sf::st_bbox(toronto_city %>% st_transform(st_crs(combined_data)))
 combined_data |>
   filter(`2021`>10|`1971`>10) |>
   ggplot() +
-  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf"),
+  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf",quiet = TRUE),
           fill="darkgrey") +
   geom_sf(linewidth=0.01,aes(fill=change_d)) +
   geom_water(tile_size_px=2048) +
@@ -113,7 +113,7 @@ combined_data |>
   mutate(change_d=cut(change_h,breaks=breaks,labels=labels)) |>
   filter(`2021`>10|`2016`>10) |>
   ggplot() +
-  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf"),
+  geom_sf(data=get_census("2021",regions=list(CMA="35535"),geo_format="sf",quiet = TRUE),
           fill="darkgrey") +
   geom_sf(linewidth=0.01,aes(fill=change_d)) +
   geom_water(tile_size_px=1024) +
@@ -130,8 +130,8 @@ combined_data |>
 Next we turn to Vancouver. The population decline that's visible in Toronto's centrally located low-density neighbourhoods is muted in Vancouver, likely due secondary suites and laneway houses becoming legalized earlier in the central parts of the region.
 
 ```{r}
-data_2021 <- get_census("2021",regions=list(CMA="59933"),level="DB")
-data_2016 <- get_census("2016",regions=list(CMA="59933"),level="DB")
+data_2021 <- get_census("2021",regions=list(CMA="59933"),level="DB",quiet = TRUE)
+data_2016 <- get_census("2016",regions=list(CMA="59933"),level="DB",quiet = TRUE)
 
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
   inner_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
@@ -140,7 +140,7 @@ db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB"
   tongfen:::get_tongfen_correspondence()
 
 tongfen_geos <- get_census("2016", regions=list(CMA="59933"), 
-                           level="DA", geo_format="sf") |>
+                           level="DA", geo_format="sf",quiet = TRUE) |>
   left_join(db_correspondence |>
               select(DAUID2016,TongfenID),by=c("GeoUID"="DAUID2016")) |>
   group_by(TongfenID) |>
@@ -150,7 +150,7 @@ tongfen_geos <- get_census("2016", regions=list(CMA="59933"),
 years=c(1971,seq(1981,2011,5))
 old_vectors <- years %>% map(function(y)paste0("v_CA",y,"x16_1")) %>% unlist %>% set_names(years)
 pop_data <- get_census("CA16CT",regions=list(CMA="59933"),
-                   vectors=c(old_vectors,c("2016"="v_CA16_1")),level="DA",labels = 'short') %>%
+                   vectors=c(old_vectors,c("2016"="v_CA16_1")),level="DA",quiet = TRUE) %>%
   select_at(c("GeoUID",years %>% as.character,"2016")) %>%
   mutate(GeoUID=recode(GeoUID,"59150062"="59153402")) |>
   group_by(GeoUID) %>%
@@ -182,7 +182,7 @@ tongfen_geos %>%
   mutate(change_d=cut(change_h,breaks=breaks,labels=labels)) |>
   filter(`2021`>10|`1971`>10) |>
   ggplot() +
-  geom_sf(data=get_census("2021",regions=list(CMA="59933"),geo_format="sf"),
+  geom_sf(data=get_census("2021",regions=list(CMA="59933"),geo_format="sf",quiet = TRUE),
           fill="darkgrey") +
   geom_sf(linewidth=0.01,aes(fill=change_d)) +
   geom_water(tile_size_px=1024) +
@@ -235,9 +235,9 @@ geo_data <- tongfen_geos_lu |>
   left_join(combined_data,by="TongfenID") 
 
 
-sf_to_s3_gzip(geo_data %>% select(c(area,matches("^\\d{4}$"))),
-              s3_bucket = "mountainmath",
-              s3_path = "yvr_timeline/yvr_pop_timeline_2021.geojson.gz")
+success <- sf_to_s3_gzip(geo_data %>% select(c(area,matches("^\\d{4}$"))),
+                         s3_bucket = "mountainmath",
+                         s3_path = "yvr_timeline/yvr_pop_timeline_2021.geojson.gz")
 ```
 
 To better deal with the spikiness of the data we again turn to a separate interactive 3D visualization for the population data, showing both population density as well as change in population density.
@@ -252,7 +252,7 @@ Unfortunately we only have the historic census data back to 1971 for the Vancouv
 
 The semi-custom tabulation we have been using solves a lot of these issues, at this point it would probably be a lot more valuable if instead of continuing to release older census data on their original census geographies StatCan were to release the older census data on geographies based on the more modern system of geographies introduced with the 2001 census, or even better, just using 2021 geographies.
 
-As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2024-03-23-population-timeline-updates/index.Rmarkdown) for anyone to reproduce or adapt for their own purposes.
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2024-04-23-population-timelines-update/index.qmd) for anyone to reproduce or adapt for their own purposes.
 
 <details><summary>Reproducibility receipt</summary>
 ```{r cache=FALSE}
