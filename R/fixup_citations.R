@@ -36,7 +36,7 @@ for (path in paths) {
   citation_line <- which(pp==paste0("  url = {https://doodles.mountainmath.ca/posts/",base,"},"))
   
   if (length(citation_line)==1) {
-    pp[citation_line] <- paste0("  url = {https://doodles.mountainmath.ca/posts/",base,"/}")
+    pp[citation_line] <- paste0("  url = {https://doodles.mountainmath.ca/posts/",base,"/},")
   } else {
     if (noisy) warning("No bibtext citation found for ",base)
   }

@@ -4,6 +4,7 @@ authors:
   - name: Jens von Bergmann
     affiliation: MountainMath
 date: '2024-04-23'
+date-modified: '2024-04-24'
 slug: population-timeline-updates
 categories:
   - Vancouver
@@ -142,7 +143,8 @@ db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB"
 tongfen_geos <- get_census("2016", regions=list(CMA="59933"), 
                            level="DA", geo_format="sf",quiet = TRUE) |>
   left_join(db_correspondence |>
-              select(DAUID2016,TongfenID),by=c("GeoUID"="DAUID2016")) |>
+              select(DAUID2016,TongfenID) |> unique(),
+            by=c("GeoUID"="DAUID2016")) |>
   group_by(TongfenID) |>
   summarize(area_old=sum(`Shape Area`,na.rm=TRUE)*100,.groups="drop") 
 
@@ -253,6 +255,74 @@ Unfortunately we only have the historic census data back to 1971 for the Vancouv
 The semi-custom tabulation we have been using solves a lot of these issues, at this point it would probably be a lot more valuable if instead of continuing to release older census data on their original census geographies StatCan were to release the older census data on geographies based on the more modern system of geographies introduced with the 2001 census, or even better, just using 2021 geographies.
 
 As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2024-04-23-population-timelines-update/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+
+# Update 2024-04-24
+A quick update to address two questions that came up.
+
+Some people have asked about the reason for the population drop in some central areas in Vancouver and Toronto. The answer is fairly simple, over that time period, areas that did not add housing tended to loose population due to demographic shifts resulting in smaller average household sizes. In particular, families tend to have fewer children than they used to, and the share of homes occupied by childless seniors or widowed individuals has increased. There is nothing wrong with that, but we should allow neighbourhoods to add housing to compensate for that and grow beyond that to allow more people to live in job and amenity rich neighbourhoods.
+
+One caveat that bears repeating is that geocoding issues, which can occur especially in older censuses, might cause some spikes. If there is a spike visible in only one year, that's probably a geocoding issue.
+
+The other question was whether the [Toronto population change data will become available on CensusMapper](https://x.com/beheshtialex/status/1783288488206757943) like the [1971 to 2016 population change map](https://censusmapper.ca/maps/1658?index=0#12/43.6942/-79.4231). While possible in principle, extending the map to 2021 requires creating a new common geography based on 2016 and 2021 census geographies as described above and uploading it to CensusMapper together the the corresponding updated census variables. We have done that in the past for the 2011 and 2016 census geographies [@comparing-censuses.2017], which makes for great interactive maps comparing census profiles variables across these two censuses like the [net migration map](https://censusmapper.ca/maps/731?index=0#10/49.2620/-123.1142) that we quite like. While it would be valuable to do this for the 2016 and 2021 censuses for all of Canada and all levels of geography, it requires time which we right now can't justify spending on this. 
+
+What's relatively easy though is to simply make a one-off map of the population change for Toronto copying the work we did for the interactive one-off map for Vancouver above.
+
+```{r}
+data_2021 <- get_census("2021",regions=list(CMA="35535"),level="DB",quiet = TRUE)
+data_2016 <- get_census("2016",regions=list(CMA="35535"),level="DB",quiet = TRUE)
+
+db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
+  inner_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
+  inner_join(data_2016 |> select(DBUID2016=GeoUID,DAUID2016=DA_UID),by="DBUID2016") |>
+  select(DBUID2021,DAUID2016) |>
+  tongfen:::get_tongfen_correspondence()
+
+tongfen_geos <- get_census("2016", regions=list(CMA="35535"), 
+                           level="DA", geo_format="sf",quiet = TRUE) |>
+  left_join(db_correspondence |>
+              select(DAUID2016,TongfenID) |> unique(),by=c("GeoUID"="DAUID2016")) |>
+  group_by(TongfenID) |>
+  summarize(area=sum(`Shape Area`,na.rm=TRUE)*100,.groups="drop") 
+
+
+years=c(1971,seq(1981,2011,5))
+old_vectors <- years %>% map(function(y)paste0("v_CA",y,"x16_1")) %>% unlist %>% set_names(years)
+pop_data <- get_census("CA16CT",regions=list(CMA="35535"),
+                   vectors=c(old_vectors,c("2016"="v_CA16_1")),level="DA",quiet = TRUE) %>%
+  select_at(c("GeoUID",years %>% as.character,"2016")) %>%
+  group_by(GeoUID) %>%
+  summarise_all(sum,na.rm=TRUE) 
+
+combined_data <- pop_data |>
+  left_join(db_correspondence |> select(DAUID2016,TongfenID) |> unique(),by=c("GeoUID"="DAUID2016")) |>
+  group_by(TongfenID) |>
+  summarize(across(matches("^\\d{4}$"),\(x)sum(x,na.rm=TRUE)),.groups="drop") |>
+  full_join(data_2021 |> 
+              inner_join(db_correspondence |> 
+                           select(DBUID2021,TongfenID) |> 
+                           unique(),
+                         by=c("GeoUID"="DBUID2021")) |> 
+              summarize(`2021`=sum(Population,na.rm=TRUE),.by=TongfenID),
+            by="TongfenID")
+
+geo_data <- tongfen_geos |>
+  mutate(area=round(area,2)) |>
+  rmapshaper::ms_simplify(keep = 0.75,keep_shapes = TRUE) %>%
+  left_join(combined_data,by="TongfenID") 
+
+success <- geo_data |>
+  select(matches("\\d{4}"),area) |>
+  sf_to_s3_gzip(s3_bucket = "mountainmath",
+                s3_path = "yvr_timeline/yyz_pop_timeline_2021.geojson.gz")
+```
+
+This map is not as snazzy as the Vancouver one as it is not cut down by land use and the densities shown may get dragged down by parks, industrial areas, and other non-residential land uses, but it should still be useful.
+
+<a href="/html/yyz_pop_timeline_2021.html" target="_blank"><img src="images/yyz_pop_timeline_2021.gif"/></a>
+
+<a class="btn btn-primary" href="/html/yyz_pop_timeline_2021.html" target="_blank">Explore the interactive population change map for Toronto</a>
+
 
 <details>
 
