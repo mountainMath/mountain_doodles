@@ -365,7 +365,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-04-24 23:23:45 PDT"
+[1] "2024-04-26 09:19:50 PDT"
 ```
 
 
@@ -381,7 +381,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [2913adb] 2024-04-24: site layout tweaks
+Head:     [07095df] 2024-04-25: fix issue with citation generation
 ```
 
 
