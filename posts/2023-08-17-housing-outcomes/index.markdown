@@ -24,6 +24,14 @@ linktitle: ''
 type: "post"
 aliases:
   - /blog/2023/08/17/housing-outcomes/
+pdf_abstract: |
+  Most commonly used metrics use existing households as the base of analysis, but households are a consequence of housing pressures. This kind of misspecification is a form of collider or selection bias that, especially in tight housing markets, misleads researchers toward faulty conclusions and policy recommendations. It blinds researchers to the struggles of people who are unhappy about their current household living arrangement, like young adults struggling to move out of their parent’s place or out of a bad roommate setup, as well as people who have left their desired region and moved away, or failed to move in, because of the lack of housing options.
+  
+  This post explains the problem with analysis based solely on households in more detail, and explains why this will lead to incorrect diagnoses of our housing problems and misguided policy recommendations.
+format:
+  html: default
+  blog-pdf:
+    output-file: 'housing-outcomes'
 ---
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/08/17/housing-outcomes/" target="_blank">HomeFreeSociology</a>)</i></p>

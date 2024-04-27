@@ -20,6 +20,14 @@ linktitle: ''
 type: "post"
 aliases:
   - /blog/2023/02/20/investing-in-definitions-and-framing/
+pdf_abstract: |
+  With last week’s CHSP release of data on the investment status of residential properties and the framing of the accompanying article there has been a lot of rather uninformed and misleading news coverage.
+  
+  The misleading reporting, combined with sometimes plainly wrong statements by people quoted in the news coverage, on one hand highlights the poor understanding of housing in the public discourse. On the other hand it highlights the importance of providing careful framing with data releases. In general it is good practice to accompany a data release with a brief analysis to provide framing and context. Analysts close to the raw data will have a much better understanding of what the data is measuring and can properly frame the data. Unfortunately, StatCan fell short of doing so, and the overview analysis provided by StatCan itself contains a number of problems. Given the public attention this has gotten it’s probably worthwhile to take a look at what the data does and does not say, and to correct some of the misinterpretations that have been circulating.
+format:
+  html: default
+  blog-pdf:
+    output-file: 'investing-in-definitions-and-framing'
 ---
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/02/21/investing-in-definitions-and-framing/" target="_blank">HomeFreeSociology</a>)</i></p>

@@ -23,6 +23,12 @@ linktitle: ''
 type: "post"
 aliases:
   - /blog/2023/02/06/a-brief-history-of-vancouver-planning-development-regimes/
+pdf_abstract: |
+  This post focuses on the history of planning for housing in the City of Vancouver and divides time up into three rough regimes, which we call the Permissive Regime, the Zoning for Growth Regime, and the Spot Discretionary Regime. We explain the basic features of each of these planning regimes, and how they have affected how housing has been built -- or has been prevented from getting built in the city.
+format:
+  html: default
+  blog-pdf:
+    output-file: 'a-brief-history-of-vancouver-planning-development-regimes'
 ---
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/02/07/a-brief-history-of-vancouver-planning-development-regimes/" target="_blank">HomeFreeSociology</a>)</i></p>

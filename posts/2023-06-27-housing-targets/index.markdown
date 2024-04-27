@@ -21,6 +21,12 @@ linktitle: ''
 type: "post"
 aliases:
   - /blog/2023/06/27/housing-targets/
+pdf_abstract: |
+  This post lays out a framework for setting housing targets at the municipal level based on the assumption that we believe housing inherently provides value, and estimates targets for select Metro Vancouver municipalities to illustrate how this works. It emphasizes that any housing target methodology is based on underlying values that should be made explicit.
+format:
+  html: default
+  blog-pdf:
+    output-file: 'housing-targets'
 ---
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/06/27/housing-targets/" target="_blank">HomeFreeSociology</a>)</i></p>

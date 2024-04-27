@@ -21,6 +21,12 @@ linktitle: ''
 type: "post"
 aliases:
   - /blog/2023/06/20/metro-vancouver-planning-regimes/
+pdf_abstract: |
+  This post traces the role regional planning plays when it comes to coordinating planning for housing and population growth, especially in a heavily balkanized environment like Metro Vancouver (containing 21 municipalities, an electoral area, a First Nation Treaty Land, and, while not explicitly represented in Metro Vancouver planning processes, 16 First Nation reserves). We draw attention to a regime change in planning. Starting with plans from the 1970s, the GVRD moved away from coordinating for growth and toward gate management. This laid a strong foundation for housing scarcity, and Metro Vancouver has to this day continued to work toward perpetuating and deepening housing scarcity in the region through its projection and coordination work. While it is unclear how important the Metro Vancouver Regional Growth Strategies have been in coordinating municipal limits on housing development, they have at a minimum given cover to municipalities for perpetuating and deepening housing scarcity and spatial misallocation, shifting growth away from where people want to live.
+format:
+  html: default
+  blog-pdf:
+    output-file: 'metro-vancouver-planning-regimes'
 ---
 <script src="index_files/kePrint/kePrint.js"></script>
 <link href="index_files/lightable/lightable.css" rel="stylesheet" />
