@@ -41,7 +41,7 @@ for (path in paths) {
     if (noisy) warning("No bibtext citation found for ",base)
   }
 
-  author_line <- which(grepl("^  author = \\{.+\\},$",pp)&grepl("von Bergmann, Jens",pp))
+  author_line <- which(grepl("^  author = \\{.+",pp)&grepl("von Bergmann, Jens",pp))
   
   if (length(author_line)==1) {
     pp[author_line] <- gsub("von Bergmann, Jens","{von Bergmann}, Jens",pp[author_line])
@@ -67,6 +67,13 @@ for (path in paths) {
   } else {
     if (noisy) warning("No author link found for ",base)
   }
+  
+  attribution_line <- which(grepl("For attribution, please cite this work as",pp) & grepl("quarto-appendix-secondary-label",pp))
+  
+  if (grepl("von Bergmann, Jens",pp[attribution_line+1])) {
+    pp[attribution_line+1] <- gsub("von Bergmann, Jens","Jens von Bergmann",pp[attribution_line+1])
+  }
+  
   
   write_lines(pp,index_path)
 }
