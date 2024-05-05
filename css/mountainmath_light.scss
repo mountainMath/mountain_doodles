@@ -50,6 +50,10 @@ $body-color:                $black !default;
    }
 }
 
+.quarto-title-banner ul.dropdown-menu li a{
+    color: #442222;
+}
+
 $primary:       $midred !default;
 $secondary:     body-mix(85%) !default;
 //$secondary:     $gray-600 !default;
