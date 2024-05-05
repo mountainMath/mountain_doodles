@@ -50,8 +50,16 @@ $body-color:                $black !default;
    }
 }
 
-.quarto-title-banner ul.dropdown-menu li a{
-    color: #442222;
+.quarto-title-banner ul.dropdown-menu li a.dropdown-item{
+    color: body-mix(10%);
+}
+
+.quarto-title-banner ul.dropdown-menu li a.dropdown-item:hover{
+    color:body-mix(90%);
+}
+
+.quarto-title-banner ul.dropdown-menu li a.dropdown-item:focus{
+    color:body-mix(90%);
 }
 
 $primary:       $midred !default;
