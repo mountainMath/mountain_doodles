@@ -260,7 +260,7 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 # Update 2024-04-24
 A quick update to address two questions that came up.
 
-Some people have asked about the reason for the population drop in some central areas in Vancouver and Toronto. The answer is fairly simple, over that time period, areas that did not add housing tended to loose population due to demographic shifts resulting in smaller average household sizes. In particular, families tend to have fewer children than they used to, and the share of homes occupied by childless seniors or widowed individuals has increased. There is nothing wrong with that, but we should allow neighbourhoods to add housing to compensate for that and grow beyond that to allow more people to live in job and amenity rich neighbourhoods.
+Some people have asked about the reason for the population drop in some central areas in Vancouver and Toronto. The answer is fairly simple, over that time period, areas that did not add housing tended to lose population due to demographic shifts resulting in smaller average household sizes. In particular, families tend to have fewer children than they used to, and the share of homes occupied by childless seniors or widowed individuals has increased. There is nothing wrong with that, but we should allow neighbourhoods to add housing to compensate for that and grow beyond that to allow more people to live in job and amenity rich neighbourhoods.
 
 One caveat that bears repeating is that geocoding issues, which can occur especially in older censuses, might cause some spikes. If there is a spike visible in only one year, that's probably a geocoding issue.
 
