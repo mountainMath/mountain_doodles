@@ -26,7 +26,7 @@ We are big fans of measuring different densities, and conceptualizing density in
 
 When I saw the following tweet and linked blog post, I of course could not resist to reproduce some of the graphs and explore population-weighted densities.
 
-{{<tweet 1120496501824815105>}}
+{{<tweet 1120496501824815105 images/twitter_pb.png>}} 
 
 It [links to a great post](https://chartingtransport.com/2015/11/26/comparing-the-densities-of-australian-and-european-cities/) which you should definitely read. In this post we will take up the idea of population weighted densities and again employ the global GHS population grid to to compute these densities.
 
