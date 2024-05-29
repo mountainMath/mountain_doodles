@@ -1,11 +1,14 @@
 ---
 title: "About"
-image: profile.jpg
+image: images/profile.jpg
 comments: false
 sidebar: sidebar-main
 about:
   template: jolla
   links:
+    - icon: envelope-at-fill
+      text: Email
+      href: mailto:jens@mountainmath.ca
     - icon: twitter
       text: Twitter
       href: https://twitter.com/@vb_jens
@@ -18,3 +21,5 @@ about:
 ---
 
 Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at [MountainMath](https://mountainmath.ca).
+
+*Please do not contact us about sponsored posts, we do not consider sponsored posts of any type on this blog.*
