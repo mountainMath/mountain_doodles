@@ -8,4 +8,4 @@
 _publish.yml
 _site/
 posts/*/index_cache/*
-psts/*/index_cache/
+posts/*/index_cache/
