@@ -7,7 +7,7 @@ author:
     affiliation: UBC Sociology
 date: '2024-06-04'
 slug: doubling-up-distinguishing-families-from-households
-description: 'Households and Families frequently get mixed up in general housing discussions. We explore the differnce between the two and interpret it as doubling up, some of which is likely voluntary and some less so.'
+description: 'Households and Families frequently get mixed up in general housing discussions. We explore the difference between the two and interpret it as doubling up, some of which is likely voluntary and some less so.'
 pdf_abstract: "In the context of housing discussions in Canada (and elsewhere) households are often assumed as fixed. But households are malleable and frequently contain families and individuals \"doubling up\" who might prefer to live independently. Given underlying familial relationships, how people distribute into households is impacted by prevailing housing pressures. Understanding the interplay between rents (or prices) and household formation shows that a) using households as the basic unit of analysis for housing need is problematic, b) there is no path to affordability without building more housing, and c) it's important to pay close attention to the metrics used and how they relate to the theoretical framework."
 image: 'index_files/figure-html/fig-rent-doubling-up-1.png'
 bibliography: ../../common_literature.bib 
@@ -438,7 +438,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-06-04 15:32:57 PDT"
+[1] "2024-06-04 16:05:30 PDT"
 ```
 
 
@@ -454,7 +454,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [fe95f6d] 2024-06-04: fix link to nathan
+Head:     [ff0fda4] 2024-06-04: recompile
 ```
 
 
