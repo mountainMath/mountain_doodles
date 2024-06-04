@@ -8,7 +8,7 @@ author:
 date: '2024-06-04'
 slug: doubling-up-distinguishing-families-from-households
 description: 'Households and Families frequently get mixed up in general housing discussions. We explore the differnce between the two and interpret it as doubling up, some of which is likely voluntary and some less so.'
-pdf_abstract: "In the context of housing discussions in Canada (and elsewhere) households are often assumed as fixed. But households are malleable. Given underlying familial relationships, how people distribute into households is impacted by prevailing housing pressures. Understanding the interplay between rents (or prices) and household formation shows that a) using households as the basic unit of analysis for housing need is problematic, b) there is no path to affordability without building more housing, and c) it's important to pay close attention to the metrics used and how they relate to the theoretical framework."
+pdf_abstract: "In the context of housing discussions in Canada (and elsewhere) households are often assumed as fixed. But households are malleable and frequently contain families and individuals \"doubling up\" who might prefer to live independently. Given underlying familial relationships, how people distribute into households is impacted by prevailing housing pressures. Understanding the interplay between rents (or prices) and household formation shows that a) using households as the basic unit of analysis for housing need is problematic, b) there is no path to affordability without building more housing, and c) it's important to pay close attention to the metrics used and how they relate to the theoretical framework."
 image: 'index_files/figure-html/fig-rent-doubling-up-1.png'
 bibliography: ../../common_literature.bib 
 categories:
@@ -18,7 +18,7 @@ code-tools:
   toggle: true
 fig-width: 8
 execute:
-  cache: true
+  cache: false
   message: false
   warning: false
 format:
@@ -34,7 +34,7 @@ format:
 
 
 
-<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/06/04/doubling-up-distinguishing-families-from-households/" target="_blank">HomeFreeSociology</a>)</i></p>
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/06/04/doubling-up-distinguishing-families-and-households/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
 
@@ -458,7 +458,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-06-04 13:50:43 PDT"
+[1] "2024-06-04 15:33:08 PDT"
 ```
 
 
@@ -474,7 +474,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [5de0956] 2024-06-01: zoned capacity post
+Head:     [fe95f6d] 2024-06-04: fix link to nathan
 ```
 
 
@@ -511,33 +511,38 @@ other attached packages:
  [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] utf8_1.2.4                generics_0.1.3           
- [3] xml2_1.3.6                RSQLite_2.3.6            
- [5] stringi_1.8.4             hms_1.1.3                
- [7] digest_0.6.35             magrittr_2.0.3           
- [9] evaluate_0.23             grid_4.4.0               
-[11] timechange_0.3.0          blob_1.2.4               
-[13] fastmap_1.1.1             jsonlite_1.8.8           
-[15] DBI_1.2.2                 httr_1.4.7               
-[17] rvest_1.0.4               fansi_1.0.6              
-[19] scales_1.3.0              codetools_0.2-20         
-[21] cli_3.6.2                 crayon_1.5.2             
-[23] rlang_1.1.3               dbplyr_2.5.0             
-[25] bit64_4.0.5               munsell_0.5.1            
-[27] cachem_1.0.8              withr_3.0.0              
-[29] yaml_2.3.8                parallel_4.4.0           
-[31] tools_4.4.0               tzdb_0.4.0               
-[33] memoise_2.0.1             colorspace_2.1-0         
-[35] curl_5.2.1                vctrs_0.6.5              
-[37] R6_2.5.1                  git2r_0.33.0             
-[39] lifecycle_1.0.4           bit_4.0.5                
-[41] vroom_1.6.5               pkgconfig_2.0.3          
-[43] pillar_1.9.0              gtable_0.3.5             
-[45] glue_1.7.0                xfun_0.43                
-[47] tidyselect_1.2.1          rstudioapi_0.16.0        
-[49] knitr_1.46                htmltools_0.5.8.1        
-[51] rmarkdown_2.26            mountainmathHelpers_0.1.4
-[53] compiler_4.4.0           
+ [1] gtable_0.3.5              xfun_0.43                
+ [3] ggrepel_0.9.5             lattice_0.22-6           
+ [5] tzdb_0.4.0                vctrs_0.6.5              
+ [7] tools_4.4.0               generics_0.1.3           
+ [9] curl_5.2.1                parallel_4.4.0           
+[11] fansi_1.0.6               RSQLite_2.3.6            
+[13] blob_1.2.4                pkgconfig_2.0.3          
+[15] Matrix_1.7-0              dbplyr_2.5.0             
+[17] RColorBrewer_1.1-3        lifecycle_1.0.4          
+[19] git2r_0.33.0              compiler_4.4.0           
+[21] farver_2.1.2              munsell_0.5.1            
+[23] mountainmathHelpers_0.1.4 htmltools_0.5.8.1        
+[25] yaml_2.3.8                pillar_1.9.0             
+[27] crayon_1.5.2              cachem_1.0.8             
+[29] nlme_3.1-164              tidyselect_1.2.1         
+[31] rvest_1.0.4               digest_0.6.35            
+[33] stringi_1.8.4             splines_4.4.0            
+[35] labeling_0.4.3            fastmap_1.1.1            
+[37] grid_4.4.0                colorspace_2.1-0         
+[39] cli_3.6.2                 magrittr_2.0.3           
+[41] utf8_1.2.4                withr_3.0.0              
+[43] scales_1.3.0              bit64_4.0.5              
+[45] timechange_0.3.0          rmarkdown_2.26           
+[47] httr_1.4.7                bit_4.0.5                
+[49] sanzo_0.1.0               hms_1.1.3                
+[51] memoise_2.0.1             evaluate_0.23            
+[53] knitr_1.46                mgcv_1.9-1               
+[55] rlang_1.1.3               Rcpp_1.0.12              
+[57] glue_1.7.0                DBI_1.2.2                
+[59] xml2_1.3.6                rstudioapi_0.16.0        
+[61] vroom_1.6.5               jsonlite_1.8.8           
+[63] MetBrewer_0.2.0           R6_2.5.1                 
 ```
 
 
