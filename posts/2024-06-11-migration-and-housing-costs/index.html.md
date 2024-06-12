@@ -739,7 +739,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-06-11 19:14:18 PDT"
+[1] "2024-06-11 19:15:57 PDT"
 ```
 
 
@@ -755,7 +755,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [1840a13] 2024-06-04: spelling
+Head:     [a7ec969] 2024-06-12: leaving vancouver post
 ```
 
 
