@@ -292,10 +292,10 @@ bc_annual_all_miration_data <- all_migration_data_for(internal_data,external_dat
   mutate(Date=as.Date(paste0(Year,"-01-01")))
 
 bc_annual_simple <- bc_annual_all_miration_data |>
-  mutate(Migration=case_when(value<0 ~ "Out-migration",
-                             TRUE ~ "In-migration")) |>
-  summarize(value=sum(value),.by=c(Year,Migration)) %>%
-  bind_rows(summarize(.,value=sum(value),.by=Year) |> mutate(Migration="Net migration"))
+  # mutate(Migration=case_when(value<0 ~ "Out-migration",
+  #                            TRUE ~ "In-migration")) |>
+  summarize(value=sum(value),.by=c(Year,Migration)) #%>%
+  #bind_rows(summarize(.,value=sum(value),.by=Year) |> mutate(Migration="Net migration"))
 
 bc_2023_simple <- bc_annual_simple |> filter(Year==2023)
 
@@ -328,7 +328,7 @@ natural_data_2023 <- natural_data |> filter(Year=="2023")
 
 
 
-The pandemic effect and subsequent boom in non-permanent resident population^[There is a lot of misunderstanding about the nature of the increase in non-permanent residents out there, net non-permanent residents acts very differently from e.g. increases in immigration. The data generation process for net non-permanent residents act essentially like a derivative and tends to zero absent of policy changes, but can temporarily rise (or fall) when hiring caps or student visa policies are changed.], as well as changes to permanent resident quotas, come out much more strongly here. So in total 450,106 people moved to BC in 2023, and 86,870 left BC, for a net increase due to migration of 363,236 people. Rounding this out, because population change is the sum of net migration + births - deaths, we can see that even more 41,019 people were born in BC at the same time that -44,122 died. Looking at only births and deaths leaves us with a net decrease of  3,103. In other words, the "natural population growth" we would see without net migration turned negative in the last couple of years, as shown in @fig-natural-population-growth.
+The pandemic effect and subsequent boom in non-permanent resident population^[There is a lot of misunderstanding about the nature of the increase in non-permanent residents out there, net non-permanent residents acts very differently from e.g. increases in immigration. The data generation process for net non-permanent residents act essentially like a derivative and tends to zero absent of policy changes, but can temporarily rise (or fall) when hiring caps or student visa policies are changed.], as well as changes to permanent resident quotas, come out much more strongly here. So in total 268,488 people moved to BC in 2023, and 86,870 left BC, for a net increase due to migration of 181,618 people. Rounding this out, because population change is the sum of net migration + births - deaths, we can see that even more 41,019 people were born in BC at the same time that -44,122 died. Looking at only births and deaths leaves us with a net decrease of  3,103. In other words, the "natural population growth" we would see without net migration turned negative in the last couple of years, as shown in @fig-natural-population-growth.
 
 
 ::: {.cell}
@@ -739,7 +739,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-06-11 19:15:57 PDT"
+[1] "2024-06-12 11:44:40 PDT"
 ```
 
 
@@ -755,7 +755,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [a7ec969] 2024-06-12: leaving vancouver post
+Head:     [f7cc5a9] 2024-06-12: leaving vancouver post
 ```
 
 

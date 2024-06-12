@@ -283,10 +283,10 @@ bc_annual_all_miration_data <- all_migration_data_for(internal_data,external_dat
   mutate(Date=as.Date(paste0(Year,"-01-01")))
 
 bc_annual_simple <- bc_annual_all_miration_data |>
-  mutate(Migration=case_when(value<0 ~ "Out-migration",
-                             TRUE ~ "In-migration")) |>
-  summarize(value=sum(value),.by=c(Year,Migration)) %>%
-  bind_rows(summarize(.,value=sum(value),.by=Year) |> mutate(Migration="Net migration"))
+  # mutate(Migration=case_when(value<0 ~ "Out-migration",
+  #                            TRUE ~ "In-migration")) |>
+  summarize(value=sum(value),.by=c(Year,Migration)) #%>%
+  #bind_rows(summarize(.,value=sum(value),.by=Year) |> mutate(Migration="Net migration"))
 
 bc_2023_simple <- bc_annual_simple |> filter(Year==2023)
 
