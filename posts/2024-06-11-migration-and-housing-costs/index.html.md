@@ -24,13 +24,13 @@ execute:
   # cache: true
   message: false
   warning: false
-# format:
-#   html: default
-#   blog-pdf:
-#     fig-format: 'svg'
-#     fig-width: 7
-#     fig-height: 5
-#     output-file: 'migration-and-housing-costs'
+format:
+  html: default
+  blog-pdf:
+    fig-format: 'svg'
+    fig-width: 7
+    fig-height: 5
+    output-file: 'migration-and-housing-costs'
 ---
 
 
@@ -739,7 +739,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-06-12 11:44:40 PDT"
+[1] "2024-06-12 14:40:15 PDT"
 ```
 
 
@@ -755,7 +755,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [f7cc5a9] 2024-06-12: leaving vancouver post
+Head:     [46392e1] 2024-06-12: fixed problem with double-counting migrants in the numbers in the text, fixed and now numbers in the text are consistent with the graph.
 ```
 
 
