@@ -135,8 +135,8 @@ data_2021 <- get_census("2021",regions=list(CMA="59933"),level="DB",quiet = TRUE
 data_2016 <- get_census("2016",regions=list(CMA="59933"),level="DB",quiet = TRUE)
 
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
-  inner_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   inner_join(data_2016 |> select(DBUID2016=GeoUID,DAUID2016=DA_UID),by="DBUID2016") |>
+  full_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   select(DBUID2021,DAUID2016) |>
   tongfen:::get_tongfen_correspondence()
 
@@ -273,8 +273,8 @@ data_2021 <- get_census("2021",regions=list(CMA="35535"),level="DB",quiet = TRUE
 data_2016 <- get_census("2016",regions=list(CMA="35535"),level="DB",quiet = TRUE)
 
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
-  inner_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   inner_join(data_2016 |> select(DBUID2016=GeoUID,DAUID2016=DA_UID),by="DBUID2016") |>
+  full_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   select(DBUID2021,DAUID2016) |>
   tongfen:::get_tongfen_correspondence()
 

@@ -13,8 +13,12 @@ categories:
   - affordability
   - Vancouver
 description: 'Migration and housing costs do not relate in straight-forward ways. In Vancouver we hear a lot about people considering or actually leaving the region because of housing costs, at the same time data on migration shows that Vancouver has a comparatively low share of people leaving the region.'
-pdf_abstract: "Migration and housing costs do not relate in straight-forward ways. In Vancouver we hear a lot about people considering or actually leaving the region because of housing costs, at the same time data on migration shows that Vancouver has a comparatively low share of people leaving the region. There is a likely common cause for these seemingly contradictory fact, Vancouver is a nice place to live and people don't want to leave.
-From data on reasons for why people move we know that housing costs generally feature higher for local moves, but the data is pointing toward housing increasingly becoming an important reasons for long-distance moves, both in keeping people from moving in as well as pushing people out."
+pdf_abstract: |
+  We use 1981 through 2021 census data to look at tenure and household formation outcomes in Canada, and develop a metric of "housing frustration".
+  
+  Tenure choice is an important and interesting dimension of housing to watch in Canada. In many places, tenure choice is also likely a source of increasing frustration. Given the strong government subsidies for homeownership we expect people to aspire to home ownership. And indeed home ownership increased 1981 through 2006, a time period where incomes rose and baby boomers and, to a lesser extent Gen X, managed to outrun rising housing pressures and costs, with these cohorts sliding through with relatively high home ownership rates.
+  
+  In terms of housing pressures, we can also consider tenure in conjunction with whether individuals, either on their own or jointly with a partner, are able to head up a household of their own. This ultimately remains a more expressive metric of housing frustration, be it household maintainer rates or more refined measures like the population in minimum household units (MHU), or elaborated across more detailed living arrangements. Here we see worsening housing outcomes throughout the forty year timeframe explored (1981-2021), in particular in high-cost areas. Monitoring changes in household living arrangements of people during their prime household formation years, 25 to 34 year olds, potentially allows demographers to track housing pressures in near real time.
 image: 'index_files/figure-html/fig-metro-leaving-rates-1.png'
 bibliography: ../../common_literature.bib 
 code-tools:
@@ -739,7 +743,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-06-12 14:40:15 PDT"
+[1] "2024-07-11 16:36:34 PDT"
 ```
 
 
@@ -755,7 +759,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [46392e1] 2024-06-12: fixed problem with double-counting migrants in the numbers in the text, fixed and now numbers in the text are consistent with the graph.
+Head:     [f15e1f6] 2024-06-26: remove unnecessary images
 ```
 
 
@@ -809,7 +813,7 @@ loaded via a namespace (and not attached):
 [29] digest_0.6.35             stringi_1.8.4            
 [31] labeling_0.4.3            fastmap_1.2.0            
 [33] grid_4.4.0                colorspace_2.1-0         
-[35] cli_3.6.2                 magrittr_2.0.3           
+[35] cli_3.6.3                 magrittr_2.0.3           
 [37] utf8_1.2.4                withr_3.0.0              
 [39] scales_1.3.0              bit64_4.0.5              
 [41] timechange_0.3.0          rmarkdown_2.27           
@@ -817,7 +821,7 @@ loaded via a namespace (and not attached):
 [45] hms_1.1.3                 memoise_2.0.1            
 [47] evaluate_0.23             knitr_1.47               
 [49] viridisLite_0.4.2         rlang_1.1.4              
-[51] glue_1.7.0                DBI_1.2.2                
+[51] glue_1.7.0                DBI_1.2.3                
 [53] xml2_1.3.6                rstudioapi_0.16.0        
 [55] vroom_1.6.5               jsonlite_1.8.8           
 [57] MetBrewer_0.2.0           R6_2.5.1                 

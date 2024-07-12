@@ -13,8 +13,12 @@ categories:
   - affordability
   - Vancouver
 description: 'Migration and housing costs do not relate in straight-forward ways. In Vancouver we hear a lot about people considering or actually leaving the region because of housing costs, at the same time data on migration shows that Vancouver has a comparatively low share of people leaving the region.'
-pdf_abstract: "Migration and housing costs do not relate in straight-forward ways. In Vancouver we hear a lot about people considering or actually leaving the region because of housing costs, at the same time data on migration shows that Vancouver has a comparatively low share of people leaving the region. There is a likely common cause for these seemingly contradictory fact, Vancouver is a nice place to live and people don't want to leave.
-From data on reasons for why people move we know that housing costs generally feature higher for local moves, but the data is pointing toward housing increasingly becoming an important reasons for long-distance moves, both in keeping people from moving in as well as pushing people out."
+pdf_abstract: |
+  We use 1981 through 2021 census data to look at tenure and household formation outcomes in Canada, and develop a metric of "housing frustration".
+  
+  Tenure choice is an important and interesting dimension of housing to watch in Canada. In many places, tenure choice is also likely a source of increasing frustration. Given the strong government subsidies for homeownership we expect people to aspire to home ownership. And indeed home ownership increased 1981 through 2006, a time period where incomes rose and baby boomers and, to a lesser extent Gen X, managed to outrun rising housing pressures and costs, with these cohorts sliding through with relatively high home ownership rates.
+  
+  In terms of housing pressures, we can also consider tenure in conjunction with whether individuals, either on their own or jointly with a partner, are able to head up a household of their own. This ultimately remains a more expressive metric of housing frustration, be it household maintainer rates or more refined measures like the population in minimum household units (MHU), or elaborated across more detailed living arrangements. Here we see worsening housing outcomes throughout the forty year timeframe explored (1981-2021), in particular in high-cost areas. Monitoring changes in household living arrangements of people during their prime household formation years, 25 to 34 year olds, potentially allows demographers to track housing pressures in near real time.
 image: 'index_files/figure-html/fig-metro-leaving-rates-1.png'
 bibliography: ../../common_literature.bib 
 code-tools:
