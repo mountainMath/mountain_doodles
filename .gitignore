@@ -9,3 +9,4 @@ _publish.yml
 _site/
 posts/*/index_cache/*
 posts/*/index_cache/
+posts/*/index_files/mediabag/index_files/figure-pdf/*.pdf
