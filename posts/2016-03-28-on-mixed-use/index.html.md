@@ -30,6 +30,7 @@ Property taxes are an important piece of the puzzle in Vancouver, so I decided t
 Long story short, re-developing single story commercial into mixed use lowers the commercial property taxes. Dramatically.
 
 <!-- more -->
+
 ## Commercial Property Taxes
 In Vancouver, the commercial property tax rate is five times the residential rate. Toronto also has higher property tax
 rates for commercial, 3x in their case, I don't know how this plays out more broadly. Nor do I know when and why these
@@ -99,18 +100,22 @@ decrease in property taxes we see is really due to the re-development to mixed u
 ## Bottom Line
 So what's the bottom line for mixed use re-development? Overall it looks pretty good, let's go down the list of all
 parties involved.
+
 ### City bottom line
 For conversion to two story mixed use, the city collects less
 property taxes than before and the overall mill rate goes up a tiny amount. Conversion to three stories or higher and
 total tax revenue for the property goes up and the overall mill rate goes down a tiny amount.
+
 ### Commercial tenant bottom line
 The property tax rate goes down substantially, but rent will go up as the gross rent is determined by the market. So not
 much changed assuming the form factor of the stores stay the same. In theory at least. If the commercial land lord was
 giving a long time tenant a break on their rent before re-development, the tenant will have a hard time to find a different
 commercial location with comparable gross rent.
+
 ### Residential tenant bottom line
 Added supply can only help. In some cases units will get stratified and sold off, in other cases the property owner keeps
 the residential units as rental.
+
 ### Property owner bottom line
 Especially with the recent change in lending practices that focus on cache flow, mixed use re-development becomes very attractive.
 After re-development, landlords can charge higher rents because commercial property taxes go down. And they can rent out
