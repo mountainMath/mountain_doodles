@@ -10,7 +10,7 @@ categories:
 tags: []
 description: "Tongfen is now on CRAN, time for a short overview of what tongfen is and how it aids research on longitudinal spatial data on different yet congruent geographies."
 featured: ''
-image: "index_files/https://raw.githubusercontent.com/mountainMath/tongfen/master/images/tongfen-sticker.png"
+image: "https://raw.githubusercontent.com/mountainMath/tongfen/master/images/tongfen-sticker.png"
 featuredalt: ""
 featuredpath: ""
 linktitle: ''
