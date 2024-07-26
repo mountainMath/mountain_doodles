@@ -1,10 +1,10 @@
 ---
 title: "Population timelines update"
-authors: 
+author: 
   - name: Jens von Bergmann
     affiliation: MountainMath
 date: '2024-04-23'
-date-modified: '2024-04-24'
+date-modified: '2024-07-26'
 slug: population-timeline-updates
 categories:
   - Vancouver
@@ -145,8 +145,8 @@ data_2021 <- get_census("2021",regions=list(CMA="59933"),level="DB",quiet = TRUE
 data_2016 <- get_census("2016",regions=list(CMA="59933"),level="DB",quiet = TRUE)
 
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
-  inner_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   inner_join(data_2016 |> select(DBUID2016=GeoUID,DAUID2016=DA_UID),by="DBUID2016") |>
+  full_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   select(DBUID2021,DAUID2016) |>
   tongfen:::get_tongfen_correspondence()
 
@@ -281,7 +281,7 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 # Update 2024-04-24
 A quick update to address two questions that came up.
 
-Some people have asked about the reason for the population drop in some central areas in Vancouver and Toronto. The answer is fairly simple, over that time period, areas that did not add housing tended to loose population due to demographic shifts resulting in smaller average household sizes. In particular, families tend to have fewer children than they used to, and the share of homes occupied by childless seniors or widowed individuals has increased. There is nothing wrong with that, but we should allow neighbourhoods to add housing to compensate for that and grow beyond that to allow more people to live in job and amenity rich neighbourhoods.
+Some people have asked about the reason for the population drop in some central areas in Vancouver and Toronto. The answer is fairly simple, over that time period, areas that did not add housing tended to lose population due to demographic shifts resulting in smaller average household sizes. In particular, families tend to have fewer children than they used to, and the share of homes occupied by childless seniors or widowed individuals has increased. There is nothing wrong with that, but we should allow neighbourhoods to add housing to compensate for that and grow beyond that to allow more people to live in job and amenity rich neighbourhoods.
 
 One caveat that bears repeating is that geocoding issues, which can occur especially in older censuses, might cause some spikes. If there is a spike visible in only one year, that's probably a geocoding issue.
 
@@ -297,8 +297,8 @@ data_2021 <- get_census("2021",regions=list(CMA="35535"),level="DB",quiet = TRUE
 data_2016 <- get_census("2016",regions=list(CMA="35535"),level="DB",quiet = TRUE)
 
 db_correspondence<-tongfen:::get_single_correspondence_ca_census_for("2021","DB") |>
-  inner_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   inner_join(data_2016 |> select(DBUID2016=GeoUID,DAUID2016=DA_UID),by="DBUID2016") |>
+  full_join(data_2021 |> filter(Population>0) |> select(DBUID2021=GeoUID),by="DBUID2021") |>
   select(DBUID2021,DAUID2016) |>
   tongfen:::get_tongfen_correspondence()
 
@@ -349,6 +349,9 @@ This map is not as snazzy as the Vancouver one as it is not cut down by land use
 
 <a class="btn btn-primary" href="/html/yyz_pop_timeline_2021.html" target="_blank">Explore the interactive population change map for Toronto</a>
 
+# Update 2024-07-26
+
+We have further refined the data in the interactive maps for Vancouver and Toronto to ameliorate geocoding errors in the historical census data timlines. For details please see our [new post describing the process to detect and ameliorate geocoding errors](/posts/2024-07-26-geocoding-errors-in-aggregate-data/). For comparison purposes the interactive maps using straight-up data from Statistics Canada before cleaning for (potential) geocoding errors is still available for [Vancouver](/html/yvr_pop_timeline_2021.html?cleaned=false) and [Toronto](/html/yyz_pop_timeline_2021.html?cleaned=false).
 
 <details>
 
@@ -365,7 +368,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-04-26 09:19:50 PDT"
+[1] "2024-07-26 09:41:16 PDT"
 ```
 
 
@@ -381,7 +384,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [07095df] 2024-04-25: fix issue with citation generation
+Head:     [cfd8e12] 2024-07-25: updated image in md
 ```
 
 
@@ -395,13 +398,13 @@ sessionInfo()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.4.1
+R version 4.4.0 (2024-04-24)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.5
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -412,25 +415,34 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] mountainmathHelpers_0.1.4 sf_1.0-16                
+ [3] tongfen_0.3.6             lubridate_1.9.3          
+ [5] forcats_1.0.0             stringr_1.5.1            
+ [7] dplyr_1.1.4               purrr_1.0.2              
+ [9] readr_2.1.5               tidyr_1.3.1              
+[11] tibble_3.2.1              ggplot2_3.5.1            
+[13] tidyverse_2.0.0           cancensus_0.5.8          
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.6.5               cli_3.6.2                
- [3] knitr_1.45                rlang_1.1.3              
- [5] xfun_0.41                 generics_0.1.3           
- [7] jsonlite_1.8.8            glue_1.7.0               
- [9] colorspace_2.1-0          git2r_0.33.0             
-[11] htmltools_0.5.7           mountainmathHelpers_0.1.4
-[13] scales_1.3.0              fansi_1.0.6              
-[15] rmarkdown_2.25            grid_4.3.2               
-[17] munsell_0.5.0             evaluate_0.23            
-[19] tibble_3.2.1              fastmap_1.1.1            
-[21] yaml_2.3.7                lifecycle_1.0.4          
-[23] compiler_4.3.2            dplyr_1.1.4              
-[25] htmlwidgets_1.6.4         pkgconfig_2.0.3          
-[27] rstudioapi_0.15.0         digest_0.6.33            
-[29] R6_2.5.1                  tidyselect_1.2.0         
-[31] utf8_1.2.4                pillar_1.9.0             
-[33] magrittr_2.0.3            tools_4.3.2              
-[35] gtable_0.3.4              ggplot2_3.5.0            
+ [1] gtable_0.3.5       xfun_0.44          htmlwidgets_1.6.4  lattice_0.22-6    
+ [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.0        generics_0.1.3    
+ [9] curl_5.2.1         parallel_4.4.0     proxy_0.4-27       fansi_1.0.6       
+[13] rmapzen_0.5.1      pkgconfig_2.0.3    KernSmooth_2.23-22 RColorBrewer_1.1-3
+[17] assertthat_0.2.1   lifecycle_1.0.4    git2r_0.33.0       farver_2.1.2      
+[21] compiler_4.4.0     tinytex_0.51       munsell_0.5.1      codetools_0.2-20  
+[25] jqr_1.3.3          htmltools_0.5.8.1  class_7.3-22       lazyeval_0.2.2    
+[29] yaml_2.3.8         pillar_1.9.0       crayon_1.5.2       classInt_0.4-10   
+[33] magick_2.8.3       wk_0.9.1           tidyselect_1.2.1   digest_0.6.35     
+[37] stringi_1.8.4      fastmap_1.2.0      grid_4.4.0         colorspace_2.1-0  
+[41] cli_3.6.3          magrittr_2.0.3     crul_1.4.2         utf8_1.2.4        
+[45] e1071_1.7-14       withr_3.0.0        scales_1.3.0       sp_2.1-4          
+[49] bit64_4.0.5        timechange_0.3.0   rmarkdown_2.27     httr_1.4.7        
+[53] bit_4.0.5          hms_1.1.3          evaluate_0.23      knitr_1.47        
+[57] V8_4.4.2           geojson_0.3.5      s2_1.1.6           rlang_1.1.4       
+[61] Rcpp_1.0.12        httpcode_0.3.0     glue_1.7.0         DBI_1.2.3         
+[65] geojsonsf_2.0.3    rstudioapi_0.16.0  vroom_1.6.5        jsonlite_1.8.8    
+[69] R6_2.5.1           geojsonio_0.11.3   units_0.8-5       
 ```
 
 

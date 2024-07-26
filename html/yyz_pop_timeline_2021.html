@@ -356,10 +356,10 @@
       return d3.format(",.0f")(d)
     }
 
-    let url = 'https://s3.ca-central-1.amazonaws.com/mountainmath/yvr_timeline/yyz_pop_timeline_2021.geojson.gz'
+    let url = 'https://s3.ca-central-1.amazonaws.com/mountainmath/yvr_timeline/yyz_pop_timeline_2021_cleaned.geojson.gz'
     
-    if (searchParams.has('cleaned') & searchParams.get('cleaned')=='true') {
-      url = 'https://s3.ca-central-1.amazonaws.com/mountainmath/yvr_timeline/yyz_pop_timeline_2021_cleaned.geojson.gz'
+    if (searchParams.has('cleaned') & searchParams.get('cleaned')=='false') {
+      url = 'https://s3.ca-central-1.amazonaws.com/mountainmath/yvr_timeline/yyz_pop_timeline_2021.geojson.gz'
     } // price_descending
 
 
