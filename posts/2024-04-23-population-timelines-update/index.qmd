@@ -1,10 +1,10 @@
 ---
 title: "Population timelines update"
-authors: 
+author: 
   - name: Jens von Bergmann
     affiliation: MountainMath
 date: '2024-04-23'
-date-modified: '2024-04-24'
+date-modified: '2024-07-26'
 slug: population-timeline-updates
 categories:
   - Vancouver
@@ -323,6 +323,9 @@ This map is not as snazzy as the Vancouver one as it is not cut down by land use
 
 <a class="btn btn-primary" href="/html/yyz_pop_timeline_2021.html" target="_blank">Explore the interactive population change map for Toronto</a>
 
+# Update 2024-07-26
+
+We have further refined the data in the interactive maps for Vancouver and Toronto to ameliorate geocoding errors in the historical census data timlines. For details please see our [new post describing the process to detect and ameliorate geocoding errors](/posts/2024-07-26-geocoding-errors-in-aggregate-data/). For comparison purposes the interactive maps using straight-up data from Statistics Canada before cleaning for (potential) geocoding errors is still available for [Vancouver](/html/yvr_pop_timeline_2021.html?cleaned=false) and [Toronto](/html/yyz_pop_timeline_2021.html?cleaned=false).
 
 <details>
 
