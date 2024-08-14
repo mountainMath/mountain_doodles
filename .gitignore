@@ -10,3 +10,6 @@ _site/
 posts/*/index_cache/*
 posts/*/index_cache/
 posts/*/index_files/mediabag/index_files/figure-pdf/*.pdf
+data/nz_rents.rds
+data/movers_data.rds
+data/pumf_2021_movers_income_new_housing.rds
