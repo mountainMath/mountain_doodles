@@ -33,6 +33,7 @@ new_post <- function(title,
   
   dir.create(path)
   readr::write_lines(text$values,file.path(path,"index.qmd"))
+  usethis::edit_file(file.path(path,"index.qmd"))
 }
 
 
