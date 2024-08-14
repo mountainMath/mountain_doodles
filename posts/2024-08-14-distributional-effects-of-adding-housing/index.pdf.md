@@ -7,7 +7,7 @@ author:
     affiliation: UBC Sociology
 date: '2024-08-14'
 slug: distributional-effects-of-adding-housing
-description: 'Households and Families frequently get mixed up in general housing discussions. We explore the difference between the two and interpret it as doubling up, some of which is likely voluntary and some less so.'
+description: 'We pick up on our post on overall housing targets to estimate distributional effects on housing outcomes if our targets were met.'
 pdf_abstract: |
   Who would benefit from dramatically expanding the supply of housing in the market? How would such an expansion address housing need? What non-market interventions would still be required to meet remaining need? How would it influence household formation and migration? This post is picking up where we left off on our housing targets post [@housing-targets.2023] that proposed overall hosing targets based on how much housing would be profitable to build, grappling with the distributional effects of adding new housing to the market. 
   
@@ -41,7 +41,7 @@ format:
 
 
 
-<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/08/12/distributional-effects-of-adding-housing/" target="_blank">HomeFreeSociology</a>)</i></p>
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/08/14/distributional-effects-of-adding-housing/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
 
@@ -1858,7 +1858,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-08-14 11:43:40 PDT"
+[1] "2024-08-14 11:54:52 PDT"
 ```
 
 
@@ -1874,7 +1874,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [9d71db5] 2024-08-14: distributional effects post
+Head:     [ea9a700] 2024-08-14: final touches
 ```
 
 
