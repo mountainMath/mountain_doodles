@@ -51,7 +51,7 @@ district_boundaries <- read_sf("~/Downloads/BCGW_7113060B_1729362546577_9396/EBC
   mutate(mainShape=area==max(area),.by=ED_ID)
 
 upload_result <- district_boundaries |>
-  select(ED_ID,ED_NAME,geometry) |>
+  select(ED_ID,ED_NAME,x,y,rank,mainShape,geometry) |>
   sf_to_s3_gzip("mountainmath","bc_2024_elections/district_boundaries.geojson")
 
 

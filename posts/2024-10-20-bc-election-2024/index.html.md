@@ -56,7 +56,7 @@ district_boundaries <- read_sf("~/Downloads/BCGW_7113060B_1729362546577_9396/EBC
   mutate(mainShape=area==max(area),.by=ED_ID)
 
 upload_result <- district_boundaries |>
-  select(ED_ID,ED_NAME,geometry) |>
+  select(ED_ID,ED_NAME,x,y,rank,mainShape,geometry) |>
   sf_to_s3_gzip("mountainmath","bc_2024_elections/district_boundaries.geojson")
 
 
@@ -513,7 +513,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-10-20 22:03:01 PDT"
+[1] "2024-10-20 22:14:16 PDT"
 ```
 
 
@@ -529,7 +529,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [37263fe] 2024-08-14: updated freeze
+Head:     [718562f] 2024-10-21: elections post
 ```
 
 
