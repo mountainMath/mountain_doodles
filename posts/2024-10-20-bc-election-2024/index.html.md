@@ -513,7 +513,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-10-20 22:14:16 PDT"
+[1] "2024-10-21 09:11:27 PDT"
 ```
 
 
@@ -529,7 +529,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [718562f] 2024-10-21: elections post
+Head:     [d9bf59a] 2024-10-21: keep relevant fields in geographies
 ```
 
 
@@ -560,40 +560,25 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] sf_1.0-16                 mountainmathHelpers_0.1.4
- [3] lubridate_1.9.3           forcats_1.0.0            
- [5] stringr_1.5.1             dplyr_1.1.4              
- [7] purrr_1.0.2               readr_2.1.5              
- [9] tidyr_1.3.1               tibble_3.2.1             
-[11] ggplot2_3.5.1             tidyverse_2.0.0          
-
 loaded via a namespace (and not attached):
- [1] gtable_0.3.5        xfun_0.47           htmlwidgets_1.6.4  
- [4] websocket_1.4.1     processx_3.8.4      lattice_0.22-6     
- [7] tzdb_0.4.0          ps_1.7.6            vctrs_0.6.5        
-[10] tools_4.4.1         generics_0.1.3      parallel_4.4.1     
-[13] curl_5.2.2          proxy_0.4-27        fansi_1.0.6        
-[16] pkgconfig_2.0.3     R.oo_1.26.0         KernSmooth_2.23-24 
-[19] lifecycle_1.0.4     git2r_0.33.0        compiler_4.4.1     
-[22] munsell_0.5.1       chromote_0.2.0      codetools_0.2-20   
-[25] cancensus_0.5.8     htmltools_0.5.8.1   class_7.3-22       
-[28] yaml_2.3.10         crayon_1.5.2        later_1.3.2        
-[31] pillar_1.9.0        R.utils_2.12.3      aws.s3_0.3.21      
-[34] classInt_0.4-10     mime_0.12           rvest_1.0.4        
-[37] tidyselect_1.2.1    digest_0.6.37       stringi_1.8.4      
-[40] fastmap_1.2.0       grid_4.4.1          colorspace_2.1-0   
-[43] cli_3.6.3           magrittr_2.0.3      base64enc_0.1-3    
-[46] utf8_1.2.4          e1071_1.7-14        aws.signature_0.6.0
-[49] withr_3.0.1         promises_1.3.0      scales_1.3.0       
-[52] bit64_4.0.5         sp_2.1-4            timechange_0.3.0   
-[55] httr_1.4.7          rmarkdown_2.28      bit_4.0.5          
-[58] R.methodsS3_1.8.2   hms_1.1.3           evaluate_1.0.0     
-[61] knitr_1.48          rmapshaper_0.5.0    V8_4.4.2           
-[64] rlang_1.1.4         Rcpp_1.0.13         glue_1.8.0         
-[67] DBI_1.2.3           selectr_0.4-2       xml2_1.3.6         
-[70] geojsonsf_2.0.3     vroom_1.6.5         rstudioapi_0.16.0  
-[73] jsonlite_1.8.8      R6_2.5.1            units_0.8-5        
+ [1] vctrs_0.6.5               cli_3.6.3                
+ [3] knitr_1.48                rlang_1.1.4              
+ [5] xfun_0.47                 generics_0.1.3           
+ [7] jsonlite_1.8.8            glue_1.8.0               
+ [9] colorspace_2.1-0          git2r_0.33.0             
+[11] htmltools_0.5.8.1         mountainmathHelpers_0.1.4
+[13] scales_1.3.0              fansi_1.0.6              
+[15] rmarkdown_2.28            grid_4.4.1               
+[17] munsell_0.5.1             evaluate_1.0.0           
+[19] tibble_3.2.1              fastmap_1.2.0            
+[21] yaml_2.3.10               lifecycle_1.0.4          
+[23] compiler_4.4.1            dplyr_1.1.4              
+[25] htmlwidgets_1.6.4         pkgconfig_2.0.3          
+[27] rstudioapi_0.16.0         digest_0.6.37            
+[29] R6_2.5.1                  tidyselect_1.2.1         
+[31] utf8_1.2.4                pillar_1.9.0             
+[33] magrittr_2.0.3            tools_4.4.1              
+[35] gtable_0.3.5              ggplot2_3.5.1            
 ```
 
 

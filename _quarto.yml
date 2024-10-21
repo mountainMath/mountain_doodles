@@ -26,6 +26,9 @@ website:
       - icon: github
         href: https://github.com/mountainMath/mountain_doodles
         aria-label: GitHub
+      # - text: "{{< fa brands bluesky >}}"
+      #   href: https://bsky.app/profile/jensvb.bsky.social
+      #   aria-label: Bluesky
       - icon: twitter
         href: https://twitter.com/vb_jens
         aria-label: Twitter
