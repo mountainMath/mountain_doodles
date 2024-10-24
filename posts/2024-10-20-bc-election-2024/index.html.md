@@ -3,6 +3,7 @@ title: "BC Election 2024"
 author:
   - name: Jens von Bergmann
 date: '2024-10-20'
+last-modified: '2024-10-23'
 slug: bc-election-2024
 description: "A quick updated on the \"land doesn't vote, people do\" theme."
 image: 'images/land_vs_people.png'
@@ -13,7 +14,7 @@ code-tools:
   toggle: true
 fig-width: 8
 execute:
-  cache: true
+  cache: false
   message: false
   warning: false
 ---
@@ -66,8 +67,9 @@ results_raw <- rvest::read_html("https://electionsbcenr.blob.core.windows.net/el
   first() |>
   select(ED_NAME=`Electoral District`,Candidate=`Candidate's Ballot Name`,Party=Affiliation,Votes=`Total Valid Votes`,Share=`% of Votes`) |>
   mutate(ED_NAME = na_if(ED_NAME,"")) |>
-  fill(ED_NAME,.direction = "down") |>
-  mutate(across(c(Candidate,Party), ~na_if(.x,"") |> coalesce("Total"))) |>
+  fill(ED_NAME,.direction = "down") %>%
+  mutate(across(c(Candidate,Party), \(x)if_else(.$Candidate=="" & .$Party=="","Total",x))) |>
+  mutate(Party=if_else(Party=="","Unaffiliated",Party)) |>
   mutate(Votes=gsub(",","",Votes) |> as.numeric(),
          Share=as.numeric(gsub("\\%","",Share))/100) 
 
@@ -81,7 +83,7 @@ close_races <- c(
   "Richmond-Steveston",
   "Surrey City Centre",
   "Surrey-Guildford",
-  "Surrey-White Rock",
+  "Surrey-Panorama",
   "Vancouver-Langara",
   "Vernon-Lumby"
 )
@@ -116,7 +118,7 @@ With the data in hand^[We placed the data separately online to not interfere wit
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="109" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="111" source-offset="0"}
 vote_map_animation = {
   const height = width*ratio ;
   
@@ -152,7 +154,7 @@ vote_map_animation = {
   setInterval(() => {
     svg.selectAll(".bcDistrict")
       .transition()
-      .delay(d => d.properties.rank*10)
+      .delay(d => d.properties.rank*20)
       .duration(5000)
       .attrTween('d', function(d, i) {
         return flubber.toCircle(path(d), d.x, d.y, d.properties.radius, {maxSegmentLength: 2});
@@ -160,7 +162,7 @@ vote_map_animation = {
 
     svg.selectAll(".bcDistrict")
       .transition()
-      .delay(d => 10000 + d.properties.rank*10)
+      .delay(d => 10000 + d.properties.rank*20)
       .duration(5000)
       .attrTween('d', function(d, i) {
         return flubber.fromCircle(d.x, d.y, d.properties.radius, path(d), {maxSegmentLength: 2});
@@ -181,7 +183,7 @@ Land does not vote, people do
 
 
 
-The animation interpolates between the geographies of the ridings, and bubbles for each riding of size proportional to the total vote count. This visualized the degree to which the map view over-emphasizes rural areas which predominantly went to the Conservatives, whereas electoral districts with high population density and consequently lower area were predominantly won by the NDP.
+The animation interpolates between the geographies of the ridings, and bubbles for each riding of size proportional to the total vote count. This visualizes the degree to which the map view over-emphasizes rural areas, which predominantly went to the Conservatives, whereas electoral districts with high population density and consequently lower area were predominantly won by the NDP.
 
 
 ::: {.cell}
@@ -194,7 +196,7 @@ lead_results <- cleaned_results |>
          Total=sum(Votes)) |>
   slice_max(Votes,n=1) |>
   ungroup() |>
-  mutate(lead_share=lead/Total)
+  mutate(lead_share=lead/Total) 
 
 tightest_race <- lead_results |> slice_min(lead_share,n=1) 
 ```
@@ -215,10 +217,19 @@ party_colours <- c(
     IND="#676767",
     GRN="#3D9B35"
 )
+party_colours2 <- c(
+  CON="#83ACF5",
+    NDP="#FFB38D",
+    IND="#FFCBB8",
+    GRN="#84DA80"
+)
+
 
 lead_results |>
   ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
   geom_bar(stat="identity") +
+  geom_bar(stat="identity", data=~filter(.,!called,Party=="NDP"),fill=party_colours2["NDP"]) +
+  geom_bar(stat="identity", data=~filter(.,!called,Party=="CON"),fill=party_colours2["CON"]) +
   scale_fill_manual(values=party_colours) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in each riding",
@@ -233,6 +244,34 @@ lead_results |>
 :::
 
 
+## Update (Oct 23, 2024)
+
+Elections BC is still regularly updating vote counts, for convenience we added a graph with just the 11 races that CBC has not yet called. We will updated this regularly as updated voting results come in.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+lead_results |>
+  filter(!called) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours2) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Number of votes lead",
+       y=NULL,
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-4-1.png){width=768}
+:::
+:::
+
+
+
 
 <details>
 <summary>Remaining Observable code</summary>
@@ -242,7 +281,7 @@ lead_results |>
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="208" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="237" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -254,7 +293,7 @@ applySimulation = (nodes) => {
     .stop()
 
   let i = 0; 
-  while (simulation.alpha() > 0.01 && i < 200) {
+  while (simulation.alpha() > 0.01 && i < 250) {
     simulation.tick(); 
     i++;
     //console.log(`${Math.round(100*i/200)}%`)
@@ -273,7 +312,7 @@ applySimulation = (nodes) => {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="230" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="259" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -286,7 +325,7 @@ spreadDistricts = applySimulation(districts)
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="234" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="263" source-offset="0"}
 maxRadius = 15
 ```
 
@@ -299,7 +338,7 @@ maxRadius = 15
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="238" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="267" source-offset="0"}
 ratio = 1
 ```
 
@@ -312,7 +351,7 @@ ratio = 1
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="242" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="271" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -325,7 +364,7 @@ nodePadding = 0.3
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="246" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="275" source-offset="0"}
 party_colors = {
   return {
     CON:"#115DA8",
@@ -345,7 +384,7 @@ party_colors = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="257" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="286" source-offset="0"}
 party_colors2 = {
   return {
     CON:"#83ACF5",
@@ -365,7 +404,7 @@ party_colors2 = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="270" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="299" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -382,7 +421,7 @@ format = ({
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="278" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="307" source-offset="0"}
 projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "FeatureCollection", features: districts})
 ```
 
@@ -395,7 +434,7 @@ projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "Feature
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="282" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="311" source-offset="0"}
 districts = bc_districts.features
 ```
 
@@ -408,7 +447,7 @@ districts = bc_districts.features
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="286" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="315" source-offset="0"}
 bc_districts = { 
   const url = "https://mountainmath.s3.ca-central-1.amazonaws.com/bc_2024_elections/district_boundaries.geojson";
   const bc_districts = await d3.json(url);
@@ -454,7 +493,7 @@ bc_districts = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="324" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="353" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -467,7 +506,7 @@ d3 = require("d3@5")
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="328" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="357" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -480,7 +519,7 @@ turf = require("@turf/turf@5")
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="332" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="361" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -513,7 +552,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-10-21 09:11:27 PDT"
+[1] "2024-10-24 12:17:12 PDT"
 ```
 
 
@@ -529,7 +568,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [d9bf59a] 2024-10-21: keep relevant fields in geographies
+Head:     [f50750a] 2024-10-21: try fontawesome to get bsky logo into nav bar
 ```
 
 
@@ -560,25 +599,41 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] sf_1.0-16                 mountainmathHelpers_0.1.4
+ [3] lubridate_1.9.3           forcats_1.0.0            
+ [5] stringr_1.5.1             dplyr_1.1.4              
+ [7] purrr_1.0.2               readr_2.1.5              
+ [9] tidyr_1.3.1               tibble_3.2.1             
+[11] ggplot2_3.5.1             tidyverse_2.0.0          
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.6.5               cli_3.6.3                
- [3] knitr_1.48                rlang_1.1.4              
- [5] xfun_0.47                 generics_0.1.3           
- [7] jsonlite_1.8.8            glue_1.8.0               
- [9] colorspace_2.1-0          git2r_0.33.0             
-[11] htmltools_0.5.8.1         mountainmathHelpers_0.1.4
-[13] scales_1.3.0              fansi_1.0.6              
-[15] rmarkdown_2.28            grid_4.4.1               
-[17] munsell_0.5.1             evaluate_1.0.0           
-[19] tibble_3.2.1              fastmap_1.2.0            
-[21] yaml_2.3.10               lifecycle_1.0.4          
-[23] compiler_4.4.1            dplyr_1.1.4              
-[25] htmlwidgets_1.6.4         pkgconfig_2.0.3          
-[27] rstudioapi_0.16.0         digest_0.6.37            
-[29] R6_2.5.1                  tidyselect_1.2.1         
-[31] utf8_1.2.4                pillar_1.9.0             
-[33] magrittr_2.0.3            tools_4.4.1              
-[35] gtable_0.3.5              ggplot2_3.5.1            
+ [1] tidyselect_1.2.1    farver_2.1.2        R.utils_2.12.3     
+ [4] fastmap_1.2.0       promises_1.3.0      cancensus_0.5.8    
+ [7] digest_0.6.37       timechange_0.3.0    mime_0.12          
+[10] lifecycle_1.0.4     processx_3.8.4      magrittr_2.0.3     
+[13] compiler_4.4.1      rlang_1.1.4         tools_4.4.1        
+[16] utf8_1.2.4          yaml_2.3.10         knitr_1.48         
+[19] labeling_0.4.3      htmlwidgets_1.6.4   bit_4.0.5          
+[22] sp_2.1-4            classInt_0.4-10     curl_5.2.2         
+[25] aws.signature_0.6.0 xml2_1.3.6          KernSmooth_2.23-24 
+[28] websocket_1.4.1     withr_3.0.1         R.oo_1.26.0        
+[31] grid_4.4.1          fansi_1.0.6         git2r_0.33.0       
+[34] e1071_1.7-14        colorspace_2.1-0    scales_1.3.0       
+[37] cli_3.6.3           rmarkdown_2.28      crayon_1.5.2       
+[40] generics_0.1.3      rstudioapi_0.16.0   httr_1.4.7         
+[43] tzdb_0.4.0          DBI_1.2.3           chromote_0.2.0     
+[46] proxy_0.4-27        rvest_1.0.4         parallel_4.4.1     
+[49] selectr_0.4-2       base64enc_0.1-3     vctrs_0.6.5        
+[52] V8_4.4.2            jsonlite_1.8.8      geojsonsf_2.0.3    
+[55] hms_1.1.3           bit64_4.0.5         rmapshaper_0.5.0   
+[58] units_0.8-5         glue_1.8.0          ps_1.7.6           
+[61] stringi_1.8.4       gtable_0.3.5        later_1.3.2        
+[64] aws.s3_0.3.21       munsell_0.5.1       pillar_1.9.0       
+[67] htmltools_0.5.8.1   R6_2.5.1            vroom_1.6.5        
+[70] evaluate_1.0.0      lattice_0.22-6      R.methodsS3_1.8.2  
+[73] class_7.3-22        Rcpp_1.0.13         xfun_0.47          
+[76] pkgconfig_2.0.3    
 ```
 
 
