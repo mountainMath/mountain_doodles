@@ -224,7 +224,7 @@ lead_results |>
   scale_fill_manual(values=party_colours2) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in races CBC has not called yet",
-       x="Number of votes lead",
+       x="Percentage point vote lead",
        y=NULL,
        caption="Data: Elections BC")
 ```

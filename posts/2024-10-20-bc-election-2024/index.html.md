@@ -260,7 +260,7 @@ lead_results |>
   scale_fill_manual(values=party_colours2) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in races CBC has not called yet",
-       x="Number of votes lead",
+       x="Percentage point vote lead",
        y=NULL,
        caption="Data: Elections BC")
 ```
@@ -552,7 +552,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-10-24 12:17:12 PDT"
+[1] "2024-10-24 18:26:52 PDT"
 ```
 
 
@@ -568,7 +568,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [f50750a] 2024-10-21: try fontawesome to get bsky logo into nav bar
+Head:     [dbd12aa] 2024-10-24: updated post with extra graph
 ```
 
 
