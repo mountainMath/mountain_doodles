@@ -83,10 +83,25 @@ close_races <- c(
   "Vernon-Lumby"
 )
 
+open_races <- c(
+  "Coquitlam-Burke Mountain",
+  "Courtenay-Comox",
+  "Juan de Fuca-Malahat",
+  "Kelowna Centre",
+  "Maple Ridge East",
+  "Richmond-Steveston",
+  "Surrey City Centre",
+  "Surrey-Guildford",
+  "Surrey-Panorama",
+  "Vancouver-Langara",
+  "Vernon-Lumby"
+)
+
 results <- results_raw |>
-  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots",ED_NAME)) |>
+  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots|Status | In Progress",ED_NAME)) |>
   left_join(district_boundaries |> st_drop_geometry() |> select(ED_NAME,ED_ID) |> unique(),by=c("ED_NAME"="ED_NAME")) |>
-  mutate(called=!(ED_NAME %in% close_races))
+  mutate(close=ED_NAME %in% close_races,
+         called=!(ED_NAME %in% open_races))
 
 tmp <- tempfile(fileext = ".csv")
 cleaned_results <- results |> 
@@ -217,18 +232,19 @@ Elections BC is still regularly updating vote counts, for convenience we added a
 
 ```{r}
 lead_results |>
-  filter(!called) |>
+  filter(close) |>
   ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
   geom_bar(stat="identity") +
+  geom_bar(stat="identity", data=~filter(.,!called,Party=="NDP"),fill=party_colours2[["NDP"]]) +
+  geom_bar(stat="identity", data=~filter(.,!called,Party=="CON"),fill=party_colours2[["CON"]]) +
   geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
-  scale_fill_manual(values=party_colours2) +
+  scale_fill_manual(values=party_colours) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in races CBC has not called yet",
        x="Percentage point vote lead",
        y=NULL,
        caption="Data: Elections BC")
 ```
-
 
 
 <details>

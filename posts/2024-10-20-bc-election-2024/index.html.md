@@ -88,10 +88,25 @@ close_races <- c(
   "Vernon-Lumby"
 )
 
+open_races <- c(
+  "Coquitlam-Burke Mountain",
+  "Courtenay-Comox",
+  "Juan de Fuca-Malahat",
+  "Kelowna Centre",
+  "Maple Ridge East",
+  "Richmond-Steveston",
+  "Surrey City Centre",
+  "Surrey-Guildford",
+  "Surrey-Panorama",
+  "Vancouver-Langara",
+  "Vernon-Lumby"
+)
+
 results <- results_raw |>
-  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots",ED_NAME)) |>
+  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots|Status | In Progress",ED_NAME)) |>
   left_join(district_boundaries |> st_drop_geometry() |> select(ED_NAME,ED_ID) |> unique(),by=c("ED_NAME"="ED_NAME")) |>
-  mutate(called=!(ED_NAME %in% close_races))
+  mutate(close=ED_NAME %in% close_races,
+         called=!(ED_NAME %in% open_races))
 
 tmp <- tempfile(fileext = ".csv")
 cleaned_results <- results |> 
@@ -118,7 +133,7 @@ With the data in hand^[We placed the data separately online to not interfere wit
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="111" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="126" source-offset="0"}
 vote_map_animation = {
   const height = width*ratio ;
   
@@ -253,11 +268,13 @@ Elections BC is still regularly updating vote counts, for convenience we added a
 
 ```{.r .cell-code}
 lead_results |>
-  filter(!called) |>
+  filter(close) |>
   ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
   geom_bar(stat="identity") +
+  geom_bar(stat="identity", data=~filter(.,!called,Party=="NDP"),fill=party_colours2[["NDP"]]) +
+  geom_bar(stat="identity", data=~filter(.,!called,Party=="CON"),fill=party_colours2[["CON"]]) +
   geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
-  scale_fill_manual(values=party_colours2) +
+  scale_fill_manual(values=party_colours) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in races CBC has not called yet",
        x="Percentage point vote lead",
@@ -272,7 +289,6 @@ lead_results |>
 
 
 
-
 <details>
 <summary>Remaining Observable code</summary>
 
@@ -281,7 +297,7 @@ lead_results |>
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="237" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="253" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -312,7 +328,7 @@ applySimulation = (nodes) => {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="259" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="275" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -325,7 +341,7 @@ spreadDistricts = applySimulation(districts)
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="263" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="279" source-offset="0"}
 maxRadius = 15
 ```
 
@@ -338,7 +354,7 @@ maxRadius = 15
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="267" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="283" source-offset="0"}
 ratio = 1
 ```
 
@@ -351,7 +367,7 @@ ratio = 1
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="271" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="287" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -364,7 +380,7 @@ nodePadding = 0.3
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="275" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="291" source-offset="0"}
 party_colors = {
   return {
     CON:"#115DA8",
@@ -384,7 +400,7 @@ party_colors = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="286" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="302" source-offset="0"}
 party_colors2 = {
   return {
     CON:"#83ACF5",
@@ -404,7 +420,7 @@ party_colors2 = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="299" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="315" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -421,7 +437,7 @@ format = ({
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="307" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="323" source-offset="0"}
 projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "FeatureCollection", features: districts})
 ```
 
@@ -434,7 +450,7 @@ projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "Feature
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="311" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="327" source-offset="0"}
 districts = bc_districts.features
 ```
 
@@ -447,7 +463,7 @@ districts = bc_districts.features
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="315" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="331" source-offset="0"}
 bc_districts = { 
   const url = "https://mountainmath.s3.ca-central-1.amazonaws.com/bc_2024_elections/district_boundaries.geojson";
   const bc_districts = await d3.json(url);
@@ -493,7 +509,7 @@ bc_districts = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="353" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="369" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -506,7 +522,7 @@ d3 = require("d3@5")
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="357" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="373" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -519,7 +535,7 @@ turf = require("@turf/turf@5")
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="361" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="377" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -552,7 +568,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-10-24 18:26:52 PDT"
+[1] "2024-10-26 11:47:31 PDT"
 ```
 
 
@@ -568,7 +584,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [dbd12aa] 2024-10-24: updated post with extra graph
+Head:     [bffbfd1] 2024-10-25: fix axis label - thanks Eric!
 ```
 
 
