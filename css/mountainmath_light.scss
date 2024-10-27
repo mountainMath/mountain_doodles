@@ -196,6 +196,13 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0
   background-color: $contrast_mm;
 }
 
+.panel-tabset{
+  border-width: 1px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: $contrast_mm;
+}
+
 .pagination {
   a:hover {
     text-decoration: none;
