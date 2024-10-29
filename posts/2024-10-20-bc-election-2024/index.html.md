@@ -3,7 +3,7 @@ title: "BC Election 2024"
 author:
   - name: Jens von Bergmann
 date: '2024-10-20'
-last-modified: '2024-10-23'
+last-modified: '2024-10-28'
 slug: bc-election-2024
 description: "A quick updated on the \"land doesn't vote, people do\" theme."
 image: 'images/land_vs_people.png'
@@ -37,24 +37,27 @@ library(tidyverse)
 library(mountainmathHelpers)
 library(sf)
 
-bc_geo <- cancensus::get_statcan_geographies("2021","PR") |>
-  filter(PRUID=="59") |>
-  rmapshaper::ms_simplify() |>
-  st_make_valid()
 
-district_boundaries <- read_sf("~/Downloads/BCGW_7113060B_1729362546577_9396/EBC_ELECTORAL_DISTS_BS11_SVW/EBC_ED_23_polygon.shp") |>
-  select(ED_ID,ED_ABBREV,ED_NAME,geometry) %>%
-  rmapshaper::ms_simplify() %>%
-  st_intersection(st_transform(bc_geo,st_crs(.))) %>%
-  rmapshaper::ms_simplify() %>%
-  st_make_valid() %>%
-  st_cast("MULTIPOLYGON") |>
-  mutate(x=st_coordinates(st_centroid(geometry))[,1],y=st_coordinates(st_centroid(geometry))[,2]) %>%
-  arrange(-y) |>
-  mutate(rank = row_number()) |>
-  st_cast("POLYGON") |>
-  mutate(area=st_area(geometry) |> as.numeric()) %>%
-  mutate(mainShape=area==max(area),.by=ED_ID)
+district_boundaries <- simpleCache({
+  bc_geo <- cancensus::get_statcan_geographies("2021","PR") |>
+    filter(PRUID=="59") |>
+    rmapshaper::ms_simplify() |>
+    st_make_valid()
+  
+  read_sf("~/Downloads/BCGW_7113060B_1729362546577_9396/EBC_ELECTORAL_DISTS_BS11_SVW/EBC_ED_23_polygon.shp") |>
+    select(ED_ID,ED_ABBREV,ED_NAME,geometry) %>%
+    rmapshaper::ms_simplify() %>%
+    st_intersection(st_transform(bc_geo,st_crs(.))) %>%
+    rmapshaper::ms_simplify() %>%
+    st_make_valid() %>%
+    st_cast("MULTIPOLYGON") |>
+    mutate(x=st_coordinates(st_centroid(geometry))[,1],y=st_coordinates(st_centroid(geometry))[,2]) %>%
+    arrange(-y) |>
+    mutate(rank = row_number()) |>
+    st_cast("POLYGON") |>
+    mutate(area=st_area(geometry) |> as.numeric()) %>%
+    mutate(mainShape=area==max(area),.by=ED_ID)
+},"bc_election_polygons.rds")
 
 upload_result <- district_boundaries |>
   select(ED_ID,ED_NAME,x,y,rank,mainShape,geometry) |>
@@ -89,21 +92,21 @@ close_races <- c(
 )
 
 open_races <- c(
-  "Coquitlam-Burke Mountain",
-  "Courtenay-Comox",
-  "Juan de Fuca-Malahat",
-  "Kelowna Centre",
-  "Maple Ridge East",
-  "Richmond-Steveston",
-  "Surrey City Centre",
-  "Surrey-Guildford",
-  "Surrey-Panorama",
-  "Vancouver-Langara",
-  "Vernon-Lumby"
+  #"Coquitlam-Burke Mountain",
+  # "Courtenay-Comox",
+  # "Juan de Fuca-Malahat",
+  # "Kelowna Centre",
+  #"Maple Ridge East",
+  #"Richmond-Steveston",
+  #"Surrey City Centre",
+  "Surrey-Guildford"
+  #"Surrey-Panorama",
+  #"Vancouver-Langara",
+  #"Vernon-Lumby"
 )
 
 results <- results_raw |>
-  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots|Status | In Progress",ED_NAME)) |>
+  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots|Status | In Progress| Complete",ED_NAME)) |>
   left_join(district_boundaries |> st_drop_geometry() |> select(ED_NAME,ED_ID) |> unique(),by=c("ED_NAME"="ED_NAME")) |>
   mutate(close=ED_NAME %in% close_races,
          called=!(ED_NAME %in% open_races))
@@ -133,7 +136,7 @@ With the data in hand^[We placed the data separately online to not interfere wit
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="126" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="129" source-offset="0"}
 vote_map_animation = {
   const height = width*ratio ;
   
@@ -219,7 +222,7 @@ tightest_race <- lead_results |> slice_min(lead_share,n=1)
 
 
 
-Some ridings had a clear winner with a large lead, others are still quite tight. @fig-party-lead-by-riding we give an overview over the vote share lead in each riding, the tightest race right now is Juan de Fuca-Malahat, where the NDP currently holds a 23 vote (0.1 percentage point) lead.
+Some ridings had a clear winner with a large lead, others are still quite tight. @fig-party-lead-by-riding we give an overview over the vote share lead in each riding, the tightest race right now is Surrey-Guildford, where the NDP currently holds a 27 vote (0.1 percentage point) lead.
 
 
 
@@ -238,18 +241,18 @@ party_colours2 <- c(
     IND="#FFCBB8",
     GRN="#84DA80"
 )
+party_colours_combined <- c(party_colours,setNames(as.character(party_colours2),paste0(names(party_colours2)," (lead)")))
 
 
 lead_results |>
-  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
   geom_bar(stat="identity") +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="NDP"),fill=party_colours2["NDP"]) +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="CON"),fill=party_colours2["CON"]) +
-  scale_fill_manual(values=party_colours) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in each riding",
        x="Percentage point lead",
-       y=NULL,
+       y=NULL,fill="Party",
        caption="Data: Elections BC")
 ```
 
@@ -261,24 +264,28 @@ lead_results |>
 
 ## Update (Oct 23, 2024)
 
-Elections BC is still regularly updating vote counts, for convenience we added a graph with just the 11 races that CBC has not yet called. We will updated this regularly as updated voting results come in.
+Elections BC is still regularly updating vote counts, for convenience we added a graph with just the 11 races that CBC has not yet called. We will updated this regularly as updated voting results come in. Fore reference we kept some of the older version in the tabs.
+
+::: {.panel-tabset}
+
+## Oct 28, 2024 - 6:50pm
 
 
 ::: {.cell}
 
 ```{.r .cell-code}
-lead_results |>
+simpleCache(lead_results,"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
   filter(close) |>
-  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
   geom_bar(stat="identity") +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="NDP"),fill=party_colours2[["NDP"]]) +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="CON"),fill=party_colours2[["CON"]]) +
   geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
-  scale_fill_manual(values=party_colours) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in races CBC has not called yet",
        x="Percentage point vote lead",
        y=NULL,
+       fill="Party",
        caption="Data: Elections BC")
 ```
 
@@ -289,6 +296,407 @@ lead_results |>
 
 
 
+
+## Oct 28, 2024 - 5pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-5pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-5-1.png){width=768}
+:::
+:::
+
+
+
+## Oct 28, 2024 - 4pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-4pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-6-1.png){width=768}
+:::
+:::
+
+
+
+## Oct 28, 2024 - 3pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-3pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-7-1.png){width=768}
+:::
+:::
+
+
+## Oct 28, 2024 - 2pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-2pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-8-1.png){width=768}
+:::
+:::
+
+
+## Oct 28, 2024 - 1pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-1pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-9-1.png){width=768}
+:::
+:::
+
+
+## Oct 28, 2024 - 12pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-12pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-10-1.png){width=768}
+:::
+:::
+
+
+## Oct 28, 2024 - 11am
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-11am.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-11-1.png){width=768}
+:::
+:::
+
+
+## Oct 28, 2024 - 10am
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-10am.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-12-1.png){width=768}
+:::
+:::
+
+
+
+<!--## Oct 28, 2024 - 9am-->
+
+
+::: {.cell}
+
+:::
+
+
+## Oct 27, 2024 - 8:30pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-27-8pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-14-1.png){width=768}
+:::
+:::
+
+
+## Oct 27, 2024 - 5:40pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-27-5pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-15-1.png){width=768}
+:::
+:::
+
+
+<!--## Oct 27, 2024 - 4pm-->
+
+
+::: {.cell}
+
+:::
+
+
+## Oct 27, 2024 - 1pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-27-1pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-17-1.png){width=768}
+:::
+:::
+
+
+## Oct 26, 2024 - 4pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-26-4pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-18-1.png){width=768}
+:::
+:::
+
+
+## Oct 26, 2024 - 1pm
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-26-1pm.rds") |>
+  filter(close) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours2) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  guides(fill=guide_legend(override.aes=list(fill=party_colours[c("CON","NDP")]))) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL, fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-19-1.png){width=768}
+:::
+:::
+
+
+## Oct 25, 2024
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-25.rds") |>
+  mutate(close=!called) |>
+  filter(close) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours2) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  guides(fill=guide_legend(override.aes=list(fill=party_colours[c("CON","NDP")]))) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL, fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-20-1.png){width=768}
+:::
+:::
+
+
+
+:::
+
+
 <details>
 <summary>Remaining Observable code</summary>
 
@@ -297,7 +705,7 @@ lead_results |>
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="253" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="555" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -328,7 +736,7 @@ applySimulation = (nodes) => {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="275" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="577" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -341,7 +749,7 @@ spreadDistricts = applySimulation(districts)
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="279" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="581" source-offset="0"}
 maxRadius = 15
 ```
 
@@ -354,7 +762,7 @@ maxRadius = 15
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="283" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="585" source-offset="0"}
 ratio = 1
 ```
 
@@ -367,7 +775,7 @@ ratio = 1
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="287" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="589" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -380,7 +788,7 @@ nodePadding = 0.3
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="291" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="593" source-offset="0"}
 party_colors = {
   return {
     CON:"#115DA8",
@@ -400,7 +808,7 @@ party_colors = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="302" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="604" source-offset="0"}
 party_colors2 = {
   return {
     CON:"#83ACF5",
@@ -420,7 +828,7 @@ party_colors2 = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="315" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="617" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -437,7 +845,7 @@ format = ({
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="323" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="625" source-offset="0"}
 projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "FeatureCollection", features: districts})
 ```
 
@@ -450,7 +858,7 @@ projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "Feature
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="327" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="629" source-offset="0"}
 districts = bc_districts.features
 ```
 
@@ -463,7 +871,7 @@ districts = bc_districts.features
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="331" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="633" source-offset="0"}
 bc_districts = { 
   const url = "https://mountainmath.s3.ca-central-1.amazonaws.com/bc_2024_elections/district_boundaries.geojson";
   const bc_districts = await d3.json(url);
@@ -509,7 +917,7 @@ bc_districts = {
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="369" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="671" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -522,7 +930,7 @@ d3 = require("d3@5")
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="373" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="675" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -535,7 +943,7 @@ turf = require("@turf/turf@5")
 
 :::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="377" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="679" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -568,7 +976,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-10-26 11:47:31 PDT"
+[1] "2024-10-29 11:08:46 PDT"
 ```
 
 
@@ -584,7 +992,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [bffbfd1] 2024-10-25: fix axis label - thanks Eric!
+Head:     [fed0083] 2024-10-27: better tabsets
 ```
 
 
@@ -600,7 +1008,7 @@ sessionInfo()
 ```
 R version 4.4.1 (2024-06-14)
 Platform: aarch64-apple-darwin20
-Running under: macOS 15.0.1
+Running under: macOS 15.1
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -624,32 +1032,30 @@ other attached packages:
 [11] ggplot2_3.5.1             tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.1    farver_2.1.2        R.utils_2.12.3     
- [4] fastmap_1.2.0       promises_1.3.0      cancensus_0.5.8    
- [7] digest_0.6.37       timechange_0.3.0    mime_0.12          
-[10] lifecycle_1.0.4     processx_3.8.4      magrittr_2.0.3     
-[13] compiler_4.4.1      rlang_1.1.4         tools_4.4.1        
-[16] utf8_1.2.4          yaml_2.3.10         knitr_1.48         
-[19] labeling_0.4.3      htmlwidgets_1.6.4   bit_4.0.5          
-[22] sp_2.1-4            classInt_0.4-10     curl_5.2.2         
-[25] aws.signature_0.6.0 xml2_1.3.6          KernSmooth_2.23-24 
-[28] websocket_1.4.1     withr_3.0.1         R.oo_1.26.0        
-[31] grid_4.4.1          fansi_1.0.6         git2r_0.33.0       
-[34] e1071_1.7-14        colorspace_2.1-0    scales_1.3.0       
-[37] cli_3.6.3           rmarkdown_2.28      crayon_1.5.2       
-[40] generics_0.1.3      rstudioapi_0.16.0   httr_1.4.7         
-[43] tzdb_0.4.0          DBI_1.2.3           chromote_0.2.0     
-[46] proxy_0.4-27        rvest_1.0.4         parallel_4.4.1     
-[49] selectr_0.4-2       base64enc_0.1-3     vctrs_0.6.5        
-[52] V8_4.4.2            jsonlite_1.8.8      geojsonsf_2.0.3    
-[55] hms_1.1.3           bit64_4.0.5         rmapshaper_0.5.0   
-[58] units_0.8-5         glue_1.8.0          ps_1.7.6           
-[61] stringi_1.8.4       gtable_0.3.5        later_1.3.2        
-[64] aws.s3_0.3.21       munsell_0.5.1       pillar_1.9.0       
-[67] htmltools_0.5.8.1   R6_2.5.1            vroom_1.6.5        
-[70] evaluate_1.0.0      lattice_0.22-6      R.methodsS3_1.8.2  
-[73] class_7.3-22        Rcpp_1.0.13         xfun_0.47          
-[76] pkgconfig_2.0.3    
+ [1] gtable_0.3.5        xfun_0.47           htmlwidgets_1.6.4  
+ [4] websocket_1.4.1     processx_3.8.4      tzdb_0.4.0         
+ [7] ps_1.7.6            vctrs_0.6.5         tools_4.4.1        
+[10] generics_0.1.3      parallel_4.4.1      curl_5.2.2         
+[13] proxy_0.4-27        fansi_1.0.6         pkgconfig_2.0.3    
+[16] R.oo_1.26.0         KernSmooth_2.23-24  lifecycle_1.0.4    
+[19] git2r_0.33.0        farver_2.1.2        compiler_4.4.1     
+[22] munsell_0.5.1       chromote_0.2.0      htmltools_0.5.8.1  
+[25] class_7.3-22        yaml_2.3.10         crayon_1.5.2       
+[28] later_1.3.2         pillar_1.9.0        R.utils_2.12.3     
+[31] aws.s3_0.3.21       classInt_0.4-10     mime_0.12          
+[34] tidyselect_1.2.1    rvest_1.0.4         digest_0.6.37      
+[37] stringi_1.8.4       labeling_0.4.3      fastmap_1.2.0      
+[40] grid_4.4.1          colorspace_2.1-0    cli_3.6.3          
+[43] magrittr_2.0.3      base64enc_0.1-3     utf8_1.2.4         
+[46] e1071_1.7-14        aws.signature_0.6.0 withr_3.0.1        
+[49] promises_1.3.0      scales_1.3.0        bit64_4.0.5        
+[52] timechange_0.3.0    rmarkdown_2.28      httr_1.4.7         
+[55] bit_4.0.5           R.methodsS3_1.8.2   hms_1.1.3          
+[58] evaluate_1.0.0      knitr_1.48          rlang_1.1.4        
+[61] Rcpp_1.0.13         glue_1.8.0          DBI_1.2.3          
+[64] selectr_0.4-2       geojsonsf_2.0.3     xml2_1.3.6         
+[67] vroom_1.6.5         rstudioapi_0.16.0   jsonlite_1.8.8     
+[70] R6_2.5.1            units_0.8-5        
 ```
 
 

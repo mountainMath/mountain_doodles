@@ -3,7 +3,7 @@ title: "BC Election 2024"
 author:
   - name: Jens von Bergmann
 date: '2024-10-20'
-last-modified: '2024-10-23'
+last-modified: '2024-10-28'
 slug: bc-election-2024
 description: "A quick updated on the \"land doesn't vote, people do\" theme."
 image: 'images/land_vs_people.png'
@@ -32,24 +32,27 @@ library(tidyverse)
 library(mountainmathHelpers)
 library(sf)
 
-bc_geo <- cancensus::get_statcan_geographies("2021","PR") |>
-  filter(PRUID=="59") |>
-  rmapshaper::ms_simplify() |>
-  st_make_valid()
 
-district_boundaries <- read_sf("~/Downloads/BCGW_7113060B_1729362546577_9396/EBC_ELECTORAL_DISTS_BS11_SVW/EBC_ED_23_polygon.shp") |>
-  select(ED_ID,ED_ABBREV,ED_NAME,geometry) %>%
-  rmapshaper::ms_simplify() %>%
-  st_intersection(st_transform(bc_geo,st_crs(.))) %>%
-  rmapshaper::ms_simplify() %>%
-  st_make_valid() %>%
-  st_cast("MULTIPOLYGON") |>
-  mutate(x=st_coordinates(st_centroid(geometry))[,1],y=st_coordinates(st_centroid(geometry))[,2]) %>%
-  arrange(-y) |>
-  mutate(rank = row_number()) |>
-  st_cast("POLYGON") |>
-  mutate(area=st_area(geometry) |> as.numeric()) %>%
-  mutate(mainShape=area==max(area),.by=ED_ID)
+district_boundaries <- simpleCache({
+  bc_geo <- cancensus::get_statcan_geographies("2021","PR") |>
+    filter(PRUID=="59") |>
+    rmapshaper::ms_simplify() |>
+    st_make_valid()
+  
+  read_sf("~/Downloads/BCGW_7113060B_1729362546577_9396/EBC_ELECTORAL_DISTS_BS11_SVW/EBC_ED_23_polygon.shp") |>
+    select(ED_ID,ED_ABBREV,ED_NAME,geometry) %>%
+    rmapshaper::ms_simplify() %>%
+    st_intersection(st_transform(bc_geo,st_crs(.))) %>%
+    rmapshaper::ms_simplify() %>%
+    st_make_valid() %>%
+    st_cast("MULTIPOLYGON") |>
+    mutate(x=st_coordinates(st_centroid(geometry))[,1],y=st_coordinates(st_centroid(geometry))[,2]) %>%
+    arrange(-y) |>
+    mutate(rank = row_number()) |>
+    st_cast("POLYGON") |>
+    mutate(area=st_area(geometry) |> as.numeric()) %>%
+    mutate(mainShape=area==max(area),.by=ED_ID)
+},"bc_election_polygons.rds")
 
 upload_result <- district_boundaries |>
   select(ED_ID,ED_NAME,x,y,rank,mainShape,geometry) |>
@@ -84,21 +87,21 @@ close_races <- c(
 )
 
 open_races <- c(
-  "Coquitlam-Burke Mountain",
-  "Courtenay-Comox",
-  "Juan de Fuca-Malahat",
-  "Kelowna Centre",
-  "Maple Ridge East",
-  "Richmond-Steveston",
-  "Surrey City Centre",
-  "Surrey-Guildford",
-  "Surrey-Panorama",
-  "Vancouver-Langara",
-  "Vernon-Lumby"
+  #"Coquitlam-Burke Mountain",
+  # "Courtenay-Comox",
+  # "Juan de Fuca-Malahat",
+  # "Kelowna Centre",
+  #"Maple Ridge East",
+  #"Richmond-Steveston",
+  #"Surrey City Centre",
+  "Surrey-Guildford"
+  #"Surrey-Panorama",
+  #"Vancouver-Langara",
+  #"Vernon-Lumby"
 )
 
 results <- results_raw |>
-  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots|Status | In Progress",ED_NAME)) |>
+  filter(!grepl("Advance voting ballot boxes|Final Voting Day ballot boxes|Out-of-district ballots|Status | In Progress| Complete",ED_NAME)) |>
   left_join(district_boundaries |> st_drop_geometry() |> select(ED_NAME,ED_ID) |> unique(),by=c("ED_NAME"="ED_NAME")) |>
   mutate(close=ED_NAME %in% close_races,
          called=!(ED_NAME %in% open_races))
@@ -211,40 +214,339 @@ party_colours2 <- c(
     IND="#FFCBB8",
     GRN="#84DA80"
 )
+party_colours_combined <- c(party_colours,setNames(as.character(party_colours2),paste0(names(party_colours2)," (lead)")))
 
 
 lead_results |>
-  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
   geom_bar(stat="identity") +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="NDP"),fill=party_colours2["NDP"]) +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="CON"),fill=party_colours2["CON"]) +
-  scale_fill_manual(values=party_colours) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in each riding",
        x="Percentage point lead",
-       y=NULL,
+       y=NULL,fill="Party",
        caption="Data: Elections BC")
 ```
 
 ## Update (Oct 23, 2024)
 
-Elections BC is still regularly updating vote counts, for convenience we added a graph with just the 11 races that CBC has not yet called. We will updated this regularly as updated voting results come in.
+Elections BC is still regularly updating vote counts, for convenience we added a graph with just the 11 races that CBC has not yet called. We will updated this regularly as updated voting results come in. Fore reference we kept some of the older version in the tabs.
+
+::: {.panel-tabset}
+
+## Oct 28, 2024 - 6:50pm
 
 ```{r}
-lead_results |>
+simpleCache(lead_results,"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
   filter(close) |>
-  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
   geom_bar(stat="identity") +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="NDP"),fill=party_colours2[["NDP"]]) +
-  geom_bar(stat="identity", data=~filter(.,!called,Party=="CON"),fill=party_colours2[["CON"]]) +
   geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
-  scale_fill_manual(values=party_colours) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
   scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
   labs(title="Party lead in races CBC has not called yet",
        x="Percentage point vote lead",
        y=NULL,
+       fill="Party",
        caption="Data: Elections BC")
 ```
+
+
+
+## Oct 28, 2024 - 5pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-5pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+
+## Oct 28, 2024 - 4pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-4pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+
+## Oct 28, 2024 - 3pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-3pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 28, 2024 - 2pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-2pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 28, 2024 - 1pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-1pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 28, 2024 - 12pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-12pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 28, 2024 - 11am
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-11am.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 28, 2024 - 10am
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-10am.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+
+<!--## Oct 28, 2024 - 9am-->
+
+```{r eval=FALSE, echo=FALSE}
+simpleCache({},"bc_elections_2024_results-2024-10-28-9am.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 27, 2024 - 8:30pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-27-8pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 27, 2024 - 5:40pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-27-5pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+<!--## Oct 27, 2024 - 4pm-->
+
+```{r eval=FALSE, echo=FALSE}
+simpleCache({},"bc_elections_2024_results-2024-10-27-4pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 27, 2024 - 1pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-27-1pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 26, 2024 - 4pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-26-4pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 26, 2024 - 1pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-26-1pm.rds") |>
+  filter(close) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours2) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  guides(fill=guide_legend(override.aes=list(fill=party_colours[c("CON","NDP")]))) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL, fill="Party",
+       caption="Data: Elections BC")
+```
+
+## Oct 25, 2024
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-25.rds") |>
+  mutate(close=!called) |>
+  filter(close) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours2) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  guides(fill=guide_legend(override.aes=list(fill=party_colours[c("CON","NDP")]))) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL, fill="Party",
+       caption="Data: Elections BC")
+```
+
+
+:::
 
 
 <details>

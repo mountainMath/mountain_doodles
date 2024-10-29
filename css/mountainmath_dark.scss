@@ -34,6 +34,7 @@ $midred: #812020 !default;
 $lightred: #f08080 !default;
 $theme_mm: #2B2222 !default;
 $contrast_mm: #452121 !default;
+$contrast_mm_dark: #372222 !default;
 // Body
 
 $body-bg:                   $theme_mm !default;
@@ -238,9 +239,25 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0
   }
 }
 
+
 .nav-tabs .nav-link.active{
   background-color: $contrast_mm;
+  border-style: solid;
+  border-color: $primary;
+  border-radius: 3px;
 }
+
+.nav-tabs .nav-link{
+  border-style: solid;
+  border-color: $contrast_mm;
+  border-radius: 3px;
+}
+
+.nav-tabs a.nav-link:not(.active):hover{
+  background-color: $contrast_mm_dark;
+}
+
+
 
 .panel-tabset{
   border-width: 1px;
