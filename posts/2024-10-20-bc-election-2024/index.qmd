@@ -94,7 +94,7 @@ open_races <- c(
   #"Maple Ridge East",
   #"Richmond-Steveston",
   #"Surrey City Centre",
-  "Surrey-Guildford"
+  # "Surrey-Guildford"
   #"Surrey-Panorama",
   #"Vancouver-Langara",
   #"Vernon-Lumby"
@@ -235,10 +235,10 @@ Elections BC is still regularly updating vote counts, for convenience we added a
 
 ::: {.panel-tabset}
 
-## Oct 28, 2024 - 6:50pm
+## Nov 8, 2024
 
 ```{r}
-simpleCache(lead_results,"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
+simpleCache(lead_results,"bc_elections_2024_results-2024-11-08.rds") |>
   filter(close) |>
   mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
   ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
@@ -253,6 +253,23 @@ simpleCache(lead_results,"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
        caption="Data: Elections BC")
 ```
 
+## Oct 28, 2024 - 6:50pm
+
+```{r}
+simpleCache({},"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
 
 
 ## Oct 28, 2024 - 5pm

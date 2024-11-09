@@ -22,11 +22,13 @@ execute:
 
 
 
+
 We don't yet have the final results for the 2024 BC provincial election, we are still waiting on the count of the vote-by-mail ballots that have not arrived yet. Some ridings are still in limbo, as is the overall outcome and who will form government.
 
 But most ridings have been called and we wanted to take this opportunity to replicate a map highlighting the difference between land and people as we have done for earlier federal elections, following the idea [implemented for the 2016 US presidential elections](https://observablehq.com/@karimdouieb/try-to-impeach-this-challenge-accepted) by [Karim Douïeb](http://twitter.com/karim_douieb). [@elections-fun.2019; @elections-fun-2021-edition.2021]
 
 As opposed to last time, we can now render the animation live within this blog, thanks quarto's direct support for [observable js](https://observablehq.com/documentation/cells/observable-javascript). All it takes is a little bit of data prep, where we grab the electoral district boundaries, cut out water features and simplify the polygons. And then scrape the election results from Elections BC. (It's 2024 and they probably have an actual data feed, but they sure make it hard to find.) Then we assemble a list of ridings that have not been called by hand, we will update that as more results come in.
+
 
 
 
@@ -99,7 +101,7 @@ open_races <- c(
   #"Maple Ridge East",
   #"Richmond-Steveston",
   #"Surrey City Centre",
-  "Surrey-Guildford"
+  # "Surrey-Guildford"
   #"Surrey-Panorama",
   #"Vancouver-Langara",
   #"Vernon-Lumby"
@@ -128,13 +130,15 @@ upload_result <- file_to_s3_gzip(tmp,
 
 
 
+
 With the data in hand^[We placed the data separately online to not interfere with page loading, and load it separately in via javascript.] we can on observable to draw our map. Regions that have not yet been called are coloured in a lighter shade of the party that is currently in the lead. The tooltip on hover shows the full riding results.
 
 
 
 
 
-:::{.cell}
+
+:::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="129" source-offset="0"}
 vote_map_animation = {
@@ -191,17 +195,19 @@ vote_map_animation = {
 }
 ```
 
-:::{#fig-land-vs-people .cell-output .cell-output-display}
+::::{#fig-land-vs-people .cell-output .cell-output-display}
 
 :::{#ojs-cell-1 nodetype="declaration"}
 :::
 Land does not vote, people do
-:::
-:::
+::::
+:::::
+
 
 
 
 The animation interpolates between the geographies of the ridings, and bubbles for each riding of size proportional to the total vote count. This visualizes the degree to which the map view over-emphasizes rural areas, which predominantly went to the Conservatives, whereas electoral districts with high population density and consequently lower area were predominantly won by the NDP.
+
 
 
 ::: {.cell}
@@ -222,7 +228,9 @@ tightest_race <- lead_results |> slice_min(lead_share,n=1)
 
 
 
-Some ridings had a clear winner with a large lead, others are still quite tight. @fig-party-lead-by-riding we give an overview over the vote share lead in each riding, the tightest race right now is Surrey-Guildford, where the NDP currently holds a 27 vote (0.1 percentage point) lead.
+
+Some ridings had a clear winner with a large lead, others are still quite tight. @fig-party-lead-by-riding we give an overview over the vote share lead in each riding, the tightest race right now is Surrey-Guildford, where the NDP currently holds a 22 vote (0.1 percentage point) lead.
+
 
 
 
@@ -262,19 +270,21 @@ lead_results |>
 :::
 
 
+
 ## Update (Oct 23, 2024)
 
 Elections BC is still regularly updating vote counts, for convenience we added a graph with just the 11 races that CBC has not yet called. We will updated this regularly as updated voting results come in. Fore reference we kept some of the older version in the tabs.
 
 ::: {.panel-tabset}
 
-## Oct 28, 2024 - 6:50pm
+## Nov 8, 2024
+
 
 
 ::: {.cell}
 
 ```{.r .cell-code}
-simpleCache(lead_results,"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
+simpleCache(lead_results,"bc_elections_2024_results-2024-11-08.rds") |>
   filter(close) |>
   mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
   ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
@@ -296,14 +306,14 @@ simpleCache(lead_results,"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
 
 
 
+## Oct 28, 2024 - 6:50pm
 
-## Oct 28, 2024 - 5pm
 
 
 ::: {.cell}
 
 ```{.r .cell-code}
-simpleCache({},"bc_elections_2024_results-2024-10-28-5pm.rds") |>
+simpleCache({},"bc_elections_2024_results-2024-10-28-6:50pm.rds") |>
   filter(close) |>
   mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
   ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
@@ -325,13 +335,15 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-5pm.rds") |>
 
 
 
-## Oct 28, 2024 - 4pm
+
+## Oct 28, 2024 - 5pm
+
 
 
 ::: {.cell}
 
 ```{.r .cell-code}
-simpleCache({},"bc_elections_2024_results-2024-10-28-4pm.rds") |>
+simpleCache({},"bc_elections_2024_results-2024-10-28-5pm.rds") |>
   filter(close) |>
   mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
   ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
@@ -353,7 +365,39 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-4pm.rds") |>
 
 
 
+
+## Oct 28, 2024 - 4pm
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+simpleCache({},"bc_elections_2024_results-2024-10-28-4pm.rds") |>
+  filter(close) |>
+  mutate(Party_call=paste0(Party, ifelse(called,""," (lead)"))) |>
+  ggplot(aes(x=lead_share,y=reorder(ED_NAME,lead_share),fill=Party_call))  +
+  geom_bar(stat="identity") +
+  geom_text(aes(label=scales::comma(lead,suffix=" vote lead"),hjust=ifelse(lead_share>0.01,1.1,-0.1))) +
+  scale_fill_manual(values=party_colours_combined,breaks=names(party_colours)) +
+  scale_x_continuous(labels=\(d)scales::percent(d,suffix="pp")) +
+  labs(title="Party lead in races CBC has not called yet",
+       x="Percentage point vote lead",
+       y=NULL,
+       fill="Party",
+       caption="Data: Elections BC")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-7-1.png){width=768}
+:::
+:::
+
+
+
+
 ## Oct 28, 2024 - 3pm
+
 
 
 ::: {.cell}
@@ -375,12 +419,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-3pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-7-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-8-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 28, 2024 - 2pm
+
 
 
 ::: {.cell}
@@ -402,12 +448,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-2pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-8-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-9-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 28, 2024 - 1pm
+
 
 
 ::: {.cell}
@@ -429,12 +477,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-1pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-9-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-10-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 28, 2024 - 12pm
+
 
 
 ::: {.cell}
@@ -456,12 +506,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-12pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-10-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-11-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 28, 2024 - 11am
+
 
 
 ::: {.cell}
@@ -483,12 +535,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-11am.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-11-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-12-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 28, 2024 - 10am
+
 
 
 ::: {.cell}
@@ -510,13 +564,15 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-10am.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-12-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-13-1.png){width=768}
 :::
 :::
+
 
 
 
 <!--## Oct 28, 2024 - 9am-->
+
 
 
 ::: {.cell}
@@ -524,7 +580,9 @@ simpleCache({},"bc_elections_2024_results-2024-10-28-10am.rds") |>
 :::
 
 
+
 ## Oct 27, 2024 - 8:30pm
+
 
 
 ::: {.cell}
@@ -546,12 +604,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-27-8pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-14-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-15-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 27, 2024 - 5:40pm
+
 
 
 ::: {.cell}
@@ -573,12 +633,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-27-5pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-15-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-16-1.png){width=768}
 :::
 :::
+
 
 
 <!--## Oct 27, 2024 - 4pm-->
+
 
 
 ::: {.cell}
@@ -586,7 +648,9 @@ simpleCache({},"bc_elections_2024_results-2024-10-27-5pm.rds") |>
 :::
 
 
+
 ## Oct 27, 2024 - 1pm
+
 
 
 ::: {.cell}
@@ -608,12 +672,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-27-1pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-17-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-18-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 26, 2024 - 4pm
+
 
 
 ::: {.cell}
@@ -635,12 +701,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-26-4pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-18-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-19-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 26, 2024 - 1pm
+
 
 
 ::: {.cell}
@@ -661,12 +729,14 @@ simpleCache({},"bc_elections_2024_results-2024-10-26-1pm.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-19-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-20-1.png){width=768}
 :::
 :::
+
 
 
 ## Oct 25, 2024
+
 
 
 ::: {.cell}
@@ -688,9 +758,10 @@ simpleCache({},"bc_elections_2024_results-2024-10-25.rds") |>
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/unnamed-chunk-20-1.png){width=768}
+![](index_files/figure-html/unnamed-chunk-21-1.png){width=768}
 :::
 :::
+
 
 
 
@@ -703,9 +774,10 @@ simpleCache({},"bc_elections_2024_results-2024-10-25.rds") |>
 
 
 
-:::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="555" source-offset="0"}
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="572" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -727,68 +799,68 @@ applySimulation = (nodes) => {
 }
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-2 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="577" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="594" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-3 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="581" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="598" source-offset="0"}
 maxRadius = 15
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-4 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="585" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="602" source-offset="0"}
 ratio = 1
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-5 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="589" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="606" source-offset="0"}
 nodePadding = 0.3
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-6 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="593" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="610" source-offset="0"}
 party_colors = {
   return {
     CON:"#115DA8",
@@ -799,16 +871,16 @@ party_colors = {
 }
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-7 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="604" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="621" source-offset="0"}
 party_colors2 = {
   return {
     CON:"#83ACF5",
@@ -819,16 +891,16 @@ party_colors2 = {
 }
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-8 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="617" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="634" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -836,42 +908,42 @@ format = ({
 })
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-9 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="625" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="642" source-offset="0"}
 projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "FeatureCollection", features: districts})
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-10 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="629" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="646" source-offset="0"}
 districts = bc_districts.features
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-11 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="633" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="650" source-offset="0"}
 bc_districts = { 
   const url = "https://mountainmath.s3.ca-central-1.amazonaws.com/bc_2024_elections/district_boundaries.geojson";
   const bc_districts = await d3.json(url);
@@ -908,51 +980,52 @@ bc_districts = {
 }
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-12 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="671" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="688" source-offset="0"}
 d3 = require("d3@5")
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-13 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="675" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="692" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-14 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell}
+:::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="679" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="696" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-15 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
+
 
 
 
@@ -966,6 +1039,7 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 <summary>Reproducibility receipt</summary>
 
 
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -976,7 +1050,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-10-29 11:08:46 PDT"
+[1] "2024-11-08 14:43:48 PST"
 ```
 
 
@@ -992,7 +1066,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [fed0083] 2024-10-27: better tabsets
+Head:     [4bf0a38] 2024-10-30: freeze for final count of bc election results (not yet accounting for manual recounts).
 ```
 
 
@@ -1061,6 +1135,7 @@ loaded via a namespace (and not attached):
 
 :::
 :::
+
 
 
 </details>

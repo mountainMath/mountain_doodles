@@ -357,7 +357,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-11-08 17:12:29 PST"
+[1] "2024-11-08 17:15:12 PST"
 ```
 
 
@@ -373,7 +373,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [4bf0a38] 2024-10-30: freeze for final count of bc election results (not yet accounting for manual recounts).
+Head:     [7e6f473] 2024-11-09: foreign buyer sredux post
 ```
 
 
