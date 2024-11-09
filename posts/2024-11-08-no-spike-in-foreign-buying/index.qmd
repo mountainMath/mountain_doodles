@@ -1,0 +1,181 @@
+---
+title: 'No spike in "foreign buying"'
+author:
+  - name: Jens von Bergmann
+    affiliation: MountainMath
+  - name: Nathan Lauster
+    affiliation: UBC Sociology
+date: '2024-11-08'
+slug: no-spike-in-foreign-buying
+description: 'Contrary to news reporting, there is no spike in "foreign buyers" in BC real estate.'
+image: 'index_files/figure-html/fig-fbt-monthly-res-1.png'
+bibliography: ../../common_literature.bib 
+code-tools:
+  toggle: true
+fig-width: 8
+categories:
+  - newsfail
+execute:
+  cache: true
+  message: false
+  warning: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(bcdata)
+library(mountainmathHelpers)
+library(cancensus)
+```
+
+
+```{r}
+ppt_datasetes <- bcdata::bcdc_search("Property Transfer Tax")
+
+titles <- lapply(ppt_datasetes,\(x)x$title)
+
+provincial_monthly_ids <- ppt_datasetes[grepl("property transfer tax data",titles,ignore.case = TRUE)] |>
+  map_df(\(x)x$resource_df |> 
+           filter(grepl("PROVINCIAL_MONTHLY_\\d{4}|PROVINCIAL MONTHLY \\d{4}|provincialmonthly\\d{4}",name,ignore.case=TRUE),
+                  format=="csv"))
+
+provincial_monthly <- provincial_monthly_ids |>
+  rowwise() |>
+  group_map(~read_csv(.x$url,col_types=cols(.default="c"))) |>
+  bind_rows() |>
+  filter(!is.na(Year)) |>
+  mutate(Date=as.Date(paste0(Year,"-",Month,"-15"))) |>
+  mutate_at(vars(-one_of("Date","Year","Month")),as.numeric)
+```
+
+Today the Globe and Mail published an [opinion piece about continued flows of "foreign money" in B.C. real estate](https://www.theglobeandmail.com/real-estate/vancouver/article-foreign-money-continues-to-flow-into-bc-real-estate/). Broadly this is a topic that has been discussed in BC for over a decade now and regularly pops up in the news. We've written extensively about the slipperiness of the "foreign money" discourse in our paper on Canada's turn toward Housing Nationalism [@housing_nationalism.2023] ([ungated version here](https://open.library.ubc.ca/soa/cIRcle/collections/facultyresearchandpublications/52383/items/1.0438798)). There are a number of conceptualizations of "foreign" in the public discussion, as well as in data sources, policy and law as it applies to real estate holdings and purchases. Our paper describes how the flexible use and application of the "foreign" label plays an integral role in keeping anti-foreign narratives and sentiments alive. 
+
+The G&M article continues this pattern, not just mixing and matching concepts but outright misrepresenting the groups targeted by the federal Foreign Buyer Ban and the BC Foreign Buyer Tax. Moreover, it leads with the claim of a "spike" in the value of foreign buying, continuing to push the narrative that our housing problems are driven by foreign origins. We will leave it to our article on Housing Nationalism to criticize this broader framing. For now we will demonstrate that the claim about a spike is wrong, and seems to be based on an error in summing across months in BC data.
+
+In support of the idea there's been a recent spike in foreign buying, the G&M article claims:
+
+>   Using property transfer tax data provided by the B.C. government, Simon Fraser University associate professor Andy Yan showed that residential purchases categorized as “foreign involvement transactions” had a total dollar value of nearly \$664-million from January to September, 2020. In that same period this year, 834 foreign involvement residential transactions added up to nearly \$824-million. The dollar value of foreign residential transactions in 2023 was \$744.5-million. The total number of foreign transactions, including commercial, increased from 1,018 in 2023 to 1,020 in 2024.
+
+The dollar values for 2023 and 2024 appear correct. However the dollar value for 2020 is plainly wrong. @tbl-fbt-first-9-months are the actual numbers for the first 9 months in every year since 2017.
+
+```{r tbl-fbt-first-9-months}
+provincial_monthly |>
+  filter(Month %in% seq(1,9)) |>
+  summarize(across(c(add_tax_paid,sum_FMV_foreign_res,sum_FMV_foreign),sum),.by=Year) |>
+  arrange(Year) |>
+  mutate(add_tax_paid=scales::dollar(add_tax_paid,scale=10^-6,suffix="M"),
+         across(c(sum_FMV_foreign_res,sum_FMV_foreign),~scales::dollar(.x,scale=10^-9,suffix="bn"))) |>
+  rename(`Total market value with foreign involvement`=sum_FMV_foreign,
+         `Total residential market value with foreign involvement`=sum_FMV_foreign_res,
+         `Total Foreign Buyer Tax`=add_tax_paid,
+         `First 9 months of year`=Year) |>
+  tinytable::tt(caption="BC Open Data",
+                note="Here \"foreign\" refers to non-citizen, non-PR, non-provincial nominees")
+```
+
+
+We were able to replicate the dollar values for 2020 when we only summed up the first six months (rather than the first nine) of 2020, and it seems likely this is the source of the error. Importantly, it's a pretty big error, and when it's corrected the idea of a recent spike in foreign involved purchases disappears. 
+
+The errors in adding across months continue to reverberate in subsequent passages:
+
+>   B.C.’s foreign buyer tax revenues ranged from \$51-million in 2020 to a high of \$71-million in 2021, to \$24-million in 2024.
+
+Again, as this is not correct as can be seen from  @tbl-fbt-first-9-months. Maybe more usefully, @fig-fbt-monthly-res shows the monthly tax revenue from the FBT, with annual means shown for added context.
+
+```{r  fig-fbt-monthly-res}
+provincial_monthly |>
+  mutate(share=n_foreign_res/n_res_trans) |>
+  mutate(share2=sum_FMV_foreign_res/sum_FMV_res) |>
+  mutate(Name="British Columbia") |>
+  ggplot(aes(x=Date,y=add_tax_paid)) + 
+  geom_line() +
+  scale_y_continuous(labels=~scales::dollar(.x,scale=10^-6,suffix="M")) +
+  geom_smooth(method="lm",formula=y~1,aes(group=Year),se=FALSE) +
+  scale_x_date(date_breaks="1 year",date_labels="%Y") +
+  labs(title="BC Foreign buyer tax revenue",
+       y="Monthly tax revenue",x=NULL,caption="BC Open Data")
+```
+
+Though the article does not mention this, BC's Foreign Buyer Tax does not apply everywhere in BC, so this misses purchases with foreign involvement outside of the FBT areas. The article is also mum on the federal Foreign Buyer Ban not applying everywhere but only in another subset in BC as shown in @fig-foreign-buyer-restriction-goes, and applying to a different set of people than the Foreign Buyer Tax.
+
+```{r fig-foreign-buyer-restriction-goes, crop=TRUE}
+rds <- bcdc_get_data("b66ed992-16c9-4527-b363-0ae4827d103b")
+geos <- get_census(2021,regions=list(PR="59"),level="CMA",geo_format = "sf") |>
+  mutate(Type="Foreign Buyer Ban")
+pr <- get_census(2021,regions=list(PR="59")) 
+
+fb_rds <- rds |> filter(grepl("Capital|Fraser Valley|Metro Vancouver|Central Okanagan|Nanaimo",REGIONAL_DISTRICT_NAME)) |>
+  mutate(Type="Foreign Buyer Tax")
+
+ggplot(geos,aes(fill=Type)) +
+  geom_sf() +
+  geom_sf(data=fb_rds) +
+  scale_fill_manual(values=c("Foreign Buyer Ban"="firebrick",
+                             "Foreign Buyer Tax"="darkgreen")) +
+  geom_roads() +
+  geom_water() +
+  theme(legend.position = "bottom") +
+  coord_sf(datum=NA) +
+  labs(title="Areas in BC with foreign buyer restrictions",
+       fill=NULL)
+```
+
+The article puts a lot of emphasis on the value of transactions involving foreign buyers, so not just the value attributed to foreign buyers based on ownership share. This is shown in @fig-fb-value-monthly-res.
+
+
+```{r  fig-fb-value-monthly-res}
+provincial_monthly |>
+  ggplot(aes(x=Date,y=sum_FMV_foreign_res)) + 
+  geom_line() +
+  scale_y_continuous(labels=~scales::dollar(.x,scale=10^-6,suffix="M")) +
+  geom_smooth(method="lm",formula=y~1,aes(group=interaction(Year)),se=FALSE) +
+  scale_x_date(date_breaks="1 year",date_labels="%Y") +
+  labs(title="Value of residential property transactions involving foreign buyers",
+       y="Total fair market value",x=NULL,caption="BC Open Data")
+```
+
+
+In @fig-fb-value-monthly-all we include non-residential properties to get the total market value of all properties with foreign involvement.
+
+```{r  fig-fb-value-monthly-all}
+provincial_monthly |>
+  ggplot(aes(x=Date,y=sum_FMV_foreign)) + 
+  geom_line() +
+  scale_y_continuous(labels=~scales::dollar(.x,scale=10^-6,suffix="M")) +
+  geom_smooth(method="lm",formula=y~1,aes(group=interaction(Year)),se=FALSE) +
+  scale_x_date(date_breaks="1 year",date_labels="%Y") +
+  labs(title="Value of all property transactions involving foreign buyers",
+       y="Total fair market value",x=NULL,caption="BC Open Data")
+```
+
+
+Looking at this the opening claim in the article that "foreign buying in British Columbia spiked in dollar value this year" is untenable and directly contradicted by the data, undermining the entire narrative of the piece.
+
+Of note, the article continues by helpfully reminding us that "people shouldn’t confuse foreign buyers with immigrants", only to continue by using the slippery concept of "foreign money" and applying it to immigrants, as well as some citizens where the "foreign" component might be a spouse working abroad or immigrants not "anglicizing" their first name upon landing.
+
+We now have a lot of data: data on foreign buyers, estimates on non-resident investment, estimates of problematic vacancies, etc. We have found this data useful and drawn extensively on it in our own work trying to understand local patterns. But it's crucial that data analysis is performed carefully and thoughtfully with respect to impact. Hopefully this piece will be corrected, and the missimpressions created by its framing will be fixed by G&M.
+
+
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2024-11-08-no-spike-in-foreign-buying/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+
+<details>
+
+<summary>Reproducibility receipt</summary>
+
+```{r cache=FALSE}
+## datetime
+Sys.time()
+
+## repository
+git2r::repository()
+
+## Session info
+sessionInfo()
+```
+
+</details>
+
+
+
+
