@@ -9,15 +9,19 @@ about:
     - icon: envelope-at-fill
       text: Email
       href: mailto:jens@mountainmath.ca
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com/@vb_jens
+    - text: Bluesky
+      icon: bluesky
+      href: https://bsky.app/profile/jensvb.bsky.social
+      aria-label: Bluesky
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com/@vb_jens
     - icon: github
       text: Github
       href: https://github.com/mountainmath
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/@vb_jens
 ---
 
 Mountain Doodles is an insomnia driven side project, born out of random questions, trying to give partial answers through data. During daytime at [MountainMath](https://mountainmath.ca).

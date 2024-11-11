@@ -24,6 +24,13 @@ execute:
 
 
 
+
+
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/11/08/no-spike-in-foreign-buying/" target="_blank">HomeFreeSociology</a>)</i></p>
+
+
+
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -357,7 +364,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2024-11-08 17:15:12 PST"
+[1] "2024-11-10 23:12:48 PST"
 ```
 
 
@@ -373,7 +380,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [7e6f473] 2024-11-09: foreign buyer sredux post
+Head:     [e567ead] 2024-11-09: freeze, and link to nathan
 ```
 
 
