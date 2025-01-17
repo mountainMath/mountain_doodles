@@ -27,7 +27,7 @@ format:
   blog-pdf:
     fig-format: 'png'
     fig-width: 8
-    fig-height: 6
+    fig-height: 5
     output-file: 'homelessness-and-rents-in-canada'
 ---
 
@@ -35,7 +35,11 @@ format:
 
 
 
+
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/01/16/homelessness-and-rents-in-canada/" target="_blank">HomeFreeSociology</a>)</i></p>
+
+
 
 
 
@@ -160,6 +164,8 @@ m_rents <- rents |> filter(BEDRM=="1 bedroom",quantile=="50%") |>
 
 
 
+
+
 Evidence suggests a clear correlation between rents and rates of homelessness in the USA. The simplest interpretation is that housing shortages drive rents higher and leave more people falling through the cracks of our systems for distributing housing. That is, [homelessness is a housing problem](https://homelessnesshousingproblem.com/). 
 
 Do we also see this relationship in Canada?
@@ -179,6 +185,8 @@ Canadian Point-in-Time (PIT) Homeless Count data has been growing in volume and 
 What we want to establish are 1) PIT counts derived from common definitions, 2) applied to correct geographic denominators for establishing risk, but reflective of extracted CMA geographies, 3) updated to be as recent as possible. From here on out we limited ourselves to counts from 2020 or beyond (see @kneebone2021local for investigation into limited access 2018 count data). We provide a dataset in CSV form of our count data broken down by category [here](/data/Shared_PIT_Homeless_count_CMA_Revised.csv), with links to sources for each count and for underlying population paired to count geographies and matched to years as best we can figure out. Here we roughly match geographies of counts to Census CMAs, often joined together as extractable from PUMF data (e.g. Kelowna - Abbotsford-Mission), while attempting to preserve the integrity of underlying populations subject to count attempts for denominators. Where possible we looked to expand counts from cities to broader metropolitan areas, but we note imperfect division into metros within the PUMF data and imperfect mapping of geographies between homeless counts and CMAs (for instance, Oshawa here actually represents results from Durham County). We've attempted to minimize these issues in our matching, with instructions included in the file linked above, but uncertainties remain. 
 
 Returning to our first issue, authorities administering PIT counts employ different methodologies to count and tally up various categories of homelessness. In particular, those temporarily housed (e.g. in various kinds of transitional housing, sometimes including hotels), within institutional settings (e.g. hospitals and jails), and those with no-fixed-address (e.g. couch-surfing) are often defined and tabulated differently within different homeless counts, and in many cases not tabulated at all. These categories are also often (though not always) considered "provisionally housed" in order to distinguish them from the "absolute homelessness" of people spending the night in homeless shelters (usually including domestic violence shelters), or without shelter (in public, within encampments or vehicles not meant for permanent shelter). Diving into tabulations directly, @fig-pit-overview pulls out distinct categories to illustrate the differences between counts in who gets counted.
+
+
 
 
 
@@ -218,9 +226,13 @@ homelessness_data_manual |>
 
 
 
+
+
 By comparing categories of counts, we can see that some jurisdictions just count a lot more people as homeless. Reading through the Capital Region of Victoria's homeless count methods, for instance, reveals a very inclusive definition applied to provisionally housed categories, at its broadest including people as homeless if they don't have stable housing arranged for the next three years. Other counts use much narrower time frames, ranging from 30 days to one year, or don't include provisionally housed categories (e.g. transitional, public system, and couch surfing) at all. Various inclusion of people as homeless when their location during the count remained unknown represents a further difficulty.
 
 In order to ensure counts are comparable, we can strip out the provisional categories where people are often counted differently and compare just the absolute categories, where methods tend to be similar (see also @kneebone2021local). It's important to remember this is simply a choice we're making for comparability purposes - we're not attempting to redefine who should count here - and in all cases, PIT counts are broadly recognized as undercounts. One useful way of thinking about this approach is that common methods to count unsheltered and sheltered groups likely undercount in a similar fashion. Using this as a base both enables comparison and allows the potential to predict what results of different metros might look like if they adopted similar count standards. For instance, insofar as differences in methods drive much of the variation, one could attempt to use absolute homelessness tabulations to predict what counts across Canada would look like if everyone employed Victoria's relatively inclusive procedures. For our purposes here, focusing in on "unsheltered" and "sheltered" populations but excluding provisional categories provides us comparable results as shown in @fig-homelessness-rate-best-guess. 
+
+
 
 
 
@@ -254,11 +266,15 @@ homelessness_data_manual |>
 
 
 
+
+
 Of note, while we stick to recent (2020 onward) counts, we recognize the dramatic changes on the ground in terms of Covid contexts and policies. In particular, most Ontario counts took place in 2021, often during acute phases of the epidemic. Other counts mostly occurred later (except for the Kelowna portion of the joint Kelowna - Abbotsford CMA below), for example through Quebec's provincial counts in 2022. Counts were also carried out at different times of the year, making comparisons between sheltered and unsheltered populations especially unstable. In other words, even our efforts at carefully establishing comparable counts remain subject to lots of caveats.
 
 # The correlation between rents and homelessness in Canada
 
 Once we have more comparable PIT counts, we can return to our starting questions. We see a strong correlation between rents and homelessness in the USA. Do we see a similarly strong correlation in Canada? To get comparable rents, we pull data from the 2021 Census. Because housing stock varies broadly across regions (more on this below) we focus on 1BR rents for consistent comparability. We also recognize that rents for all tenants reported in the Census are often misleading concerning the housing stock actually available for rent. Policies like rent control can really favour long-term renters maintaining existing contracts, and the rents they pay are often far below current market rents. So here we focus on turnover rents. That is, what is the median rent charged for those moving into a 1BR dwelling within the last year? And how does it relate to PIT homeless count rates? The result is shown in @fig-rent-homelessness-canada.
+
+
 
 
 
@@ -310,7 +326,11 @@ pd0 |>
 
 
 
+
+
 As noted above, many of Canada's smaller metropolitan areas are combined in the PUMF release we're using for rents, even when they're not near one another. This creates potential comparability issues which can cause problems when examining the joint rent distribution, as well as combining homelessness counts. Sure enough, we note that combined metros are often outliers in the figure above. In @fig-rent-homelessness-canada_single we exclude multiple-CMA regions from the regression, which shrinks the sample even further but yields a better fit, suggesting an even stronger relationship between rent and PIT count homelessness rates.
+
+
 
 
 
@@ -350,6 +370,8 @@ pd0 |>
 
 
 
+
+
 Overall, we see a pretty strong correlation, similar to that found in the USA. This also roughly matches @kneebone2021local findings from 2018 matching rents to counts. There's still a lot of unexplained variation. But the figure emphasizes interconnection between how the housing system operates in terms of rental markets and the prevalence of homelessness. That interconnectedness is, itself, an important takeaway: housing is a system! Overall, the simplest interpretation is that housing shortages drive high rents, which in turn exclude more people from being able to afford housing, producing more homelessness. Correspondingly, adding more housing could reduce rents and significantly reduce homelessness.
 
 But is this right? And if so, just how does it work? We have a correlation, so let's dive into mechanisms.
@@ -379,6 +401,8 @@ We think these observations are useful, and calling attention to how relationshi
 Among things worth pushing back on, it's worth remembering that medians are just summaries for underlying distributions of rents. Median rents are imperfect stand-ins for the availability of low-end housing, but they can still indicate such availability, both in market and non-market forms. 
 
 We can get a fuller glimpse at how well median rents do by displaying them alongside upper and lower quartiles (bounding the yellow boxes) and top and bottom decile range (here represented as whiskers) for larger metro areas in Canada, as in @fig-rent-distribution1 below. Note we also subdivide into 1BR and 2BR rentals, and exclude dedicated non-market or otherwise subsidized housing (we will return to this portion of systems for housing distribution later). Crucially we also distinguish between turnover rents available for recent movers (in past year) and all non-subsidized rents. On the left, the low end of the distribution of turnover rents offers probably the best estimate of what kind of market housing is generally available for those with low incomes. But on the right, the distribution of all rents can still be useful for understanding the situations current renters face. 
+
+
 
 
 
@@ -430,9 +454,13 @@ rent_dist_data |>
 
 
 
+
+
 We can see by the ordering of metros that median rents don't fully capture what's going on in the bottom quartile of the housing market, much less the lowest rents on offer (which also captures varying degrees of non-arms length rentals). For instance, Victoria's 1-bedroom rents at the lowest decile are above Vancouver's, and at the 25th percentile are relatively near to Vancouver's, despite Victoria having median rents far below Vancouver's. Furth is right that it's these lower rents that really matter and we can do better to measure them directly instead of relying upon medians. Still, overall median rents generally do ok at predicting these lower rents, and it's an error to dismiss their predictive power on the basis of their unaffordability to the poor.^[For analysis rents are generally modelled on a log-normal distribution, which better approximates the rent distributions we see empirically. The median generally not being centred in 25th to 75th quartile range, and the upper whiskers in the plot being longer than the lower ones, speak to that.]
 
 We can also see that turnover rents at the lowest decile of the market are indeed generally lower than overall median rents, making them more affordable to those with very low incomes, but they are still relatively well predicted by median rents. We highlight this in @fig-rents-med-vs-lower-decidle, where we plot lower decile rents rents of recently available units against median overall rents.
+
+
 
 
 
@@ -470,11 +498,15 @@ bind_rows(
 
 
 
+
+
 Of note, rents at the lower end of the market generally reflect some combination of poorer quality, rent controlled, and worse located housing. But there are also lots of intermediate forms of 'non-arm's length' rentals that fit pretty well in Furth's "people don’t become homeless when they run out of money, they become homeless when they run out of relationships" framing. The share of households moving into non-arms length rentals varies across metro areas, in Metro Vancouver it seems to be around 10%. [@tumbling-turnover.2022] 
 
 Non-arm's length rents can still be related to prevailing market rents. For instance, in cheaper markets, the landlord of an apartment that might otherwise filter out of the housing stock altogether, for instance because of its low quality, might more readily be persuaded to provide it to a friend or acquaintance at extremely low rent instead. On the flip side, those without access to extra housing units to rent out below market rates can and do at times provide cash transfers to help friends and family access market housing. Such help can also assist those with low incomes afford market housing, even if paying prevailing rents remains beyond their own incomes. In other words, and for lots of reasons, it is not necessarily the case that Furth's point 2 challenges his point 1.
 
 To further emphasize this objection, in @fig-homelessness-rents we plot PIT homelessness rates against prevailing metro area rents, taken at various percentiles, comparing median rents to those at the bottom 25th percentile and the bottom 10th percentile. We continue to focus on the single-CMA regions to understand the relationship.
+
+
 
 
 
@@ -536,6 +568,8 @@ pd |>
 
 
 
+
+
 Without trying to over-interpret inherently messy data, we note that the relationship becomes stronger if we focus on the lower end of the rent spectrum. This fits with our expectations that the lower end is what really matters. At the same time, the difference between what's happening at the low end and at the median isn't all that big and the relationship to homelessness doesn't shift much. Medians do a decent job of capturing distributions, even if they're not perfect. 
 
 Broadening the view to take into account the whole distribution of rents can go a long way to explaining how lowering market rents can help people stay housed. And acknowledging that people often double up, pooling low incomes to make things work, further narrows the gap between people's incomes and rents at the lower end of the market. [@distributional-effects-of-adding-housing.2024] 
@@ -570,6 +604,10 @@ We can get much deeper into the weeds by thinking about Furth's mechanism in ter
 
 
 
+
+
+
+
 where the first mechanism is theorized as high rents inducing people to "right-size" housing, leaving few spare bedrooms, and the second is thought of as few spare bedrooms generating fewer opportunities and more friction for family and friends to offer informal housing (or, more accurately, household membership) to otherwise (potentially) homeless people. 
 
 While this particular chain of mechanisms is intriguing, a broader view should also consider potential confounding relationships likely to bias any observed relationship we see between the variables above. We consider a few of these below.
@@ -581,6 +619,10 @@ Flipping the causal chain around, Furth also makes the argument that:
 <!--
 "low rents" -> "more spare bedrooms" -> "less homelessness, conditional on being poor"
 -->
+
+
+
+
 
 
 
@@ -606,6 +648,10 @@ While this is interesting, conditioning on being poor raises some potential prob
 
 
 
+
+
+
+
 This potentially confounds any observation of the relationship between low rents and the risk of homelessness given being poor. That is, it's not necessarily the case that housed poor people would be unhoused poor people in a place with higher costs, challenging Furth's counterfactual. It could instead be that housed poor people would be housed people with higher incomes in a place with better opportunities.
 
 This confounding also comes up in the graphs showing the share of the population that is single, housed, and poor among working age adults, and contrasting this against rents. Generally, the share of the working age population that is single and housed does not vary much across metro areas, the main variation in the graph comes from the variation in prevalence of poverty. So really, it's not a statement about housing but mostly just (anti-) correlating prevailing rents with regional poverty levels.
@@ -615,6 +661,10 @@ The confounding can also extend to bedroom figures. Low economic opportunity can
 <!--
 "more empty bedrooms" <- "low economic opportunity" -> "low rents"
 -->
+
+
+
+
 
 
 
@@ -648,6 +698,10 @@ This observation leads us to the following conceptualization of the underlying m
 
 
 
+
+
+
+
 In other words, spare bedrooms and homelessness are both caused by high rents, with the "high rents" -> "doubling up" channel capturing people priced out of the market who are making things work by pooling income in roommate situations or doubling up with family and friends, and the "high rents" -> "homelessness" channel capturing those who fall through the cracks. There is a not insignificant third channel of financial help, either in form of non-arms length rental agreements or cash transfers from family members to enable independent living, which goes a lot further when rent is lower. Additionally the makeup of the housing stock, in particular the distribution by number of bedrooms, also impacts the number of spare bedrooms, or formally: "dwelling stock" -> "spare bedrooms".
 
 To make that a little more precise we check into how the involved concepts of bedrooms, couple status, number of children, and doubling up break down by metro area.
@@ -655,6 +709,8 @@ To make that a little more precise we check into how the involved concepts of be
 ## Bedrooms
 
 Let's take a look at the data to understand how the mechanisms work. We'll start by looking at the distribution of bedrooms in the occupied housing stock in large Canadian CMAs shown in @fig-bedrooms. 
+
+
 
 
 
@@ -687,10 +743,14 @@ pumf_data |>
 
 
 
+
+
 There is a fair bit of variation, with Oshawa showing a higher share of homes with many bedrooms, with Calgary and Edmonton not far behind. At the other end of the spectrum are Vancouver, Victoria, Montréal and the Québec CMA, which all show up with a relatively high share of studio, one and two bedroom units. These low-bedroom units can be viewed as enabling independent living or alternatively as constraining the ability of people to double up. Here is where the real variation in housing stock across Canada helps provide information to test the "spare bedroom" mechanism proposed by Furth.
 
 
 In @fig-spare-bedrooms we look at "spare bedrooms", which we here define as the number of bedrooms in a home minus the number of people living in it, except that we discount households containing a married or common law couple by assuming they share a bedroom. 
+
+
 
 
 
@@ -731,12 +791,16 @@ spare_bedrooms |>
 
 
 
+
+
 We note that metro areas that have a lot of 4 or 5+ bedroom homes also tend to have more empty bedrooms. But there are other things going on too; for example the Québec City CMA does not fit that pattern.
 
 ## Couple structure and number of children
 Couple structure and number of children could also impact spare bedrooms, so let's explore how these vary.
 
 In @fig-couple-single-adults we contrast this by looking at the demographic structure in each metro area and their broad preferences for living in separate dwelling units as encoded by Ermisch's Minimal Household Units (MHU) concept [@ermisch1985minimal]. We discuss the concept in much greater detail elsewhere [@housing-outcomes.2023; @housing_shortages_doubled_up_households.2024], but the basic idea is that most couples and parents with younger children would all choose to continue living together even if offered a spare dwelling. It's less clear this would hold for most other households, where we would expect much greater splitting apart if more dwellings were available. 
+
+
 
 
 
@@ -771,7 +835,11 @@ pumf_data |>
 
 
 
+
+
 Here we see relatively little variation in coupling up by metro area, certainly a lot smaller than the variation in bedroom mix. Given this, one might expect that the number of spare bedrooms is mostly driven by the overall bedroom mix, but the share of the population under the age of 20, which is what we here chose to count as "dependent" children, has a small impact too as seen in @fig-child-share.
+
+
 
 
 
@@ -808,8 +876,12 @@ pumf_data |>
 
 
 
+
+
 ## Doubling up
 Neither couple structure nor share of the population that are children exhibit enough variation to have a meaningful impact on spare bedrooms. The more important variation however is the rate of doubling up, which we can measure by the share of Minimal Household Units to actual households, focusing on the population 20 years and over as done in @fig-mhu-hh-ratio. This does not include households formed by people under the age of 20.
+
+
 
 
 
@@ -852,7 +924,11 @@ mhu_ratio |>
 
 
 
+
+
 The variation in doubling up is significant, and is much stronger than the variation in couple structure, which is encoded here in the Minimum Household Units, and the variation in share of children. This, together with the somewhat smaller variation in bedroom mix, drives the variation in spare bedrooms. As we have argued in other places, the variation in doubling up is primarily driven by prevailing rents, and @fig-mhu-rents gives another view into this using our shorthand of taking the population 20 years and over.
+
+
 
 
 
@@ -881,6 +957,8 @@ mhu_ratio |>
 
 
 
+
+
 So rents drive doubling up directly. Does doubling up, in turn, drive variation in spare bedrooms?
 
 <!--
@@ -895,7 +973,13 @@ So rents drive doubling up directly. Does doubling up, in turn, drive variation 
 
 
 
+
+
+
+
 To relate back to spare bedrooms, we count up all spare bedrooms per metro area and order the metro areas by their prevailing (median) 1-bedroom rent levels using recent movers as a proxy for recently available units. Additionally, we check whether those empty bedrooms can be found in homes occupied by Minimal Household Units, so homes without any doubling up, or in doubled-up homes as shown in @fig-rent-spare-bedrooms.
+
+
 
 
 
@@ -970,9 +1054,13 @@ combined_data_mhu |>
 
 
 
+
+
 Not surprisingly, the share of spare bedroom differs widely between MHU and non-MHU (doubled up) households. MHU have more spare bedrooms. But there remains a correlation between the two, with lower share of empty bedrooms in MHU households generally corresponding to lower share of empty bedrooms in non-MHU households.
 
 @fig-spare-bedroom-rents relates these shares to prevailing rent levels to understand how rents might be driving the variation.
+
+
 
 
 
@@ -1004,6 +1092,8 @@ combined_data_mhu |>
 
 
 
+
+
 The correlation is clear, but there is sizable variation in the data. The slope for the *Combined* category is steeper than that when MHU and non-MHU households are taken separately, suggesting that the variation in the overall share of spare bedrooms is driven by underlying variation in doubling up. In other words, there's a strong case for:
 
 <!--
@@ -1018,11 +1108,17 @@ The correlation is clear, but there is sizable variation in the data. The slope 
 
 
 
+
+
+
+
 What about the case Furth's case for few spare bedrooms driving homeless counts?
 
 To some extent, the relationship between doubling up and spare bedrooms supports Furth's argument. Most of the cases of people he tracks living with parents or roommates are simply people we would consider doubled up. But doubling up is widespread as a response to high rents, rather than simply a last stop before homelessness. It probably works well for some people, but not so well for others. 
 
 To wrap this up let's return to PIT homelessness rates and directly explore their relationships with rents, MHU, and spare bedrooms as done in @fig-homelessness-rents-mhu-brm. 
+
+
 
 
 
@@ -1126,9 +1222,13 @@ g_rents <- pd |>
 
 
 
+
+
 Drawing upon Canadian data, we can replicate the basic finding that high rents are positively related to high rates of homelessness. By contrast, we cannot replicate Furth's findings that spare bedrooms have a strong negative relationship to homelessness rates. Rates of doubling up (excess MHU relative to households) seem to relate to homelessness in a similar way as rents (not so surprising following much of our recent work establishing the strong relationship between rents and doubling up). This analysis of Canadian data so far suggests rent may be driving both doubling up and homelessness, but other factors, including housing stock, also drive spare bedrooms.
 
 For completeness @fig-homelessness-rents-mhu-brm_single shows the results when multiple-CMA regions are excluded from the regression.
+
+
 
 
 
@@ -1240,6 +1340,8 @@ g_rents <- pd |>
 
 
 
+
+
 As we saw earlier, removing smaller Census-joined CMAs from the analysis significantly strengthens the relationship of PIT counts with rents. The relationships with MHU and Spare Bedrooms are also slightly stronger, but neither is significantly different from zero (a flat line). Relative to rents they exhibit very little explanatory power.
 
 # Other possible determinants
@@ -1249,6 +1351,8 @@ The simplest interpretation for the correlation between rents and homelessness i
 What other measures might we consider? Low income is an important risk factor but we won't dive into this in this post. Aggregate income metrics vary much less between metro areas than rents, rendering it less informative than rents at the metro level. Additionally, income data around the time many of our homelessness PIT counts were taken is complicated by one-time pandemic support payments, which matters especially at the bottom of the income distribution that is relevant in this context. Rental vacancy rates around the time of the homelessness counts also suffer from pandemic shocks.
 
 The relationship with non-market housing is a priori less clear. Non-market housing can offer both safety nets preventing homelessness and a direct solution for those experiencing homelessness. In other words, it's an important way to fill in the cracks, and this has mostly been its role within Canada. This isn't true everywhere. In many places, non-market housing contributes a sizable portion of the housing stock, directly contributing to reducing shortages. But in the Canadian context, non-market housing has been quite modest in its contribution. Insofar as filling in the cracks has become non-market housing's primary role within Canadian systems for distributing housing, it is difficult to track its beneficial impact via metropolitan comparison. After all, it is often added in response to high rates of homelessness. @fig-homlessness-subsidized shows that in Canada there is a slight negative correlation between the share of households in subsidized housing and homelessness PIT counts, although with high uncertainty and not significantly different from zero.
+
+
 
 
 
@@ -1320,6 +1424,8 @@ ggplot(aes(x=Share,y=Absolute_Rate_Likely_Geography)) +
 
 
 
+
+
 Placed in the context of the larger relationship between rents and homelessness rates, we think the important takeaway for non-market housing is that it's much more effective as a direct means of preventing or alleviating homelessness when rents overall are low. Rising rents produce more cracks in our systems of housing distribution, and it's much harder for non-market housing to fill those cracks when more and more keep appearing every time providers turn around. More broadly, while the contributions of non-market housing to relieving the housing shortage overall have been modest so far, every little bit helps, and more ambition would help further!
 
 
@@ -1354,6 +1460,8 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 
 
 
+
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -1364,7 +1472,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-01-16 20:47:08 PST"
+[1] "2025-01-16 20:55:20 PST"
 ```
 
 
@@ -1380,7 +1488,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [3063f3e] 2024-11-28: include legacy js code
+Head:     [99fb5fc] 2025-01-17: homelessness post
 ```
 
 
@@ -1451,6 +1559,8 @@ loaded via a namespace (and not attached):
 
 :::
 :::
+
+
 
 
 

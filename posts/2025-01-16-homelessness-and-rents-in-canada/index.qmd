@@ -27,7 +27,7 @@ format:
   blog-pdf:
     fig-format: 'png'
     fig-width: 8
-    fig-height: 6
+    fig-height: 5
     output-file: 'homelessness-and-rents-in-canada'
 ---
 

@@ -27,7 +27,7 @@ format:
   blog-pdf:
     fig-format: 'png'
     fig-width: 8
-    fig-height: 6
+    fig-height: 5
     output-file: 'homelessness-and-rents-in-canada'
 ---
 
@@ -1364,7 +1364,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-01-16 20:42:56 PST"
+[1] "2025-01-16 20:51:16 PST"
 ```
 
 
@@ -1380,7 +1380,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [3063f3e] 2024-11-28: include legacy js code
+Head:     [99fb5fc] 2025-01-17: homelessness post
 ```
 
 
