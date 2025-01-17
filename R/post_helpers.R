@@ -1,5 +1,6 @@
 new_post <- function(title,
                      author=c("Jens von Bergmann"),
+                     affiliation=c("MountainMath"),
                      date=Sys.Date(),
                      categories=c()) {
   slug=title |>
@@ -12,6 +13,7 @@ new_post <- function(title,
   text <- dplyr::bind_rows(text,dplyr::tibble(values=paste0("title: \"",title,"\"")))
   text <- dplyr::bind_rows(text,dplyr::tibble(values=paste0("author:")))
   text <- dplyr::bind_rows(text,dplyr::tibble(values=paste0("  - name: ",author)))
+  text <- dplyr::bind_rows(text,dplyr::tibble(values=paste0("    affiliation: ",affiliation)))
   text <- dplyr::bind_rows(text,dplyr::tibble(values=paste0("date: '",date,"'")))
   text <- dplyr::bind_rows(text,dplyr::tibble(values=paste0("slug: ",slug)))
   if (length(categories)>0) {
