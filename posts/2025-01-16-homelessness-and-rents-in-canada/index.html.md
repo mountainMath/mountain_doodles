@@ -564,7 +564,11 @@ We can get much deeper into the weeds by thinking about Furth's mechanism in ter
 
 
 
-
+::: {.cell crop='true'}
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-2-1.png){width=768}
+:::
+:::
 
 
 
@@ -585,7 +589,11 @@ Flipping the causal chain around, Furth also makes the argument that:
 
 
 
-
+::: {.cell crop='true'}
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-3-1.png){width=768}
+:::
+:::
 
 
 
@@ -601,7 +609,11 @@ While this is interesting, conditioning on being poor raises some potential prob
 
 
 
-
+::: {.cell crop='true'}
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-4-1.png){width=768}
+:::
+:::
 
 
 
@@ -619,7 +631,11 @@ The confounding can also extend to bedroom figures. Low economic opportunity can
 
 
 
-
+::: {.cell crop='true'}
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-5-1.png){width=768}
+:::
+:::
 
 
 
@@ -643,7 +659,11 @@ This observation leads us to the following conceptualization of the underlying m
 
 
 
-
+::: {.cell crop='true'}
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-6-1.png){width=768}
+:::
+:::
 
 
 
@@ -890,7 +910,11 @@ So rents drive doubling up directly. Does doubling up, in turn, drive variation 
 
 
 
-
+::: {.cell crop='true'}
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-7-1.png){width=768}
+:::
+:::
 
 
 
@@ -1013,7 +1037,11 @@ The correlation is clear, but there is sizable variation in the data. The slope 
 
 
 
-
+::: {.cell crop='true'}
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-8-1.png){width=768}
+:::
+:::
 
 
 
@@ -1364,7 +1392,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-01-16 20:51:16 PST"
+[1] "2025-01-29 09:21:52 PST"
 ```
 
 
@@ -1380,7 +1408,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [99fb5fc] 2025-01-17: homelessness post
+Head:     [5e8d524] 2025-01-17: post freeze
 ```
 
 
@@ -1396,7 +1424,7 @@ sessionInfo()
 ```
 R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sequoia 15.2
+Running under: macOS Sequoia 15.3
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1415,27 +1443,26 @@ other attached packages:
  [1] patchwork_1.3.0           rvest_1.0.4              
  [3] mountainmathHelpers_0.1.4 cansim_0.3.18            
  [5] canpumf_0.2.0             cancensus_0.5.8          
- [7] lubridate_1.9.3           forcats_1.0.0            
+ [7] lubridate_1.9.4           forcats_1.0.0            
  [9] stringr_1.5.1             dplyr_1.1.4              
 [11] purrr_1.0.2               readr_2.1.5              
 [13] tidyr_1.3.1               tibble_3.2.1             
 [15] ggplot2_3.5.1             tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6      xfun_0.47         htmlwidgets_1.6.4 websocket_1.4.1  
- [5] processx_3.8.4    tzdb_0.4.0        vctrs_0.6.5       tools_4.4.2      
- [9] ps_1.7.6          generics_0.1.3    fansi_1.0.6       pkgconfig_2.0.3  
-[13] lifecycle_1.0.4   compiler_4.4.2    farver_2.1.2      git2r_0.33.0     
-[17] munsell_0.5.1     chromote_0.2.0    htmltools_0.5.8.1 yaml_2.3.10      
-[21] Rttf2pt1_1.3.12   later_1.3.2       pillar_1.9.0      extrafontdb_1.0  
-[25] tidyselect_1.2.1  digest_0.6.37     stringi_1.8.4     extrafont_0.19   
-[29] rprojroot_2.0.4   fastmap_1.2.0     grid_4.4.2        here_1.0.1       
-[33] colorspace_2.1-1  cli_3.6.3         magrittr_2.0.3    utf8_1.2.4       
-[37] withr_3.0.2       scales_1.3.0      promises_1.3.0    timechange_0.3.0 
-[41] rmarkdown_2.28    httr_1.4.7        sanzo_0.1.0       hms_1.1.3        
-[45] evaluate_1.0.0    knitr_1.48        rlang_1.1.4       Rcpp_1.0.13-1    
-[49] glue_1.8.0        xml2_1.3.6        rstudioapi_0.16.0 jsonlite_1.8.9   
-[53] R6_2.5.1         
+ [1] generics_0.1.3    xml2_1.3.6        stringi_1.8.4     extrafontdb_1.0  
+ [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    evaluate_1.0.0   
+ [9] grid_4.4.2        timechange_0.3.0  fastmap_1.2.0     rprojroot_2.0.4  
+[13] jsonlite_1.8.9    processx_3.8.4    chromote_0.2.0    ps_1.7.6         
+[17] promises_1.3.0    httr_1.4.7        scales_1.3.0      cli_3.6.3        
+[21] rlang_1.1.5       munsell_0.5.1     sanzo_0.1.0       withr_3.0.2      
+[25] yaml_2.3.10       tools_4.4.2       tzdb_0.4.0        colorspace_2.1-1 
+[29] here_1.0.1        vctrs_0.6.5       R6_2.5.1          git2r_0.33.0     
+[33] lifecycle_1.0.4   htmlwidgets_1.6.4 pkgconfig_2.0.3   pillar_1.10.1    
+[37] later_1.3.2       gtable_0.3.6      glue_1.8.0        Rcpp_1.0.14      
+[41] xfun_0.50         tidyselect_1.2.1  rstudioapi_0.16.0 knitr_1.48       
+[45] extrafont_0.19    farver_2.1.2      websocket_1.4.1   htmltools_0.5.8.1
+[49] rmarkdown_2.28    Rttf2pt1_1.3.12   compiler_4.4.2   
 ```
 
 

@@ -461,7 +461,7 @@ We can get much deeper into the weeds by thinking about Furth's mechanism in ter
 "high rents" -> "few spare bedrooms" -> "more homelessness"
 -->
 
-```{r crop=TRUE, include=FALSE}
+```{r crop=TRUE, echo=FALSE}
 ggplot() +
   annotate("label",x=1,y=0,label="high rents") +
   annotate("label",x=2,y=0,label="few spare bedrooms") +
@@ -488,7 +488,7 @@ Flipping the causal chain around, Furth also makes the argument that:
 "low rents" -> "more spare bedrooms" -> "less homelessness, conditional on being poor"
 -->
 
-```{r crop=TRUE, include=FALSE}
+```{r crop=TRUE, echo=FALSE}
 ggplot() +
   annotate("label",x=1,y=0,label="low rents") +
   annotate("label",x=1.8,y=0,label="more spare bedrooms") +
@@ -510,7 +510,7 @@ While this is interesting, conditioning on being poor raises some potential prob
 "more (and different) poor people" <- "low economic opportunity" -> "low rents"
 -->
 
-```{r crop=TRUE, include=FALSE}
+```{r crop=TRUE, echo=FALSE}
 ggplot() +
   annotate("label",x=1,y=0,label="low rents") +
   annotate("label",x=1.85,y=0,label="low economic opportunity") +
@@ -534,7 +534,7 @@ The confounding can also extend to bedroom figures. Low economic opportunity can
 "more empty bedrooms" <- "low economic opportunity" -> "low rents"
 -->
 
-```{r crop=TRUE, include=FALSE}
+```{r crop=TRUE, echo=FALSE}
 ggplot() +
   annotate("label",x=1,y=0,label="low rents") +
   annotate("label",x=1.85,y=0,label="low economic opportunity") +
@@ -564,7 +564,7 @@ This observation leads us to the following conceptualization of the underlying m
 "few spare bedrooms" <- "high rates of doubling up" <- "high rents" -> "homelessness"
 -->
 
-```{r crop=TRUE, include=FALSE}
+```{r crop=TRUE, echo=FALSE}
 ggplot() +
   annotate("label",x=1,y=0,label="few spare bedrooms") +
   annotate("label",x=1.85,y=0,label="high rates of doubling up") +
@@ -741,7 +741,7 @@ So rents drive doubling up directly. Does doubling up, in turn, drive variation 
 "high rents" -> "high rates of doubling up" -> "few spare bedrooms"
 -->
 
-```{r crop=TRUE, include=FALSE}
+```{r crop=TRUE, echo=FALSE}
 ggplot() +
   annotate("label",x=1,y=0,label="high rents") +
   annotate("label",x=1.8,y=0,label="high rates of doubling up") +
@@ -844,7 +844,7 @@ The correlation is clear, but there is sizable variation in the data. The slope 
 "high rents" -> "high rates of doubling up" -> "few spare bedrooms"
 -->
 
-```{r crop=TRUE, include=FALSE}
+```{r crop=TRUE, echo=FALSE}
 ggplot() +
   annotate("label",x=1,y=0,label="high rents") +
   annotate("label",x=1.8,y=0,label="high rates of doubling up") +
