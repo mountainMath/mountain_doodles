@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
   Sea level rise comes up regularly in coastal cities. And nowadays every costal area,
 [including Vancouver](http://www.env.gov.bc.ca/wsd/public_safety/flood/pdfs_word/cost_of_adaptation-final_report_oct2012.pdf)
 has their flood assessment and detailed plans on how to deal with sea level rise, although some plans are

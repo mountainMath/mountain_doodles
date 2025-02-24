@@ -517,10 +517,12 @@ tibble(area=seq(75,2000,25)) %>%
 ```
 
 The part of the plot that we are most interested in is toward the lower left. The median Vancouver RS lot size is `r round(rs_parcels$area %>% median)`m^2, what's the opportunity cost of preventing this lot from getting subdivided? That's easy to check. This is asking what value we lose by preventing a lot from getting split into two. It's most easily expressed as a share of current land value.
+
 \begin{eqnarray}
 OC(A) &=& \frac{2\cdot LV(A/2)-LV(A)}{LV(A)}
 &=& 2^{1-\beta}-1
 \end{eqnarray}
+
 ```{r}
 zoning_tax_share <- 2^{1-c}-1
 plot_data <- linked_parcles %>%

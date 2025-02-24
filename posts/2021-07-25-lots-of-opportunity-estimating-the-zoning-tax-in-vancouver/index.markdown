@@ -115,10 +115,11 @@ We fit a random intercept model that estimates a fixed slope and we allow to int
 <img src="index_files/figure-html/model-result-1.png" width="768" />
 
 The part of the plot that we are most interested in is toward the lower left. The median Vancouver RS lot size is 402m^2, what's the opportunity cost of preventing this lot from getting subdivided? That's easy to check. This is asking what value we lose by preventing a lot from getting split into two. It's most easily expressed as a share of current land value.
-`\begin{eqnarray}
+
+\begin{eqnarray}
 OC(A) &=& \frac{2\cdot LV(A/2)-LV(A)}{LV(A)}
 &=& 2^{1-\beta}-1
-\end{eqnarray}`
+\end{eqnarray}
 
 
 which comes out at 37%. In other words, the zoning tax that's preventing RS lots from getting subdivided in half stands at 37% of current land value. Aggregated over all residential RS lots in the City of Vancouver the zoning tax comes out at $46bn.

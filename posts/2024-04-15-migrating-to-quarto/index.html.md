@@ -15,6 +15,8 @@ code-tools:
 
 
 
+
+
 I started this blog 10 years ago, first using a jekyll setup. In 2017 I switched to [blogdown](https://bookdown.org/yihui/blogdown/), which linked the posts with the Rmarkdown notebook that generated the content. The setup aimed at maximum transparency, with the source living in a [public Github repository](https://github.com/mountainMath/mountaindoodles) that keeps all changes transparent, and deploys to the website via [Netlify](https://www.netlify.com) directly triggered from the GitHub repo when it changed. That means the website of the blog was always in sync with the repository, and the repository contained the entire history of the blog.
 
 # Why switch?
@@ -42,7 +44,9 @@ Here is a simple example that pulls in all item and rent CPI time series directl
 
 
 
-:::{.cell}
+
+
+:::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="40" source-offset="0"}
 vegalite({
@@ -95,12 +99,14 @@ vegalite({
   }]})
 ```
 
-:::{.cell-output .cell-output-display}
+::::{.cell-output .cell-output-display}
 
 :::{#ojs-cell-1 nodetype="expression"}
 :::
-:::
-:::
+::::
+:::::
+
+
 
 
 
@@ -111,7 +117,9 @@ One fun part about observable is that the order of the code chunks does not matt
 
 
 
-:::{.cell}
+
+
+::::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="96" source-offset="-0"}
 vectors = {return {
@@ -126,26 +134,26 @@ data = d3.json("https://www150.statcan.gc.ca/t1/wds/rest/getDataFromVectorsAndLa
 })
 ```
 
-:::{.cell-output .cell-output-display}
+:::::{.cell-output .cell-output-display}
 
-:::{}
+::::{}
 
 :::{#ojs-cell-2-1 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell-output .cell-output-display}
+:::::{.cell-output .cell-output-display}
 
-:::{}
+::::{}
 
 :::{#ojs-cell-2-2 nodetype="declaration"}
 :::
-:::
-:::
-:::
+::::
+:::::
+::::::
 
-:::{.cell}
+::::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="109" source-offset="-0"}
 vegalite = require("@observablehq/vega-lite@0.1")
@@ -180,33 +188,35 @@ transformedData = [].concat.apply([], data.map(function(d){
 })
 ```
 
-:::{.cell-output .cell-output-display}
+:::::{.cell-output .cell-output-display}
 
-:::{}
+::::{}
 
 :::{#ojs-cell-3-1 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell-output .cell-output-display}
+:::::{.cell-output .cell-output-display}
 
-:::{}
+::::{}
 
 :::{#ojs-cell-3-2 nodetype="declaration"}
 :::
-:::
-:::
+::::
+:::::
 
-:::{.cell-output .cell-output-display}
+:::::{.cell-output .cell-output-display}
 
-:::{}
+::::{}
 
 :::{#ojs-cell-3-3 nodetype="declaration"}
 :::
-:::
-:::
-:::
+::::
+:::::
+::::::
+
+
 
 
 

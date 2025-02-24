@@ -70,7 +70,7 @@ for (path in paths) {
   
   attribution_line <- which(grepl("For attribution, please cite this work as",pp) & grepl("quarto-appendix-secondary-label",pp))
   
-  if (grepl("von Bergmann, Jens",pp[attribution_line+1])) {
+  if (length(attribution_line)>0 && grepl("von Bergmann, Jens",pp[attribution_line+1])) {
     pp[attribution_line+1] <- gsub("von Bergmann, Jens","Jens von Bergmann",pp[attribution_line+1])
   }
   
