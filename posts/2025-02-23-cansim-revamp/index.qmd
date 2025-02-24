@@ -29,7 +29,7 @@ library(bench)
 cansim_repartition_cached_table("46-10-0070",new_partitioning = c()) # Ensure we are starting with unpartitioned parquet
 ```
 
-
+<img src="https://raw.githubusercontent.com/mountainMath/cansim/master/images/cansim-sticker.png" style="width:300px;max-width=45%;float:right;padding:5px;"/>
 With version 0.4 **cansim** package got a major revamp. The **cansim** package has been available con CRAN since late 2018 and has undergone number of improvements since then. It started out focused on retrieving entire table data, with an emphasis on folding in metadata and making this additional layer of information easily available to users. From accessing table notes and footnotes to aid with data interpretation, to encoding the hierarchical structure within each dimension into the data frame to allow for filtering by sub-categories.
 
 We then added support to query data by vector, or table and coordinate, for targeted data retrieval. And we enhanced the ability to access and browse the list of available StatCan tables, and retrieve their metadata without downloading the table first.

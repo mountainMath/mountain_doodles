@@ -34,26 +34,27 @@ cansim_repartition_cached_table("46-10-0070",new_partitioning = c()) # Ensure we
 
 
 
-
+<img src="https://raw.githubusercontent.com/mountainMath/cansim/master/images/cansim-sticker.png" style="width:300px;max-width=45%;float:right;padding:5px;"/>
 With version 0.4 **cansim** package got a major revamp. The **cansim** package has been available con CRAN since late 2018 and has undergone number of improvements since then. It started out focused on retrieving entire table data, with an emphasis on folding in metadata and making this additional layer of information easily available to users. From accessing table notes and footnotes to aid with data interpretation, to encoding the hierarchical structure within each dimension into the data frame to allow for filtering by sub-categories.
 
 We then added support to query data by vector, or table and coordinate, for targeted data retrieval. And we enhanced the ability to access and browse the list of available StatCan tables, and retrieve their metadata without downloading the table first.
 
 In 2021 we added support for more permanent caching of tables in SQLite, which makes it easier and faster to work with the data, especially for slowly updating tables, while warning users if the cached SQLite table becomes stale and there is a newer version available. This means users don't have to re-download the table between R sessions, and querying data becomes much faster with database level filtering as well as summarizing while significantly reducing the memory footprint.
 
-By further enhancing access to table metadata without downloading the table first we no also enrich data queries by vector or table and coordinate with the full metadata, giving context to how the downloaded data fits into the larger data table by e.g. providing the full levels of each data dimension.
+By further enhancing access to table metadata without downloading the table first we now also enrich data queries by vector or table and coordinate with the full metadata, giving context to how the downloaded data fits into the larger data table by e.g. providing the full levels of each data dimension.
 
-While the functionality is now quite extensive, there was one particular issue that emerged for us and others that diminished the usefulness of the package: Some tables are very large, which makes working with these tables cumbersome in several ways.
+While the functionality is now quite extensive, there was one particular issue that emerged for us and others that diminished the usefulness of the package: **Some tables are very large, which makes working with these tables cumbersome in several ways:**
 
 * The basic `get_cansim()` function takes a long time to download and parse the data. It also has a fairly large memory footprint, which can be a problem for users with limited memory.
 * A good way to deal with this has been to use `get_cansim_sqlite()` to cache the data as SQLite table after downloading it. However, even while this significantly reduces the memory footprint, the initial parsing to SQLite and indexing takes even longer than accessing the data via `get_cansim()`. And the storage space taken is larger than the initial CSV file, which is less than ideal. For some StatCan tables the resulting SQLite database can exceed 20Gb or even 40Gb, and having a couple of these cached noticeably eats into the local storage space.
 
 # Enter parquet
-To get around the issues of long import times and large storage requirements for caching SQLite tables, we decided to give [parquet](https://parquet.apache.org/) a try as alternative storage format. And this works extremely well for StatCan table data. Initial parsing to parquet is very fast with radically reduced storage space, by over two orders of magnitude for large tables. Via the `arrow` package and `dbplyr` integration we can query the parquet files directly with dplyr verbs in pretty much the same way we accessed the tables via SQLite. Access speed when filtering data is still quite fast, but slower than SQLite for large tables. However, if data is filtered in predictable ways, e.g. by geography or another dimension, we can specify a partition for the parquet data along one or several dimensions and significantly reduces access times, especially for queries that filter along those dimensions, resulting in access times faster than SQLite. At the same time we also implemented *feather* as an alternative data storage type, which preforms similarly to *parquet* for initial parsing and retrieval times but takes up more storage space.
+To get around the issues of long import times and large storage requirements for caching SQLite tables, we decided to give [parquet](https://parquet.apache.org/) a try as alternative storage format. And this works extremely well for StatCan table data. Initial parsing to parquet is very fast with radically reduced storage space, by over one order of magnitude, for very large tables even over two orders of magnitude. Via the `arrow` package and `dbplyr` integration we can query the parquet files directly with dplyr verbs in pretty much the same way we accessed the tables via SQLite. Access speed when filtering data is still quite fast, roughly comparable to SQLite. However, if data is filtered in predictable ways, e.g. by geography or another dimension, we can specify a partition for the parquet data along one or several dimensions and significantly reduces access times, especially for queries that filter along those dimensions, resulting in access times faster than SQLite. At the same time we also implemented *feather* as an alternative data storage type, which preforms similarly to *parquet* for initial parsing and retrieval times but takes up more storage space.
 
 Adding new storage methods required some mild changes to the interface when caching data in a database via `get_cansim_sqlite`.
 
 # Transition guide
+
 If you have not been making use of the sqlite capabilities of **cansim** in the past then nothing changed. But you should consider making use of the new database capabilities, especially when working with large tables.
 
 If you have been working with the sqlite capabilities your old code will still run, but emit a deprecation warning. You should transition your code by globally renaming `get_cansim_sqlite` to `get_cansim_connection`. This will from now on use *parquet* format instead of sqlite. If you want to keep making use of *sqlite* instead, you should set the `format` parameter as follows.
@@ -290,7 +291,7 @@ get_cansim("46-10-0070") |>
 
 :::
 
-At this point it is probably prudent to note that this outlier search surfaced data quirks surfacing regions with a high number of purpose-built rental apartments that were legally structured as condominium as we have documented in detail previously. [@investing-in-definitions-and-framing.2023] The varying shares of "investor"-owned condos is mostly a function of differences how purpose-built rental apartments are structured in different regions, not that investors identified Woodstock as a particularly good place to invest. StatCan is [now explicitly acknowledging this issue](https://bsky.app/profile/jensvb.bsky.social/post/3l5mmhst2b62w) in their [Daily article](https://www150.statcan.gc.ca/n1/daily-quotidien/241003/dq241003a-eng.htm) on new releases of this table, but this has had little impact on media reporting or lead to corrections in [highly misleading news reporting on this](https://www.cbc.ca/news/canada/london/london-ontario-investment-property-1.6739784), even for [artices that specifically highlighed the four regions from our outlier search](https://www.theglobeandmail.com/business/article-investors-own-big-chunk-of-ontarios-condo-market/).
+At this point it is probably prudent to note that this outlier search surfaced data quirks, spotlighting regions with a high number of purpose-built rental apartments that were legally structured as condominium as we have documented in detail previously. [@investing-in-definitions-and-framing.2023] The varying shares of "investor"-owned condos is mostly a function of differences how purpose-built rental apartments are structured in different regions, not that investors identified Woodstock as a particularly good place to invest. StatCan is [now explicitly acknowledging this issue](https://bsky.app/profile/jensvb.bsky.social/post/3l5mmhst2b62w) in their [Daily article](https://www150.statcan.gc.ca/n1/daily-quotidien/241003/dq241003a-eng.htm) on new releases of this table, but this has had little impact on media reporting in [highly misleading news reporting on this](https://www.cbc.ca/news/canada/london/london-ontario-investment-property-1.6739784), even for [artices that specifically highlighed the four regions from our outlier search](https://www.theglobeandmail.com/business/article-investors-own-big-chunk-of-ontarios-condo-market/), none of these have seen corrections.
 
 
 The takeaway is that when hunting for outliers there is a good chance that one simply discovers data quirks instead of a surprising real phenomenon on the ground.
@@ -345,7 +346,7 @@ get_cansim_connection("46-10-0070") |>
 
 
 
-Database level operations are fast and have a low memory footprint.
+Here the entire filtering and summarizing of the data happened during the data retrieval process, these operations are fast and have a low memory footprint.
 
 # Query execution speed
 
@@ -473,7 +474,7 @@ plot(bb2) +
 
 
 
-When partitioned by geography the query time for *parquet* drops significantly averaging 342ms, easily justifying the time spent repartitioning when running the query 50 times for the profiler. Memory footprint stays essentially unchanged. The somehwat small penalty for repartitioning shirinks even further if we partition data right at import. One downside of partitioning is that it increases the storage space taken up on disk as compression is less efficient on partitioned data.
+When partitioned by geography the query time for *parquet* drops significantly averaging 342ms, easily justifying the time spent repartitioning when running the query 50 times for the profiler. Memory footprint stays essentially unchanged. The somewhat small penalty for repartitioning shrinks even further if we partition data right at import. One downside of partitioning is that it increases the storage space taken up on disk as compression is less efficient on partitioned data.
 
 
 # Other changes
@@ -505,7 +506,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-02-23 20:13:22 PST"
+[1] "2025-02-23 20:40:01 PST"
 ```
 
 
@@ -521,7 +522,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [625cbbf] 2025-02-24: cansim revamp post
+Head:     [bd04212] 2025-02-24: text tweaks
 ```
 
 
