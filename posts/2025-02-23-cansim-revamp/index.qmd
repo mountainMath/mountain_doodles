@@ -24,6 +24,7 @@ execute:
 #| code-fold: true
 library(tidyverse)
 library(cansim)
+library(bench)
 
 cansim_repartition_cached_table("46-10-0070",new_partitioning = c()) # Ensure we are starting with unpartitioned parquet
 ```

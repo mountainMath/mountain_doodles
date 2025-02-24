@@ -8,6 +8,8 @@ slug: cansim-revamp
 description: 'The cansim package got a speed boost. And some new features.'
 image: 'https://raw.githubusercontent.com/mountainMath/cansim/master/images/cansim-sticker.png'
 bibliography: ../../common_literature.bib 
+categories: 
+  - cansim
 code-tools:
   toggle: true
 code-fold: show
@@ -24,6 +26,7 @@ execute:
 ```{.r .cell-code  code-fold="true"}
 library(tidyverse)
 library(cansim)
+library(bench)
 
 cansim_repartition_cached_table("46-10-0070",new_partitioning = c()) # Ensure we are starting with unpartitioned parquet
 ```
@@ -482,4 +485,107 @@ We also started to implement more systematic unit testing to ensure more stable 
 # Upshot
 
 For people who have exclusively relied on `get_cansim` I recommend transitioning some uses over to `get_cansim_connection()`, possibly setting the `refresh="auto"` option to ensure they are always working with the latest data. From a coding perspective the cost is the additional `collect_and_normalize()` call, but the speedup when filtering before collecting is well worth it.
+
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2025-02-23-cansim-revamp/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+
+<details>
+
+<summary>Reproducibility receipt</summary>
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "2025-02-23 20:13:22 PST"
+```
+
+
+:::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Local:    main /Users/jens/R/mountain_doodles
+Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
+Head:     [625cbbf] 2025-02-24: cansim revamp post
+```
+
+
+:::
+
+```{.r .cell-code}
+## Session info
+sessionInfo()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+R version 4.4.2 (2024-10-31)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.3.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Vancouver
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] bench_1.1.4     cansim_0.4      lubridate_1.9.4 forcats_1.0.0  
+ [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.0.4     readr_2.1.5    
+ [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
+
+loaded via a namespace (and not attached):
+ [1] bit_4.5.0.1               gtable_0.3.6             
+ [3] jsonlite_1.8.9            compiler_4.4.2           
+ [5] tidyselect_1.2.1          git2r_0.33.0             
+ [7] assertthat_0.2.1          arrow_18.1.0.1           
+ [9] scales_1.3.0              yaml_2.3.10              
+[11] fastmap_1.2.0             R6_2.6.1                 
+[13] generics_0.1.3            knitr_1.48               
+[15] htmlwidgets_1.6.4         munsell_0.5.1            
+[17] pillar_1.10.1             tzdb_0.4.0               
+[19] rlang_1.1.5               stringi_1.8.4            
+[21] xfun_0.50                 bit64_4.6.0-1            
+[23] timechange_0.3.0          cli_3.6.4                
+[25] withr_3.0.2               magrittr_2.0.3           
+[27] mountainmathHelpers_0.1.4 digest_0.6.37            
+[29] grid_4.4.2                rstudioapi_0.16.0        
+[31] hms_1.1.3                 lifecycle_1.0.4          
+[33] vctrs_0.6.5               evaluate_1.0.3           
+[35] glue_1.8.0                colorspace_2.1-1         
+[37] rmarkdown_2.28            tools_4.4.2              
+[39] pkgconfig_2.0.3           htmltools_0.5.8.1        
+```
+
+
+:::
+:::
+
+
+
+</details>
+
 
