@@ -461,7 +461,7 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
   #theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election, comparing FPTP vs PR by province",
+  labs(title="Canada 2025 federal election, comparing FPTP vs PR by province",
        x="Province",y="Share of seats",fill="Party")
 ```
 

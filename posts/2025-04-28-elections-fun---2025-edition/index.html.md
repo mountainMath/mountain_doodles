@@ -561,7 +561,7 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
   #theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election, comparing FPTP vs PR by province",
+  labs(title="Canada 2025 federal election, comparing FPTP vs PR by province",
        x="Province",y="Share of seats",fill="Party")
 ```
 
@@ -914,7 +914,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-04-30 07:23:48 PDT"
+[1] "2025-04-30 07:27:26 PDT"
 ```
 
 
@@ -930,7 +930,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [5c5b417] 2025-04-30: add continuous cartogram
+Head:     [9079e2e] 2025-04-30: make sure titles properly reflect that this is based on 2025 data, thanks kmavai!
 ```
 
 
