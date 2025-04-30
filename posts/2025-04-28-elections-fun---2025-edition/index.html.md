@@ -221,7 +221,7 @@ ggplot(map_data,aes(fill=Party)) +
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2021")
+  labs(title="Canada federal election 2025")
 ```
 
 ::: {.cell-output-display}
@@ -266,7 +266,7 @@ cartogram_data |>
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2021")
+  labs(title="Canada federal election 2025")
 ```
 
 ::: {.cell-output-display}
@@ -378,7 +378,7 @@ ggplot(plot_data ,aes(x=reorder(District,Share),y=Share,fill=Party)) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election",x="Voting districts",y="Vote share of winning candidate")
+  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate")
 ```
 
 ::: {.cell-output-display}
@@ -433,7 +433,7 @@ ggplot(all_data ,aes(x=District,y=Share,fill=fct_rev(Party))) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election",x="Voting districts",y="Vote share",fill="Party")
+  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share",fill="Party")
 ```
 
 ::: {.cell-output-display}
@@ -469,7 +469,7 @@ ggplot(waste_data ,aes(x=Party,y=waste,fill=fct_rev(Party))) +
   scale_fill_manual(values=party_colours,guide='none') +
   my_theme +
   scale_y_continuous(labels=scales::comma) +
-  labs(title="Canada 2021 federal election",x="",y="Wasted votes",fill="Party")
+  labs(title="Canada 2025 federal election",x="",y="Wasted votes",fill="Party")
 ```
 
 ::: {.cell-output-display}
@@ -528,7 +528,7 @@ ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
   #theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election, comparing FPTP to PR with 5% minimum vote cutoff",
+  labs(title="Canada 2025 federal election, comparing FPTP to PR with 5% minimum vote cutoff",
        subtitle="(preliminary results)",
        x="Voting system",y="Share of seats",fill="Party")
 ```
@@ -540,7 +540,7 @@ ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
 
 
 
-Last time the Liberals were the big winner of FPTP, as was Bloc Québécois. This time around the NDP profited most from FPTP, at cost to the Liberals. But overall, the election outcome would not have been that much different in who forms government under either system, but there is a difference in whether it's a minority or majority government.
+Last time the Liberals were the big winner of FPTP, as was Bloc Québécois. This time around the NDP profited most from FPTP, at cost to the Liberals.^[Some people would likely change their voting behaviour if the voting system changed, this comparison makes the simplifying and somewhat unrealistic assumption that this won't happen and voting behaviour remains unchanged.] But overall, the election outcome would not have been that much different in who forms government under either system, but there is a difference in whether it's a minority or majority government.
 
 
 We can run this by individual province to see how well each province is represented in terms of first-past-the-post vs proportional representation.
@@ -561,7 +561,7 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
   #theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2019 federal election, comparing FPTP vs PR by province",
+  labs(title="Canada 2021 federal election, comparing FPTP vs PR by province",
        x="Province",y="Share of seats",fill="Party")
 ```
 
@@ -914,7 +914,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-04-29 18:45:21 PDT"
+[1] "2025-04-30 07:23:48 PDT"
 ```
 
 
@@ -930,7 +930,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [56f187a] 2025-04-30: link to Karim's bsky instead of twitter
+Head:     [5c5b417] 2025-04-30: add continuous cartogram
 ```
 
 
@@ -975,16 +975,16 @@ loaded via a namespace (and not attached):
  [1] generics_0.1.3     class_7.3-22       KernSmooth_2.23-24 lattice_0.22-6    
  [5] stringi_1.8.7      hms_1.1.3          digest_0.6.37      magrittr_2.0.3    
  [9] evaluate_1.0.3     grid_4.4.2         timechange_0.3.0   fastmap_1.2.0     
-[13] jsonlite_2.0.0     e1071_1.7-16       DBI_1.2.3          tinytex_0.57      
-[17] scales_1.3.0       codetools_0.2-20   cli_3.6.4          rlang_1.1.6       
-[21] units_0.8-7        munsell_0.5.1      withr_3.0.2        yaml_2.3.10       
-[25] tools_4.4.2        tzdb_0.5.0         colorspace_2.1-1   curl_6.2.2        
-[29] vctrs_0.6.5        R6_2.6.1           git2r_0.33.0       magick_2.8.3      
-[33] proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-11    V8_6.0.3          
-[37] htmlwidgets_1.6.4  pkgconfig_2.0.3    pillar_1.10.2      gtable_0.3.6      
-[41] glue_1.8.0         Rcpp_1.0.14        xfun_0.50          tidyselect_1.2.1  
-[45] rstudioapi_0.17.1  knitr_1.48         farver_2.1.2       htmltools_0.5.8.1 
-[49] rmarkdown_2.28     compiler_4.4.2     sp_2.1-4          
+[13] jsonlite_2.0.0     e1071_1.7-16       DBI_1.2.3          scales_1.3.0      
+[17] codetools_0.2-20   cli_3.6.4          rlang_1.1.6        units_0.8-7       
+[21] munsell_0.5.1      withr_3.0.2        yaml_2.3.10        tools_4.4.2       
+[25] tzdb_0.5.0         colorspace_2.1-1   curl_6.2.2         vctrs_0.6.5       
+[29] R6_2.6.1           git2r_0.33.0       proxy_0.4-27       lifecycle_1.0.4   
+[33] classInt_0.4-11    V8_6.0.3           htmlwidgets_1.6.4  pkgconfig_2.0.3   
+[37] pillar_1.10.2      gtable_0.3.6       glue_1.8.0         Rcpp_1.0.14       
+[41] xfun_0.50          tidyselect_1.2.1   rstudioapi_0.17.1  knitr_1.48        
+[45] farver_2.1.2       htmltools_0.5.8.1  labeling_0.4.3     rmarkdown_2.28    
+[49] compiler_4.4.2     sp_2.1-4          
 ```
 
 

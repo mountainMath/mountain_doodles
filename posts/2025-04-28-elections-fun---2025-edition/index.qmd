@@ -208,7 +208,7 @@ ggplot(map_data,aes(fill=Party)) +
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2021")
+  labs(title="Canada federal election 2025")
 ```
 
 This map makes it virtually impossible to get a good reading of the distribution of votes. There are a couple of ways around this. 
@@ -242,7 +242,7 @@ cartogram_data |>
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2021")
+  labs(title="Canada federal election 2025")
 ```
 
 While this fairly accurately represents the "colour" of the vote, most of the geographic references are lost and it is only of limited usefulness. Although interesting how Canada gets pinched at Hudson Bay with low population areas collapsed.
@@ -327,7 +327,7 @@ ggplot(plot_data ,aes(x=reorder(District,Share),y=Share,fill=Party)) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election",x="Voting districts",y="Vote share of winning candidate")
+  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate")
 ```
 
 ```{r}
@@ -368,7 +368,7 @@ ggplot(all_data ,aes(x=District,y=Share,fill=fct_rev(Party))) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election",x="Voting districts",y="Vote share",fill="Party")
+  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share",fill="Party")
 
 ```
 
@@ -394,7 +394,7 @@ ggplot(waste_data ,aes(x=Party,y=waste,fill=fct_rev(Party))) +
   scale_fill_manual(values=party_colours,guide='none') +
   my_theme +
   scale_y_continuous(labels=scales::comma) +
-  labs(title="Canada 2021 federal election",x="",y="Wasted votes",fill="Party")
+  labs(title="Canada 2025 federal election",x="",y="Wasted votes",fill="Party")
 ```
 
 The parties that got the most votes are naturally also the ones with the most votes to waste. 
@@ -439,12 +439,12 @@ ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
   #theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2021 federal election, comparing FPTP to PR with 5% minimum vote cutoff",
+  labs(title="Canada 2025 federal election, comparing FPTP to PR with 5% minimum vote cutoff",
        subtitle="(preliminary results)",
        x="Voting system",y="Share of seats",fill="Party")
 ```
 
-Last time the Liberals were the big winner of FPTP, as was Bloc Québécois. This time around the NDP profited most from FPTP, at cost to the Liberals. But overall, the election outcome would not have been that much different in who forms government under either system, but there is a difference in whether it's a minority or majority government.
+Last time the Liberals were the big winner of FPTP, as was Bloc Québécois. This time around the NDP profited most from FPTP, at cost to the Liberals.^[Some people would likely change their voting behaviour if the voting system changed, this comparison makes the simplifying and somewhat unrealistic assumption that this won't happen and voting behaviour remains unchanged.] But overall, the election outcome would not have been that much different in who forms government under either system, but there is a difference in whether it's a minority or majority government.
 
 
 We can run this by individual province to see how well each province is represented in terms of first-past-the-post vs proportional representation.
@@ -461,7 +461,7 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
   #theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2019 federal election, comparing FPTP vs PR by province",
+  labs(title="Canada 2021 federal election, comparing FPTP vs PR by province",
        x="Province",y="Share of seats",fill="Party")
 ```
 
