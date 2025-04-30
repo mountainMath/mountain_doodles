@@ -40,7 +40,7 @@ my_theme <- list(
 
 
 
-Following our posts on the [2019 election](https://doodles.mountainmath.ca/blog/2019/10/22/elections-fun/) and [2021 election](https://doodles.mountainmath.ca/posts/2021-09-25-elections-fun-2021-edition/) we might as well re-use the code to run a high-level analysis of the 2025 federal election results. And also include the obligatory "land does not vote - people do" map pioneered by [Karim Douïeb](http://twitter.com/karim_douieb). And thanks to [quarto](https://quarto.org) supporting [observable.js](https://observablehq.com/documentation/cells/observable-javascript) we can now embed the interactive maps directly into the post, as we did with the [2024 BC election results](https://doodles.mountainmath.ca/posts/2024-10-20-bc-election-2024/).
+Following our posts on the [2019 election](https://doodles.mountainmath.ca/blog/2019/10/22/elections-fun/) and [2021 election](https://doodles.mountainmath.ca/posts/2021-09-25-elections-fun-2021-edition/) we might as well re-use the code to run a high-level analysis of the 2025 federal election results. And also include the obligatory "land does not vote - people do" map pioneered by [Karim Douïeb](https://bsky.app/profile/karimdouieb.bsky.social). And thanks to [quarto](https://quarto.org) supporting [observable.js](https://observablehq.com/documentation/cells/observable-javascript) we can now embed the interactive maps directly into the post, as we did with the [2024 BC election results](https://doodles.mountainmath.ca/posts/2024-10-20-bc-election-2024/).
 
 Initially I was writing this on election day, with the goal of getting this up and then updating it regularly as the results come in. But the Elections Canada webpage stopped reporting results to the general public and it became too much of a pain. Ridings that have not been called by CBC are coloured in a lighter tone, those will disappear as the remaining ridings get called and the results are updated.
 
@@ -244,7 +244,7 @@ For example, one could break out the areas with electoral districts too small to
 
 
 
-Another way to bridge the gap is to animate a map that moves between a cartographic view of Canada and a Dorling cartogram as popularized by [Karim Douïeb](http://twitter.com/karim_douieb), as as we have done for past election. The following is a live animation morphing between the map and the cartogram, with tooltips providing added interactivity and details on ridings.
+Another way to bridge the gap is to animate a map that moves between a cartographic view of Canada and a Dorling cartogram as popularized by [Karim Douïeb](https://bsky.app/profile/karimdouieb.bsky.social), as as we have done for past election. The following is a live animation morphing between the map and the cartogram, with tooltips providing added interactivity and details on ridings.
 
 
 
@@ -880,7 +880,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-04-29 16:46:57 PDT"
+[1] "2025-04-29 17:05:28 PDT"
 ```
 
 
@@ -896,7 +896,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [fc19b84] 2025-03-13: updated markdown
+Head:     [06a787b] 2025-04-29: elections 2025 post
 ```
 
 
