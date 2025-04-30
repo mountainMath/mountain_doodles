@@ -235,14 +235,48 @@ This map makes it virtually impossible to get a good reading of the distribution
 
 For example, one could break out the areas with electoral districts too small to make a visible impact on the map, or use a cartogram, like shown on the [Wikipedia page of the 2021 federal election](https://en.wikipedia.org/wiki/2021_Canadian_federal_election).
 
-<!--Another way to structure a cartogram is to scale geographic regions to the size of their (voting) population, as can be seen in the following graph.-->
+Another way to structure a cartogram is to scale geographic regions to the size of their (voting) population, as can be seen in the following graph.
 
 
 
+::: {.cell crop='true'}
+
+```{.r .cell-code}
+# this takes forever
+cartogram_data <- simpleCache({
+  library(cartogram)
+  map_data |>
+    st_cast("POLYGON") |>
+    mutate(a=st_area(geometry) |> as.numeric()) |>
+    mutate(area_rank=rank(a),
+           total_area=sum(a),.by=FEDUID) |>
+    mutate(pop=Total*a/total_area) |>
+    ms_simplify(keep=0.05) |>
+    cartogram_cont(weight="pop",
+                   itermax = 150,
+                   maxSizeError = 1.1,
+                   prepare = "adjust",
+                   threshold = 0.2,
+                   verbose = TRUE)
+}, "continuous_cartogram.rds")
+
+cartogram_data |>
+  ggplot(aes(fill=Party)) +
+  geom_sf(size=0.1) +
+  scale_fill_manual(values=party_colours) +
+  coord_sf(datum=NA) +
+  theme(legend.position = "bottom") +
+  labs(title="Canada federal election 2021")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-4-1.png){width=768}
+:::
+:::
 
 
 
-
+While this fairly accurately represents the "colour" of the vote, most of the geographic references are lost and it is only of limited usefulness. Although interesting how Canada gets pinched at Hudson Bay with low population areas collapsed.
 
 Another way to bridge the gap is to animate a map that moves between a cartographic view of Canada and a Dorling cartogram as popularized by [Karim Douïeb](https://bsky.app/profile/karimdouieb.bsky.social), as as we have done for past election. The following is a live animation morphing between the map and the cartogram, with tooltips providing added interactivity and details on ridings.
 
@@ -254,7 +288,7 @@ Another way to bridge the gap is to animate a map that moves between a cartograp
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="250" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="254" source-offset="0"}
 vote_map_animation = {
   const height = width*ratio ;
   const svg = d3.select(DOM.svg(width, height))
@@ -552,7 +586,7 @@ There is endless fun to be had with elections data. As usual, the code for this 
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="472" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="476" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -583,7 +617,7 @@ applySimulation = (nodes) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="494" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="498" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -596,7 +630,7 @@ spreadDistricts = applySimulation(districts)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="498" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="502" source-offset="0"}
 maxRadius = 10
 ```
 
@@ -609,7 +643,7 @@ maxRadius = 10
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="502" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="506" source-offset="0"}
 radiusScale = {
   const populationMax = districts.map(d => d.properties.Total).reduce((a, b) => Math.max(a, b), 0);
   return d3.scaleSqrt()
@@ -627,7 +661,7 @@ radiusScale = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="512" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="516" source-offset="0"}
 ratio = 0.8
 ```
 
@@ -640,7 +674,7 @@ ratio = 0.8
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="516" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="520" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -653,7 +687,7 @@ nodePadding = 0.3
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="520" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="524" source-offset="0"}
 tooltip = f => {
   const p = f.properties;
   const w = p.winner;
@@ -677,7 +711,7 @@ tooltip = f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="537" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="541" source-offset="0"}
 party_colors = {
   return {
     Liberal:"#A50B0B",
@@ -701,7 +735,7 @@ party_colors = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="552" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="556" source-offset="0"}
 party_colors2 = {
   return {
     Liberal: "#ce7474",
@@ -723,7 +757,7 @@ party_colors2 = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="567" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="571" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -740,7 +774,7 @@ format = ({
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="575" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="579" source-offset="0"}
 projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 ```
 
@@ -753,7 +787,7 @@ projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="579" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="583" source-offset="0"}
 districts = canada.features.map(f => {
   f.properties.centroid=projection([f.properties.X,f.properties.Y]);
   return f;
@@ -769,7 +803,7 @@ districts = canada.features.map(f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="586" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="590" source-offset="0"}
 canada = { 
   const url = "https://s3.ca-central-1.amazonaws.com/mountainmath/elections/election_2025.json.gz";
   const canada = await d3.json(url);
@@ -821,7 +855,7 @@ canada = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="630" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="634" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -834,7 +868,7 @@ d3 = require("d3@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="634" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="638" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -847,7 +881,7 @@ turf = require("@turf/turf@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="638" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="642" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -880,7 +914,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-04-29 17:05:28 PDT"
+[1] "2025-04-29 18:45:21 PDT"
 ```
 
 
@@ -896,7 +930,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [06a787b] 2025-04-29: elections 2025 post
+Head:     [56f187a] 2025-04-30: link to Karim's bsky instead of twitter
 ```
 
 
@@ -927,24 +961,30 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] httr_1.4.7                cancensus_0.5.8          
+ [3] rmapshaper_0.5.0          sf_1.0-20                
+ [5] mountainmathHelpers_0.1.4 lubridate_1.9.4          
+ [7] forcats_1.0.0             stringr_1.5.1            
+ [9] dplyr_1.1.4               purrr_1.0.4              
+[11] readr_2.1.5               tidyr_1.3.1              
+[13] tibble_3.2.1              ggplot2_3.5.2            
+[15] tidyverse_2.0.0          
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.6.5               cli_3.6.4                
- [3] knitr_1.48                rlang_1.1.6              
- [5] xfun_0.50                 generics_0.1.3           
- [7] jsonlite_2.0.0            glue_1.8.0               
- [9] colorspace_2.1-1          git2r_0.33.0             
-[11] htmltools_0.5.8.1         mountainmathHelpers_0.1.4
-[13] scales_1.3.0              rmarkdown_2.28           
-[15] grid_4.4.2                munsell_0.5.1            
-[17] evaluate_1.0.3            tibble_3.2.1             
-[19] fastmap_1.2.0             yaml_2.3.10              
-[21] lifecycle_1.0.4           compiler_4.4.2           
-[23] dplyr_1.1.4               htmlwidgets_1.6.4        
-[25] pkgconfig_2.0.3           rstudioapi_0.17.1        
-[27] digest_0.6.37             R6_2.6.1                 
-[29] tidyselect_1.2.1          pillar_1.10.2            
-[31] magrittr_2.0.3            tools_4.4.2              
-[33] gtable_0.3.6              ggplot2_3.5.2            
+ [1] generics_0.1.3     class_7.3-22       KernSmooth_2.23-24 lattice_0.22-6    
+ [5] stringi_1.8.7      hms_1.1.3          digest_0.6.37      magrittr_2.0.3    
+ [9] evaluate_1.0.3     grid_4.4.2         timechange_0.3.0   fastmap_1.2.0     
+[13] jsonlite_2.0.0     e1071_1.7-16       DBI_1.2.3          tinytex_0.57      
+[17] scales_1.3.0       codetools_0.2-20   cli_3.6.4          rlang_1.1.6       
+[21] units_0.8-7        munsell_0.5.1      withr_3.0.2        yaml_2.3.10       
+[25] tools_4.4.2        tzdb_0.5.0         colorspace_2.1-1   curl_6.2.2        
+[29] vctrs_0.6.5        R6_2.6.1           git2r_0.33.0       magick_2.8.3      
+[33] proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-11    V8_6.0.3          
+[37] htmlwidgets_1.6.4  pkgconfig_2.0.3    pillar_1.10.2      gtable_0.3.6      
+[41] glue_1.8.0         Rcpp_1.0.14        xfun_0.50          tidyselect_1.2.1  
+[45] rstudioapi_0.17.1  knitr_1.48         farver_2.1.2       htmltools_0.5.8.1 
+[49] rmarkdown_2.28     compiler_4.4.2     sp_2.1-4          
 ```
 
 

@@ -215,23 +215,26 @@ This map makes it virtually impossible to get a good reading of the distribution
 
 For example, one could break out the areas with electoral districts too small to make a visible impact on the map, or use a cartogram, like shown on the [Wikipedia page of the 2021 federal election](https://en.wikipedia.org/wiki/2021_Canadian_federal_election).
 
-<!--Another way to structure a cartogram is to scale geographic regions to the size of their (voting) population, as can be seen in the following graph.-->
+Another way to structure a cartogram is to scale geographic regions to the size of their (voting) population, as can be seen in the following graph.
 
-```{r include=FALSE, eval=FALSE}
+```{r crop=TRUE}
 # this takes forever
-library(cartogram)
-cartogram_data <- map_data |>
-  st_cast("POLYGON") |>
-  mutate(a=st_area(geometry) |> as.numeric()) |>
-  mutate(area_rank=rank(a),
-         total_area=sum(a),.by=FEDUID) |>
-  mutate(pop=Total*a/total_area) |>
-  cartogram_cont(weight="pop",
-                 itermax = 15,
-                 maxSizeError = 1.1,
-                 prepare = "adjust",
-                 threshold = 0.05,
-                 verbose = TRUE)
+cartogram_data <- simpleCache({
+  library(cartogram)
+  map_data |>
+    st_cast("POLYGON") |>
+    mutate(a=st_area(geometry) |> as.numeric()) |>
+    mutate(area_rank=rank(a),
+           total_area=sum(a),.by=FEDUID) |>
+    mutate(pop=Total*a/total_area) |>
+    ms_simplify(keep=0.05) |>
+    cartogram_cont(weight="pop",
+                   itermax = 150,
+                   maxSizeError = 1.1,
+                   prepare = "adjust",
+                   threshold = 0.2,
+                   verbose = TRUE)
+}, "continuous_cartogram.rds")
 
 cartogram_data |>
   ggplot(aes(fill=Party)) +
@@ -242,6 +245,7 @@ cartogram_data |>
   labs(title="Canada federal election 2021")
 ```
 
+While this fairly accurately represents the "colour" of the vote, most of the geographic references are lost and it is only of limited usefulness. Although interesting how Canada gets pinched at Hudson Bay with low population areas collapsed.
 
 Another way to bridge the gap is to animate a map that moves between a cartographic view of Canada and a Dorling cartogram as popularized by [Karim Douïeb](https://bsky.app/profile/karimdouieb.bsky.social), as as we have done for past election. The following is a live animation morphing between the map and the cartogram, with tooltips providing added interactivity and details on ridings.
 
