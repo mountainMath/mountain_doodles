@@ -156,7 +156,7 @@ geos <- get_electoral_areas() %>%
 
 
 ```{r}
-cbc_data <- simpleCache(get_cbc_data(),"cbc_election_results_2025_04_29_16_45")
+cbc_data <- simpleCache(get_cbc_data(),"cbc_election_results_2025_05_01_14_15")
 
 not_called<- cbc_data%>% filter(!called) %>% pull(District)%>% unique
 called_districts<- cbc_data%>% filter(called) %>% pull(District)%>% unique
