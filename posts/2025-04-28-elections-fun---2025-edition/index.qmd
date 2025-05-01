@@ -190,7 +190,6 @@ results |>
   select(FEDUID,Candidate=Name,Party,Votes,called,previous_winner,validated,Type,Registered,Total) |>
   write_csv(tmp)
 dummy <- file_to_s3_gzip(tmp,"mountainmath","elections/results_2025.csv")
-
 ```
 
 ```{r fig.height=7, crop=TRUE, clip=TRUE}
@@ -208,7 +207,7 @@ ggplot(map_data,aes(fill=Party)) +
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2025")
+  labs(title="Canada federal election 2025") 
 ```
 
 This map makes it virtually impossible to get a good reading of the distribution of votes. There are a couple of ways around this. 
@@ -227,14 +226,14 @@ cartogram_data <- simpleCache({
     mutate(area_rank=rank(a),
            total_area=sum(a),.by=FEDUID) |>
     mutate(pop=Total*a/total_area) |>
-    ms_simplify(keep=0.05) |>
+    ms_simplify(keep=0.1) |>
     cartogram_cont(weight="pop",
                    itermax = 150,
                    maxSizeError = 1.1,
                    prepare = "adjust",
                    threshold = 0.2,
                    verbose = TRUE)
-}, "continuous_cartogram.rds")
+}, "continuous_cartogram.rds",refresh=TRUE)
 
 cartogram_data |>
   ggplot(aes(fill=Party)) +
@@ -242,7 +241,7 @@ cartogram_data |>
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2025")
+  labs(title="Canada federal election 2025") 
 ```
 
 While this fairly accurately represents the "colour" of the vote, most of the geographic references are lost and it is only of limited usefulness. Although interesting how Canada gets pinched at Hudson Bay with low population areas collapsed.
@@ -327,7 +326,7 @@ ggplot(plot_data ,aes(x=reorder(District,Share),y=Share,fill=Party)) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate")
+  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate") 
 ```
 
 ```{r}
@@ -339,7 +338,7 @@ top_sweep <- plot_data %>%
   mutate(n=row_number()) %>%
   filter(Party != head(.,1)$Party) %>%
   pull(n) %>%
-  min -1
+  min -1 
 ```
 
 In the last election the top 4 spots in terms of vote share were taken by the Conservatives, this time around the Conservatives swept the top `r top_sweep` spots.
@@ -359,7 +358,6 @@ all_data <- results %>%
                            summarize(Share=sum(Share,na.rm=TRUE),.groups="drop") %>% 
                            arrange(Share) %>% 
                            pull(District),ordered = TRUE))
-
 
 ggplot(all_data ,aes(x=District,y=Share,fill=fct_rev(Party))) +
   geom_bar(stat="identity") +
@@ -386,7 +384,6 @@ waste_data <- results %>%
   mutate(waste=ifelse(winner,Votes-required-1,Votes)) %>%
   group_by(Party) %>%
   summarize(waste=sum(waste),.groups="drop")
-
 
 ggplot(waste_data ,aes(x=Party,y=waste,fill=fct_rev(Party))) +
   geom_bar(stat="identity") +
@@ -421,7 +418,7 @@ pr_share_data <- all_data %>%
                            pull(Province),ordered = TRUE)) %>%
   ungroup %>%
   select(-PR) %>%
-  rename(FPTP=Seats,PR=Votes) 
+  rename(FPTP=Seats,PR=Votes)  
 ```
 
 ```{r}
@@ -441,7 +438,7 @@ ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
   #theme(axis.text.y = element_blank()) +
   labs(title="Canada 2025 federal election, comparing FPTP to PR with 5% minimum vote cutoff",
        subtitle="(preliminary results)",
-       x="Voting system",y="Share of seats",fill="Party")
+       x="Voting system",y="Share of seats",fill="Party") 
 ```
 
 Last time the Liberals were the big winner of FPTP, as was Bloc Québécois. This time around again the Liberals profited most from FPTP, at cost to the NDP^[Some people would likely change their voting behaviour if the voting system changed, this comparison makes the simplifying and somewhat unrealistic assumption that this won't happen and voting behaviour remains unchanged.] But overall, the election outcome would not have been that much different in who forms government under either system, but there is a difference in whether it's a minority or majority government.
@@ -461,7 +458,7 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
   #theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2025 federal election, comparing FPTP vs PR by province",
+  labs(title="Canada 2025 federal election, comparing FPTP vs PR by province", 
        x="Province",y="Share of seats",fill="Party")
 ```
 
