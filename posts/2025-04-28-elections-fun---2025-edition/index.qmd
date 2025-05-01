@@ -444,7 +444,7 @@ ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
        x="Voting system",y="Share of seats",fill="Party")
 ```
 
-Last time the Liberals were the big winner of FPTP, as was Bloc Québécois. This time around the NDP profited most from FPTP, at cost to the Liberals.^[Some people would likely change their voting behaviour if the voting system changed, this comparison makes the simplifying and somewhat unrealistic assumption that this won't happen and voting behaviour remains unchanged.] But overall, the election outcome would not have been that much different in who forms government under either system, but there is a difference in whether it's a minority or majority government.
+Last time the Liberals were the big winner of FPTP, as was Bloc Québécois. This time around again the Liberals profited most from FPTP, at cost to the NDP^[Some people would likely change their voting behaviour if the voting system changed, this comparison makes the simplifying and somewhat unrealistic assumption that this won't happen and voting behaviour remains unchanged.] But overall, the election outcome would not have been that much different in who forms government under either system, but there is a difference in whether it's a minority or majority government.
 
 
 We can run this by individual province to see how well each province is represented in terms of first-past-the-post vs proportional representation.
