@@ -233,7 +233,7 @@ cartogram_data <- simpleCache({
                    prepare = "adjust",
                    threshold = 0.2,
                    verbose = TRUE)
-}, "continuous_cartogram.rds",refresh=TRUE)
+}, "continuous_cartogram.rds")
 
 cartogram_data |>
   ggplot(aes(fill=Party)) +
@@ -241,7 +241,7 @@ cartogram_data |>
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2025") 
+  labs(title="Canada federal election 2025")
 ```
 
 While this fairly accurately represents the "colour" of the vote, most of the geographic references are lost and it is only of limited usefulness. Although interesting how Canada gets pinched at Hudson Bay with low population areas collapsed.

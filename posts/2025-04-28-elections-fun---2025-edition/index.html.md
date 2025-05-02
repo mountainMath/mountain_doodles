@@ -251,7 +251,7 @@ cartogram_data <- simpleCache({
     mutate(area_rank=rank(a),
            total_area=sum(a),.by=FEDUID) |>
     mutate(pop=Total*a/total_area) |>
-    ms_simplify(keep=0.05) |>
+    ms_simplify(keep=0.1) |>
     cartogram_cont(weight="pop",
                    itermax = 150,
                    maxSizeError = 1.1,
@@ -266,7 +266,7 @@ cartogram_data |>
   scale_fill_manual(values=party_colours) +
   coord_sf(datum=NA) +
   theme(legend.position = "bottom") +
-  labs(title="Canada federal election 2025") 
+  labs(title="Canada federal election 2025")
 ```
 
 ::: {.cell-output-display}
@@ -912,7 +912,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-01 14:25:03 PDT"
+[1] "2025-05-01 17:05:10 PDT"
 ```
 
 
@@ -928,7 +928,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [d853bf2] 2025-05-01: update cbc data and re-run to update the data used for the live animation with the recount flipping one rinding
+Head:     [9e682a7] 2025-05-01: update to reflect the flipped seats in all the graphs
 ```
 
 
@@ -970,28 +970,19 @@ other attached packages:
 [15] tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6        xfun_0.50           htmlwidgets_1.6.4  
- [4] lattice_0.22-6      tzdb_0.5.0          vctrs_0.6.5        
- [7] tools_4.4.2         generics_0.1.3      curl_6.2.2         
-[10] parallel_4.4.2      proxy_0.4-27        R.oo_1.26.0        
-[13] pkgconfig_2.0.3     KernSmooth_2.23-24  lifecycle_1.0.4    
-[16] git2r_0.33.0        farver_2.1.2        compiler_4.4.2     
-[19] tinytex_0.57        munsell_0.5.1       codetools_0.2-20   
-[22] htmltools_0.5.8.1   class_7.3-22        yaml_2.3.10        
-[25] pillar_1.10.2       crayon_1.5.3        aws.s3_0.3.21      
-[28] R.utils_2.12.3      classInt_0.4-11     magick_2.8.3       
-[31] mime_0.12           tidyselect_1.2.1    digest_0.6.37      
-[34] stringi_1.8.7       labeling_0.4.3      fastmap_1.2.0      
-[37] grid_4.4.2          colorspace_2.1-1    cli_3.6.4          
-[40] magrittr_2.0.3      base64enc_0.1-3     aws.signature_0.6.0
-[43] e1071_1.7-16        withr_3.0.2         scales_1.3.0       
-[46] sp_2.1-4            bit64_4.6.0-1       timechange_0.3.0   
-[49] rmarkdown_2.28      bit_4.6.0           R.methodsS3_1.8.2  
-[52] hms_1.1.3           evaluate_1.0.3      knitr_1.48         
-[55] V8_6.0.3            rlang_1.1.6         Rcpp_1.0.14        
-[58] glue_1.8.0          DBI_1.2.3           xml2_1.3.7         
-[61] rstudioapi_0.17.1   vroom_1.6.5         jsonlite_2.0.0     
-[64] R6_2.6.1            units_0.8-7        
+ [1] generics_0.1.3     class_7.3-22       KernSmooth_2.23-24 lattice_0.22-6    
+ [5] stringi_1.8.7      hms_1.1.3          digest_0.6.37      magrittr_2.0.3    
+ [9] evaluate_1.0.3     grid_4.4.2         timechange_0.3.0   fastmap_1.2.0     
+[13] jsonlite_2.0.0     e1071_1.7-16       DBI_1.2.3          tinytex_0.57      
+[17] scales_1.3.0       codetools_0.2-20   cli_3.6.4          rlang_1.1.6       
+[21] units_0.8-7        munsell_0.5.1      withr_3.0.2        yaml_2.3.10       
+[25] tools_4.4.2        tzdb_0.5.0         colorspace_2.1-1   curl_6.2.2        
+[29] vctrs_0.6.5        R6_2.6.1           git2r_0.33.0       magick_2.8.3      
+[33] proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-11    V8_6.0.3          
+[37] htmlwidgets_1.6.4  pkgconfig_2.0.3    pillar_1.10.2      gtable_0.3.6      
+[41] glue_1.8.0         Rcpp_1.0.14        xfun_0.50          tidyselect_1.2.1  
+[45] rstudioapi_0.17.1  knitr_1.48         farver_2.1.2       htmltools_0.5.8.1 
+[49] rmarkdown_2.28     compiler_4.4.2     sp_2.1-4          
 ```
 
 
