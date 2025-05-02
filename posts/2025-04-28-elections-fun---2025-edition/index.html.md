@@ -253,10 +253,10 @@ cartogram_data <- simpleCache({
     mutate(pop=Total*a/total_area) |>
     ms_simplify(keep=0.1) |>
     cartogram_cont(weight="pop",
-                   itermax = 150,
-                   maxSizeError = 1.1,
+                   itermax = 500,
+                   maxSizeError = 1.01,
                    prepare = "adjust",
-                   threshold = 0.2,
+                   threshold = 0.05,
                    verbose = TRUE)
 }, "continuous_cartogram.rds")
 
@@ -912,7 +912,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-01 17:05:10 PDT"
+[1] "2025-05-02 16:06:30 PDT"
 ```
 
 
@@ -928,7 +928,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [9e682a7] 2025-05-01: update to reflect the flipped seats in all the graphs
+Head:     [6eb8f10] 2025-05-02: update recomputed continuous cartogram with flipped riding
 ```
 
 

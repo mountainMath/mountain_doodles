@@ -228,10 +228,10 @@ cartogram_data <- simpleCache({
     mutate(pop=Total*a/total_area) |>
     ms_simplify(keep=0.1) |>
     cartogram_cont(weight="pop",
-                   itermax = 150,
-                   maxSizeError = 1.1,
+                   itermax = 500,
+                   maxSizeError = 1.01,
                    prepare = "adjust",
-                   threshold = 0.2,
+                   threshold = 0.05,
                    verbose = TRUE)
 }, "continuous_cartogram.rds")
 
