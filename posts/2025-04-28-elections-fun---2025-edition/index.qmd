@@ -167,7 +167,6 @@ new_results <- get_election_results()  %>%
   filter(Type=="validated" | (!validated & Type !="validated")) %>%
   mutate(Party=recode(Party,"People's Party - PPC"="People's Party")) 
 
-
 results <- new_results |> 
   select(-Surname, `Middle name(s)`, `Given name`) |>
   left_join(cleaned_previous_results |> 
@@ -178,7 +177,6 @@ results <- new_results |>
   mutate(called=dd %in% called_districts)
 
 stopifnot(sum(sort(unique(results$dd))!=sort(unique(cbc_data$District)))==0) # make sure we don't miss any
-
 
 
 tmp <- tempfile("results_2025.csv")
@@ -199,8 +197,6 @@ map_data <- geos |>
               clean_parties() |>
               slice_max(n=1,order_by=Votes, with_ties = FALSE,by=FEDUID),by="FEDUID") |>
   mutate(Party=if_else(Total==0,"No results",Party))
-  #mutate(Party=factor(case_when(called~as.character(Party),
-  #                       TRUE~"Undecided"),levels=names(party_colours)))
 
 ggplot(map_data,aes(fill=Party)) +
   geom_sf(size=0.1) +
@@ -233,7 +229,10 @@ cartogram_data <- simpleCache({
                    prepare = "adjust",
                    threshold = 0.05,
                    verbose = TRUE)
-}, "continuous_cartogram.rds")
+}, "continuous_cartogram.rds") |>
+  select(District) |>
+  left_join(results |> filter(Votes==max(Votes),.by=FEDUID),by="District")
+
 
 cartogram_data |>
   ggplot(aes(fill=Party)) +
@@ -309,7 +308,7 @@ plot_data <- results %>%
   top_n(1) %>%
   mutate(margin=Share-LagShare)
 
-plurality <- plot_data %>% ungroup %>% filter(Share>0.5) %>% count
+plurality <- plot_data %>% ungroup %>% filter(Share>0.5) %>% count()
 ```
 
 This still loses a lot of nuance. The colour is determined by who won the district, the animation reveals no information on how wide or narrow the margin of victory was. Or how the other candidates performed. 
@@ -326,7 +325,7 @@ ggplot(plot_data ,aes(x=reorder(District,Share),y=Share,fill=Party)) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate") 
+  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate")
 ```
 
 ```{r}
@@ -338,7 +337,7 @@ top_sweep <- plot_data %>%
   mutate(n=row_number()) %>%
   filter(Party != head(.,1)$Party) %>%
   pull(n) %>%
-  min -1 
+  min -1
 ```
 
 In the last election the top 4 spots in terms of vote share were taken by the Conservatives, this time around the Conservatives swept the top `r top_sweep` spots.
@@ -367,7 +366,6 @@ ggplot(all_data ,aes(x=District,y=Share,fill=fct_rev(Party))) +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
   labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share",fill="Party")
-
 ```
 
 ## Wasted votes
@@ -387,7 +385,6 @@ waste_data <- results %>%
 
 ggplot(waste_data ,aes(x=Party,y=waste,fill=fct_rev(Party))) +
   geom_bar(stat="identity") +
-  #coord_flip() +
   scale_fill_manual(values=party_colours,guide='none') +
   my_theme +
   scale_y_continuous(labels=scales::comma) +
@@ -410,7 +407,6 @@ pr_share_data <- all_data %>%
   group_by(PR) %>%
   mutate(Share=Votes/sum(Votes)) %>%
   mutate(Province=pr_names[PR] %>% as.character) %>%
-  #mutate(District=factor(District,levels=as.vector(pr_names))) %>%
   mutate(Province=factor(Province,levels=group_by(.,Province) %>% 
                            filter(Party %in% c("People's Party","Conservative")) %>% 
                            summarize(Share=sum(Share,na.rm=TRUE),.groups="drop") %>% 
@@ -425,7 +421,6 @@ pr_share_data <- all_data %>%
 pr_share_data %>%
   group_by(Party) %>%
   summarize(FPTP=sum(FPTP),PR=sum(PR),.groups="drop") %>%
-  #mutate(PR=ifelse(PR/sum(PR)<0.05 | Party=="Other",0,PR))%>%
   mutate(PR=PR/sum(PR)) %>%
   gather(key="Voting system",value="value",c("FPTP","PR")) %>%
 ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
@@ -435,7 +430,6 @@ ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
-  #theme(axis.text.y = element_blank()) +
   labs(title="Canada 2025 federal election, comparing FPTP to PR with 5% minimum vote cutoff",
        subtitle="(preliminary results)",
        x="Voting system",y="Share of seats",fill="Party") 
@@ -457,7 +451,6 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
   facet_wrap("`Voting system`") +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
-  #theme(axis.text.y = element_blank()) +
   labs(title="Canada 2025 federal election, comparing FPTP vs PR by province", 
        x="Province",y="Share of seats",fill="Party")
 ```

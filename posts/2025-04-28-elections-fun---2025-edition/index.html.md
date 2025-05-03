@@ -178,7 +178,6 @@ new_results <- get_election_results()  %>%
   filter(Type=="validated" | (!validated & Type !="validated")) %>%
   mutate(Party=recode(Party,"People's Party - PPC"="People's Party")) 
 
-
 results <- new_results |> 
   select(-Surname, `Middle name(s)`, `Given name`) |>
   left_join(cleaned_previous_results |> 
@@ -189,7 +188,6 @@ results <- new_results |>
   mutate(called=dd %in% called_districts)
 
 stopifnot(sum(sort(unique(results$dd))!=sort(unique(cbc_data$District)))==0) # make sure we don't miss any
-
 
 
 tmp <- tempfile("results_2025.csv")
@@ -213,8 +211,6 @@ map_data <- geos |>
               clean_parties() |>
               slice_max(n=1,order_by=Votes, with_ties = FALSE,by=FEDUID),by="FEDUID") |>
   mutate(Party=if_else(Total==0,"No results",Party))
-  #mutate(Party=factor(case_when(called~as.character(Party),
-  #                       TRUE~"Undecided"),levels=names(party_colours)))
 
 ggplot(map_data,aes(fill=Party)) +
   geom_sf(size=0.1) +
@@ -258,7 +254,10 @@ cartogram_data <- simpleCache({
                    prepare = "adjust",
                    threshold = 0.05,
                    verbose = TRUE)
-}, "continuous_cartogram.rds")
+}, "continuous_cartogram.rds") |>
+  select(District) |>
+  left_join(results |> filter(Votes==max(Votes),.by=FEDUID),by="District")
+
 
 cartogram_data |>
   ggplot(aes(fill=Party)) +
@@ -288,7 +287,7 @@ Another way to bridge the gap is to animate a map that moves between a cartograp
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="253" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="252" source-offset="0"}
 vote_map_animation = {
   const height = width*ratio ;
   const svg = d3.select(DOM.svg(width, height))
@@ -354,7 +353,7 @@ plot_data <- results %>%
   top_n(1) %>%
   mutate(margin=Share-LagShare)
 
-plurality <- plot_data %>% ungroup %>% filter(Share>0.5) %>% count
+plurality <- plot_data %>% ungroup %>% filter(Share>0.5) %>% count()
 ```
 :::
 
@@ -363,7 +362,7 @@ plurality <- plot_data %>% ungroup %>% filter(Share>0.5) %>% count
 This still loses a lot of nuance. The colour is determined by who won the district, the animation reveals no information on how wide or narrow the margin of victory was. Or how the other candidates performed. 
 
 ## Winning vote share
-With more than 2 candidates in each riding, one does not necessarily require a plurality of votes to win. 224 out of the 343 candidates won with over 50% of the vote in their district, that's almost double of what we saw in the last election.
+With more than 2 candidates in each riding, one does not necessarily require a plurality of votes to win. 217 out of the 343 candidates won with over 50% of the vote in their district, that's almost double of what we saw in the last election.
 The largest vote share any winning candidate got was 84%, the lowest was 34%, both numbers up a little from what we saw in the last election. 
 
 
@@ -378,7 +377,7 @@ ggplot(plot_data ,aes(x=reorder(District,Share),y=Share,fill=Party)) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(axis.text.y = element_blank()) +
-  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate") 
+  labs(title="Canada 2025 federal election",x="Voting districts",y="Vote share of winning candidate")
 ```
 
 ::: {.cell-output-display}
@@ -397,7 +396,7 @@ top_sweep <- plot_data %>%
   mutate(n=row_number()) %>%
   filter(Party != head(.,1)$Party) %>%
   pull(n) %>%
-  min -1 
+  min -1
 ```
 :::
 
@@ -463,7 +462,6 @@ waste_data <- results %>%
 
 ggplot(waste_data ,aes(x=Party,y=waste,fill=fct_rev(Party))) +
   geom_bar(stat="identity") +
-  #coord_flip() +
   scale_fill_manual(values=party_colours,guide='none') +
   my_theme +
   scale_y_continuous(labels=scales::comma) +
@@ -497,7 +495,6 @@ pr_share_data <- all_data %>%
   group_by(PR) %>%
   mutate(Share=Votes/sum(Votes)) %>%
   mutate(Province=pr_names[PR] %>% as.character) %>%
-  #mutate(District=factor(District,levels=as.vector(pr_names))) %>%
   mutate(Province=factor(Province,levels=group_by(.,Province) %>% 
                            filter(Party %in% c("People's Party","Conservative")) %>% 
                            summarize(Share=sum(Share,na.rm=TRUE),.groups="drop") %>% 
@@ -515,7 +512,6 @@ pr_share_data <- all_data %>%
 pr_share_data %>%
   group_by(Party) %>%
   summarize(FPTP=sum(FPTP),PR=sum(PR),.groups="drop") %>%
-  #mutate(PR=ifelse(PR/sum(PR)<0.05 | Party=="Other",0,PR))%>%
   mutate(PR=PR/sum(PR)) %>%
   gather(key="Voting system",value="value",c("FPTP","PR")) %>%
 ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
@@ -525,7 +521,6 @@ ggplot(aes(x=`Voting system`,y=value,fill=fct_rev(Party))) +
   my_theme +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
-  #theme(axis.text.y = element_blank()) +
   labs(title="Canada 2025 federal election, comparing FPTP to PR with 5% minimum vote cutoff",
        subtitle="(preliminary results)",
        x="Voting system",y="Share of seats",fill="Party") 
@@ -558,7 +553,6 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
   facet_wrap("`Voting system`") +
   scale_y_continuous(labels=scales::percent) +
   theme(legend.position = "bottom") +
-  #theme(axis.text.y = element_blank()) +
   labs(title="Canada 2025 federal election, comparing FPTP vs PR by province", 
        x="Province",y="Share of seats",fill="Party")
 ```
@@ -584,7 +578,7 @@ There is endless fun to be had with elections data. As usual, the code for this 
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="473" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="466" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -615,7 +609,7 @@ applySimulation = (nodes) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="495" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="488" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -628,7 +622,7 @@ spreadDistricts = applySimulation(districts)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="499" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="492" source-offset="0"}
 maxRadius = 10
 ```
 
@@ -641,7 +635,7 @@ maxRadius = 10
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="503" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="496" source-offset="0"}
 radiusScale = {
   const populationMax = districts.map(d => d.properties.Total).reduce((a, b) => Math.max(a, b), 0);
   return d3.scaleSqrt()
@@ -659,7 +653,7 @@ radiusScale = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="513" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="506" source-offset="0"}
 ratio = 0.8
 ```
 
@@ -672,7 +666,7 @@ ratio = 0.8
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="517" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="510" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -685,7 +679,7 @@ nodePadding = 0.3
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="521" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="514" source-offset="0"}
 tooltip = f => {
   const p = f.properties;
   const w = p.winner;
@@ -709,7 +703,7 @@ tooltip = f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="538" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="531" source-offset="0"}
 party_colors = {
   return {
     Liberal:"#A50B0B",
@@ -733,7 +727,7 @@ party_colors = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="553" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="546" source-offset="0"}
 party_colors2 = {
   return {
     Liberal: "#ce7474",
@@ -755,7 +749,7 @@ party_colors2 = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="568" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="561" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -772,7 +766,7 @@ format = ({
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="576" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="569" source-offset="0"}
 projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 ```
 
@@ -785,7 +779,7 @@ projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="580" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="573" source-offset="0"}
 districts = canada.features.map(f => {
   f.properties.centroid=projection([f.properties.X,f.properties.Y]);
   return f;
@@ -801,7 +795,7 @@ districts = canada.features.map(f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="587" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="580" source-offset="0"}
 canada = { 
   const url = "https://s3.ca-central-1.amazonaws.com/mountainmath/elections/election_2025.json.gz";
   const canada = await d3.json(url);
@@ -853,7 +847,7 @@ canada = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="631" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="624" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -866,7 +860,7 @@ d3 = require("d3@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="635" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="628" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -879,7 +873,7 @@ turf = require("@turf/turf@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="639" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="632" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -912,7 +906,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-02 16:06:30 PDT"
+[1] "2025-05-02 18:11:12 PDT"
 ```
 
 
@@ -928,7 +922,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [6eb8f10] 2025-05-02: update recomputed continuous cartogram with flipped riding
+Head:     [c8be0dc] 2025-05-02: cartogram update
 ```
 
 
@@ -970,19 +964,28 @@ other attached packages:
 [15] tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] generics_0.1.3     class_7.3-22       KernSmooth_2.23-24 lattice_0.22-6    
- [5] stringi_1.8.7      hms_1.1.3          digest_0.6.37      magrittr_2.0.3    
- [9] evaluate_1.0.3     grid_4.4.2         timechange_0.3.0   fastmap_1.2.0     
-[13] jsonlite_2.0.0     e1071_1.7-16       DBI_1.2.3          tinytex_0.57      
-[17] scales_1.3.0       codetools_0.2-20   cli_3.6.4          rlang_1.1.6       
-[21] units_0.8-7        munsell_0.5.1      withr_3.0.2        yaml_2.3.10       
-[25] tools_4.4.2        tzdb_0.5.0         colorspace_2.1-1   curl_6.2.2        
-[29] vctrs_0.6.5        R6_2.6.1           git2r_0.33.0       magick_2.8.3      
-[33] proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-11    V8_6.0.3          
-[37] htmlwidgets_1.6.4  pkgconfig_2.0.3    pillar_1.10.2      gtable_0.3.6      
-[41] glue_1.8.0         Rcpp_1.0.14        xfun_0.50          tidyselect_1.2.1  
-[45] rstudioapi_0.17.1  knitr_1.48         farver_2.1.2       htmltools_0.5.8.1 
-[49] rmarkdown_2.28     compiler_4.4.2     sp_2.1-4          
+ [1] gtable_0.3.6        xfun_0.50           htmlwidgets_1.6.4  
+ [4] lattice_0.22-6      tzdb_0.5.0          vctrs_0.6.5        
+ [7] tools_4.4.2         generics_0.1.3      curl_6.2.2         
+[10] parallel_4.4.2      proxy_0.4-27        R.oo_1.26.0        
+[13] pkgconfig_2.0.3     KernSmooth_2.23-24  lifecycle_1.0.4    
+[16] git2r_0.33.0        farver_2.1.2        compiler_4.4.2     
+[19] tinytex_0.57        munsell_0.5.1       codetools_0.2-20   
+[22] htmltools_0.5.8.1   class_7.3-22        yaml_2.3.10        
+[25] pillar_1.10.2       crayon_1.5.3        aws.s3_0.3.21      
+[28] R.utils_2.12.3      classInt_0.4-11     magick_2.8.3       
+[31] mime_0.12           tidyselect_1.2.1    digest_0.6.37      
+[34] stringi_1.8.7       labeling_0.4.3      fastmap_1.2.0      
+[37] grid_4.4.2          colorspace_2.1-1    cli_3.6.4          
+[40] magrittr_2.0.3      base64enc_0.1-3     aws.signature_0.6.0
+[43] e1071_1.7-16        withr_3.0.2         scales_1.3.0       
+[46] sp_2.1-4            bit64_4.6.0-1       timechange_0.3.0   
+[49] rmarkdown_2.28      bit_4.6.0           R.methodsS3_1.8.2  
+[52] hms_1.1.3           evaluate_1.0.3      knitr_1.48         
+[55] V8_6.0.3            rlang_1.1.6         Rcpp_1.0.14        
+[58] glue_1.8.0          DBI_1.2.3           xml2_1.3.7         
+[61] rstudioapi_0.17.1   vroom_1.6.5         jsonlite_2.0.0     
+[64] R6_2.6.1            units_0.8-7        
 ```
 
 
