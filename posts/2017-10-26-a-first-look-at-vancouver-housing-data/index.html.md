@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 The 2016 census data on housing got released yesterday. We had the data imported and available on CensusMapper by 10am yesterday morning, after a slight delay due to the 40GB SSD space on the server running out and requiring additional disk space to be mounted for the data import. Lots of people have already used CensusMapper to dive into the data, but I had only just now found some time to take a look myself. This is a descriptive overview as a first step toward understanding what is happening. As always, the code for the analysis and graphs is embedded in this post and the underlying R notebook can be [downloaded from GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2017-10-26-a-first-look-at-vancouver-housing-data.Rmarkdown).
 
 # The big question

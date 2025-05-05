@@ -21,6 +21,8 @@ aliases:
 ---
 
 
+
+
 ### We are excited to announce CensusMapper public beta launch!
 
 The project on mapping census data for Canada is entering the next stage. We are now mapping 3875 different

@@ -19,6 +19,8 @@ aliases:
 
 
 
+
+
 A year ago, as were were just getting CensusMapper up and running, we put out three Halloween-themed census maps. Those
 maps almost broke our servers when they went viral. At least as viral as census data goes. They were viewed by over
 150,000 Canadians over the course of three days. And many of those came back to view the maps more than once.

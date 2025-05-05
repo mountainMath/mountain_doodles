@@ -24,6 +24,8 @@ aliases:
 
 
 
+
+
 In the past weeks I got interested in several news stories on aboriginal [youth admissions to correctional services](http://www.cbc.ca/news/canada/manitoba/youth-incarcerated-indigenous-half-1.4720019), [adult incarceration rates](https://newsinteractives.cbc.ca/longform/correctional-healing-lodges-aim-to-reduce-rising-rates-of-indigenous-inmates-but-numbers-continue-to-climb) and [frequency of getting carded](https://globalnews.ca/news/4328087/1-in-5-people-carded-by-vancouver-police-in-2016-were-indigenous-women-complaint/). I have this habit that when something interests me I go grab the original data and take a look myself. Having done this three times on related issues within a fairly short timeframe I decided to throw my code snippets together into a blog post.
 
 # TL;DR

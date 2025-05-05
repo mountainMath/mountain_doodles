@@ -24,6 +24,8 @@ aliases:
 
 
 
+
+
 With COVID-19 cases growing exponentially, Canada has introduced sweeping restrictions to curb the spread of the virus. People are asked to practice *social distancing*, work from home if possible, keep shopping trips to a minimum, keep a distance of at least 6 feet to people outside of their household, universities and schools have been closed, and travel has been restricted.
 
 ## Why *social distancing*?

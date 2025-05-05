@@ -26,6 +26,8 @@ aliases:
 
 
 
+
+
 A little over a year ago we ran some analysis
 [on teardowns](http://doodles.mountainmath.ca/blog/2016/01/18/redevelopment/)
 of single family homes in the City of Vancouver. We used the City of Vancouver

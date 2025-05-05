@@ -25,6 +25,8 @@ aliases:
 
 
 
+
+
 In the City of Vancouver operators of short term rentals now need to obtain a license from the city to legally operate. There are restrictions on what units can be rented out short term. I won't get into the nitty-gritty, but here is the main point. Licenses are only available for people that want to rent out their primary residence, that is the place where they reside at least half a year. Secondary suites or laneway houses count as separate residences for this purpose, so e.g. a person living in the main unit of a house can only STR the main unit, but not the secondary suite or the laneway house. However, long term tenants that claim the secondary suite as their primary residence can STR their suite if the landlord permits it.
 
 My favourite part about licensing is that we get licence data. Yay. Time for a quick blog post using the data we have so far on the [City of Vancouver Open Data Catalogue](http://data.vancouver.ca/datacatalogue/businessLicence.htm). 

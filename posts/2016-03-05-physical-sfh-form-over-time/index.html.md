@@ -19,6 +19,8 @@ aliases:
 ---
 
 
+
+
 I was curious how the physical parameters of Single Family Houses changed over time.
 
 Using the [assessment dataset](https://mountainmath.ca/map/assessment) merged with the [land use dataset](https://mountainmath.ca/land_use/map)

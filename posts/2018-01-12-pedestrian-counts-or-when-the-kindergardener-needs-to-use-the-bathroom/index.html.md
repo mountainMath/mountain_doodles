@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 Two days ago [we took a first look at motor vehicle traffic counts](https://doodles.mountainmath.ca/blog/2018/01/09/school-traffic/), now it is time to turn to pedestrian lights. Everyone knows the "beg buttons" that pedestrians need to push for the pedestrian signal to turn green. If you forget to push the pedestrian light might stay red even if parallel motor vehicle traffic has a green light, all in the name of efficiency of motor vehicle traffic.
 
 # Beg buttons

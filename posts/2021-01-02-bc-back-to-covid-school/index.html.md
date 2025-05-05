@@ -24,6 +24,8 @@ aliases:
 
 
 
+
+
 <p style="text-align:center;"><i>(Joint with HsingChi von Bergmann, health science education researcher,  professor at UBC Faculty of Dentistry, previously associate professor and science teacher educator at UofC)</i></p>
 
 Schools across BC [are set to resume this coming Monday, January 4th](https://globalnews.ca/news/7550277/bc-back-to-school-uk-covid-variant/). Meanwhile British Columbia universities have delayed the start of the semester by a week to gauge the fallout from Christmas and New Year celebrations, and other Canadian provinces with [similar case rates](https://github.com/mountainMath/BCCovidSnippets/blob/main/two_covid_canadas.md) are delaying their school starts, [Ontario by at least a week](https://www.todocanada.ca/ontario-delays-opening-for-in-person-learning-in-schools-after-winter-break/), [Manitoba will keep grades 7 to 12 in remote learning for two weeks while younger children can choose between remote and in-class learning](https://www.cbc.ca/news/canada/manitoba/manitoba-teachers-remote-learning-january-2021-covid-19-1.5826396), and [Regina is keeping students in remote learning for the first week after the break](https://www.cbc.ca/news/canada/saskatchewan/regina-public-schools-remote-learning-covid-19-1.5831360). The discovery of the new UK variant, which is thought to have [higher transmission rates and may have higher infectiousness among children](https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-12-31-COVID19-Report-42-Preprint-VOC.pdf) adds to these concerns.

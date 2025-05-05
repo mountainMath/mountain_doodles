@@ -31,6 +31,8 @@ aliases:
 
 
 
+
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/05/06/estimating-suppressed-household-formation/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

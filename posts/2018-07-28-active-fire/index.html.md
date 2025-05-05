@@ -28,6 +28,8 @@ aliases:
 
 
 
+
+
 The other day I saw a link to NASA active fire data fly by on Twitter. It's a satellite-derived world wide dataset at 375m resolution, where one (or several) polar orbiting satellites scan earth in the infrared band from which fire and fire intensity is computed.
 
 ## Redding, CA

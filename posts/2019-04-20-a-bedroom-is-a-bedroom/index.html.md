@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 A quick note following up on a [discussion earlier today](https://twitter.com/YVRHousing/status/1119747981131935745), where the question came up on how to compare single family with condo (or rental apartment) density. This point comes up a lot and becomes increasingly important as Vancouver densifies.
 
 In Vancouver, some single family homes are heavily suited. Legally a single family lot can have the main unit, a secondary suite and a laneway house. Roughly a half of single family homes have a suite, and a couple percent have laneway houses. Some homes have more than one suite. There is also a strong geographic bias for suites, for [existing suites](https://doodles.mountainmath.ca/blog/2018/05/23/teardowns-and-emissions/) as well as in permit data for new homes. For new SFH, [a little over half of them come with suites](https://doodles.mountainmath.ca/blog/2018/07/17/making-room/). Of course having a suite does not mean the suite is rented out. In fact, suites are the [most empty type of dwelling units in Vancouver](https://doodles.mountainmath.ca/blog/2018/01/25/empty-suites/), which should not be too surprising given their flexible character.

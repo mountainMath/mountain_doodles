@@ -19,6 +19,8 @@ aliases:
 
 
 
+
+
 In the [last post](https://doodles.mountainmath.ca/blog/2019/03/17/city-density-patterns/) we compared international city density patterns. While travelling and reading [Alain Bertaud's excellent book Order without Design](https://mitpress.mit.edu/books/order-without-design) I decided to slightly expand on the initial images and add bar graphs showing radial density to get an aggregate understanding of density patterns, as well as adding timelines to show how densities have developed over time. I am getting increasingly interested in modelling urban economics, and understanding and quantifying urban densities is a part of that.
 
 This aims to reproduce some of the results of Chapter 4 in Bertaud's book. There are differences in data processing, I am making use of the 250m GHS global population model for 1975, 1990, 2000 and 2015. To compute the population density in 1km wide annuli around city centres I decided to only count areas with densities higher than 1 person per hectare, thus eliminating large parks, bodies of water or otherwise uninhabited (or sparsely inhabitated) areas. This will lead to different results, especially in coastal cities or cities otherwise constrained. One may wish to modify this, as usual the [code for this post is available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2019-03-27-density-timelines.Rmarkdown) in case someone wants to modify the assumptions.

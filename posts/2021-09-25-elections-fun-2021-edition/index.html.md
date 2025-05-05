@@ -25,6 +25,8 @@ aliases:
 
 
 
+
+
 We noticed a lot of recent traffic to our [blog post on the 2019 elections](https://doodles.mountainmath.ca/blog/2019/10/22/elections-fun/), so maybe that means that, now that all districts have been called, we should update the post with 2021 data. We will just lazily run the code from the old post with the new data. And given that the outcome was overall quite similar, we can also leave the text/commentary largely unchanged. Which makes life nice and easy for us.
 
 Election maps in Canada tend to be somewhat terrible, 

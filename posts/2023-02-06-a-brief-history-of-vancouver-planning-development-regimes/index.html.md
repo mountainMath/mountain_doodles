@@ -34,6 +34,9 @@ format:
 
 
 
+
+
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/02/07/a-brief-history-of-vancouver-planning-development-regimes/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

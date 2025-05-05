@@ -32,6 +32,8 @@ aliases:
 
 
 
+
+
 Canada's metropolitan areas are growing, which means we need to add housing. But adding housing often faces stiff oppositions. There are many reasons people don't like to add housing, this post is trying to look at one particular one. That adding housing causes displacement of the low-income population.
 
 Adding new housing to a neighbourhood has two opposing effects.

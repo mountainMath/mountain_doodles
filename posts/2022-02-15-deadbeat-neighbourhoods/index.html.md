@@ -24,6 +24,8 @@ aliases:
 
 
 
+
+
 How much have City of Vancouver neighbourhoods changed 2016-2021? We have our [interactive Canada-wide population change map on CensusMapper](https://censusmapper.ca/maps/3054#12/49.2539/-123.1435) showing 2016-2021 population change down to the census tract level, and we have [looked at finer geography population change using TongFen](https://doodles.mountainmath.ca/blog/2022/02/09/canada-s-2021-census-part-1/). But sometimes we don't want maps but just a list of how city neighbourhoods changed.
 
 The city pulls a custom tabulation for city neighbourhood geographies for every census, but that will still take more than year until that arrives. Until then we can use  [TongFen](https://mountainmath.github.io/tongfen/) to get good estimates, just like what we did for our [deadbeat zoning post](https://doodles.mountainmath.ca/blog/2022/02/11/deadbeat-zoning/) to go down to block level and build a least common denominator geography for the 2016 and 2021 based on the respective dissemination blocks. Then we can categorize the geographies by which neighbourhood they (mostly) fall in. Strictly speaking we are going to look at the City of Vancouver together with Musqueam 2, which is part of the Dunbar-Southlands neighbourhood.

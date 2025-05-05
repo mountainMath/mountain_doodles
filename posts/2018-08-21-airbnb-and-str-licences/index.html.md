@@ -25,6 +25,8 @@ aliases:
 
 
 
+
+
 We are getting close the [end of the STR grace period ending August 31st](https://vancouver.ca/doing-business/short-term-rentals.aspx), so it's time to take a look at compliance of the STR operators. For today we will just look at [Airbnb](https://www.airbnb.ca/s/Vancouver--BC/homes?query=Vancouver%2C%20BC&refinement_paths%5B%5D=%2Fhomes), which is the largest STR listings platform. Other larger listings platforms are [VRBO](https://www.vrbo.com/results?petIncluded=false&ssr=true&adultsCount=2&childrenCount=0&neLat=49.315593397975874&neLong=-123.06274539513674&swLat=49.22161586817295&swLong=-123.15544253869143&zoom=13&q=Vancouver%2C%20BC%2C%20Canada&from-date=2018-08-23&to-date=2018-08-29) or [Craiglist](https://vancouver.craigslist.ca/search/vac).
 
 ## How did we get here?

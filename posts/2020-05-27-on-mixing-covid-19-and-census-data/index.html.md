@@ -23,6 +23,8 @@ aliases:
 
 
 
+
+
 Mixing census data with COVID-19 case and mortality data seems like an obvious thing to do when trying to understand how COVID-19 affects different groups. But it's only of very limited use. COVID-19 data is only (openly) available on coarse geographies and can only be matched at the ecological level. Deriving individual level relationships from this is extremely ambitious. At best, it can inform decisions on what individual level data should be collected moving forward.
 
 A good example is when the City of Toronto chief medical officer [looked into the possibility that black and low income communities in Canada are disproportionately affected by COVID-19](https://www.cbc.ca/news/canada/toronto/toronto-officials-covid-19-outbreak-may-5-update-1.5556401). To understand this they mixed census data with finer geography COVID-19 case data. The TL;DR:

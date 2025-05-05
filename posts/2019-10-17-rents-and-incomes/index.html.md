@@ -30,6 +30,8 @@ aliases:
 
 
 
+
+
 Following up on our [previous post on rents and vacancy rates](https://doodles.mountainmath.ca/blog/2019/10/16/rents-and-vacancy-rates/) there is another rental stat originating from City of Vancouver documents that is making the rounds and that is misleading. Again, our housing crisis is fundamentally a rental crisis, so it’s important to keep the numbers straight so that we can better focus our energy and resources. This one is a bit more serious, but still has been [making the rounds quite broadly on social media](https://twitter.com/nicholas_falvo/status/1160632600009908226).
 
 <img src="images/cov_rents_incomes.png" style="width:45%;float:left;margin-right:10px; ">

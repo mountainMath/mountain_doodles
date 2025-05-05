@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 School has started, and with it debate about people driving their kids to and from school is flaring up. And again people are questioning how much traffic is caused by this. As someone who bikes to school with his son every day I am keenly aware of the traffic mess around schools. But since I choose not to drive regularly, I don't have a feeling for broader traffic patterns on non-school days to compare this too. 
 
 But who needs anecdata when we have actual data on this: counts from traffic light induction loops. While the City of Vancouver has been talking for more than a year to make this data available, [Surrey](http://data.surrey.ca/dataset/traffic-loop-count) has been at it for about a year now (big thanks!), and we have [played with that data a while back](https://doodles.mountainmath.ca/blog/2016/03/27/surrey-traffic-loop-counts/). It seems however that the Surrey Open Data API changed since then and the interactive map from last year is not pulling in live data any more. Instead of updating the old map I thought my time is better spent in doing something new.

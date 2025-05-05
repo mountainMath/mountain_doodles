@@ -25,6 +25,8 @@ aliases:
 
 
 
+
+
 This [excellent NYTimes article on mobility in the US coming out today](https://www.nytimes.com/2022/05/27/upshot/housing-market-slow-moving.html) nudged me into doing a quick post on residential mobility in Canada. While there are lots of similarities between Canada and the US, there are some important differences when it comes to residential mobility. A while back [Nathan Lauster compared residential mobility between the two countries](https://homefreesociology.com/2019/11/24/why-do-people-move-new-data-mysteries-and-fundamental-rights/) and noticed that the declining trend in US residential mobility is much more muted in Canada, and may have reversed by the 2016 census, the last year for which we currently have data in Canada. (The 2021 data is slated to come out on October 26, 2022.) Nathan's post also takes a closer look at what has changed in the US and why residential mobility declined by examining the reasons people give for moving. And Yes, it's housing related reasons that are driving the decline in moving.
 
 The NYTimes article places this into a longer timeline, showing that this trend started well before the 2000-2001 year which Nathan used as a starting point. While we are waiting for the 2021 data we want to take this as an opportunity to push the Canadian data back a bit further to see how Canada's residential mobility has evolved. And also look into how this varies across the country and depending on tenure and age.

@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2019/06/12/simple-metrics-for-deciding-if-you-have-enough-housing/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

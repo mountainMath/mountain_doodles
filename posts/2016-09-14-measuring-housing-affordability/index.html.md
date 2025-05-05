@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 Housing affordability is a serious issue that deserves attention. Affordability is generally defined comparing incomes
 to housing costs. And ideally also factoring in transportation cost, although that's seldom done and we will not attempt
 today.

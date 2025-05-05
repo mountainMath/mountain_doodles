@@ -24,6 +24,8 @@ aliases:
 
 
 
+
+
 At the end of this odd COVID-19 summer we launched a reading group to bring together people interested in diving into papers and books looking at housing issues. 
 
 Geoffrey Meen and Christine Whitehead's recently released book [Understanding Affordability: The Economics of Housing Markets](https://www.google.ca/search?lr=&hl=en&rlz=1G1GGLQ_ENCA326&sxsrf=ALeKk00e9C0Ju7rRnwPwg8MXIYXn5fcJOw%3A1601131692506&ei=rFRvX827HpT9-gTL-oqQCA&q=geoffrey+meen+and+christine+whitehead&oq=geoffrey+meen+and+christine+whitehead&gs_lcp=CgZwc3ktYWIQAzIECCMQJzoHCCMQsAIQJ1CBNFiBNGCONmgAcAB4AIABRYgBd5IBATKYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=psy-ab&ved=0ahUKEwjNwZSuiIfsAhWUvp4KHUu9AoIQ4dUDCA0&uact=5) has been the group's first read. We highly recommend the book, it's a good read for anyone looking for a practical understanding of how housing markets work and ways to think about supply and demand and what they mean for housing affordability.

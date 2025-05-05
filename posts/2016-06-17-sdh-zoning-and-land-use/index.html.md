@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 Recently the question around the amount of space taken up (exclusively) by single detached houses has show up on my
 Twitter feed citing that
 SFH take up [70%](https://twitter.com/WayneFougere/status/743211599821844481),

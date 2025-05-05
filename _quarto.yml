@@ -35,9 +35,9 @@ website:
       - icon: envelope-at-fill
         href: mailto:jens@mountainmath.ca
         aria-label: Email
-      - icon: twitter
-        href: https://twitter.com/vb_jens
-        aria-label: Twitter
+      # - icon: twitter
+      #   href: https://twitter.com/vb_jens
+      #   aria-label: Twitter
       - icon: rss
         href: index.xml
         aria-label: RSS
@@ -58,9 +58,9 @@ website:
       - icon: envelope-at-fill
         href: mailto:jens@mountainmath.ca
         aria-label: Email
-      - icon: twitter
-        href: https://twitter.com/vb_jens
-        aria-label: Twitter
+      # - icon: twitter
+      #   href: https://twitter.com/vb_jens
+      #   aria-label: Twitter
       # title: "Mountain Doodles"
       logo: images/profile.jpg
       header: "**Too much data, too little time**"
@@ -126,9 +126,9 @@ website:
       - icon: envelope-at-fill
         href: mailto:jens@mountainmath.ca
         aria-label: Email
-      - icon: twitter
-        href: https://twitter.com/vb_jens
-        aria-label: Twitter
+      # - icon: twitter
+      #   href: https://twitter.com/vb_jens
+      #   aria-label: Twitter
       # title: "Mountain Doodles"
       logo: images/profile.jpg
       header: "**Too much data, too little time**"

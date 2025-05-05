@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 To help deal with the response effort in the recent Newfoundland and Labrador show storm,
 [StatCan created vulnerability maps](https://ipolitics.ca/2020/01/31/how-data-from-statscan-was-used-to-help-in-n-l-snowstorm-response/) of the most affected areas. It's great to see StatCan putting their data to use. After seeing this [fly by on twitter](https://twitter.com/EricNeudorf/status/1223671695153778689?s=20) and then flagged by [Simon on Linkedin](https://www.linkedin.com/feed/update/urn:li:activity:6629452224760283136?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A6629452224760283136%2C6629532110996807680%29) I had some thoughts on this that might be worth a quick blog post.
 

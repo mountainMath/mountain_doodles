@@ -28,6 +28,8 @@ aliases:
 
 
 
+
+
 After our recent [posts on multi-census comparisons](https://doodles.mountainmath.ca/blog/2019/06/03/2001-census-data-and-tongfen/) I was [pointed to](https://twitter.com/purposeanalytix/status/1136675415286865923) a [semi-custom tabulation for census timelines back to 1971 for Vancouver and Toronto](https://twitter.com/purposeanalytix/status/1136675415286865923). That's data for the 1971, 1981, 1986, 1991, 1996, 2001, 2006 and 2011 censuses on a common 2016 DA geography for the two CMAs. This is really cool, not just that it eliminates the need to [tongfen](https://github.com/mountainMath/tongfen) the geographies, but in particular because Statistics Canada does not even haven publicly available geographic boundary files for censuses before 2001. 
 
 It also ties in nicely with [recent work we did with Stuart Smith](https://doodles.mountainmath.ca/blog/2019/06/09/vancouver-population-density-over-time/) that took hand-transcribed census data all the way back to 1941 and looked at population change on a common geography. This data does not go back quite as far, but it comes on a much finer geography.

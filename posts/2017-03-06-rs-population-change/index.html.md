@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 With reporting on the new census numbers gaining traction, and now
 Mayor Robertson
 [picking up on single family neighbourhoods losing population](http://www.cbc.ca/news/canada/british-columbia/gregor-robertson-statement-vancouver-character-homes-review-1.4011100)

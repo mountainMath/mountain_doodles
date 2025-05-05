@@ -26,6 +26,8 @@ aliases:
 
 
 
+
+
 High-value homes frequently make the news in Vancouver, most recently in the wake of the [extra school tax for homes valued over $3M](https://doodles.mountainmath.ca/blog/2018/02/28/extra-school-tax/). The province will have looked at the data before introducing the legislation, but none of this seems to have filtered out to the general public. So maybe there is a need to take a closer look using Census data.
 
 The census is a couple of years old now, and things have changed a bit since then. Nonetheless, it should give a basic overview of who lives in high-value homes. Throughout we will only look at owner-occupied homes and ignore investors that don't live in their homes.

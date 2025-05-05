@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 In the ongoing debate on affordability of housing in the City of Vancouver we regularly
 hear voices expressing concern for ["elderly folks of modest means who had been counting
 on using their home as a pension"](http://news.nationalpost.com/full-comment/andrew-coyne-dont-blame-chinese-billionaires-for-vancouver-housing-prices) to argue against doing anything to ease the housing

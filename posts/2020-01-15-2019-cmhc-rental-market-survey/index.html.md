@@ -32,6 +32,8 @@ aliases:
 
 
 
+
+
 Finally the new 2019 CMHC Rms data is out. As expected, the high-level numbers are pretty bleak. For Metro Vancouver the vacancy rate inched up a tiny bit from 1.0% in October 2018 to 1.1% in October 2019. In the City of Vancouver the vacancy rate similarly crept from 0.8% in October 2018 to 1.0% in October 2019.
 
 With the slight uptick in vacancy rate, both areas saw somewhat lower rents increases, with the (nominal) fixed-sample rent increase in the year before October 2019 clocking in at  4.7% and 4.6% for the Metro Vancouver and the City of Vancouver, respectively. That compares to 6.1% and 6.0% in the year before that. But the vacancy rate is still very low and the rent increase is high.

@@ -28,6 +28,8 @@ aliases:
 
 
 
+
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/11/29/first-peek-at-population-and-household-data-during-covid-caveats/" target="_blank">HomeFreeSociology</a>)</i></p> 
 
 

@@ -27,6 +27,8 @@ aliases:
 
 
 
+
+
 At the end of June StatCan released an interesting census tract level metric, dubbed the **D-index**, measuring how much the income distribution in each census tract differs from the metro-wide distribution, and we decided to take it for a test drive.
 
 We are a bit of a sucker for this kind of fine-geography index. Condensing our wealth of information into a single number is an interesting exercise that involves lots of attention to detail. How best to do this depends on the question one is asking. And it's extremely satisfying to arrive at a single number as a decent measure for a very complex question. But there are risks when developing such indices, once introduced they often develop a life on it's own and get tortured to answer questions they were not designed for.

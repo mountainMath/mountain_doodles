@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 Here come some general thoughts on bike maps. Not throught through yet, just jotting down some ideas so that I don't
 forget and maybe to start a discussion.
 

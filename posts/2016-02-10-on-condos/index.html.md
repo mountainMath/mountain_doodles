@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 Lots has been said about the upper end of owned dwellings. The movement of the "million dollar line", the emergence of
 the "two million dollar line" and "multi-million dollar lines". Most of that discussion is focused on
 <a href="http://mountainmath.ca/map/assessment?filter=sfh" target="_blank">single detached homes</a> or on proxies for "single detached" like

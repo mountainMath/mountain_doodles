@@ -21,6 +21,8 @@ aliases:
 ---
 
 
+
+
 The property tax data for the City of Vancouver has been available for a while now, and with new assessment data becoming
 available soon everyone's worried about what their property taxes will look like. The City just passed a 3.9% increase
 in their budget, so on average everyone will pay 3.9% more taxes than they did last year.

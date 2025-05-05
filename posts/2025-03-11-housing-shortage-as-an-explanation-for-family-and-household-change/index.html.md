@@ -22,6 +22,7 @@ execute:
 
 
 
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/03/11/housing-shortage-as-an-explanation-for-family-and-household-change/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 In our new paper "The new rules: housing shortage as an explanation for family and household change across large metro areas in Canada, 1981-2021" [@mhu.2025] ([preprint and replication code](https://mountainmath.github.io/family_household_change/)) we estimate the impacts of housing shortage on the substantial variation we see in family and household structures, both across large metro areas in Canada and across time, focusing on 1981 through 2021. 

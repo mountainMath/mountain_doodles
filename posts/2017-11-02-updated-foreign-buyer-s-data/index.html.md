@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 After the BC government stopped publishing foreign buyer's data after May this year it reversed course and gave the data out to media outlets earlier this week. It started being released to the general public only earlier today, with the complete data becoming available around noon today.
 
 # The Data

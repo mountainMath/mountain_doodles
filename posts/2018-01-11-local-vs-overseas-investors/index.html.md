@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 Nathan Lauster just opened up an interesting way to look at CHSP data -- by folding in the SFS. I have [played with SFS data in the past](https://twitter.com/vb_jens/status/846951173177442308) but it clearly is time to revisit this and reproduce Lauster's numbers. Let's also fold in census estimates for that to see how these numbers match up. I have nothing to add to the excellent commentary from Lauster's original post, so please [head over there for good context of these estimates](https://homefreesociology.wordpress.com/2018/01/11/if-the-problem-is-speculation-then-why-focus-on-foreigners/).
 
 

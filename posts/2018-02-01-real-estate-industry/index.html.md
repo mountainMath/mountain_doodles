@@ -21,11 +21,18 @@ aliases:
 
 
 
+
+
 I keep seeing people circulate claims of the type: The Real Estate Industry makes up x% of British Columbia's GDP, and apparently I am the last person left that doesn't know what that actually means. So I decided it's time for me to catch up. Yesterday I saw a chart that came with a source, a good opportunity to sit down and reproduce it to figure out  what the "Real Estate Industry" is, or in this case how to measure the "Addiction to Housing Boom".
 
 
 
+
+
 {{< tweet 958850995211051008 >}}
+
+
+
 
 
 

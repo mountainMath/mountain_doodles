@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 Canadian 1996 census data is now [avaiable on CensusMapper](https://censusmapper.ca/maps/2338#12/49.2455/-123.1071) for [anyone to make maps](https://censusmapper.ca/maps/new?identifier=CA1996), for [API access](https://censusmapper.ca/api?identifier=CA1996) and via the [{cancensus} R package](https://mountainmath.github.io/cancensus/index.html). Yay!
 
 The geographic data is not freely available from Statistics Canada, but can be custom ordered (via a small processing fee). Now the data is freely available on CensusMapper. The geographic data is slightly processed, we clipped out water areas and geographies from CSD upward are slightly simplified for better mapping performance as usual on CensusMapper. I threw the raw data from StatCan into [an S3 bucket for download](https://mountainmath.s3.ca-central-1.amazonaws.com/public/census_geographies_1996.zip) in case anyone is interested in the original data and does not want to pay the processing free.

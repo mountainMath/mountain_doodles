@@ -23,6 +23,8 @@ aliases:
 
 
 
+
+
 Geographic data often comes on different geographic breakdowns. A prime example is census data, where the underlying census geographies can change from census year to census year. This makes it difficult to compare census data across censuses. But comparing census data across censuses at fine geographies is important for many applications.
 
 There are two main ways how people deal with this problem.

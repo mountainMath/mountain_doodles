@@ -22,11 +22,18 @@ aliases:
 
 
 
+
+
 One of the [constructive outcome of the "Supply Myth" discussion](https://homefreesociology.wordpress.com/2017/11/29/notes-on-the-myth-of-housing-supply/) was the spotlight it shone on secondary suites. While we have already [touched on this topic](https://doodles.mountainmath.ca/blog/2017/12/11/some-thoughts-on-the-supply-myth/), it is wroth to fully flesh this out. With the perpetual empty home discussion in Vancouver one would have thought that the numbers by structural type of dwelling would have percolated through to the empty home hive mind.
 
 
 
+
+
 {{< tweet 956753530437562370 >}}
+
+
+
 
 
 

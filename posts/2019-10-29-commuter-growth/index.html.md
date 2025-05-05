@@ -34,6 +34,8 @@ aliases:
 
 
 
+
+
 Metro Vancouver is growing, both in terms of population and jobs. That means the number of people commuting to work is growing and putting a strain on our transportation system. The nature of that strain depends to a large extent on how people are getting to and from work. The Canadian census started collecting data on how people get to work in 1996, which allows us to see how commuters and commute choice have changed over time.
 
 

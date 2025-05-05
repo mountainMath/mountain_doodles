@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 I want do a short post to gently remind people of pitfalls when overly relying on medians for understanding complex issues. Medians are useful because they take a complex distribution and break it down into a single, simple to understand number. This works well as long as this does not mask other aspects of the distribution that are important in the context it is used.
 
 A good example for the dangers of overly relying on medians is the ["median multiple"](https://censusmapper.ca/maps/897) metric that gets used a lot, the median dwelling value divided by the median household income in an area. I have [talked about this before](https://doodles.mountainmath.ca/blog/2016/09/14/measuring-housing-affordability/) but want to give some more general context to illustrate some pitfalls more directly.

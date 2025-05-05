@@ -29,6 +29,8 @@ aliases:
 
 
 
+
+
 City of Vancouver council [rejected the development application for 21 purpose-built rental townhouses](https://www.theglobeandmail.com/canada/british-columbia/article-vancouver-city-council-rejects-controversial-shaughnessy-townhouse/) in Vancouver's exclusive enclave of Shaughnessy last week, and the owner is now [proceeding with building a mansion on that lot instead](https://globalnews.ca/news/5432920/vancouver-rejects-townhouse-project/). 
 
 <img style="float:right;width:50%;" src="images/st_johns.png">Councillors gave a variety of reasons for the rejection. Some were voicing concerns of about the compatibility of hospice use with the 3 1/2 storey townhouse development next door, which seems far fetched as a quick look at St John's hospice at UBC (the low building on the right in the picture here) shows. There the hospice wanted to locate directly next to a 19 storey condo tower, and condo owners fought tooth and nail to stop the hospice from getting built. The difference there is that the condo tower was their first and it was the condo tower that was arguing that these are incompatible uses, while in Shaughnessy the hospice was first and was arguing that the townhouses are incompatible use. In both cases, some design changes were made to the respective new developments to enhance privacy of the respective other side. Bottom line, hospice and residential developments can happily co-exist, those that claim otherwise are plain NIMBYing.

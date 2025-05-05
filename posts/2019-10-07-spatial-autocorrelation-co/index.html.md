@@ -26,6 +26,8 @@ aliases:
 
 
 
+
+
 These days I run a fair bit of spatial analysis. And there are three problems that regularly come up:
 
 1. Getting data on compatible geographies

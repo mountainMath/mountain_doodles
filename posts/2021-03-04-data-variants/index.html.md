@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 Variants of concern are named such because they are concerning. The ones we worry about are B.1.1.7 (the variant first documented in UK), B.1.351 (the variant first documented in South Africa), and P.1 (the variant first documented in Brazil).
 
 Currently, B.1.1.7 is probably the most concerning in BC because we know it is significantly more infectious, with a daily growth rate average of around 10%. This means that in our current BC environment, [where we have been seeing a decline by about 0.7% a day](https://doodles.mountainmath.ca/blog/2021/02/21/on-covid-and-exponential-growth/) since our tougher restrictions enacted in November, B.1.1.7 would grow at about 9.3% a day. As a comparison, we have seen roughly 5% daily growth between July 1 through mid November, with a brief period of lower growth around September.

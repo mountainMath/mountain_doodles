@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 CANSIM switched over to the New Dissemination Model (NDM) this past weekend. What this means is that we now have better organized CANSIM data. Yay. But it also broke my R package to easily access and process cansim data. Not so yay. Luckily it was an easy fix to switch things over to the NDM, and the cleaning of data gets even easier. And I also build in functionality to access tables through the old trusty cansim numbers. But unfortunately there was no way to automatically keep the table format the same. Some some adjustments are needed for people wanting to run some of my previous posts that utilize cansim data.
 
 # Refreshed `cansim` R package

@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 Some time ago I saw [Geoff Boeing's excellent package](https://twitter.com/gboeing/status/816331801266262017)
 to generate Jane Jacobs style street grid images. It's lots of fun to compare different cities that way.
 

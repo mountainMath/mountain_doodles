@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 We are big fans of measuring different densities, and conceptualizing density in different ways. From [tax density](https://doodles.mountainmath.ca/blog/2015/05/31/density-in-vancouver/), [tax density in 3D](https://doodles.mountainmath.ca/blog/2016/03/02/property-taxes-and-land-use/), plus an [animated version](https://doodles.mountainmath.ca/blog/2016/12/13/updated-property-tax-data/), [lot level density of single detached homes over time](https://doodles.mountainmath.ca/blog/2016/03/05/physical-sfh-form-over-time/), [estimating FSR from LIDAR data](https://doodles.mountainmath.ca/blog/2016/05/20/density/),  [density treemaps](https://doodles.mountainmath.ca/blog/2017/08/23/density/), [dot-density maps](https://doodles.mountainmath.ca/blog/2017/08/24/dot-density/), [comparing Vancouver and Vieanna densities](https://doodles.mountainmath.ca/blog/2017/09/08/the-vienna-model/), [building height profiles](https://doodles.mountainmath.ca/blog/2018/05/11/building-height-profiles/), [renter density and net dwelling density](https://doodles.mountainmath.ca/blog/2019/02/21/planned-displacement/), [city density patterns](https://doodles.mountainmath.ca/blog/2019/03/17/city-density-patterns/) and [city density timelines](https://doodles.mountainmath.ca/blog/2019/03/27/density-timelines/).
 
 

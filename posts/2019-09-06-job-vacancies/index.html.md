@@ -37,6 +37,8 @@ aliases:
 
 
 
+
+
 A number I have been watching fairly closely is the job vacancy rate. It comes from StatCan's Job Vacancy and Wage Survey (JVWS), and is updated quarterly. It is one of several surveys that complement the Labour Force Survey (LFS) that tends to receive a lot of attention. But the LFS is missing some important aspects of the labour market. I have been pushing JVWS data on [numerous occasions](https://doodles.mountainmath.ca/blog/2019/08/01/on-vancouver-population-projections/), so I wanted to do a quick post to add a little more context. This is also a good opportunity to mix in data from the Survey of Employment, Payrolls and Hours (SEPH) and the Canadian Income Survey (CIS).
 
 The LFS reports employment (and unemployment) numbers. Often this is used as a stand-in for the number of jobs, but the LFS is an imperfect proxy for two reasons.

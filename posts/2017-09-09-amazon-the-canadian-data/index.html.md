@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 I wasn't really getting into the Amazon HQ2 thing, but then the [Upshot](https://www.nytimes.com/interactive/2017/09/09/upshot/where-should-amazon-new-headquarters-be.html?smid=tw-share&_r=0) did some analysis that excluded Canadian metros. That's not right. So I decided to fill in the gap. Our [`cancensus`](https://github.com/mountainMath/cancensus) package is perfect for the job. This post is generated from an R markdown document, which is [available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2017-09-09-amazon-the-canadian-data.Rmarkdown) for anyone interested in refining this.
 
 

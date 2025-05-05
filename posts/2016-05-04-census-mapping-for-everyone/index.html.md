@@ -19,6 +19,8 @@ aliases:
 
 
 
+
+
 At CensusMapper, we have come a long way from first [dabbling in census data](http://doodles.mountainmath.ca/blog/2015/06/23/vancouver-2011-census-data-on-housing/) to
 building out a [platform to map data Canada wide](http://doodles.mountainmath.ca/blog/2015/09/28/census-mapper/), adding
 the ability to [easily drill down into individual census regions](http://doodles.mountainmath.ca/blog/2015/10/24/census-drilldown/), 

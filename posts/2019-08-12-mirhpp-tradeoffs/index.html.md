@@ -28,6 +28,8 @@ aliases:
 
 
 
+
+
 The City of Vancouver has introduced the [Moderate Income Rental Housing Pilot Project](https://vancouver.ca/people-programs/creating-new-market-rental-housing.aspx), with density bonusing in exchange for 20% of the units renting at about 35% below market. 
 
 ## TL;DR

@@ -30,6 +30,8 @@ aliases:
 
 
 
+
+
 When we (Denis and Jens) got together for coffee the other day, Denis showed off some maps of renter density in the frequent transit network that he was working on. The idea immediately clicked and we decided to work this out together. Motivated by the issue of renter demoviction caused by the [2017 Metrotown Plan](https://www.burnaby.ca/City-Services/Policies--Projects---Initiatives/Community-Development/Community-Plans/Metrotown-Downtown-Plan.html), we set out to quantify how one could **plan for displacement** on a regional level, instead of treating it as an unwelcome consequence of development at the lot level. Denis has some [great context and explanations on his blog, be sure to check it out too](http://denisagar.com/where-should-new-homes-go-a-map-of-renter-density/)!
 
 ## Where should new housing go?

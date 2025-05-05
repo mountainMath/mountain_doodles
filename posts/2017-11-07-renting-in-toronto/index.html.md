@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 <a href="https://twitter.com/simongerman600/status/927587422149447681" target="_blank"><img src="https://pbs.twimg.com/media/DN9z1-jWkAcqLAw.jpg", style="width:50%;float:right;margin-left=10px;"/></a>
 Earlier today I came across [Gil Meslin's tweet](https://twitter.com/g_meslin/status/927681384835141632) suggesting to reproduce [this rent graph](https://twitter.com/simongerman600/status/927587422149447681) for neighbourhoods in Toronto. 
 

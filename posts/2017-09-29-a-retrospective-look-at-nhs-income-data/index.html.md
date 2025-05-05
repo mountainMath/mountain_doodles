@@ -23,6 +23,8 @@ aliases:
 
 
 
+
+
 ## NHS Income Data, a First Retrospective
 There was much hand wringing when NHS income data got released. The change in methods were big, most notably the replacement of the mandatory long form census, that was administered to a random 1 in 5 sub sample, by the voluntary NHS that went out to approximately 1 in 3 households. The (design-weighted) response rate for the NHS was 77%, compared to 94% for the long form in 2006. And the rate of households that allowed a direct match with CRA records dropped from 82% to 73%. This lead to an overall drop in response rate for income data from around 80% in 2006 to around 60% in 2011.
 

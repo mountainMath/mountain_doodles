@@ -26,6 +26,8 @@ aliases:
 
 
 
+
+
  
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2020/12/07/what-to-expect-from-an-empty-homes/" target="_blank">HomeFreeSociology</a>)</i></p>
 

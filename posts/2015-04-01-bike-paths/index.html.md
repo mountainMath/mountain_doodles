@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 Motivated by the excellent [Washington Post Wonkblog](https://www.washingtonpost.com/blogs/wonkblog/wp/2015/04/01/bleak-maps-of-how-cities-look-using-only-their-bike-lanes/) I
 mapped Vancouver's bike infrastructure. Looks good at first, but when you take out the 'fake' "Local Street" bikeways more in line with Wonkblog's methodology it's looking pretty
 bleak in large portions of the city.

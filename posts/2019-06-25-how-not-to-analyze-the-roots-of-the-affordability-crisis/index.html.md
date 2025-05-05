@@ -28,6 +28,8 @@ aliases:
 
 
 
+
+
 Another ["working paper" on Vancouver's real estate woes](https://www.sfu.ca/content/dam/sfu/mpp/WorkingPaperSeries/Solving%20Wozny%27s%20puzzle%20on%20decoupling%20and%20housing%202019%20Gordon%20(1).pdf) came out, this one by Josh Gordon. We have been contemplating for a week now if it is worth responding to, but after seeing one too many obviously false statements about what the working paper supposedly shows making the rounds, we felt the benefits of addressing this might outweigh the costs of further entrenching the camps in Vancouver's real estate debates with this post.
 
 For those that don't have the patience to read the whole post, feel free to jump around between the following fairly self-contained sections.

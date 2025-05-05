@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 Not sure how long this has been live, but this morning fellow `cancensus` developer Dmitry flagged a new StatCan feature. [Interactive thematic web maps](http://www12.statcan.gc.ca/census-recensement/2016/dp-pd/dv-vd/cpdv-vdpr/index-eng.cfm). Essentially it enables users to choose from the a selection of 2016 census variables and map them. You can zoom and pan around, and select the aggregation levels to display the data at down to census tracts. And there is a option to download single variables as CSV.
 
 After building and running [CensusMapper](https://censusmapper.ca) for over two years now I have some opinions.

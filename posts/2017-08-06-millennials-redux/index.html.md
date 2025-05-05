@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 Catching up with my local news reading last night I stumbled about another
 [new report on millennials](https://beta.theglobeandmail.com/real-estate/vancouver/priced-out-of-downtown-vancouver-millennials-are-building-hipsturbia/article35884038/).
 

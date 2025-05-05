@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 Recently there has been a lot of talk about households, and how they match up with dwelling units. So it's probably a good idea to take a closer look at what a household is. 
 
 Apart from better understanding what a household is, I want to also dig deeper into how people live in households. Part of my motivation is to start to understand latent demand in our housing market, some of which may come from suppressed household formation. As a starting point for this I want to better understand "complex" household types that may strive to "simplify", to put it in language introduced further down. There are many confounding factors for "complex" household types that we would have to account for in order to move from the simple enumeration of household types that we do in this post toward using this to derive estimates for latent demand of suppressed household formation. So this post is more of an inventory of household types and their intersection with dwellings, and does not (yet) make any statements about latent demand.

@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 I was browsing the [Canadian Perspectives Survey Series 3](https://www150.statcan.gc.ca/n1/en/catalogue/45250007) on **Resuming Economic and Social Activities During COVID-19** and thought that some of the results were interesting. I don't have time to do a detailed post on this, but thought that others might enjoy a quick series of graphs highlighting some of the result. The survey is only released as microdata, and I have not seen much uptake or reporting other than the high-level results put out by StatCan in The Daily.
 
 StatCan PUMF microdata can be a bit of a pain to work with, StatCan does not include general purpose metadata. It comes as a flat fixed-width file and the metadata needs to get scraped out of language-specific command files. This shows that StatCan still has a long way to go to actually open up their data. The secondary purpose of this post is to share code to parse the SPSS command files to scrape out the metadata needed to read and interpret the PUMF data. The code for the post [can be found on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2020-08-25-covid-series-3-survey.Rmarkdown).

@@ -28,6 +28,8 @@ aliases:
 
 
 
+
+
 This post responds to a misconception about rental housing that has been making the rounds. Our housing crisis is fundamentally a rental crisis, so it’s important to keep the numbers straight so that we can better focus our energy and resources. 
 
 The misconception originate from the [2019 Vancouver Housing Data Book](https://vancouver.ca/files/cov/2019-housing-vancouver-annual-progress-report-and-data-book.pdf). The data book is a huge effort to compile and has a host of valuable information. Vancouver has been doing this for the second year now, and it is successively getting better. But there are bound to be some hiccups on the road, and these are two of them.

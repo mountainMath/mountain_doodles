@@ -26,6 +26,8 @@ aliases:
 
 
 
+
+
 Metro Vancouver's population is growing. For planning purposes we want to understand how our population will be growing. For that we need projections.
 
 Here we need to carefully distinguish two related but distinct types of population projections.

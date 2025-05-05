@@ -22,6 +22,8 @@ aliases:
 
 
 
+
+
 With social distancing and travel restrictions in full swing in Canada, everyone wants to know if it's working. And when and how we can start to loosen some of the restrictions. To answer these questions we need data.
 
 Canada has been extremely slow to make covid-19 related data available, only at the end of March did Canada get [official government dataset for confirmed case counts and deaths by province and date](https://health-infobase.canada.ca/covid-19/). Shortly after Statistics Canada [published individual case data with demographic and hospitilization information](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1310076701) (since replaced by a new timeseries), but that data only covers about half of all cases in Canada. Why only half? Because Health Canada, the national health authority from which the StatCan data originates, can only publish data "for which a case report form has been received by the Public Health Agency of Canada from provincial or territorial partners". And it is missing a lot of data.

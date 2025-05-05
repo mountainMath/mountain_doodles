@@ -23,6 +23,8 @@ aliases:
 
 
 
+
+
 COVID-19 got me thinking about trend lines and the different ways people generate and interpret them. This is a question that's of course more general than just COVID-19, but let me use this as an example to explain some very basic principles. This post is motivated by discussions I have had with a number of journalists, including [Chad Skelton who nerd-sniped me into writing a post on trend lines](https://twitter.com/chadskelton/status/1335124377000546306?s=20) and a [thread discussing trend lines with Roberto Rocha and Tom Cardoso](https://twitter.com/vb_jens/status/1352650041450663936?s=20).
 
 

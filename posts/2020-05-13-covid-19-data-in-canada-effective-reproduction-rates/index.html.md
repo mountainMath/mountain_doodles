@@ -21,6 +21,8 @@ aliases:
 
 
 
+
+
 We have written about [the situation of covid-19 data in Canada](https://doodles.mountainmath.ca/blog/2020/04/10/covid-19-data-in-canada/) previously, and the need for good data is becoming more pressing as we are poised to slowly open up some of our restrictions and need to closely monitor how the spread of COVID-19 is responding.
 
 A key number to watch is the **effective reproduction rate**, the average number of people an infected person passes on the virus (`$R_0$`). Our collective social distancing has led to the effective reproduction rate to drop below 1, so the spread of the virus is receding. But social distancing also has adverse effects. For some it is merely an inconvenience, for others it has meant serious hardship.

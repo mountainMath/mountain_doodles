@@ -29,6 +29,8 @@ aliases:
 
 
 
+
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2019/11/27/property-tax-snacks/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

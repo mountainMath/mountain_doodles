@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 Almost a year has passed since we first noticed how
 [sitting on single family homes and twiddling thumbs generates more income than working](http://doodles.mountainmath.ca/blog/2016/01/24/work-vs-twiddling-thumbs/).
 And not just at the level of individual single family households. In the

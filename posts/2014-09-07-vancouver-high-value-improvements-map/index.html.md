@@ -20,6 +20,8 @@ aliases:
 
 
 
+
+
 After the [teardown map](/blog/2014/09/05/vancouver-teardown-map/) that looked at the low end of Vancouver's building
 stock, a natural question is to look at the high end. Just as before, we are focusing on the (assessed) value of the
 building relative to the total (assessed) value of land and improvements. We defined "highly improved" properties to
