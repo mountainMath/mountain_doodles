@@ -185,6 +185,7 @@ results |>
   mutate(Registered=Total) |>
   mutate(Total=sum(Votes,na.rm=TRUE),.by=FEDUID) |>
   filter(Party %in% names(party_colours)) |>
+  mutate(Type=str_to_title(Type)) |>
   select(FEDUID,Candidate=Name,Party,Votes,called,previous_winner,validated,Type,Registered,Total) |>
   write_csv(tmp)
 dummy <- file_to_s3_gzip(tmp,"mountainmath","elections/results_2025.csv")
@@ -517,7 +518,7 @@ tooltip = f => {
   const w = p.winner;
   return [
         p.District,
-        `${p.called ? "Winner" : "In the lead"}: ${w.Candidate} - (${w.Party})`,
+        `${p.Type} winner: ${w.Candidate} - (${w.Party})`,
   `${format.comma(p.Total)} votes counted`,
           p.results.filter(d => d.Votes>0).map(d => {
             return `${d.Party}:   ${format.comma(d.Votes)} (${format.percent(d.Votes/p.Total)})`
@@ -593,6 +594,7 @@ canada = {
         .sort((a,b) => b.Votes-a.Votes)
       hash[elem] = {results:rs,
                     subTotal:d3.sum(rs, d => d.Votes),
+                    Type:rs[0].Type,
                     called:rs[0].called==="TRUE",
                     winner:rs[0]}
       return hash

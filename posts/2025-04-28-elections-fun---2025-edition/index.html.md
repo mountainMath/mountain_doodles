@@ -196,6 +196,7 @@ results |>
   mutate(Registered=Total) |>
   mutate(Total=sum(Votes,na.rm=TRUE),.by=FEDUID) |>
   filter(Party %in% names(party_colours)) |>
+  mutate(Type=str_to_title(Type)) |>
   select(FEDUID,Candidate=Name,Party,Votes,called,previous_winner,validated,Type,Registered,Total) |>
   write_csv(tmp)
 dummy <- file_to_s3_gzip(tmp,"mountainmath","elections/results_2025.csv")
@@ -287,7 +288,7 @@ Another way to bridge the gap is to animate a map that moves between a cartograp
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="252" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="253" source-offset="0"}
 vote_map_animation = {
   const height = width*ratio ;
   const svg = d3.select(DOM.svg(width, height))
@@ -578,7 +579,7 @@ There is endless fun to be had with elections data. As usual, the code for this 
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="466" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="467" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -609,7 +610,7 @@ applySimulation = (nodes) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="488" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="489" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -622,7 +623,7 @@ spreadDistricts = applySimulation(districts)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="492" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="493" source-offset="0"}
 maxRadius = 10
 ```
 
@@ -635,7 +636,7 @@ maxRadius = 10
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="496" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="497" source-offset="0"}
 radiusScale = {
   const populationMax = districts.map(d => d.properties.Total).reduce((a, b) => Math.max(a, b), 0);
   return d3.scaleSqrt()
@@ -653,7 +654,7 @@ radiusScale = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="506" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="507" source-offset="0"}
 ratio = 0.8
 ```
 
@@ -666,7 +667,7 @@ ratio = 0.8
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="510" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="511" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -679,13 +680,13 @@ nodePadding = 0.3
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="514" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="515" source-offset="0"}
 tooltip = f => {
   const p = f.properties;
   const w = p.winner;
   return [
         p.District,
-        `${p.called ? "Winner" : "In the lead"}: ${w.Candidate} - (${w.Party})`,
+        `${p.Type} winner: ${w.Candidate} - (${w.Party})`,
   `${format.comma(p.Total)} votes counted`,
           p.results.filter(d => d.Votes>0).map(d => {
             return `${d.Party}:   ${format.comma(d.Votes)} (${format.percent(d.Votes/p.Total)})`
@@ -703,7 +704,7 @@ tooltip = f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="531" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="532" source-offset="0"}
 party_colors = {
   return {
     Liberal:"#A50B0B",
@@ -727,7 +728,7 @@ party_colors = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="546" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="547" source-offset="0"}
 party_colors2 = {
   return {
     Liberal: "#ce7474",
@@ -749,7 +750,7 @@ party_colors2 = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="561" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="562" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -766,7 +767,7 @@ format = ({
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="569" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="570" source-offset="0"}
 projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 ```
 
@@ -779,7 +780,7 @@ projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="573" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="574" source-offset="0"}
 districts = canada.features.map(f => {
   f.properties.centroid=projection([f.properties.X,f.properties.Y]);
   return f;
@@ -795,7 +796,7 @@ districts = canada.features.map(f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="580" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="581" source-offset="0"}
 canada = { 
   const url = "https://s3.ca-central-1.amazonaws.com/mountainmath/elections/election_2025.json.gz";
   const canada = await d3.json(url);
@@ -811,6 +812,7 @@ canada = {
         .sort((a,b) => b.Votes-a.Votes)
       hash[elem] = {results:rs,
                     subTotal:d3.sum(rs, d => d.Votes),
+                    Type:rs[0].Type,
                     called:rs[0].called==="TRUE",
                     winner:rs[0]}
       return hash
@@ -847,7 +849,7 @@ canada = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="624" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="626" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -860,7 +862,7 @@ d3 = require("d3@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="628" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="630" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -873,7 +875,7 @@ turf = require("@turf/turf@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="632" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="634" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -906,7 +908,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-02 18:11:12 PDT"
+[1] "2025-05-07 13:39:10 PDT"
 ```
 
 
@@ -922,7 +924,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [c8be0dc] 2025-05-02: cartogram update
+Head:     [0cfd5e8] 2025-05-05: updated quarto re-run on old posts instroduces space
 ```
 
 
@@ -936,13 +938,13 @@ sessionInfo()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-R version 4.4.2 (2024-10-31)
+R version 4.5.0 (2025-04-11)
 Platform: aarch64-apple-darwin20
 Running under: macOS Sequoia 15.4.1
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -964,28 +966,27 @@ other attached packages:
 [15] tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6        xfun_0.50           htmlwidgets_1.6.4  
+ [1] gtable_0.3.6        xfun_0.52           htmlwidgets_1.6.4  
  [4] lattice_0.22-6      tzdb_0.5.0          vctrs_0.6.5        
- [7] tools_4.4.2         generics_0.1.3      curl_6.2.2         
-[10] parallel_4.4.2      proxy_0.4-27        R.oo_1.26.0        
-[13] pkgconfig_2.0.3     KernSmooth_2.23-24  lifecycle_1.0.4    
-[16] git2r_0.33.0        farver_2.1.2        compiler_4.4.2     
-[19] tinytex_0.57        munsell_0.5.1       codetools_0.2-20   
-[22] htmltools_0.5.8.1   class_7.3-22        yaml_2.3.10        
-[25] pillar_1.10.2       crayon_1.5.3        aws.s3_0.3.21      
-[28] R.utils_2.12.3      classInt_0.4-11     magick_2.8.3       
-[31] mime_0.12           tidyselect_1.2.1    digest_0.6.37      
-[34] stringi_1.8.7       labeling_0.4.3      fastmap_1.2.0      
-[37] grid_4.4.2          colorspace_2.1-1    cli_3.6.4          
-[40] magrittr_2.0.3      base64enc_0.1-3     aws.signature_0.6.0
-[43] e1071_1.7-16        withr_3.0.2         scales_1.3.0       
-[46] sp_2.1-4            bit64_4.6.0-1       timechange_0.3.0   
-[49] rmarkdown_2.28      bit_4.6.0           R.methodsS3_1.8.2  
-[52] hms_1.1.3           evaluate_1.0.3      knitr_1.48         
-[55] V8_6.0.3            rlang_1.1.6         Rcpp_1.0.14        
-[58] glue_1.8.0          DBI_1.2.3           xml2_1.3.7         
-[61] rstudioapi_0.17.1   vroom_1.6.5         jsonlite_2.0.0     
-[64] R6_2.6.1            units_0.8-7        
+ [7] tools_4.5.0         generics_0.1.3      curl_6.2.2         
+[10] parallel_4.5.0      proxy_0.4-27        R.oo_1.27.1        
+[13] pkgconfig_2.0.3     KernSmooth_2.23-26  RColorBrewer_1.1-3 
+[16] lifecycle_1.0.4     git2r_0.36.2        compiler_4.5.0     
+[19] farver_2.1.2        codetools_0.2-20    htmltools_0.5.8.1  
+[22] class_7.3-23        yaml_2.3.10         pillar_1.10.2      
+[25] crayon_1.5.3        aws.s3_0.3.21       R.utils_2.13.0     
+[28] classInt_0.4-11     mime_0.13           tidyselect_1.2.1   
+[31] digest_0.6.37       stringi_1.8.7       fastmap_1.2.0      
+[34] grid_4.5.0          cli_3.6.5           magrittr_2.0.3     
+[37] base64enc_0.1-3     aws.signature_0.6.0 e1071_1.7-16       
+[40] withr_3.0.2         scales_1.4.0        sp_2.2-0           
+[43] bit64_4.6.0-1       timechange_0.3.0    rmarkdown_2.29     
+[46] bit_4.6.0           R.methodsS3_1.8.2   hms_1.1.3          
+[49] evaluate_1.0.3      knitr_1.50          V8_6.0.3           
+[52] rlang_1.1.6         Rcpp_1.0.14         glue_1.8.0         
+[55] DBI_1.2.3           xml2_1.3.8          rstudioapi_0.17.1  
+[58] vroom_1.6.5         jsonlite_2.0.0      R6_2.6.1           
+[61] units_0.8-7        
 ```
 
 
