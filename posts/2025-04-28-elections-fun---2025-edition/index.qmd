@@ -162,10 +162,9 @@ not_called<- cbc_data%>% filter(!called) %>% pull(District)%>% unique
 called_districts<- cbc_data%>% filter(called) %>% pull(District)%>% unique
 
 new_results <- get_election_results()  %>%
-  left_join((.) %>% filter(Type=="validated") %>% select(FEDUID) %>% unique %>% mutate(validated=TRUE),by="FEDUID") %>%
-  mutate(validated=coalesce(validated,FALSE)) %>%
-  filter(Type=="validated" | (!validated & Type !="validated")) %>%
-  mutate(Party=recode(Party,"People's Party - PPC"="People's Party")) 
+  mutate(Type=str_to_title(Type)) |>
+  #filter(Type=="validated" | (!validated & Type !="validated")) %>%
+  mutate(Party=recode(Party,"People's Party - PPC"="People's Party"))
 
 results <- new_results |> 
   select(-Surname, `Middle name(s)`, `Given name`) |>
@@ -174,7 +173,10 @@ results <- new_results |>
               select(FEDUID,Party,previous_winner), 
             by=c("FEDUID","Party")) |>
   mutate(dd=gsub("--","-",District)) |>
-  mutate(called=dd %in% called_districts)
+  mutate(called=dd %in% called_districts) |>
+  mutate(Type=factor(Type,levels=c("Preliminary","Validated","Judicially Certified"),ordered = TRUE)) |>
+  mutate(maxType=max(Type),.by=FEDUID) |>
+  filter(Type==max(Type),.by=FEDUID)
 
 stopifnot(sum(sort(unique(results$dd))!=sort(unique(cbc_data$District)))==0) # make sure we don't miss any
 
@@ -185,8 +187,7 @@ results |>
   mutate(Registered=Total) |>
   mutate(Total=sum(Votes,na.rm=TRUE),.by=FEDUID) |>
   filter(Party %in% names(party_colours)) |>
-  mutate(Type=str_to_title(Type)) |>
-  select(FEDUID,Candidate=Name,Party,Votes,called,previous_winner,validated,Type,Registered,Total) |>
+  select(FEDUID,Candidate=Name,Party,Votes,called,previous_winner,Type,Registered,Total) |>
   write_csv(tmp)
 dummy <- file_to_s3_gzip(tmp,"mountainmath","elections/results_2025.csv")
 ```

@@ -173,10 +173,9 @@ not_called<- cbc_data%>% filter(!called) %>% pull(District)%>% unique
 called_districts<- cbc_data%>% filter(called) %>% pull(District)%>% unique
 
 new_results <- get_election_results()  %>%
-  left_join((.) %>% filter(Type=="validated") %>% select(FEDUID) %>% unique %>% mutate(validated=TRUE),by="FEDUID") %>%
-  mutate(validated=coalesce(validated,FALSE)) %>%
-  filter(Type=="validated" | (!validated & Type !="validated")) %>%
-  mutate(Party=recode(Party,"People's Party - PPC"="People's Party")) 
+  mutate(Type=str_to_title(Type)) |>
+  #filter(Type=="validated" | (!validated & Type !="validated")) %>%
+  mutate(Party=recode(Party,"People's Party - PPC"="People's Party"))
 
 results <- new_results |> 
   select(-Surname, `Middle name(s)`, `Given name`) |>
@@ -185,7 +184,10 @@ results <- new_results |>
               select(FEDUID,Party,previous_winner), 
             by=c("FEDUID","Party")) |>
   mutate(dd=gsub("--","-",District)) |>
-  mutate(called=dd %in% called_districts)
+  mutate(called=dd %in% called_districts) |>
+  mutate(Type=factor(Type,levels=c("Preliminary","Validated","Judicially Certified"),ordered = TRUE)) |>
+  mutate(maxType=max(Type),.by=FEDUID) |>
+  filter(Type==max(Type),.by=FEDUID)
 
 stopifnot(sum(sort(unique(results$dd))!=sort(unique(cbc_data$District)))==0) # make sure we don't miss any
 
@@ -196,8 +198,7 @@ results |>
   mutate(Registered=Total) |>
   mutate(Total=sum(Votes,na.rm=TRUE),.by=FEDUID) |>
   filter(Party %in% names(party_colours)) |>
-  mutate(Type=str_to_title(Type)) |>
-  select(FEDUID,Candidate=Name,Party,Votes,called,previous_winner,validated,Type,Registered,Total) |>
+  select(FEDUID,Candidate=Name,Party,Votes,called,previous_winner,Type,Registered,Total) |>
   write_csv(tmp)
 dummy <- file_to_s3_gzip(tmp,"mountainmath","elections/results_2025.csv")
 ```
@@ -288,7 +289,7 @@ Another way to bridge the gap is to animate a map that moves between a cartograp
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="253" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="254" source-offset="0"}
 vote_map_animation = {
   const height = width*ratio ;
   const svg = d3.select(DOM.svg(width, height))
@@ -579,7 +580,7 @@ There is endless fun to be had with elections data. As usual, the code for this 
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="467" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="468" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -610,7 +611,7 @@ applySimulation = (nodes) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="489" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="490" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -623,7 +624,7 @@ spreadDistricts = applySimulation(districts)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="493" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="494" source-offset="0"}
 maxRadius = 10
 ```
 
@@ -636,7 +637,7 @@ maxRadius = 10
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="497" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="498" source-offset="0"}
 radiusScale = {
   const populationMax = districts.map(d => d.properties.Total).reduce((a, b) => Math.max(a, b), 0);
   return d3.scaleSqrt()
@@ -654,7 +655,7 @@ radiusScale = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="507" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="508" source-offset="0"}
 ratio = 0.8
 ```
 
@@ -667,7 +668,7 @@ ratio = 0.8
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="511" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="512" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -680,7 +681,7 @@ nodePadding = 0.3
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="515" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="516" source-offset="0"}
 tooltip = f => {
   const p = f.properties;
   const w = p.winner;
@@ -704,7 +705,7 @@ tooltip = f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="532" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="533" source-offset="0"}
 party_colors = {
   return {
     Liberal:"#A50B0B",
@@ -728,7 +729,7 @@ party_colors = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="547" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="548" source-offset="0"}
 party_colors2 = {
   return {
     Liberal: "#ce7474",
@@ -750,7 +751,7 @@ party_colors2 = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="562" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="563" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -767,7 +768,7 @@ format = ({
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="570" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="571" source-offset="0"}
 projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 ```
 
@@ -780,7 +781,7 @@ projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="574" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="575" source-offset="0"}
 districts = canada.features.map(f => {
   f.properties.centroid=projection([f.properties.X,f.properties.Y]);
   return f;
@@ -796,7 +797,7 @@ districts = canada.features.map(f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="581" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="582" source-offset="0"}
 canada = { 
   const url = "https://s3.ca-central-1.amazonaws.com/mountainmath/elections/election_2025.json.gz";
   const canada = await d3.json(url);
@@ -849,7 +850,7 @@ canada = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="626" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="627" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -862,7 +863,7 @@ d3 = require("d3@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="630" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="631" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -875,7 +876,7 @@ turf = require("@turf/turf@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="634" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="635" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -908,7 +909,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-07 13:39:10 PDT"
+[1] "2025-05-10 18:18:41 PDT"
 ```
 
 
@@ -924,7 +925,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [0cfd5e8] 2025-05-05: updated quarto re-run on old posts instroduces space
+Head:     [41ef9ea] 2025-05-07: update post with validated results where available
 ```
 
 
