@@ -571,6 +571,78 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
 There is endless fun to be had with elections data. As usual, the code for this post, including the pre-processing for the animation, is [available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2025-04-28-elections-fun---2025-edition/index.qmd) for anyone to adapt and dig deeper into elections data.
 
 
+## Update (May 10th)
+I have been re-running the code occasionally as Elections Canada updated results. And seats flipped, which happened twice since the election was called on election night.
+
+Additionally, I got a [question about showing seat flips](https://bsky.app/profile/thomassomething.bsky.social/post/3loud5jbzp22h). With the redistricting in 2023 we now have more elecoral districts than in 2021 and not all ridings are comparable. Of course people also moved in the meantime, so it's not the same people voting. Understanding this we can take the 2021 votes redistributed over the new electoral ridings used in the 2025 election and compare the 2025 outcome to the hypothetical outcome of the 2021 vote redistributed over the 2025 electoral riding boundaries. 
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+map_data2 <- map_data |> 
+  filter(Votes==max(Votes),.by=FEDUID) |>
+  left_join(previous_results |> filter(Votes==max(Votes,na.rm = TRUE),.by=FEDUID) |> select(FEDUID,PreviousParty=Party),
+            by="FEDUID") |>
+  mutate(flip=Party!=PreviousParty) 
+
+flips <- map_data2 |>
+    filter(flip) |>
+    mutate(PRUID=substr(FEDUID,1,2)) |>
+    left_join(list_census_regions("2021") |> 
+                  filter(level=="PR") |> 
+                  mutate(name=fct_reorder(name,pop)) |>
+                  select(PRUID=region,Province=name),
+              by="PRUID") |> st_drop_geometry() |> 
+  count(Party) |>
+  pivot_wider(names_from = Party,values_from=n)
+
+flips_lost <- map_data2 |>
+    filter(flip) |>
+    mutate(PRUID=substr(FEDUID,1,2)) |>
+    left_join(list_census_regions("2021") |> 
+                  filter(level=="PR") |> 
+                  mutate(name=fct_reorder(name,pop)) |>
+                  select(PRUID=region,Province=name),
+              by="PRUID") |> st_drop_geometry() |> 
+  count(PreviousParty) |>
+  pivot_wider(names_from = PreviousParty,values_from=n)
+
+map_data2 |>
+  filter(flip) |>
+  mutate(PRUID=substr(FEDUID,1,2)) |>
+  left_join(list_census_regions("2021") |> 
+              filter(level=="PR") |> 
+              mutate(name=fct_reorder(name,pop)) |>
+              select(PRUID=region,Province=name),
+            by="PRUID") |>
+  ggplot(aes(y=Province,fill=PreviousParty)) +
+  geom_bar() +
+  scale_fill_manual(values=party_colours) +
+  facet_wrap(~Party,labeller=as_labeller(c("Conservative"="Conservative 2025","Liberal"="Liberal 2025"))) +
+  labs(title="Flipped seats 2025 vs redistricted 2021 federal election results",
+       y=NULL,x="Number of seats",
+       fill="2021 winner")
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/unnamed-chunk-13-1.png){width=768}
+:::
+:::
+
+
+
+This shows that overall the Liberals flipped 28 seats and the Conservatives flipped 28 in their favour, while the liberals lost 16 and the Conservatives lost 11 seats compared to the redistributed 2021 votes. No other parties picked up seats. The biggest losers in this election were the NDP who lost 17 seats, while the Bloc Québécois lost 11 seats and the Green Party lost 1 seat.
+
+
+
+
+
+
+
+
+
 <details>
 <summary>Remaining Observable code</summary>
 
@@ -580,7 +652,7 @@ There is endless fun to be had with elections data. As usual, the code for this 
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="468" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="542" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
@@ -611,7 +683,7 @@ applySimulation = (nodes) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="490" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="564" source-offset="0"}
 spreadDistricts = applySimulation(districts)
 ```
 
@@ -624,7 +696,7 @@ spreadDistricts = applySimulation(districts)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="494" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="568" source-offset="0"}
 maxRadius = 10
 ```
 
@@ -637,7 +709,7 @@ maxRadius = 10
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="498" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="572" source-offset="0"}
 radiusScale = {
   const populationMax = districts.map(d => d.properties.Total).reduce((a, b) => Math.max(a, b), 0);
   return d3.scaleSqrt()
@@ -655,7 +727,7 @@ radiusScale = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="508" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="582" source-offset="0"}
 ratio = 0.8
 ```
 
@@ -668,7 +740,7 @@ ratio = 0.8
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="512" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="586" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -681,7 +753,7 @@ nodePadding = 0.3
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="516" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="590" source-offset="0"}
 tooltip = f => {
   const p = f.properties;
   const w = p.winner;
@@ -705,7 +777,7 @@ tooltip = f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="533" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="607" source-offset="0"}
 party_colors = {
   return {
     Liberal:"#A50B0B",
@@ -729,7 +801,7 @@ party_colors = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="548" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="622" source-offset="0"}
 party_colors2 = {
   return {
     Liberal: "#ce7474",
@@ -751,7 +823,7 @@ party_colors2 = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="563" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="637" source-offset="0"}
 format = ({
   density: (x) => x > 1000 ? d3.format(".2s")(x) : d3.format(".3r")(x),
   percent: d3.format(".1%"),
@@ -768,7 +840,7 @@ format = ({
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="571" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="645" source-offset="0"}
 projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 ```
 
@@ -781,7 +853,7 @@ projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="575" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="649" source-offset="0"}
 districts = canada.features.map(f => {
   f.properties.centroid=projection([f.properties.X,f.properties.Y]);
   return f;
@@ -797,7 +869,7 @@ districts = canada.features.map(f => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="582" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="656" source-offset="0"}
 canada = { 
   const url = "https://s3.ca-central-1.amazonaws.com/mountainmath/elections/election_2025.json.gz";
   const canada = await d3.json(url);
@@ -850,7 +922,7 @@ canada = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="627" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="701" source-offset="0"}
 d3 = require("d3@5")
 ```
 
@@ -863,7 +935,7 @@ d3 = require("d3@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="631" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="705" source-offset="0"}
 turf = require("@turf/turf@5")
 ```
 
@@ -876,7 +948,7 @@ turf = require("@turf/turf@5")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="635" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="709" source-offset="0"}
 flubber = require('https://unpkg.com/flubber')
 ```
 
@@ -909,7 +981,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-10 18:18:41 PDT"
+[1] "2025-05-10 22:22:37 PDT"
 ```
 
 
@@ -925,7 +997,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [41ef9ea] 2025-05-07: update post with validated results where available
+Head:     [f5465af] 2025-05-11: update code to report judicial recount results where available.
 ```
 
 
@@ -967,27 +1039,20 @@ other attached packages:
 [15] tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6        xfun_0.52           htmlwidgets_1.6.4  
- [4] lattice_0.22-6      tzdb_0.5.0          vctrs_0.6.5        
- [7] tools_4.5.0         generics_0.1.3      curl_6.2.2         
-[10] parallel_4.5.0      proxy_0.4-27        R.oo_1.27.1        
-[13] pkgconfig_2.0.3     KernSmooth_2.23-26  RColorBrewer_1.1-3 
-[16] lifecycle_1.0.4     git2r_0.36.2        compiler_4.5.0     
-[19] farver_2.1.2        codetools_0.2-20    htmltools_0.5.8.1  
-[22] class_7.3-23        yaml_2.3.10         pillar_1.10.2      
-[25] crayon_1.5.3        aws.s3_0.3.21       R.utils_2.13.0     
-[28] classInt_0.4-11     mime_0.13           tidyselect_1.2.1   
-[31] digest_0.6.37       stringi_1.8.7       fastmap_1.2.0      
-[34] grid_4.5.0          cli_3.6.5           magrittr_2.0.3     
-[37] base64enc_0.1-3     aws.signature_0.6.0 e1071_1.7-16       
-[40] withr_3.0.2         scales_1.4.0        sp_2.2-0           
-[43] bit64_4.6.0-1       timechange_0.3.0    rmarkdown_2.29     
-[46] bit_4.6.0           R.methodsS3_1.8.2   hms_1.1.3          
-[49] evaluate_1.0.3      knitr_1.50          V8_6.0.3           
-[52] rlang_1.1.6         Rcpp_1.0.14         glue_1.8.0         
-[55] DBI_1.2.3           xml2_1.3.8          rstudioapi_0.17.1  
-[58] vroom_1.6.5         jsonlite_2.0.0      R6_2.6.1           
-[61] units_0.8-7        
+ [1] gtable_0.3.6       xfun_0.52          htmlwidgets_1.6.4  lattice_0.22-6    
+ [5] tzdb_0.5.0         vctrs_0.6.5        tools_4.5.0        generics_0.1.3    
+ [9] curl_6.2.2         parallel_4.5.0     proxy_0.4-27       pkgconfig_2.0.3   
+[13] KernSmooth_2.23-26 RColorBrewer_1.1-3 lifecycle_1.0.4    git2r_0.36.2      
+[17] compiler_4.5.0     farver_2.1.2       codetools_0.2-20   htmltools_0.5.8.1 
+[21] class_7.3-23       yaml_2.3.10        pillar_1.10.2      crayon_1.5.3      
+[25] classInt_0.4-11    tidyselect_1.2.1   digest_0.6.37      stringi_1.8.7     
+[29] labeling_0.4.3     fastmap_1.2.0      grid_4.5.0         cli_3.6.5         
+[33] magrittr_2.0.3     e1071_1.7-16       withr_3.0.2        scales_1.4.0      
+[37] sp_2.2-0           bit64_4.6.0-1      timechange_0.3.0   rmarkdown_2.29    
+[41] bit_4.6.0          hms_1.1.3          evaluate_1.0.3     knitr_1.50        
+[45] V8_6.0.3           rlang_1.1.6        Rcpp_1.0.14        glue_1.8.0        
+[49] DBI_1.2.3          rstudioapi_0.17.1  vroom_1.6.5        jsonlite_2.0.0    
+[53] R6_2.6.1           units_0.8-7       
 ```
 
 

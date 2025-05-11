@@ -462,6 +462,80 @@ ggplot(aes(x=Province,y=Share,fill=fct_rev(Party))) +
 There is endless fun to be had with elections data. As usual, the code for this post, including the pre-processing for the animation, is [available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2025-04-28-elections-fun---2025-edition/index.qmd) for anyone to adapt and dig deeper into elections data.
 
 
+## Update (May 10th)
+I have been re-running the code occasionally as Elections Canada updated results. And seats flipped, which happened twice since the election was called on election night.
+
+Additionally, I got a [question about showing seat flips](https://bsky.app/profile/thomassomething.bsky.social/post/3loud5jbzp22h). With the redistricting in 2023 we now have more elecoral districts than in 2021 and not all ridings are comparable. Of course people also moved in the meantime, so it's not the same people voting. Understanding this we can take the 2021 votes redistributed over the new electoral ridings used in the 2025 election and compare the 2025 outcome to the hypothetical outcome of the 2021 vote redistributed over the 2025 electoral riding boundaries. 
+
+```{r}
+map_data2 <- map_data |> 
+  filter(Votes==max(Votes),.by=FEDUID) |>
+  left_join(previous_results |> filter(Votes==max(Votes,na.rm = TRUE),.by=FEDUID) |> select(FEDUID,PreviousParty=Party),
+            by="FEDUID") |>
+  mutate(flip=Party!=PreviousParty) 
+
+flips <- map_data2 |>
+    filter(flip) |>
+    mutate(PRUID=substr(FEDUID,1,2)) |>
+    left_join(list_census_regions("2021") |> 
+                  filter(level=="PR") |> 
+                  mutate(name=fct_reorder(name,pop)) |>
+                  select(PRUID=region,Province=name),
+              by="PRUID") |> st_drop_geometry() |> 
+  count(Party) |>
+  pivot_wider(names_from = Party,values_from=n)
+
+flips_lost <- map_data2 |>
+    filter(flip) |>
+    mutate(PRUID=substr(FEDUID,1,2)) |>
+    left_join(list_census_regions("2021") |> 
+                  filter(level=="PR") |> 
+                  mutate(name=fct_reorder(name,pop)) |>
+                  select(PRUID=region,Province=name),
+              by="PRUID") |> st_drop_geometry() |> 
+  count(PreviousParty) |>
+  pivot_wider(names_from = PreviousParty,values_from=n)
+
+map_data2 |>
+  filter(flip) |>
+  mutate(PRUID=substr(FEDUID,1,2)) |>
+  left_join(list_census_regions("2021") |> 
+              filter(level=="PR") |> 
+              mutate(name=fct_reorder(name,pop)) |>
+              select(PRUID=region,Province=name),
+            by="PRUID") |>
+  ggplot(aes(y=Province,fill=PreviousParty)) +
+  geom_bar() +
+  scale_fill_manual(values=party_colours) +
+  facet_wrap(~Party,labeller=as_labeller(c("Conservative"="Conservative 2025","Liberal"="Liberal 2025"))) +
+  labs(title="Flipped seats 2025 vs redistricted 2021 federal election results",
+       y=NULL,x="Number of seats",
+       fill="2021 winner")
+```
+
+This shows that overall the Liberals flipped `r flips$Liberal` seats and the Conservatives flipped `r flips$Conservative` in their favour, while the liberals lost `r flips_lost$Liberal` and the Conservatives lost `r flips_lost$Conservative` seats compared to the redistributed 2021 votes. No other parties picked up seats. The biggest losers in this election were the NDP who lost `r flips_lost$NDP` seats, while the Bloc Québécois lost `r flips_lost[["Bloc Québécois"]]` seats and the Green Party lost `r flips_lost[["Green Party"]]` seat.
+
+
+```{r eval=FALSE, include=FALSE}
+map_data3 <- map_data2 |> 
+  st_cast("POLYGON") |> # only keep largest polygon for each district
+  mutate(a=st_area(geometry)) |>
+  slice_max(order_by = a, n=1, with_ties = FALSE,by=FEDUID) 
+
+hex <- map_data3 |>
+  geogrid::calculate_grid(grid_type = "hexagonal", seed = 1, verbose = FALSE, learning_rate = 0.03)
+
+hexmap <- geogrid::assign_polygons(map_data3, hex)
+
+hexmap |>
+  mutate(p=if_else(flip,Party,"Other")) |>
+  ggplot() + 
+  geom_sf(aes(fill = p)) +
+  scale_fill_manual(values=party_colours) +
+  coord_sf(datum=NA) 
+```
+
+
 <details>
 <summary>Remaining Observable code</summary>
 
