@@ -42,6 +42,24 @@ format:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Three years ago we [wrote a post on First Time Buyer Lorenz Curves](https://doodles.mountainmath.ca/blog/2020/09/28/first-time-buyer-lorenz-curves/), looking at what share of homes are in principle available to first-time home buyers.[^1] That post continues to be a more popular one, so we thought it would be good to update it with more recent data and expand some of the ideas further.
 
 [^1]: We define first-time home buyers as members economic families with non-student primary household maintainers between the ages of 25 and 64 that are currently renting.
