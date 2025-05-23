@@ -981,7 +981,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-10 22:22:37 PDT"
+[1] "2025-05-23 16:14:52 PDT"
 ```
 
 
@@ -997,7 +997,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [f5465af] 2025-05-11: update code to report judicial recount results where available.
+Head:     [30d5ab6] 2025-05-16: lorentz curve pust fix speeling (thanks Michael), crop images to avoid white background and transition to quarto
 ```
 
 
@@ -1013,7 +1013,7 @@ sessionInfo()
 ```
 R version 4.5.0 (2025-04-11)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sequoia 15.4.1
+Running under: macOS Sequoia 15.5
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
@@ -1028,31 +1028,24 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] httr_1.4.7                cancensus_0.5.8          
- [3] rmapshaper_0.5.0          sf_1.0-20                
- [5] mountainmathHelpers_0.1.4 lubridate_1.9.4          
- [7] forcats_1.0.0             stringr_1.5.1            
- [9] dplyr_1.1.4               purrr_1.0.4              
-[11] readr_2.1.5               tidyr_1.3.1              
-[13] tibble_3.2.1              ggplot2_3.5.2            
-[15] tidyverse_2.0.0          
-
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6       xfun_0.52          htmlwidgets_1.6.4  lattice_0.22-6    
- [5] tzdb_0.5.0         vctrs_0.6.5        tools_4.5.0        generics_0.1.3    
- [9] curl_6.2.2         parallel_4.5.0     proxy_0.4-27       pkgconfig_2.0.3   
-[13] KernSmooth_2.23-26 RColorBrewer_1.1-3 lifecycle_1.0.4    git2r_0.36.2      
-[17] compiler_4.5.0     farver_2.1.2       codetools_0.2-20   htmltools_0.5.8.1 
-[21] class_7.3-23       yaml_2.3.10        pillar_1.10.2      crayon_1.5.3      
-[25] classInt_0.4-11    tidyselect_1.2.1   digest_0.6.37      stringi_1.8.7     
-[29] labeling_0.4.3     fastmap_1.2.0      grid_4.5.0         cli_3.6.5         
-[33] magrittr_2.0.3     e1071_1.7-16       withr_3.0.2        scales_1.4.0      
-[37] sp_2.2-0           bit64_4.6.0-1      timechange_0.3.0   rmarkdown_2.29    
-[41] bit_4.6.0          hms_1.1.3          evaluate_1.0.3     knitr_1.50        
-[45] V8_6.0.3           rlang_1.1.6        Rcpp_1.0.14        glue_1.8.0        
-[49] DBI_1.2.3          rstudioapi_0.17.1  vroom_1.6.5        jsonlite_2.0.0    
-[53] R6_2.6.1           units_0.8-7       
+ [1] vctrs_0.6.5               cli_3.6.5                
+ [3] knitr_1.50                rlang_1.1.6              
+ [5] xfun_0.52                 generics_0.1.4           
+ [7] jsonlite_2.0.0            glue_1.8.0               
+ [9] git2r_0.36.2              htmltools_0.5.8.1        
+[11] mountainmathHelpers_0.1.4 scales_1.4.0             
+[13] rmarkdown_2.29            grid_4.5.0               
+[15] evaluate_1.0.3            tibble_3.2.1             
+[17] fastmap_1.2.0             yaml_2.3.10              
+[19] lifecycle_1.0.4           compiler_4.5.0           
+[21] dplyr_1.1.4               RColorBrewer_1.1-3       
+[23] htmlwidgets_1.6.4         pkgconfig_2.0.3          
+[25] rstudioapi_0.17.1         farver_2.1.2             
+[27] digest_0.6.37             R6_2.6.1                 
+[29] tidyselect_1.2.1          pillar_1.10.2            
+[31] magrittr_2.0.3            tools_4.5.0              
+[33] gtable_0.3.6              ggplot2_3.5.2            
 ```
 
 
