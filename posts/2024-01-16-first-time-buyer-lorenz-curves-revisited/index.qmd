@@ -53,24 +53,6 @@ The *adjusted Gini curve* is then a visual representation of affordability of pe
 ## First-time home buyer Lorenz curves in 2021
 
 ```{r}
-# pumf_2006 <- get_pumf("Census","2006") |>
-#    label_pumf_data(rename_columns = FALSE) |>
-#   mutate(ef_lower=case_when(EFINC=="Under $2,000" ~ 0,
-#                          TRUE ~ as.numeric(gsub("\\$|,","",str_extract(as.character(EFINC),"^\\$[\\d,]+")))),
-#          ef_upper=case_when(EFINC=="$250,000 and over" ~ 350000,
-#                          TRUE~as.numeric(gsub("\\$ *|,","",str_extract(as.character(EFINC),"\\$ *[\\d,]+$"))))) %>%
-#   mutate(ef_income=(ef_lower+ef_upper)/2) |>
-#   mutate(CMA=fct_recode(CMA,"Greater Sudbury – Thunder Bay"="Greater Sudbury/Grand Sudbury – Thunder Bay",
-#                         "Kelowna – Abbotsford-Mission"="Kelowna – Abbotsford"))
-# 
-# pumf_2006_h <- get_pumf("Census","2006 (hierarchical)") |>
-#    label_pumf_data(rename_columns = FALSE) |>
-#   mutate(CMA=fct_recode(CMA,"Greater Sudbury – Thunder Bay"="Greater Sudbury/Grand Sudbury – Thunder Bay",
-#                         "Kelowna – Abbotsford-Mission"="Kelowna – Abbotsford")) |>
-#   rename(BEDRM=BROOMH)
-
-
-
 pumf_2011 <- get_pumf("Census","2011") |>
   label_pumf_data(rename_columns = FALSE) %>%
   setNames(toupper(names(.))) |> 
