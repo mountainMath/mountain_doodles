@@ -26,13 +26,14 @@ execute:
   warning: false
 ---
 
-
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(FinCal)
 library(patchwork)
 library(canpumf)
 ```
+
+
 
 Three years ago we [wrote a post on First Time Buyer Lorenz Curves](https://doodles.mountainmath.ca/blog/2020/09/28/first-time-buyer-lorenz-curves/), looking at what share of homes are in principle available to first-time home buyers.[^1] That post continues to be a more popular one, so we thought it would be good to update it with more recent data and expand some of the ideas further.
 
@@ -51,6 +52,8 @@ The *adjusted Gini curve* is then a visual representation of affordability of pe
 
 
 ## First-time home buyer Lorenz curves in 2021
+
+
 
 ```{r}
 # pumf_2006 <- get_pumf("Census","2006") |>
@@ -352,7 +355,11 @@ lorenz_theme2 <- function(step=0.1){
 
 ```
 
+
+
 Let's take a look what such a Lorenz curve for potential first-time buyers (essentially renters aged 20 through 49) looks like. To remind us we show the Lorenz curve for Calgary in 2021.
+
+
 
 ```{r calgary-ftb, crop=TRUE, fig.height=6}
 calgary_ftbs <-adj_ef_lorenz_data %>%
@@ -371,11 +378,15 @@ calgary_ftbs %>%
        caption = "Statistics Canada 2021 Census PUMF (individuals)") 
 ```
 
+
+
 In Calgary, potential first-time buyers at the bottom end of the renter income can't afford any of the homes. Someone at the 20th income percentile of potential first-time buyers can only afford `r scales::percent(filter(calgary_ftbs,abs(percentile-0.2)<0.01)$a)` of Calgary homes. But after that things pick up fast and someone at the 60th percentile can afford `r scales::percent(filter(calgary_ftbs,abs(percentile-0.6)<0.01)$a)`, at which point things even out and the Lorenz curve hugs the diagonal.
 
 This says nothing about what kind of home someone can afford, or where in the metro area an affordable home may be. It also skirts the discussion about "starter homes" or more generally the question if there is a mismatch between homes first-time buyers are buying and the overall distribution of homes in the metro area in terms of quality or size. Or if there should be such a distinction. What this does is it gives a rough matchup between incomes of (potential) first-time buyers and home values.
 
 With this we can update our Lorenz curves by showing both the 2016 and the new 2021 in the same plot, and adding in 2011 data for good measure, enabling us to see how the affordability distribution has shifted over the last 10 years.
+
+
 
 ```{r ftb-updated, fig.height=8.5, crop=TRUE}
 adj_ef_lorenz_data %>%
@@ -389,11 +400,15 @@ adj_ef_lorenz_data %>%
        title="Metro area first time home buyer adjusted Lorenz curves") 
 ```
 
+
+
 This reveals that first time buyer affordability has shifted in different ways. The already largely unaffordable markets of Vancouver and Toronto have become further unaffordable. Hamilton shows the worst deterioration of affordability, as measured by the area between the 2016 and 2021 curve. On the other hand, Québec City has become more affordable.
 
 It's important to note that the 2021 census using 2020 income data, and especially low income people benefited from pandemic CERB payments that have lifted them up and explains some of the affordability improvements for the lower income percentiles. We note that this effect is only visible in some metro area, in others increasing home prices have more than offset the temporary pandemic income boost
 
 ## Property taxes
+
+
 
 ```{r}
 #q_home_value_bump_1 <- -pv.perpetuity(r=interest_rate, pmt=0.007)
@@ -402,9 +417,13 @@ q_home_value_bump_3 <- -pv(r=filter(mortgage_rates,Year=="2021")$mortgage_rate, 
 
 ```
 
+
+
 This view might be overly optimistic, our affordability metric does not include property taxes and utilities. Cost of utilities are fairly uniform across Canada and don't change much over time, but property taxes certainly do. And this matters to affordability, for example Québec City's property tax rates are around 1% of the property value, compared to around 0.3% in Vancouver. Correspondingly people in Vancouver can afford higher-priced homes than people in Québec City on the same income.
 
 Adjusting our affordability metric to include property taxes, for this exercise taken from an [Altus report](https://www.saskatoon.ca/sites/default/files/documents/asset-financial-management/finance-supply/Altus_Group_Canadian_Property_Tax_Benchmark_Report_2022%20%284%29.pdf), shows this effect on affordability quite clearly.
+
+
 
 ```{r prop-tax-effect, fig.height=8.5, crop=TRUE}
 adj_ef_lorenz_data %>%
@@ -424,11 +443,15 @@ adj_ef_lorenz_data %>%
        title="Metro area first time home buyer adjusted Lorenz curves in 2021") 
 ```
 
+
+
 In Vancouver, with it's relatively low property tax rate, this does not make much of a difference, whereas in other metro areas the difference is substantial.
 
 This should not be taken to mean that property taxes have a causal effect on affordability in the sense that lowering property taxes will increase affordability of first-time buyers. This is because prices are highly endogenous to property taxes, if Québec City's property tax rates were the same as Vancouver's the net present value of a home in Québec would be around `r scales::percent(q_home_value_bump_3,accuracy=1)` higher, and exogenously changing property tax rates would cause prices to adjust to reflect that to a large extent. In Canada property tax rates are set by the ratio of aggregate home values to municipal budgets, so prices impact property tax rates. On the other hand, property tax rates impact home prices in the same way that interest rates do, with lower property tax rates leading to higher prices.
 
 With this insight we continue by including property taxes in our affordability metric, with an updated graph for all years and metro areas.
+
+
 
 ```{r ftb-pt, fig.height=8.5, crop=TRUE}
 adj_ef_lorenz_data %>%
@@ -443,11 +466,15 @@ adj_ef_lorenz_data %>%
        title="Metro area first time home buyer adjusted Lorenz curves") 
 ```
 
+
+
 ## Condensing the Lorenz curve into a discrete metric
 
 An obvious candidate for a discrete metric is the Gini coefficient. The Gini coefficient is just the area between the Lorenz curve and the diagonal. This gives a broad measure of affordability in a metro area, a positive coefficient means housing is less affordable, a negative coefficient means housing is more affordable. Perfect proportional affordability is where every potential first time buyer can access housing up to the percentile that corresponds to their percentile in the income distribution.
 
 High unaffordability is characterized by the Lorenz curve staying under the diagonal, high affordability by a curve staying above the diagonal. In many cases we see curves exhibiting high-income skew where they are crossing the diagonal somewhere in the middle of the income spectrum, with lower income people unable to afford homes corresponding to their income percentile while higher income people able to afford homes above their income percentile.
+
+
 
 ```{r ftb-synthetic, crop=TRUE}
 perfect_affordability <- as_tibble(seq(0,1,0.001)) %>%
@@ -505,9 +532,13 @@ ggplot(example, aes(x=percentile, y=`Can afford price percentile`, col=Type))+
   coord_fixed()
 ```
 
+
+
 But there are several problems, the first time buyer Lorenz curves can also take values above the diagonal, and for example the two curves show above with zero Gini coefficient are qualitatively quite different. The *high-income skew* curve models a housing market like Calgary in 2021, where lower income potential first time buyers can't afford housing corresponding to their income percentile, whereas higher income potential first time buyers can access more housing than corresponds to their income percentile. The Gini coefficient can't distinguish between these two cases, both have a Gini of zero, but they represent distinct distributions of (un-)affordability.For analysis and policy making, it is important our metrics summarizing the lorenz curve retains this information.
 
 Intuitively we can think of the two model cases of high (un)affordability and high-income skew as the first two harmonics relative to the diagonal representing perfect proportional affordability. More formally we discretize the Lorenz curves by taking the first two terms of the Fourier expansion of their difference from the diagonal, the *perfect proportional affordability* lorenz curve . A sine expansion will capture these reasonably well with just a few terms, where the first term is a good approximation of the (scaled) Gini coefficient representing the **aggregate unaffordability** and the second term gives the strength of the main oscillation around the diagonal, interpreted as **high-income skew**.
+
+
 
 ```{r ftb-approx, fig.height=8.5, crop=TRUE}
 calculate_sine_expansion <- function(data,afford_column,order=2){
@@ -572,9 +603,13 @@ adj_ef_lorenz_data %>%
   theme(legend.position = "top")
 ```
 
+
+
 Except for the highly unaffordable metro areas of Vancouver, Toronto and Hamilton the first two (sine) Fourier coefficients capture the curve quite well, for Vancouver, Toronto and Hamilton the approximation struggles to properly capture how long the curve stays flat and how late it rises. This is yet another way how these city's affordability, or the lack thereof, is extreme compared to the other metro areas.
 
 We can now take these two coefficients and plot their movement over time.
+
+
 
 ```{r ftb-discrete}
 coeffs <- adj_ef_lorenz_data %>%
@@ -647,6 +682,8 @@ ggplot(cutoffs_clean,aes(x=Gini,y=-oscillation,colour=fct_rev(CMA))) +
 
 ```
 
+
+
 This graph shows that Vancouver, Toronto and Hamilton are in a league of there own when it comes to housing affordability. They exhibit quite similar aggregate unaffordability and high-income skew. Vancouver has been doing quite poorly for the entire decade covered here, whereas Toronto and in particular Hamilton have see their housing affordability radically worsen over the past decade. Ottawa-Gatineau and Montréal are in mildly unaffordable territory, while Calgary, Edmonton and Winnipeg are fairly neutral in terms of affordability. Québec City is the most affordable market considered here, and its affordability has improved significantly.
 
 We note that the values taken by the CMAs follow a rough frown shape. This is not coincidence, not all values in the range shown can be attained. Values in the lower left and lower right aren't mathematically possible because the Lorenz curves are monotonic. Values in the top middle correspond to scenarios where lower income families have access to a higher share of housing than their position in the income distribution, whereas higher income households have access to a lower portion of housing. This is not how the housing system works.
@@ -654,6 +691,8 @@ We note that the values taken by the CMAs follow a rough frown shape. This is no
 ## Property tax effects
 
 We can revisit what this would look like if we did not account for differences in property tax rates.
+
+
 
 ```{r tfb-discrete-npt}
 coeffs2 <- adj_ef_lorenz_data %>%
@@ -711,6 +750,8 @@ ggplot(cutoffs2_clean,aes(x=Gini,y=-oscillation,colour=fct_rev(CMA))) +
 
 ```
 
+
+
 Omitting property taxes decreases aggregate unaffordability, but it also changes the relative position of the cities. For example, when not accounting for property taxes, Vancouver has slightly higher aggregate unaffordability and slightly stronger high-income skew than Toronto, but this reverses after accounting for property taxes.
 
 ## Upshot
@@ -723,6 +764,8 @@ This could be expanded on by using higher frequency data like home transactions 
 As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2024-01-16-first-time-buyer-lorenz-curves-revisited/index.Rmarkdown) for anyone to reproduce or adapt for their own purposes.
 
 <details><summary>Reproducibility receipt</summary>
+
+
 ```{r cache=FALSE}
 ## datetime
 Sys.time()
@@ -733,4 +776,7 @@ git2r::repository()
 ## Session info
 sessionInfo()
 ```
+
+
 </details>
+
