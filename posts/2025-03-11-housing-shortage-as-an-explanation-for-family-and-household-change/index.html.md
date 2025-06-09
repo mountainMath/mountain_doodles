@@ -9,6 +9,8 @@ date: '2025-03-11'
 slug: housing-shortage-as-an-explanation-for-family-and-household-change
 description: 'A run down of our recent paper on this topic, and implications for research and policy.'
 image: 'images/paper_title_abstract.png'
+categories: 
+  - affordability
 bibliography: ../../common_literature.bib 
 code-tools:
   toggle: true
@@ -18,12 +20,6 @@ execute:
   message: false
   warning: false
 ---
-
-
-
-
-
-
 
 
 

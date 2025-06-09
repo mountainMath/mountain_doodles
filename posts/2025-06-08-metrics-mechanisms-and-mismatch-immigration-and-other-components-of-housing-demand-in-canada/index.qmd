@@ -10,6 +10,12 @@ slug: metrics-mechanisms-and-mismatch-immigration-and-other-components-of-housin
 description: "What's the housing demand due to immigration and how does this relate to other components of housing demand?"
 pdf_abstract: "Housing demand from external migration receives outsized attention in the public discussion. We take a recent Statistics Canada report on housing consumption by immigrants and non-permanent residents as an opportunity to clarify underlying concepts. We also broaden the scope to decompose housing demand in Canada into several components and estimate their sizes to better understand where demand for housing comes from and what is needed to meet that demand."
 image: "index_files/figure-html/fig-housing-demand-components-1.png"
+categories: 
+  - affordability
+  - canpumf
+  - cansim
+  - cancensus
+  - cmhc
 bibliography: ../../common_literature.bib 
 code-tools:
   toggle: true

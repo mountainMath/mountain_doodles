@@ -10,6 +10,12 @@ slug: metrics-mechanisms-and-mismatch-immigration-and-other-components-of-housin
 description: "What's the housing demand due to immigration and how does this relate to other components of housing demand?"
 pdf_abstract: "Housing demand from external migration receives outsized attention in the public discussion. We take a recent Statistics Canada report on housing consumption by immigrants and non-permanent residents as an opportunity to clarify underlying concepts. We also broaden the scope to decompose housing demand in Canada into several components and estimate their sizes to better understand where demand for housing comes from and what is needed to meet that demand."
 image: "index_files/figure-html/fig-housing-demand-components-1.png"
+categories: 
+  - affordability
+  - canpumf
+  - cansim
+  - cancensus
+  - cmhc
 bibliography: ../../common_literature.bib 
 code-tools:
   toggle: true
@@ -32,16 +38,7 @@ format:
 
 
 
-
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/06/08/metrics-mechanisms-and-mismatch-immigration-and-other-components-of-housing-demand-in-canada/" target="_blank">HomeFreeSociology</a>)</i></p>
-
-
-
-
-
 
 
 
@@ -63,10 +60,6 @@ source(here::here("R/mhu.R"))
 source(here::here("R/census_import.R"))
 ```
 :::
-
-
-
-
 
 
 
@@ -108,10 +101,6 @@ As the StatCan report points out, this is a question under discussion, and we ha
 The immediate difficulty with the approach taken by StatCan is that households are complex, and there are many situations where a household mixes members of the three categories; non-permanent residents, immigrants, and non-immigrant Canadians. The study sidesteps this issue by classifying housing consumption at the household level via the immigration status of the "primary household maintainer". The statistics will likely be impacted somewhat by this choice vs other ways to select a representative household person. It would be interesting to look at mixed couples, for instance, to see how (largely arbitrary) reporting of the primary maintainer ends up placing them as immigrants or non-immigrants, but these effects might cancel each other out and could likely be managed [@statisticscanada_maintainers.2024]. To arrive at a *housing occupancy rate* the number of primary household maintainers is then divided by the total number of people (in private households) in each group. This choice of denominator is a potentially bigger problem, as we'll discuss ahead.
 
 To understand how this plays out we reproduce the results of the report using PUMF data in @fig-immigration-status-housing-consumption. For good measure we also add in 2016 data, recognizing that 2021 was a COVID-directed year that experienced significant shocks in the housing market as well as to immigration, and in particular the non-permanent resident and recent immigrant populations.
-
-
-
-
 
 
 
@@ -200,10 +189,6 @@ bind_rows(
 
 
 
-
-
-
-
 These numbers are in line with the StatCan report derived from the full sample, and we added error bars to reflect uncertainty from drawing from the PUMF subsample (assuming no other measurement problems). Of note, patterns for 2021 are relatively similar to 2016, except for recent immigrants, where we might be seeing a Covid effect worth returning to.
 
 In the meantime, let's talk about the metric. The denominator here causes a number of issues that are likely to impact the results. The report mentions a particular issue arising from the non-uniformity of households, where household members span several immigration categories. In particular the report draws attention to the prevalence of Canadian-born children in immigrant households. These children, like all children under the age of 15 (and most children under the age of 20), don't show up as household maintainers, so they don't count into numerators of these ratios. However these children do show up in the denominator -- but for the Canadian born population. In effect, the measure inherently strips away the Canadian born status of children of immigrants in the numerator, identifying their status with the primary householder. But the status is reapplied to these children in the denominator. This treatment of children inherently biases the housing occupancy measure upward for immigrants and downward for the Canadian born.
@@ -223,10 +208,6 @@ Nobody would expect a 15 or 16 year old to be a household maintainer. At age 17 
 Thinking through how household formation, and the consumption of housing functions in Canada (as measured in number of housing units) leads us to exclude dependent children below some age from the metric as they are generally not seen as being part of the demand for dwelling units. @fig-immigration-status-housing-consumption-no-children shows the impact when removing dependent children under the age of 20 from the metric.[^4]
 
 [^4]: To be precise, we removed all children under the age of 15, and people under the age of 20 if they lived with parents or other relatives and were not flagged as primary household maintainer.
-
-
-
-
 
 
 
@@ -284,10 +265,6 @@ housing_demand_no_children |>
 
 
 
-
-
-
-
 This simple adjustment pushes the housing consumption of Canadian born residents above that of immigrants, falling back in line with general expectations. In effect, we can see that the seeming immigrant overconsumption of housing is a simple artifact of choices about measurement. This is acknowledged in the report, but not fully carried through in terms of its implications, especially regarding later comparisons.
 
 The adjustment also widens the gap between non-permanent residents and immigrants as well as Canadian-born residents, again in line with expectations. To return to the difference between results for recent immigrants in 2016 relative to 2021, its worth keeping in mind that Canada experienced a dramatic drop in immigration in 2020. This means the category of Recent Immigrants (arriving within the last five years) was more heavily weighted by those who had been in Canada longer in 2021. Recent immigrants coming in at essentially the same (for 2021) or slightly lower consumption rate than non-permanent residents (for 2016) is curious. This may speak to aspects of both selection and transitions between groups, but also to choice of household reference person. Let's look at this a bit more in-depth.
@@ -297,10 +274,6 @@ We can provide a first-hand example of transitions between groups. One of us arr
 The finer breakdowns below and the following analysis sheds some light onto further potential explanations for differences and we will see that to a large extent they are also a product of immigrant selection mechanisms. In this context it's good to remember that the census [has difficulty capturing non-permanent residents](https://www12.statcan.gc.ca/census-recensement/2021/ref/98-303/index-eng.cfm), generally picking up only around 50% of the non-permanent resident population. NPR's ties to Canada can be quite fluid, and they may not recognize that they have to fill out the census. There is reason to suspect that under-coverage for international students and temporary foreign workers is especially high, and that their housing consumption is especially low. Additionally, temporary foreign workers in collective housing, as is often the case for farm workers, are not covered in either the StatCan study nor in the PUMF data we used. In summary, there is good reason to suspect that housing occupancy rates of the non-permanent residents captured in the census significantly over-estimate the occupancy rates of the overall non-permanent resident population in Canada.
 
 We can expand on the immigrant categories slightly by using the full range provided in the PUMF data in @fig-immcat5-consumption. Of note, admission categories are only collected for immigrants who landed after 1980, providing us the extra general purpose category of immigrants landing prior to this time.
-
-
-
-
 
 
 
@@ -349,19 +322,7 @@ pumf_data |>
 
 
 
-
-
-
-
 Here we can see curiously high housing consumption for immigrants that landed before 1980, as well as interesting consumption patterns across the other immigrant categories. In particular refugees appear to consume more housing than economic immigrants, and almost as much housing as non-immigrants. To understand what's going on here again leads us to go beyond just looking at frequencies but also to pay attention to the data generation process. Refugees interact with housing in different ways from other groups, and that's important to understand.
-
-
-
-
-
-
-
-
 
 
 
@@ -384,10 +345,6 @@ As already discussed above, we should remove dependent children from this denomi
 More broadly, analysis all too often simply draws upon present frequencies and projects them into the future. In the context of housing this plays a large part in our accumulated housing shortage, where policy makers have interpreted observed housing consumption rates as revealed preference instead of as constrained choices reflecting limitations on available housing stock. Very little attention has been paid to the drivers of household formation and housing consumption. This includes demographic factors, but also income and wealth. Ignoring these drivers of demand helps explain the past 50 years of failure to increase housing supply to match increased demand. [@planning-for-scarcity.2022] The report acknowledges that, noting that the housing occupancy rates "reflect housing use constrained by factors such as financial resources, living preferences and housing supply availability", but the report fails to incorporate that knowledge into the analysis.
 
 The curious differences in housing consumption across various groups in @fig-immcat5-consumption are entirely driven by features of the data generation process that we have thus far ignored. It's useful to go back to first principles and understand what drives household formation. As we have explained in the past, this is mostly driven by age, income and wealth, as well as couple status of the individual, set against the cost of housing at the regional level. [@housing_shortages_doubled_up_households.2024; @mhu.2025] Immigrants who landed before 1980 distinguish themselves from the other groups most obviously by age, and the high housing consumption is a reflection of that, as opposed to a particular feature of their immigrant status. Similarly, the StatCan report breaks out statistics for recent immigrants, which tend to be younger. Their registering with a lower housing occupancy rate is again at least partially driven by age - as opposed to their immigration status - although income plays another role and it's an unfortunate reality that labour force integration of recent immigrants is slow in Canada, leading to lower incomes, even for economic immigrants selected for by their skill level.
-
-
-
-
 
 
 
@@ -429,15 +386,7 @@ refugee_vs_canadian <- subsidized_summary |>
 
 
 
-
-
-
-
 For refugees the mechanism governing their housing consumption is quite different. Refugees in Canada disproportionately live in subsidized housing, at a rate 4.9 times higher that of economic immigrants and 3 times that of of Canadian-born householders. Subsidized rents, along with rules frequently preventing the sharing of non-market housing, mean refugees don't double up as often as other people do in the market. Once we consider ratios of those in subsidized and non-subsidized (and ownership) housing separately, the distinct effect observed for refugees basically disappears, as shown in @fig-subsidy-consumption.
-
-
-
-
 
 
 
@@ -479,10 +428,6 @@ subsidized_breakdown |>
 
 
 
-
-
-
-
 That's not to say that, for the purpose of estimating the housing consumption of future refugees, the crude rates aren't useful. They can be, and here they're likely a decent estimate for the expected housing consumption under our current housing system. But peeling back the layers of how and why these occupancy ratios come about helps understand how things fit together, highlighting the role, for instance, of the subsidized housing sector. And that's especially important for policy considerations of how you might want to change the current housing system.
 
 # Age
@@ -496,10 +441,6 @@ The report goes on to explain the increase in occupancy rates they observe for o
 > Newcomers tend to have larger households, often living with extended family members such as parents and grandparents, to reduce costs and address economic constraints. As immigrants settle, household sizes typically decrease because of children moving out, increased economic stability and adaptation to Canadian norms of nuclear families.
 
 The report gives no evidence to the interpretation that newcomer's "living with extended family members such as parents and grandparents" is responsible for the observed patterns, and the framing suggests a naive understanding on how people in Canada live together in households. A quick check in the data as done in @fig-multi-family-immigrant shows that while around 10% of recent immigrants live in multi-family households, which includes multi-generational households, this share is fairly low and does not change much across immigrant cohorts until very far back in time when it becomes important to account for aging and mortality.
-
-
-
-
 
 
 
@@ -549,15 +490,7 @@ pumf_data |>
 
 
 
-
-
-
-
 In @fig-immigrant-household-type we complement this by looking at all household living arrangements of recent immigrants (within the past 5 years) compared to that of immigrants who landed 10 to 15 years ago.
-
-
-
-
 
 
 
@@ -609,10 +542,6 @@ recent_immigrants |>
 
 
 
-
-
-
-
 This shows that there are many ways that people double up besides in multi-family households. Indeed roommate households, as captured in the last category, exceed multi-family households as a category containing recent immigrants in 2021. The share living in couple and couple with children households without additional persons are both larger for the cohort that immigrated 10-15 years ago compared to the one that immigrated in the year and a bit before the census, demonstrating the further moves toward partnering and childbearing that we expect to see with all populations as they age and settle into their lives, including their careers.
 
 With some understanding of these processes we can now broaden our view on housing demand from other factors, beyond the addition of immigrants and net NPRs. This brings us to the second stage of this post, after which we will return to the question of changes in housing occupancy rates of subsequent immigrant cohorts and will be able to properly interpret these changes.
@@ -634,10 +563,6 @@ All these methods have advantages and disadvantages, and the size of the estimat
 
 
 
-
-
-
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -645,10 +570,6 @@ shortfall_low <- 1100000
 shortfall_high <- 2500000
 ```
 :::
-
-
-
-
 
 
 
@@ -662,10 +583,6 @@ These are estimates for the housing shortfall in 2021, it's 4 years later now an
 Canada's population is ageing, and older people tend to consume more housing in terms of number of housing units. This leads to an increase of housing demand from demographic drivers alone. We have looked into the underlying processes in detail in the past. [@estimating-suppressed-household-formation.2022; @housing-outcomes.2023; @still-short-suppressed-households-in-2021.2022; @tenure-and-household-independence-across-the-life-course-1981-2021.2024; @housing_shortages_doubled_up_households.2024; @mhu.2025]
 
 We can estimate the demographic effect on housing demand by taking StatCan population projections by age that already include mortality effects, and apply age-specific household maintainer rates from a fixed year. This translates population into age-expected households, and we can split these expected households into changes in household size and changes in population growth. The change in household size is the demographic effect, that we can then express in terms of additional households formed, assuming households form at the same rate as they did in the reference year. @fig-demographic-contribution shows the resulting demographic contribution to housing demand based on a range of reference years used for the underlying age-specific household formation rates.
-
-
-
-
 
 
 
@@ -774,10 +691,6 @@ hh_contribution |>
 
 
 
-
-
-
-
 In summary, we should expect around 720,000 households to form over the next 10 years just based on the demographic shifts associated with an aging population. These estimates are taken at the national level, so this likely under-estimates the actual demand by mixing areas where household formation has increased with those where household formation has decreased. And housing consumption is sticky; older population have seen increased housing consumption even when younger populations have seen theirs deteriorate. A more careful analysis would follow cohorts and likely arrive at a higher estimate. [@housing-outcomes.2023; @tenure-and-household-independence-across-the-life-course-1981-2021.2024] But this will suffice as a rough estimate.
 
 ## Income growth
@@ -785,10 +698,6 @@ In summary, we should expect around 720,000 households to form over the next 10 
 Income growth is a key driver of housing consumption. Rich people, counting both income and wealth, consume more housing. This manifests itself in nicer and larger dwellings, but also in consuming more overall housing units. These additional housing units can take the form of vacation homes. But more importantly for our purposes, higher income increases household formation by children moving out of their parent's place earlier, leaving roommate setups earlier, splitting up multi-generational households into nearby independent dwelling units, and people generally doubling up at lower rates. When rising incomes are not met with increased housing supply this can, perversely, lead to decreased affordability at the lower end of the income spectrum.
 
 Consider the case when a population and its demographic structure stays fixed, and housing supply also remains fixed, but incomes rise. Income effects are heterogeneous, triggering increased household formation for those who see income boosts. Since the housing stock is fixed, by the pigeonhole principle this increased household formation has to be matched by increased doubling up further down the (new) income spectrum. The aggregate change to affordability depends on the relative sizes of the demand elasticity of household formation and the price elasticity to income. These elasticities are difficult to estimate and the relative sizes likely depend on the particularities of housing markets, but some researchers have estimated that in aggregate rising incomes on the backdrop of a fixed housing supply lead to decreased aggregate affordability. [@meen2008] The effects of income on demand only further emphasize how freezing housing supply is bad.
-
-
-
-
 
 
 
@@ -814,10 +723,6 @@ additional_hh <- household_growth_income_f_10 * hh_sizes |>
 
 
 
-
-
-
-
 We have done some work to estimate the impact of income growth on housing demand, but have not explicitly solved for this. For key household formation age groups the impact of income on household formation, controlling for couple status and age, and with it age-related increases in income, is about 0.1 times that of rent, with the opposite sign.[^6] [@mhu.2025] This means that in the Vancouver setting a 1% increase in real incomes results to an increase in household demand by about 0.4%. For all of Canada this is likely an over-estimate, and assuming the housing shortfall is reduced in Vancouver, it would also reduce Vancouver's elasticity. A back of the envelope guesstimation suggests that maybe reducing this by a factor of 1.5 or even 2 might give a reasonable ballpark estimate. For the sake of this post we will use a fudge factor of 1.75 to reduce the elasticity to 0.2%.
 
 [^6]: This is not the total effect of income, but only the portion not explained by couple status and age. There are some caveats in that it's not clear how well these effects can be separated, but in our setup where we treat demographic effects separately and considering this partial effect avoids double-counting. An alternative approach would be to re-structure the estimates to prioritize the total effect of income and then consider the residual impact of age and coupling up on household formation.
@@ -825,10 +730,6 @@ We have done some work to estimate the impact of income growth on housing demand
 Historically real age-adjusted family incomes in Canada have grown by about 1.4% per year, so we can expect, including our fudge factor, a 0.32% increase in household demand per year, or about 3.2% over the next decade. Using this ballpark estimate, that results in demand for roughly an additional 620,000 households from income growth as a ballpark estimate. Overall, the impact of income growth on housing demand remains under-studied and could use further research.
 
 ## Population growth
-
-
-
-
 
 
 
@@ -851,10 +752,6 @@ recent_immigrants_raw = housing_demand_no_children_rates$`Recent immigrants`
 
 
 
-
-
-
-
 Lastly, we can try and estimate the impact of population growth on housing demand. Given fixed boundaries, population growth combines information about births, deaths, and net migration. Births and deaths largely filter through slow-moving age structures in generating population-level housing demand (see effects of age above). Deaths of single person householders reduce housing consumption, but do not offer justifiable policy levers. Outside of these forces and at the national level, short-term variation in our population growth mostly comes from external migration, and resulting housing demand again depends on assumptions about housing consumption of immigrants and non-permanent residents. Setting aside the justifiability of policy levers here, which [should not be assumed](https://www.liberalcurrents.com/closed-borders-are-the-line-in-the-sand/), we have seen that the housing demand of non-permanent resident adults is very similar to that of recent immigrants, both sitting at about 75% that of Canadian-born adults. As discussed above, the estimate for non-permanent residents is likely a significant over-estimate. At the same time, recent changes to Canada's immigration and NPR intake regime means that the total non-resident population will likely decline over the next 10 years as permit holders finish school or see their work permits expire. Some of the NPRs will physically depart Canada. Others will simply change their status, transitioning into permanent residents and showing up in our immigrant population instead.
 
 The StatCan population projection scenarios have this transition happen rather fast, wrapping up by mid-2027. This seems overly optimistic to us, we suspect that this transition will likely take a couple of years longer.[^7] But either way, it is good to remember that net NPR is a stationary process and will revert to near zero over longer time periods.[^8]
@@ -864,10 +761,6 @@ The StatCan population projection scenarios have this transition happen rather f
 [^8]: A surprising number of people in the public immigration discourse who should know better seem to not understand this and think of net NPR growth as similar to growth due to immigration, that latter of which is an I(1) process. These are fundamentally different processes and there is a lot of public confusion and misinformation out there because of this mixup. It of course does not help that people often fail to clearly distinguish in their language between immigration and external in-migration.
 
 Given the comparatively small effect of changes to net NPR over a 10 year timeframe, as well as the high uncertainty of NPR housing consumption because of high under-coverage of exactly the categories that are likely to see the highest reductions, we won't distinguish changes in net NPR and immigration and just look at the combined effects. Moreover, changes in natural growth are quite small, so we will just take the projected change in overall population as roughly proxying for immigration and apply housing consumption rates of recent immigrants.
-
-
-
-
 
 
 
@@ -900,19 +793,11 @@ hh_contribution2 <- naive_housing_demand_growth-imm_growth2
 
 
 
-
-
-
-
 Using the M1 population projections and subtracting out our estimates of housing demand growth due to demographic shifts gives roughly 790,000 from population growth due to immigration. We note that the assumed housing occupancy rate differential between recent immigrants and the Canadian-born population is the product of recent immigrants having lower incomes, as well as the cost of housing being high, making it harder to secure independent living on these lower incomes.[^9] If the housing shortfall is reduced, and rents accordingly fall, the gap between the household formation rates of recent immigrants and the Canadian-born population will likely shrink.
 
 [^9]: Cultural norms and preferences for independent living do play a role too, but economic factors dominate. [@mhu.2025]
 
 ## Translating households into housing
-
-
-
-
 
 
 
@@ -927,10 +812,6 @@ moving_vacancies <- 0.05
 
 
 
-
-
-
-
 These previous sections provided various estimates on household growth or demand. To fully translate this into housing growth we need to add in moving vacancies. Generally a 5% bump to all estimates is a good ballpark to ensure people can move freely and housing is available. In the past planning has often skipped this step, effectively resulting in net attrition. This is not the largest problem with past past planning practices when it comes to projections for housing demand, but it's a simple one to fix.[^10]
 
 [^10]: Metro Vancouver blurs this distinction by mislabelling their *household projections* as *dwelling projections* in their growth strategy, adding additional shrinking on top of the other issues in their methods that systematically lead to housing shortages. [@metro-vancouver-planning-regimes.2023]
@@ -938,10 +819,6 @@ These previous sections provided various estimates on household growth or demand
 Additionally we want to point out that these estimates are about net additions, so actual new housing production needs to be significantly higher to make up for demolitions and deconversions.
 
 ## Putting everything together
-
-
-
-
 
 
 
@@ -966,17 +843,9 @@ demand_components <- tibble(Component=c("Existing shortfall","Ageing","Income gr
 
 
 
-
-
-
-
 Putting all the estimates above together we get demand of about 2,100,000 additional households from demographic shifts, immigration, and income growth over the next decade. Adding this to the existing housing shortage gets us to 3,200,000 to 4,600,000 additional households. Factoring in moving vacancies to translate this into housing units bumps that up to 3,400,000 to 4,900,000 additional net new housing units needed. Accounting for teardowns and deconversions, roughly estimated at 7% of new construction, we arrive at a need between 3,600,000 and 5,200,000 housing completions over the next decade.
 
 We summarize these in @fig-housing-demand-components. These estimates come with various degrees of uncertainty, and here we use a gradient fade to indicate the particularly large area of uncertainty in the estimate of the existing housing shortfall.
-
-
-
-
 
 
 
@@ -1004,17 +873,9 @@ demand_components |>
 
 
 
-
-
-
-
 We can compare these estimates of housing demand to historical rates of housing completions across Canadian population centres[^11] as shown in @fig-cananda-centres-completions.
 
 [^11]: CMHC used to have an estimate of completions for all of Canada which ran slightly higher than the completions it enumerated in the population centres it surveys, for the ballpark estimates in this post we will gloss over this difference.
-
-
-
-
 
 
 
@@ -1046,10 +907,6 @@ completions2 |>
 
 
 
-
-
-
-
 This indicates that adopting the goal of doubling completions over the next decade is roughly in line with the expected increase in housing demand combined with digging our way out of our current housing shortfall. Doubling construction won't happen instantly but ramp up over time, so it will likely take longer to make up for our shortfall, but this puts us on the right path. It remains to be seen how successful Canada will be in meeting this ambitious goal.
 
 Comparing this to the CMHC Supply Gap estimates [@cmhc_supply_2022; @cmhc_supply_2023], which uses a different counterfactual scenario, we see that they estimate a need for around 3.5M additional housing units over a decade above and beyond business as usual construction, which is at the upper end of our estimates.
@@ -1065,10 +922,6 @@ The second reason is that quality and size are not core issues in our housing cr
 [^13]: As our housing shortage accumulated over the years builders have responded for increased demand for smaller units as people are changing how they trade privacy and space when navigating whether they want to live in their own separate dwelling unit or double up in a potentially larger one with others.
 
 [^14]: Another angle on this is the popular refrain that productivity in the construction sector, typically measured as number of construction workers per newly completed unit of housing, has remained stagnant. This is at least partially due to an increase in the share of construction workers who don't actually work to complete new housing but who renovate old housing, with the overall share of investment into repair construction rising from around 20% in in 60s to well over 40% now.
-
-
-
-
 
 
 
@@ -1096,10 +949,6 @@ get_cansim_vector(c(new="v62144023",reno="v62144024")) |>
 
 
 
-
-
-
-
 The StatCan report also talks about housing demand by tenure or by structural type. Here the analysis largely ignores the confounding issues of regional variation in housing stock and immigrant concentration in big cities, let alone how the addition of immigrants to small cities can lead to their growth into bigger ones. Moreover, tenure choice is of course highly endogenous to housing prices and rents. Changes to affordability will change shares of renters and owners throughout the entire population, not just for newcomers. There are real tradeoffs to buying vs. renting, and people do make choices, but treating observed frequencies of tenure as revealing static underlying preferences is wrong. People choose within constraints. Ignoring this for either newcomers or long-time residents is akin to planning by gaslight - telling folks they want something different than they want. There are lots of renters who would really like to buy but just can't afford to.
 
 The issue gets even worse when trying to "plan for" housing by structural type by looking at observed frequencies. When it comes to structural type, our housing market is highly distorted by zoning, where the kind of housing allowed interacts with location in ways that clearly disrupt any attempt to read underlying preferences from market outcomes. Any plan that seriously attempts to deal with our latent and growing housing demand will have to tackle zoning restrictions or invite large costs of sprawl (or both), which in turn will fundamentally change how people make tradeoffs. And again, this affects everyone.
@@ -1113,10 +962,6 @@ Armed with this understanding we can come back to the question about why immigra
 We can more usefully split this question about change in immigrant housing consumption over time into two parts, one that looks at why housing consumption is initially low compared to those born in Canada and the other why it rises over time.
 
 For the first, we need to understand the selection process for immigrants. Immigrants to Canada often apply and get accepted as a family rather than as individuals. This means that recent immigrants are often already coupled up when they arrive to Canada, lowering their housing consumption. We can see that very clearly in @fig-immigrant-couples, where the coupling rate of new immigrants exceeds the coupling rate of the Canadian born across nearly all ages. For this we took *recent immigrants* to be those who landed in the three years preceeding the census to have a robust enough sample to split by age group.
-
-
-
-
 
 
 
@@ -1166,17 +1011,9 @@ pumf_data |>
 
 
 
-
-
-
-
 Looking more closely we observe that recent immigrants of all age groups until about 70 years old are coupled up at higher rates than the Canadian born population, and we know that high rates of coupling up reduce housing occupancy rates. This is a product of how Canada selects for immigrants. <!--At the same time we see significant variation between 2016 and 2021. The exact causes for this variation are not clear, but may well indicate a pandemic effect.-->
 
 Apart from coupling, our general understanding of how housing and household formation works tells us that age and income are likely factors in explaining the initial housing occupancy rates of recent immigrants, as well as that of previous cohorts proxying changes over time. To start we look at income, where we want to compare recent immigrants to those landing ten years prior to get a sideways glance at trajectory. We set our landing dates for the comparison two years prior to the census in order to ensure that income data (covering previous tax year) actually gets captured. More precisely, we are interested in the economic resources available to families, so we will work with adjusted family income deciles. In @fig-immigrant-incomes we adjust for age to remove age effects (where incomes generally rise with age) to just focus in on immigrant status and year of immigration.
-
-
-
-
 
 
 
@@ -1229,10 +1066,6 @@ pumf_data |>
 
 
 
-
-
-
-
 This shows that in the years after landing immigrant families have tend to have significantly lower income available to them than their Canadian born counterparts. While the immigrant cohort in Canada for 10 years remains behind the income distribution of the Canadian born, they more closely approximate it, demonstrating the process of "catching up" we expect to see with immigrants settling into the Canadian labour market. This increase in income over time will drive independent household formation.
 
 At the same time, immigrants, like all people, age. And like income, as explained previously, this also drives independence as people feel higher pressure to form their own households and families, generally cohering with our understanding of Minimal Household Units. Some differences in cultural acceptance to alternatives likely remains, but most of the drivers of household formation for both immigrants and non-immigrants alike in Canada are economic and demographic. [@mhu.2025]
@@ -1256,10 +1089,6 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 
 
 
-
-
-
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -1270,7 +1099,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-06-08 18:36:30 PDT"
+[1] "2025-06-09 13:42:00 PDT"
 ```
 
 
@@ -1286,14 +1115,14 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [b835ccf] 2025-05-29: first time buyer lorenz curves key image and remove double entry
+Head:     [2dd9b3c] 2025-06-09: _freeze
 ```
 
 
 :::
 
 ```{.r .cell-code}
-## Session info
+## Session info 
 sessionInfo()
 ```
 
@@ -1328,29 +1157,21 @@ other attached packages:
 [15] ggplot2_3.5.2             tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] generics_0.1.4     stringi_1.8.7      hms_1.1.3          digest_0.6.37     
- [5] magrittr_2.0.3     evaluate_1.0.3     grid_4.5.0         timechange_0.3.0  
- [9] RColorBrewer_1.1-3 fastmap_1.2.0      rprojroot_2.0.4    jsonlite_2.0.0    
-[13] httr_1.4.7         viridisLite_0.4.2  scales_1.4.0       codetools_0.2-20  
-[17] cli_3.6.5          ggpattern_1.1.4    crayon_1.5.3       rlang_1.1.6       
-[21] gridpattern_1.3.1  bit64_4.6.0-1      cachem_1.1.0       sanzo_0.1.0       
-[25] withr_3.0.2        yaml_2.3.10        parallel_4.5.0     tools_4.5.0       
-[29] tzdb_0.5.0         memoise_2.0.1      here_1.0.1         assertthat_0.2.1  
-[33] curl_6.2.3         vctrs_0.6.5        R6_2.6.1           git2r_0.36.2      
-[37] lifecycle_1.0.4    htmlwidgets_1.6.4  bit_4.6.0          vroom_1.6.5       
-[41] arrow_20.0.0.2     pkgconfig_2.0.3    pillar_1.10.2      gtable_0.3.6      
-[45] glue_1.8.0         xfun_0.52          tidyselect_1.2.1   rstudioapi_0.17.1 
-[49] knitr_1.50         farver_2.1.2       htmltools_0.5.8.1  labeling_0.4.3    
-[53] rmarkdown_2.29     compiler_4.5.0    
+ [1] gtable_0.3.6       jsonlite_2.0.0     compiler_4.5.0     tidyselect_1.2.1  
+ [5] git2r_0.36.2       scales_1.4.0       yaml_2.3.10        fastmap_1.2.0     
+ [9] here_1.0.1         R6_2.6.1           generics_0.1.4     knitr_1.50        
+[13] htmlwidgets_1.6.4  rprojroot_2.0.4    pillar_1.10.2      RColorBrewer_1.1-3
+[17] tzdb_0.5.0         rlang_1.1.6        stringi_1.8.7      xfun_0.52         
+[21] timechange_0.3.0   cli_3.6.5          withr_3.0.2        magrittr_2.0.3    
+[25] digest_0.6.37      grid_4.5.0         rstudioapi_0.17.1  hms_1.1.3         
+[29] lifecycle_1.0.4    vctrs_0.6.5        evaluate_1.0.3     glue_1.8.0        
+[33] farver_2.1.2       rmarkdown_2.29     tools_4.5.0        pkgconfig_2.0.3   
+[37] htmltools_0.5.8.1 
 ```
 
 
 :::
 :::
-
-
-
-
 
 
 
