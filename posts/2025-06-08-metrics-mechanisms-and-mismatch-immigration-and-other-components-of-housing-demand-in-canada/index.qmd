@@ -31,7 +31,6 @@ format:
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/06/08/metrics-mechanisms-and-mismatch-immigration-and-other-components-of-housing-demand-in-canada/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
-
 ```{r setup, cache=FALSE}
 library(tidyverse)
 library(canpumf)
@@ -901,7 +900,7 @@ Sys.time()
 ## repository
 git2r::repository()
 
-## Session info
+## Session info 
 sessionInfo()
 ```
 
