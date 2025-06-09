@@ -23,6 +23,11 @@ execute:
 
 
 
+
+
+
+
+
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/03/11/housing-shortage-as-an-explanation-for-family-and-household-change/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 In our new paper "The new rules: housing shortage as an explanation for family and household change across large metro areas in Canada, 1981-2021" [@mhu.2025] ([preprint and replication code](https://mountainmath.github.io/family_household_change/)) we estimate the impacts of housing shortage on the substantial variation we see in family and household structures, both across large metro areas in Canada and across time, focusing on 1981 through 2021. 
@@ -44,7 +49,7 @@ Rising rents may also be a sign of improving quality of housing services, deflat
 
 ![Rent to income ratios for Canadian metro areas are estimated using median total income for the population aged 25 to 44, including zeros, to reflect income available to our main population of interest. 20 to 24 year olds were excluded to guard against impacts of trends of increasing education and delayed entry into the workforce. Data availability in early years is limited.](images/rent-income-timeline.png)
 
-The share of young adults not in minimum household units by age bracket follows a related pattern across metro areas and census years.
+The share of young adults not in minimal household units by age bracket follows a related pattern across metro areas and census years.
 
 ![Timelines of the share of individuals in MHU by CMA and age group, 1981-2021.](images/mhu-shares-simple.png)
 
@@ -62,7 +67,7 @@ We estimate our model by utilizing individual level census public use microdata 
 
 ![MHU model using baseline non-visible minority non-immigrant population not attending school part or full time, year fixed effects not shown.](images/mhu-model-baseline.png)
 
-This shows a clear impact of rents on the probability of living in a minimum household unit vs doubling up. As expected, other factors also matter, in particular couple status and incomes. Couple status is not unrelated to housing outcomes and lacks a clear causal interpretation.
+This shows a clear impact of rents on the probability of living in a minimal household unit vs doubling up. As expected, other factors also matter, in particular couple status and incomes. Couple status is not unrelated to housing outcomes and lacks a clear causal interpretation.
 
 But what happens when we add "Culture" into the model and try to assess it's impact on the relationship? Given the model utilizing data back to 1981, and working under the constraints of variables available in the PUMF data (not having access to the full sample of the census for this work), we lack the ability to include fine subgroups. Instead we settle for broad categories built from visible minority status and immigrant generation.^[We estimate a model with finer categories in the Appendix of the paper based only on the most recent three census years.]
 
