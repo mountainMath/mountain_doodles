@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 The other day I was catching a bus home later at night, which made me acutely aware that I should not take the frequent daytime transit in Vancouver for granted. On the ride home I decided to dig into this and grab some transit data. We have played with transit data before, but since this was going to be the second time it was high time for a [quick R package](https://github.com/mountainMath/transitland) to standardize our efforts and simplify things for the next time around. Or for anyone else interested in this. And I can't think of a better way to use the time during a bus ride than writing an R package to access transit data!
 
 It's easy to write a quick package that gets the job done, but it took me a couple of days until I found some time to clean it up and write a short post, so here we go. This post is meant less to be informative about transit in Vancouver and more a mini-introduction of the [R package](https://github.com/mountainMath/transitland) in case others are interested in using this. It still has some pretty graphs and late-night bus riders might appreciate seeing why that bus they were waiting for never came.

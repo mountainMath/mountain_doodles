@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 The night before the [council hearing](http://council.vancouver.ca/20170919/phea20170919ag.htm) discussing the [character home zoning review](http://vancouver.ca/home-property-development/character-home-zoning-review.aspx) and [changes to duplex zoning](http://council.vancouver.ca/20170919/documents/phea9summary.pdf) we decided to spend some time understanding for who we keep 67% of residential land zoned as "single family" (RS), and another 2% as quasi single family in First Shaugnessey (FSD) and 9% as "duplex" (RT). Keeping things simple, let's just look at RS.
 
 ## Who Can Afford To Buy?

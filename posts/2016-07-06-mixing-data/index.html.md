@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Census data is very rich and with [CensusMapper](https://censusmapper.ca) we now have about 1 billion data points right at
 our fingertips. And we have managed to open up some of our interfaces for everyone to [explore data and make their own maps
 and freely share them](http://doodles.mountainmath.ca/blog/2016/05/04/census-mapping-for-everyone/).

@@ -20,7 +20,6 @@ aliases:
 
 
 
-
 The news media has an extraordinarily difficult time with income data. And that's only partially the media's fault.
 In general, income data is a funny beast. So I decided to give a quick overview over income data that's available through
 Statistics Canada. To make things a little more concrete I focused on Vancouver as an example, but everything applies

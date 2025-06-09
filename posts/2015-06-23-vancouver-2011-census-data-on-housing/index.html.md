@@ -20,7 +20,6 @@ aliases:
 
 
 
-
 Last week my friend Alejandro emailed me some census data. After sitting on it for a couple of days I decided one evening
 to take a look and map the dissemination areas. The dataset contained 125 fields around housing and income. So I started
 plucking some of the fields off the table and mapping them.

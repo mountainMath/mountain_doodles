@@ -28,7 +28,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/02/15/unoccupied-canada/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

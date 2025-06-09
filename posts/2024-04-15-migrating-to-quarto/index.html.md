@@ -16,7 +16,6 @@ code-tools:
 
 
 
-
 I started this blog 10 years ago, first using a jekyll setup. In 2017 I switched to [blogdown](https://bookdown.org/yihui/blogdown/), which linked the posts with the Rmarkdown notebook that generated the content. The setup aimed at maximum transparency, with the source living in a [public Github repository](https://github.com/mountainMath/mountaindoodles) that keeps all changes transparent, and deploys to the website via [Netlify](https://www.netlify.com) directly triggered from the GitHub repo when it changed. That means the website of the blog was always in sync with the repository, and the repository contained the entire history of the blog.
 
 # Why switch?
@@ -40,7 +39,6 @@ Other than the look and feel, quarto has the ability to much more easily add int
 Here is a simple example that pulls in all item and rent CPI time series directly from the StatCan NDM API into the browser and plots them interactively, taken from [our interactive ObservableHQ notebook](https://observablehq.com/@mountainmath/year-over-year-change-in-rent-cpi). Live and auto-updating data is great, but this of course also means that the code will fail when StatCan servers are down.[^1]
 
 [^1]: Of course the StatCan servers for the data used here went down on the evening this post was written ahead of the next day's release of the March CPI data...
-
 
 
 
@@ -109,11 +107,9 @@ vegalite({
 
 
 
-
 The lower chart is a brush to allow to zoom into time periods of interest in the main chart. The rent CPI method was substantially updated starting in January 2019, the effect of which is quite visible in the graph when zooming in, and the year over year change is fully based on the new method starting January 2020.
 
 One fun part about observable is that the order of the code chunks does not matter. The above code junk produced the chart, but the code to pull in the data from StatCan, and the code to load required libraries is below. This flexibility makes it easier to rearrange a blog post where one does not have to worry about breaking dependencies when moving around the code.
-
 
 
 
@@ -215,7 +211,6 @@ transformedData = [].concat.apply([], data.map(function(d){
 ::::
 :::::
 ::::::
-
 
 
 

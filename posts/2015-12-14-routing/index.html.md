@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 Routing is a hard problem. Routing for drivers is pretty good at this point, mostly because we have been very good at
 designing for cars and creating predicable infrastructure. Routing for bikes is a whole other story, data quality is
 poor and the physical infrastructure is, at least in North America, not strongly predictive of cycling comfort/safety.

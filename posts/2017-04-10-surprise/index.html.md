@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 At CensusMapper we like building models based on census data. We now
 have a [common tiling for 2011 and 2016 geographies](http://doodles.mountainmath.ca/blog/2017/03/22/comparing-censuses/)
 that allows us to easily model changes over time. After building a model

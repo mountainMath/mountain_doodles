@@ -23,7 +23,6 @@ aliases:
 
 
 
-
 Vancouver's median household income has grown. But there are many ways how this could have happened. We want to take a deeper look to understand how the income distribution changed. To that end, we will investigate the change in the number of people in each income bracket between the census years. And put that into context to what happened in the region and Canada wide.
 
 This is a mixture of what we have done when comparing the [size of age groups](https://censusmapper.ca/maps/745) between censuses. But it also has a bit of the flavour [*net migration*](https://doodles.mountainmath.ca/blog/2017/05/16/lifeblood/) that looks at the inflow and outflow of people by age groups. It really is a mixture of the two. People do get pay rises and households move up income brackets. Or one person loses their job and the household income drops. But the bigger movements are from new households coming into a region, or forming in the region, and existing households leaving the region, or splitting up. Unfortunately we won't be able to separate these two processes without a custom tabulation.

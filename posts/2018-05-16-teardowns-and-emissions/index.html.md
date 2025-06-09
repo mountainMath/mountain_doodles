@@ -29,7 +29,6 @@ aliases:
 
 
 
-
 Last year we took a detailed look at [Single Family teardowns in Vancouver](https://mountainmath.ca/teardowns), that is houses in RS or "Single Family" zoning that got torn down. We focused exclusively on those homes in RS zoning because these have to be replaced by another, often  bigger, Single Family home. Using historical data we build a probabilistic model to predict future teardowns in Vancouver. If you haven't taken the time yet to read through the data story, you [probably should do that right now](https://mountainmath.ca/teardowns). The rest of this post assumes the reader is familiar with the concepts explained in the data story.
 
 <a href="https://mountainmath.ca/teardowns"><img src="images/teardowns_animated.gif" style="width:50%;float:right;margin-left:10px;"></a>

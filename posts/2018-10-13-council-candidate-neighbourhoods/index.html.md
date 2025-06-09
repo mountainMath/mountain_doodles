@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 I haven't taken time yet to dive into the council candidate's data game, [Christopher Porter](https://twitter.com/cdnveggie) has been tearing it up with great posts, one on [candidate location](https://canadianveggie.wordpress.com/2018/09/15/mapping-at-the-2018-vancouver-election-candidates/), several on their [position on various housing issues](https://canadianveggie.wordpress.com/2018/10/06/vancouver-election-2018-primer-part-3-housing/) and a [compilation of endorsements](https://canadianveggie.wordpress.com/2018/10/11/vancouver-election-2018-primer-part-5-endorsements/).
 
 [Dmitry Shkolnik](https://twitter.com/dshkol) has been [running some analysis on candidate's tweets](https://www.dshkol.com/2018/vancouver-mayor-race-twitter/).

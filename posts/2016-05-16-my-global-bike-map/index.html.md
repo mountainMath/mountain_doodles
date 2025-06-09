@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Last week Mapzen [announced](https://twitter.com/mapzen/status/730782107685912576) that they included bike data in their OSM vector tiles. That's just what the doctor ordered
 to continue on my path towards the perfect bike map that I [started on](http://doodles.mountainmath.ca/blog/2015/12/13/how-to-make-a-bike-map/),
 [explored routing](http://doodles.mountainmath.ca/blog/2015/12/14/routing/) and [looked at improving OSM bike data](http://doodles.mountainmath.ca/blog/2015/12/15/bike-data/).

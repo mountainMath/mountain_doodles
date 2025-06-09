@@ -29,7 +29,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/08/19/25-years-of-structural-change/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

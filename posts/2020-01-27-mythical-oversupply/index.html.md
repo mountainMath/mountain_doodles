@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 It's been over two years now since the news media [reported on John Rose claiming that Vancouver has a surplus of housing](https://www.theglobeandmail.com/real-estate/vancouver/academic-takes-on-vancouvers-housing-supply-myth/article37015584/) and [Rose shared his Working Paper, Version 1](https://www.kpu.ca/sites/default/files/The%20Housing%20Supply%20Myth%20Report%20John%20Rose.pdf) detailing his claims of some mythical oversupply of housing in Vancouver.
 
 We have [written about this](https://doodles.mountainmath.ca/blog/2017/12/11/some-thoughts-on-the-supply-myth/) on [several occasions](https://doodles.mountainmath.ca/blog/2018/01/25/empty-suites/), but we were missing a piece of data that can greatly simplify our arguments: Cross-tabulations of structural type by document type (whether a dwelling was *occupied by usual residents*, or *occupied by temporarily present persons*, or *unoccupied*) for the censuses 2001-2016. Recently we needed this for a different project, and were [able to make it openly available thanks to CMHC](https://doodles.mountainmath.ca/blog/2020/01/26/unoccupied-dwellings-data/), so here is a supposed-to-be-quick-but-turned-out-lengthy post to on what that means for the "supply myth". 

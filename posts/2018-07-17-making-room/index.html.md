@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 Recently the City of Vancouver pivoted their planning for RS ("single family") and RT ("duplex") neighbourhoods from [downzoning](https://www.theglobeandmail.com/news/british-columbia/vancouver-drops-downzoning-plan-meant-to-curb-demolitions-of-character-houses/article34236732/), to slow the pace of teardowns to [adding infill as an incentive to to keep older buildings through extensive renovations](https://council.vancouver.ca/20170725/documents/p2.pdf), to now proposing the [Making Room](https://vancouver.ca/people-programs/making-room.aspx) program to allow stratification and higher unit density, and [Mayor Robertson adding an amendment](https://www.theglobeandmail.com/canada/british-columbia/article-vancouver-mayor-gregor-robertson-pushes-to-allow-multiunit-housing-in/) to direct staff to look into also allowing multiplexes.
 
 This change in policy grew out of a [series of consultation processes](https://vancouver.ca/people-programs/housing-vancouver-strategy-background.aspx), and it is quite interesting to browse through them chronologically and observe the shift in how participants talk about low density zoning.

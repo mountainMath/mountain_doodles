@@ -25,7 +25,6 @@ aliases:
 
 
 
-
 We have spent much digital ink on the [myth of fleeing Millenials](https://doodles.mountainmath.ca/blog/2017/05/16/lifeblood/), and related misconceptions around the [difference between changing sizes of age groups and net migration](https://doodles.mountainmath.ca/blog/2017/08/06/millennials-redux/). And one of our favourite [CensusMapper maps visualizes net-migration across Canada](https://censusmapper.ca/maps/731).
 
 Today we want to take a slightly different angle and take a quick look at **gross migration**, that is look separately at in- and out-migration. More specifically, we are interested in separating out interprovincial and intraprovincial in- and out-migrants, as well as external in-migrants. Unfortunately the census does not have data on external out-migrants since they don't live in Canada at the time of the census. Duh.

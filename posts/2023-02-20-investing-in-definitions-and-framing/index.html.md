@@ -34,8 +34,6 @@ format:
 
 
 
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/02/21/investing-in-definitions-and-framing/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

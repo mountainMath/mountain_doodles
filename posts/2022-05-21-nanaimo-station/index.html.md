@@ -28,7 +28,6 @@ aliases:
 
 
 
-
 With a [new redevelopment proposal around Vancouver's Nanaimo Skytrain station hitting the news](https://dailyhive.com/vancouver/skytrain-nanaimo-station-transit-oriented-development-proposal), and [a local journalist feigning ignorance about zoning around skytrain stations](https://twitter.com/GoldinYVR/status/1527075936381784064), maybe it's time for a quick post on zoning and population growth around the Nanaimo Station.
 
 

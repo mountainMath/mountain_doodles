@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 Cities like Vancouver and Toronto talk a lot about unoccupied dwellings. We have [a whole category for empty homes themed posts](https://doodles.mountainmath.ca/categories/empty-homes/) on this blog. Do we need one more? Probably not, except that we were able to open up an empty-homes related cross-tabulation that we needed through current work for CMHC. Yay, and big thanks to CMHC for making this available to the general public. Open data FTW!
 
 Possibly more useful is the classification of the entire building stock by structural type that this data contains, when in the past many have used the classification of the stock *occupied by usual residents* as a proxy that comes with the standard release census data.

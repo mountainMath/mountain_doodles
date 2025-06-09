@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 Vancouver has low property taxes and high income taxes. Seattle is the opposite. What would it look like if British Columbia was more like Washington State? If we got rid of personal provincial income tax and recovered the revenue by raising the provincial portion of the residential property tax, a.k.a. the "school tax".
 
 The tax policy of British Columbia, when compared to Washington, is sending the message that it's a great place to come and invest in property with it's low property tax rate, but not such a great place to live and work with it's higher income tax rate. There have been a number of initiatives to try and change this, from the [BC Housing Affordability Fund](http://www.housingaffordability.org) that aims to raise property taxes for those that don't work here, to the [Extra School Tax on properties over $3M](https://doodles.mountainmath.ca/blog/2018/02/28/extra-school-tax/) that raises property taxes on expensive properties and follows [arguments for a progressive property tax](https://www.cdhowe.org/intelligence-memos/rhys-kesselman-attacking-high-housing-prices-making-property-tax-progressive), to the "speculation tax" that is being discussed and the details are getting fleshed out right now.

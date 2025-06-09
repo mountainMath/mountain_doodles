@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 There has been some [recent confusion](http://www.theglobeandmail.com/real-estate/vancouver/bcs-empty-home-problem-moving-beyond-just-vancouver/article34130746/)
 that got [confounded further](http://vancouversun.com/business/local-business/three-transit-oriented-communities-in-metro-rival-coal-harbour-for-empty-or-underused-housing)
 about transit-oriented development

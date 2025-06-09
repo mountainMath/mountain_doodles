@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Rental data is an important ingredient to understanding the housing market. Unfortunately we, or maybe just I, don't have good data on this. And the little data we have we, or maybe just I, don't understand well. So I spent some time to make sense of what we got. Here is what I learned.
 
 ## Rental Data

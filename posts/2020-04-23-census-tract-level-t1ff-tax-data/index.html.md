@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 Recently we added a [cross-tabulation of Structural type by Document type](https://doodles.mountainmath.ca/blog/2020/01/26/unoccupied-dwellings-data/) to CensusMapper for mapping and API use, including in our {cancensus} R package. Today we added another datasets to this.
 
 * Taxfiler data at the census tract level for tax years 2000 through 2017

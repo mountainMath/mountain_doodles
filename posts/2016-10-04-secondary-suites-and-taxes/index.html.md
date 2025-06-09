@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 A couple of weeks ago I started thinking about secondary suites, laneway houses and taxes in the City of Vancouver. The number
 of secondary suites and laneway houses has been continuously growing. Rental income
 is probably one of the main reasons people choose to activate a secondary suite. What are the tax implications?

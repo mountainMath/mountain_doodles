@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2020/02/19/wealth-vs-income/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

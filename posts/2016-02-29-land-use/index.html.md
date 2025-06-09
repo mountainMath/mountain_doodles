@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 The other day at the [SFU's City Conversations](https://www.sfu.ca/publicsquare/upcoming-events/city-conversations/2016/Feb-18-2016.html)
 someone asked a question about space dedicated to roads, and how that could be unlocked
 to aid housing. He mentioned what percentage of space is currently dedicated to roads. I forgot the number,

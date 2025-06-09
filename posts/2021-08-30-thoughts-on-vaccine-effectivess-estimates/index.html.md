@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 BC now shares data on the vaccination status of cases and hospitalizations in their weekly Data Reports. This is progress, although calling it "data" is reaching. What is shared is graphs that need manual scraping to be turned into (approximate) data.
 
 The numbers themselves aren't particularly meaningful. Vaccines aren't 100% effective in preventing symptomatic COVID (approximated by "cases" in BC) or hospitalizations. This means that as more people get vaccinated, there will be more cases and hospitalizations among the vaccinated population. If everyone were vaccinated then all cases and hospitalizations would be necessarily among vaccinated people, this is not very helpful information.

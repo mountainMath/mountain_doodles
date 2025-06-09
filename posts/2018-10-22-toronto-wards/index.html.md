@@ -29,7 +29,6 @@ aliases:
 
 
 
-
 Vancouver had elections on Saturday, today Toronto had their elections. And as opposed to Vancouver, Toronto has wards. Which makes things more fun, as we can look at census data for each ward to understand how people voted in the ward. We ran a [very similar type of analysis the other day for Vancouver](https://doodles.mountainmath.ca/blog/2018/10/17/the-rise-and-fall-of-vancouver-eligible-voters/), so this is an easy add.
 
 

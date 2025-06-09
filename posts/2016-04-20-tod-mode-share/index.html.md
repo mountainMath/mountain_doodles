@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Just saw a [comment on the Pricetags blog](https://pricetags.wordpress.com/2016/04/20/surprising-densities-at-some-skytrain-stations/)
 pointing to a nice [master's thesis](http://summit.sfu.ca/system/files/iritems1/9819/ETD4936.pdf)
 investigating various TOD metrics around skytrain stations. I got curious how the 2011 transit mode share compares to the earlier

@@ -25,7 +25,6 @@ aliases:
 
 
 
-
 [Mitchell Reardon](https://twitter.com/MitchellReardon) asked me a question about lanes in the City of Vancouver: "Do you happen to have a figure (or quick way to calculate) the number of laneways in Vancouver, and the amount of space they take up?" I have [looked at the overall space taken up by roads before](https://doodles.mountainmath.ca/blog/2016/02/29/land-use/) using the Metro Vancouver land use dataset, but never looked just at lanes. But that's easy enough to do thanks to [the streets package in Vancouver's Open Data Catalogue](http://data.vancouver.ca/datacatalogue/cityStreets.htm). So I decided to run the numbers. And write up a quick blog post for posterity, in case someone has questions or wants to refine this.
 
 Given the sheer mass of land dedicated to streets right-of-ways in Vancouver we should be paying a lot more attention to this. Transportation corridors can be a great resource for public space and even parks as Vancouver's ratio of park space to people is slowly declining. The Arbutus Corridor is just the latest example of how a transportation corridor can be repurposed, and the proposals on how to shape the individual sections looks amazing.

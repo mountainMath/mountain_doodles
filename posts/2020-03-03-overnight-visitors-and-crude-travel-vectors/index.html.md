@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2020/03/04/overnight-visitors-and-travel-vectors/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

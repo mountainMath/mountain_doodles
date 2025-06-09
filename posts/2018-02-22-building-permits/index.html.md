@@ -26,15 +26,11 @@ aliases:
 
 
 
-
 The City of Vancouver has [put up building permit data](http://data.vancouver.ca/datacatalogue/issuedBuildingPermits.htm) yesterday, and [Aaron Licker](https://twitter.com/LGeospatial) swiftly took a look at the data and teased out some interesting bits.
 
 
 
-
 {{< tweet 966469537909493760 >}}
-
-
 
 
 

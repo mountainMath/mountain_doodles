@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 We are growing increasingly concerned with the COVID-19 situation in BC. In particular the way there seems to be no strategy or goal to stop rising case numbers, and the relativism that excuses this by pointing to other provinces and countries that are doing worse. At upward of 150 cases a day we are looking at an average of one death a day and unknown numbers, likely in the mid to high two digits, with long lasting morbidity due to a COVID-19 infection.
 
 ## What's our goal?

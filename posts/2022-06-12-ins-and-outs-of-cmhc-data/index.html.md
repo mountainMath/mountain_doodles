@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 This is a data-focused post, it's targeted at people consuming or otherwise working with CMHC data. And also at the future me that will stumble again over problems outlined in this post and will have to remember the ins and outs of CMHC data.
 
 ## The data

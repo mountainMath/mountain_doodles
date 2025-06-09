@@ -20,7 +20,6 @@ aliases:
 
 
 
-
 After reading the [post on Price Tags](http://pricetags.wordpress.com/2014/11/04/the-daily-durning-back-and-forth-on-cacs/),
 originally from [Karen Sawatzky's blog](http://karensawatzky.ca/2014/10/29/7868/), I got curious about getting a
 geographic overview over the CACs in Vancouver in 2010, 2011 and 2012.

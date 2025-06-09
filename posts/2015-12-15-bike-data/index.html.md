@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 Maps live and die with the quality
 of the underlying data. So I decided to dive a little deeper down the OSM bike data rabbit hole. Task number one was
 to expand display data for a wider region. My primitive workflow to pull data out of OSM only allows for extracting a quarter

@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 Now three people have asked me about the [purported explosion of Canadians 18 and over in Downtown Vancouver](https://www.vancourier.com/news/npa-strongholds-on-vancouver-s-west-side-losing-voters-1.23464652), and in particular the claim that [eligible voters in the Downtown and West End grew by a combined 70%](https://www.thestar.com/vancouver/2018/10/16/with-population-boom-vancouvers-downtown-and-east-side-voters-could-sway-municipal-election-results.html). And I had to explain three times that while that population grew strongly, it grew by much less than reported. In fact, the number of Canadian citizens 18 years and older in the downtown peninsula only grew by 17.1%. Or maybe 21%, depending how to count. So maybe it's time for a super-quick blog post, if nothing else it's a reference people can quote and a way for people to [check my code and see what I did](https://github.com/mountainMath/doodles/blob/master/content/posts/2018-10-17-the-rise-and-fall-of-vancouver-eligible-voters.Rmarkdown).
 
 The census conveniently provides a data field for Canadian citizens 18 and over, so it's just a simple exercise of grabbing the numbers from 2006 and 2016 and dividing them. This can easily be done in excel or by hand, not sure how one could get this so wrong. However, there are a couple of details to pay attention to.

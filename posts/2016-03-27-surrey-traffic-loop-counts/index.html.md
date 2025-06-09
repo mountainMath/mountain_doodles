@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 Surrey published a [beta version of their traffic loop counts](http://data.surrey.ca/dataset/ff9c223a-57e2-49b8-900f-e4b9d9423b4b),
 which is pretty awesome. Real life traffic data is very exciting, and there are lots of fun things one could do with that.
 So last night I decided to take a look and make a quick map. Nothing exciting yet, just to feel may way around

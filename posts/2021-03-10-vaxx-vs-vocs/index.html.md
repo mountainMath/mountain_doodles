@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 At this stage in the pandemic there is good news and bad news. The good news is that vaccines are ramping up. And change in dosing schedule means more people are getting some level of protection earlier. The bad news is that variants of concern, or VOCs, are on the rise in BC. We have a decent intuition how each one of these changes our pandemic, but unclear how they interact. Thus, it's time for some modelling. We will keep the model as simple as possible, yet complex enough to capture the interaction between VOCs and vaccinations.
 
 Before we can do modelling we have to assemble the main ingredients.

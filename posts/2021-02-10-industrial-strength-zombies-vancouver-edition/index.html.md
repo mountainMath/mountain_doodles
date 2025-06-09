@@ -30,7 +30,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/02/11/industrial-strength-zombies-vancouver-edition/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

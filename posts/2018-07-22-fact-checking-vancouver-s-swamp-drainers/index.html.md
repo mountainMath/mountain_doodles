@@ -30,7 +30,6 @@ aliases:
 
 
 
-
 Down south of the border, a politician who shall remain nameless campaigned on "draining the swamp" of Washington D.C., trafficked in countless conspiracies, and lied his way into office. His lies painted a picture of a United States turned dark, corrupt and menacing. He promised to fix it, Making American Great Again, mostly by shutting down globalization and kicking out the immigrants.
 
 In Canada, we like to think we're immune to this kind of rhetoric. But a strain has made its way into discussions concerning Vancouver, where the intersection of real estate, politics, and globalization are increasingly portrayed as a swamp in need of draining. We don't believe most of those portraying Vancouver as swamp-like are intentionally lying (and in real life they surely favour the preservation of environmentally sensitive wetlands). Nevertheless many commenters are muddying the discourse with poorly sourced claims as a means of scoring political points and attacking various aspects of globalization.

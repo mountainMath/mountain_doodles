@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Vancouver finally has a bikeshare system. And everyone is hoping it will succeed, despite the obstacles BC's mandatory
 helmet law poses for the system. So we are eager to find out how things are going with Mobi.
   

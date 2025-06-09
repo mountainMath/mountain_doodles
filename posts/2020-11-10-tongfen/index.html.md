@@ -25,7 +25,6 @@ aliases:
 
 
 
-
 The [tongfen R package](https://mountainmath.github.io/tongfen/index.html) is now [on CRAN](https://cran.r-project.org/web/packages/tongfen/index.html), so it's time for an overview post. Tongfen has changed a bit since it's inception and is now a lot more flexible but slightly more abstract to use.
 
 ## What is tongfen?

@@ -30,7 +30,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/02/04/bartholomews-dot-destiny/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

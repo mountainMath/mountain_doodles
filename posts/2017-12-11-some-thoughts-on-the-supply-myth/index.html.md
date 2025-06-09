@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 Smarter people than I have already responded to the recent furor about [John Rose's working paper](http://www.kpu.ca/sites/default/files/The%20Housing%20Supply%20Myth%20Report%20John%20Rose.pdf), which is (part of?) the result of one year of research on affordability by the author, arguing that Vancouver has no supply problem. Most notably Nathan Lauster in a series of blog posts [taking a look at the theoretical framework and methods used](https://homefreesociology.wordpress.com/2017/11/29/notes-on-the-myth-of-housing-supply/) and [running some numbers himself](https://homefreesociology.wordpress.com/2017/11/30/overbuilding-vs-undercounting/). I don't have much to add to the first post, which took the time to highlight some of the useful demand measures that are either already implemented or currently under discussion and makes the point that the idea that we have enough housing in Vancouver, especially enough rental housing, requires an extraordinarily strong argument in the face of sub 1% rental vacancy rates. And the arguments made were weak at best.
 
 The second post digs into some of the census data issues that the working paper had, and introduces construction and demolition data as another measure to contrast and contextualize changes in the census methods, which is interesting. It seems that in the evening blog post writing some of the numbers may have gotten mixed up, which should not distract from the larger critique presented. 

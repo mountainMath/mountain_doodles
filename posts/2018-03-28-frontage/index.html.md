@@ -25,7 +25,6 @@ aliases:
 
 
 
-
 Over the past years several people have asked me questions about street frontage of city properties. When I needed similar data for a work project, and Scot Hein asked me a question about frontages of commercial properties for his [Urbanarium debate](https://urbanarium.org/city-debate-11-build-missing-middle-housing-without-lot-assembly), I decided to finally pull the numbers. The answer to that question is not as straight forward as it might seem, mostly because properties aren't necessarily square. There are a couple of algorithm that can solve this problem, but in this case we can keep things reasonably simple as the City of Vancouver has property frontages listed on [VanMap](http://vancouver.ca/your-government/vanmap.aspx) and make the data available on their [Open Data Portal](http://data.vancouver.ca/datacatalogue/propertyInformation.htm).
 
 Scot was particularly interested in the frontages in the commercial zones along the arterials. The ingredients we need to answer that question are:

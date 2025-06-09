@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Just saw [this excellent post looking at density around transit stations](http://michaelmortensenblog.com/2016/04/05/transit-oriented-development-room-for-smart-growth-in-greater-vancouver/)
 today and though I should pull out some numbers
 to go with the pretty visuals. And with CensusMapper's new capabilities of populating custom geometries with census data

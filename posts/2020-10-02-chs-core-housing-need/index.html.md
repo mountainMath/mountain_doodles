@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 Today StatCan released four more tables of data from the Canadian Housing Survey, all around the concept of *Core Housing Need*. Core housing need aims to measure housing stress based on affordability, suitability (crowding) and adequacy (disrepair). It applies to all households with shelter-cost-to-income ratio less than 100%, excluding non-family student-lead households, that aren't able to afford an adequate and suitable home in their region.
 
 We want to give a quick overview what's in the new data release.

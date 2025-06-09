@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/11/22/three-years-of-speculation-and-vacancy-tax-data/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Mapzen again upped their game by publishing their [Mobility API](https://mapzen.com/documentation/mobility). This is
 super exciting for anyone interested in a whole range of mobility questions. A [question I have seen](https://twitter.com/dnproulx/status/799644235720900608) is how to adapt that
 to specific needs. So here is a quick example how to customize walksheds.

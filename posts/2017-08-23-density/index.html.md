@@ -23,7 +23,6 @@ aliases:
 
 
 
-
 Density in Vancouver has been one of the recurring themese on this blog, and there are many
 different ways to come at it. We have [looked at density in terms of land use](http://doodles.mountainmath.ca/blog/2016/02/29/land-use/)
 to understand how much land is devoted to what purpose in Metro Vancouver and it's municipalities. We have looked

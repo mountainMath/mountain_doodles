@@ -23,7 +23,6 @@ aliases:
 
 
 
-
 On the heels of the [new assessment data](http://doodles.mountainmath.ca/blog/2016/01/17/updated-vancouver-assessment-data/) we
 can start to slice the data in different ways to understand various aspects of the real estate landscape in Vancouver. The
 fact that [Vancouver Open Data](http://vancouver.ca/your-government/open-data-catalogue.aspx) makes historic data available

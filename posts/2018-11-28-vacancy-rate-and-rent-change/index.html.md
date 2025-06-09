@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 Today the new CMHC Rental Market Survey data came out, which is a good opportunity to refine my musings on the rental vacancy rate and rent increases. I view this as the renter version of the relationship between [months of inventory and changes in resale prices in the for sale market](https://twitter.com/YVRHousing/status/940663306511048705).
 
 

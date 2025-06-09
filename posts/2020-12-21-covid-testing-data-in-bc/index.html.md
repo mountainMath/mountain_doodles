@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 What do we know about COVID-19 testing in BC? That's a surprisingly tricky question, so I decided to do a quick post on this.
 
 ## Why do we test?

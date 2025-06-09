@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 The term has recently been making the rounds in Vancouver. A typical statement is that Vancouver has enough zoned
 capacity until 2041. These kind of claims are usually attributed to the [Coriolis report on CACs](http://vancouver.ca/files/cov/CAC-coriolis-consultancy-final-report-december-2014.pdf).
 

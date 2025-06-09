@@ -25,7 +25,6 @@ aliases:
 
 
 
-
 One week ago the [new batch of CHSP data on ownership of residential properties in British Columbia, Ontario and Nova Scocia came out](https://www150.statcan.gc.ca/n1/daily-quotidien/190611/dq190611a-eng.htm), and I [tweeted some quick graphs](https://twitter.com/vb_jens/status/1138574885591048192). While there has been reporting on some aspect of the numbers in the news a couple of days after, it struck me that this did not really hit all the questions that are on the public mind that the data can address.
 
 Thus a quick post serving two purposes, putting a couple more graphs and data points into the public eye and [providing the code to reproduce the visuals](https://github.com/mountainMath/doodles/blob/master/content/posts/2019-06-18-some-notes-on-investor-and-corporate-ownership-of-residential-properties.Rmarkdown) and serve as a launching point in case others want to further explore different angles.

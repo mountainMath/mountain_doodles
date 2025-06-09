@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 The new CMHC Rms data is out today, and [it's been three years since we did our post on vacancy rates and rent change](https://doodles.mountainmath.ca/blog/2018/11/28/vacancy-rate-and-rent-change/). That post still gets a lot of views, so maybe it's a good time for an update.
 
 The Rms survey is carried out in October, and the results used to come out in the following month. Checking the date of our post from three years ago it was written on November 28th reporting on the Rms from October 2018. But last year we had to wait until January to get the data, and this year it came out in February. The Rms provides important data that informs a lot of decisions, and I am having a hard time understanding why this can't be delivered in a more timely fashion.

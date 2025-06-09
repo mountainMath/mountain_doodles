@@ -35,7 +35,6 @@ aliases:
 
 
 
-
 About half a year ago I did a [post on Airbnb data](https://doodles.mountainmath.ca/blog/2018/08/21/airbnb-and-str-licences/) back when enforcement of the Short Term Rental (STR) regulation came into full effect starting September 2018 and have not really writing things up since then. Probably time for an update post. What has happened since, and what have we learned?
 
 ## Overview

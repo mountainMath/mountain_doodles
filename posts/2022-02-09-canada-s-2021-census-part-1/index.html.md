@@ -25,7 +25,6 @@ aliases:
 
 
 
-
 Today we are getting the first release of the 2021 census data. For now, it's just population, household, and dwelling counts. As well as Census Metropolitan Area and Census Tract boundaries. Census data is a snapshot in time, the reference day for the 2021 census is May 11, 2021. The rest of the data will [follow over the coming year](https://www12.statcan.gc.ca/census-recensement/2021/ref/prodserv/release-diffusion-eng.cfm).
 
 ## CensusMapper

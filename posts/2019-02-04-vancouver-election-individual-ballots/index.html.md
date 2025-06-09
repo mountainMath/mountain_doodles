@@ -24,7 +24,6 @@ aliases:
 
 
 
-
 The City of Vancouver [made individual ballot data available](https://data.vancouver.ca/datacatalogue/anonymousBallotMarking.htm). So the vote choice on each individual ballot. It's been out for a couple of days now, and I have been quietly hoping someone else would write something up. But I got too curious, so here is a super-fast write-up. We focus on mayor and council votes only. There were 21 candidates for mayor and 71 for council to choose from, and each voter was allowed to vote for (at most) one mayoral candidate and up to ten council candidates on their ballot.
 
 ## Number of votes per ballot

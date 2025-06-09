@@ -30,7 +30,6 @@ aliases:
 
 
 
-
 With the first batch of data from the 2021 census we can start to answer some questions about how Vancouver has grown. One of these is how population growth relates to zoning as [Gil Meslin reminded me today](https://twitter.com/g_meslin/status/1492262176035332096). It would be very useful to have a custom tabulation available for that, but it will still take a lot of time before 2021 custom tabulations will become available.
 
 In the meantime, we can get a pretty good idea how low-density zoning has or has not contributed to Vancouver's population growth by following a line of analysis [like we did back when the 2016 data came out](https://doodles.mountainmath.ca/blog/2017/03/06/rs-population-change/). The idea is quite simple, we are going to take block level population change data, and divided it into three categories. Block that lie entirely within low-density zones ("Core" blocks), blocks that have parts inside and parts outside of low-density zones ("Fringe" blocks), and blocks that are entirely outside of low-density zones ("Rest"). To refine this a little we will remove parks from the census data, and shrink the census blocks by 10m in all directions to avoid issues with boundaries along roads or other places being drawn slightly differently.

@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 CensusMapper now has 2001 census data, the changes are live and functional and available for mapping and via the data API. We ran some basic verification of the import, and set the metadata for the variables. There may still be some quirks in need of getting ironed out, feedback is appreciated if anyone finds anything that does not look right.
 
 At the same time we finally updated my [TongFen package](https://github.com/mountainMath/tongfen) to also include DA level TongFen out of the box, in addition to the CT level that has been working for a while. TongFen is (what we call) the process of making data that originally comes on different geographies comparable, and the TongFen package does that in two ways. It allows for estimates on arbitrary geometries, and it allows re-aggregation of variables from different (Canadian) censuses on a common DA or CT tiling. The latter method does not just result in estimates, but exact counts (up to statistical rounding) at the expense of finding a coarser least common geographic denominator.

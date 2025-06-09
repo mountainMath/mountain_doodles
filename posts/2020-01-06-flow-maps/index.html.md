@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 Just came across this [excellent flow map tool](https://flowmap.blue) that takes a google sheet and turns it into an interactive flow map. It's super-easy to use, here is a quick demo.
 
 We are using the commuting flow data between census subdivisions from the 2016 census. First we load the required libraries

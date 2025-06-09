@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 The election data got posted on the [Vancouver Open Data website](http://data.vancouver.ca/datacatalogue/municipalElectionResults.htm) so we decided to take a very quick peek at how the candidates fared by polling station. Citizens can vote at any station they want, so there is are no voting districts. But proximity to home is probably a large factor in determining where people vote, although some may choose locations close to work or somewhere else convenient. For anyone that wants to refine the analysis, the R Notebook that generated this post [lives on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2017-11-21-byelection-data.Rmarkdown).
 
 

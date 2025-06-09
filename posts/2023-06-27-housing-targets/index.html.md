@@ -33,8 +33,6 @@ format:
 
 
 
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/06/27/housing-targets/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

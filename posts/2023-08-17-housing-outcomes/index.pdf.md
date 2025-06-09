@@ -38,8 +38,6 @@ format:
 
 
 
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2023/08/17/housing-outcomes/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

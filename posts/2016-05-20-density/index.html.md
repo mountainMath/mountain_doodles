@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 Ever since I played with the [LIDAR-generated building height data](http://mountainmath.ca/vancouver_lidar/map) I thought
 that I should use that to map gross floor area (GFA) and floor space ratio (FSR). Gross floor area is the total floor area
 inside the building envelope. So for a three storey building, it is the area of the footprint times three.

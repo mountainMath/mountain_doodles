@@ -19,7 +19,6 @@ aliases:
 
 
 
-
 Today I went to the City of Vancouver Character Retention open house. It was quite informative, city staff were helpful and knowledgeable,
 and the display board and feedback form asked many good questions. But I came away with a couple of points that I think need to be addressed further:
 

@@ -32,7 +32,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/07/25/lots-of-opportunity-estimating-the-zoning-tax-in-vancouver/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

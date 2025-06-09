@@ -22,7 +22,6 @@ aliases:
 
 
 
-
 Vancouver pushed out a heatmap of dwelling units that have so far failed to declare their empty homes tax status.
 ![Undeclared](images/undeclared_homes.png)
 With everyone eagerly awaiting data on the empty homes tax declaration we wonder what can be learned from the map.

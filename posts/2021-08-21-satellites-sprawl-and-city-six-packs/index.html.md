@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/08/21/satellites-sprawl-and-city-six-packs/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

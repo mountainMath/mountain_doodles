@@ -32,7 +32,6 @@ aliases:
 
 
 
-
 There are many useful metrics to understand neighbourhood change, [change in the income distribution](https://doodles.mountainmath.ca/blog/2018/10/28/understanding-income-distributions-across-geographies-and-time/), [change in the share of population in low income and change in dwelling units](https://doodles.mountainmath.ca/blog/2019/09/02/low-income-vs-new-dwellings/), [change in households who rent](https://doodles.mountainmath.ca/blog/2018/02/08/neighbourhood-level-census-data/), or just [overall population change](https://doodles.mountainmath.ca/blog/2019/06/15/census-custom-timelines/) and [how that relates to zoning](https://doodles.mountainmath.ca/blog/2022/02/11/deadbeat-zoning/). All these tell us something about how neighbourhoods change, the metric we want to focus on in this post is the [number of children under 15](https://doodles.mountainmath.ca/blog/2018/02/08/neighbourhood-level-census-data/).
 
 Children under 15 years of age tell us something about now demographic renewal works in neighbourhoods, about demographic sustainability. Some neighbourhoods have more children than others for a variety of reasons, ranging from preference to built form of housing. If a neighbourhood is dominated by 1-bedroom dwelling units there will be few children living there. What we are interested in in this post is how this changes over time, which neighbourhoods are gaining children and which ones are losing children? And why?

@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 Income numbers for the 2016 census are out, and I am taking a first shot to dig a little into the numbers. The numbers correspond to the 2015 income tax data, and this census was the first time that all data was directly linked to CRA tax data. For all people. So the income data is part of the "100% data" this time. 
 
 In the standard release we got median income data (no average income numbers this year, for better or worse), individual and household income distributions, income deciles for families, and two low income measures by rough age groups. That's a lot to digest. I have made some graphs to make sense of it, and [got nudged to share my code](https://twitter.com/rtanglao/status/908547217333542912). That's a good idea, so I packed it into a blog post. For readability I hide some of the code, but the full R notebook [lives on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2017-09-14-income-a-first-look.Rmarkdown).

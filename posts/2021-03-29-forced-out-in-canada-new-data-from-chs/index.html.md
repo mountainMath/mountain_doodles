@@ -29,7 +29,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/03/29/forced-out-in-canada-new-data-from-chs/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

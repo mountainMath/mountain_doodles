@@ -19,7 +19,6 @@ aliases:
 
 
 
-
 At CensusMapper we are super excited about Census Week 2016. Data is increasingly getting incorporated into local and
 regional decision making. At CensusMapper we have been working to facilitate this by making this wealth of information
 more accessible to everyone. To celebrate Census Week 2016 we have updated CensusMapper with 2006 census data for easy

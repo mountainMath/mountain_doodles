@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 Some months ago I did a little side project and put some Census Canada data for Vancouver
 [on an interactive map](https://mountainmath.ca/census) online. After it generated quite some interest, to a large part
 due to Ian Young's reporting

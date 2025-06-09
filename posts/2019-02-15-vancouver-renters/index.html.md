@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 ## Disclaimer
 Apologies up front, this is a bit of a hodge podge of a blog post. I have about half a dozen stubs on rental data and affordability that I looked at at some point while trying to understand some aspect of rental affordability. But it's a large and complex topic, and I never took the time to distill out coherent storylines. Rather than keep pushing things off I decided to grab a couple of relevant pieces and put them together in a short blog post. Some of this is based on public census release data, other parts are based on a a custom tabulation [that I have also used in a previous post](https://doodles.mountainmath.ca/blog/2019/01/09/high-value-homes/) and that I am unfortunately not at liberty to share the raw data.
 

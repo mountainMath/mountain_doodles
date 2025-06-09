@@ -30,7 +30,6 @@ aliases:
 
 
 
-
 Canadian census data is freely available, alas not in a very convenient format for older data. Census data back to 1991 are [available from Statistics Canada](https://www12.statcan.gc.ca/datasets/index-eng.cfm?Temporal=2016) with an open data licence, digital geographic data is only available back to 2001. Older census data is available in digital format via paid subscription services from private entities with restrictive licences. But all data is available for free as open data in paper format. 
 
 Stuart Smith took it upon himself to go to the library and digitize (i.e. type into a spreadsheet) old census data all the way back to 1941. And he used the reference maps to trace back the areas to [tongfen](https://github.com/mountainMath/tongfen) to modern census boundaries. Which it totally awesome. And Stuart has been making neighbourhood timelines using that data to great effect.

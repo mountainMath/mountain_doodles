@@ -27,7 +27,6 @@ aliases:
 
 
 
-
 The neighbourhood level custom tab the City of Vancouver pulls for every census has arrived on the open data portal today. We have not worked much with that data because the 2011 dataset excluded the NHS, but it's worth revisiting with the 2016 data now available. (Hopefully the 2011 NHS data will get retroactively added, it's a bit of a shame that it's missing and CoV return rates were quite reasonable.)
 
 The neighbourhood level data adds to the generally available census data in two ways:

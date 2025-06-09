@@ -19,7 +19,6 @@ aliases:
 
 
 
-
 At the heart of the Vancouver affordability crisis is a phrase that comes up again and again. *Loss of Character*. To effectively
 move forward I think it is important to look closely what it means and how it is used.
 

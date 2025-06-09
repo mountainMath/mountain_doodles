@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 A friend of mine is looking for a new rental, which reminded me that I always wanted to do a quick map of rents near skytrain stations. Should not be too hard. 
 
 # Skytrain station data

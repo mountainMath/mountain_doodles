@@ -23,7 +23,6 @@ aliases:
 
 
 
-
 [Aaron Licker](https://twitter.com/LGeospatial) asked a good question about this very interesting dataset. 
 
 {{<tweet 1067902087571230721>}}

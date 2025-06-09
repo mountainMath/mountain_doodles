@@ -30,7 +30,6 @@ aliases:
 
 
 
-
 The long awaited first batch of data from the Canadian Housing Survey came out yesterday. The Canadian Housing Survey (CHS) is a new survey that aims give a better idea of well housing needs of Canadians are met.
 
 

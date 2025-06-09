@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 Canada is a large country, with some reasonably densely populated regions, and large areas that are sparsely populated. That makes it hard to map things. CensusMapper, [our project to flexibly map Canadian census data](https://censusmapper.ca), struggles with that. The choropleth maps can be quite misleading. The same problem comes up when mapping Canadian election data.
 
 

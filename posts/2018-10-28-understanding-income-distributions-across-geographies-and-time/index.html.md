@@ -28,7 +28,6 @@ aliases:
 
 
 
-
 When trying to understand the income makeup of regions in Canada we need to take the income distribution and simplify in a way that is accessible. This is no easy task. Simplification is an essential part of this, but we need to take care not to over-simplify but instead still retain the essential parts.
 
 ## How to measure income?

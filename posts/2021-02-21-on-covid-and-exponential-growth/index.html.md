@@ -23,7 +23,6 @@ aliases:
 
 
 
-
 The recent dismissal of PHAC modelling by the head of the BCCDC, coupled with some reactions we have seen on Twitter, have led us realize how hard it is for most people to understand exponential growth. Part of the fault lies with most modellers generally assume too much math literacy in others. In particular, we assume that public health officials or relevant policy makers can understand the models. Even though we have seen time and time again that this assumption is very tenuous. But more importantly, their inability to understand the models will not help them derive at the desirable responses and will not be able to explain to the general public. 
 
 So how can we explain those models better? I don't have a good answer, but I have some ideas which I want to try out in this post.

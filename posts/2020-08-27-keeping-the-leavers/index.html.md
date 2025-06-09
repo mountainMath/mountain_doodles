@@ -25,7 +25,6 @@ aliases:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2020/08/28/keeping-the-leavers/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
@@ -78,10 +77,7 @@ So given the endogeneity issues: how should we be doing future population projec
 
 
 
-
 {{< youtube id="9Z_H11F7WDI" autoplay="true" >}}
-
-
 
 
 

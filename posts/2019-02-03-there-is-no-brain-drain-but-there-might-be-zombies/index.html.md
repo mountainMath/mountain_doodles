@@ -29,7 +29,6 @@ aliases:
 
 
 
-
 Zombie attack! [Zombies fleeing Vancouver](https://thetyee.ca/Analysis/2018/05/18/Vancouver-Not-Losing-Millennials/) want to eat your brain... drain... or something.
 
 A couple of weeks ago [The Canadian Press](https://www.cbc.ca/news/canada/british-columbia/vancouver-s-brain-drain-young-professionals-leaving-over-high-cost-of-housing-1.4976682) reported a story asserting that young professionals were leaving Vancouver because of the high cost of housing. This fits in with a [common zombie refrain](https://thetyee.ca/Analysis/2018/05/18/Vancouver-Not-Losing-Millennials/) that we hear from the media. It's a story that just won't die, no matter how many times it's proven wrong: [Millennials](https://doodles.mountainmath.ca/blog/2017/05/16/lifeblood/), or [young people](https://doodles.mountainmath.ca/blog/2017/08/06/millennials-redux/), or [boomers](https://doodles.mountainmath.ca/blog/2017/10/21/boomer-exodus/), or people important for some other reason are leaving Vancouver because of housing. Usually there are supporting anecdotes, and indeed, it's not too hard to find people leaving Vancouver who will tell you about their frustrations with housing. But here's the thing: there is almost never supporting data that actually indicates a decline in people worth caring about. Why? Two reasons. First, in growing cities, like Vancouver, when some people leave, even more people come in to replace them. Second, ALL people are worth caring about. 

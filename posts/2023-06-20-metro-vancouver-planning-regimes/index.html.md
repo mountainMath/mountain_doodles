@@ -32,8 +32,6 @@ format:
 
 
 
-
-
 <script src="index_files/kePrint/kePrint.js"></script>
 <link href="index_files/lightable/lightable.css" rel="stylesheet" />
 <script src="index_files/kePrint/kePrint.js"></script>

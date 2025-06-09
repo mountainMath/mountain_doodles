@@ -26,7 +26,6 @@ aliases:
 
 
 
-
 We have [previously look at T1FF tax data](https://doodles.mountainmath.ca/blog/2020/04/23/census-tract-level-t1ff-tax-data/) which is an extremely rich annual administrative data source. The [cansim tables](https://www150.statcan.gc.ca/n1/en/surveys/4105) have a range of variables to inform about incomes of individuals, families (sliced by number of children, including zero children), low income statistics, and just statistics about the number of taxfilers and dependants by age.
 
 It's available on cansim for Canada overall, the provinces and CMAs/CAs. That's great, but sometimes it's nice to have finer geographic detail. Especially when trying to understand neighbourhood change, census tract level data on incomes and basic demographics is extremely valuable, and is now [available on CensusMapper for all years 2000 through 2018 at the census tract level](https://doodles.mountainmath.ca/blog/2020/04/23/census-tract-level-t1ff-tax-data/).

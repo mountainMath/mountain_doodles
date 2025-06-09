@@ -21,7 +21,6 @@ aliases:
 
 
 
-
 The pandemic changed our lives and behaviours. And our perceptions of things. With physical distancing, various degrees of restrictions and people avoiding the 3Cs: crowded places, close-contact settins, confined and enclosed spaces, people have been focusing on spending time outdoors whenever possible. I certainly pay a lot more attention to the weather than I used to, and Vancouver's fall and winter has felt especially miserable so far.
 
 But has the weather actually been worse or is it just my warped perception? That's an easy question to check. Environment Canada has historical weather data, we we can see how 2020 has compared to the previous years.
