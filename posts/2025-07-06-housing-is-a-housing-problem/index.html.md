@@ -25,8 +25,11 @@ fig-height: 5
 fig-format: png
 format:
   html: default
-  pdf: default
-  markdown: default
+  blog-pdf:
+    fig-format: 'png'
+    fig-width: 8
+    fig-height: 5
+    output-file: 'housing-is-a-housing-problem'
 ---
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/07/06/housing-is-a-housing-problem/" target="_blank">HomeFreeSociology</a>)</i></p>
@@ -149,7 +152,7 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-07-06 17:57:32 PDT"
+[1] "2025-07-06 18:14:56 PDT"
 ```
 
 
@@ -160,7 +163,7 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [6f4ad19] 2025-06-09: add categories
+Head:     [493b07f] 2025-07-07: housing is a housing problem
 ```
 
 
@@ -186,24 +189,27 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] mountainmathHelpers_0.1.4 canpumf_0.3.0            
+ [3] cansim_0.4.3              lubridate_1.9.4          
+ [5] forcats_1.0.0             stringr_1.5.1            
+ [7] dplyr_1.1.4               purrr_1.0.4              
+ [9] readr_2.1.5               tidyr_1.3.1              
+[11] tibble_3.3.0              ggplot2_3.5.2            
+[13] tidyverse_2.0.0          
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.6.5               cli_3.6.5                
- [3] knitr_1.50                rlang_1.1.6              
- [5] xfun_0.52                 generics_0.1.4           
- [7] jsonlite_2.0.0            glue_1.8.0               
- [9] git2r_0.36.2              htmltools_0.5.8.1        
-[11] mountainmathHelpers_0.1.4 scales_1.4.0             
-[13] rmarkdown_2.29            grid_4.5.1               
-[15] evaluate_1.0.4            tibble_3.3.0             
-[17] fastmap_1.2.0             yaml_2.3.10              
-[19] lifecycle_1.0.4           compiler_4.5.1           
-[21] dplyr_1.1.4               RColorBrewer_1.1-3       
-[23] htmlwidgets_1.6.4         pkgconfig_2.0.3          
-[25] rstudioapi_0.17.1         farver_2.1.2             
-[27] digest_0.6.37             R6_2.6.1                 
-[29] tidyselect_1.2.1          pillar_1.10.2            
-[31] magrittr_2.0.3            tools_4.5.1              
-[33] gtable_0.3.6              ggplot2_3.5.2            
+ [1] generics_0.1.4     stringi_1.8.7      hms_1.1.3          digest_0.6.37     
+ [5] magrittr_2.0.3     evaluate_1.0.4     grid_4.5.1         timechange_0.3.0  
+ [9] RColorBrewer_1.1-3 fastmap_1.2.0      rprojroot_2.0.4    jsonlite_2.0.0    
+[13] httr_1.4.7         scales_1.4.0       codetools_0.2-20   cli_3.6.5         
+[17] rlang_1.1.6        bit64_4.6.0-1      withr_3.0.2        yaml_2.3.10       
+[21] tools_4.5.1        tzdb_0.5.0         here_1.0.1         curl_6.4.0        
+[25] assertthat_0.2.1   vctrs_0.6.5        R6_2.6.1           git2r_0.36.2      
+[29] lifecycle_1.0.4    bit_4.6.0          htmlwidgets_1.6.4  arrow_20.0.0.2    
+[33] pkgconfig_2.0.3    pillar_1.10.2      gtable_0.3.6       glue_1.8.0        
+[37] xfun_0.52          tidyselect_1.2.1   rstudioapi_0.17.1  knitr_1.50        
+[41] farver_2.1.2       htmltools_0.5.8.1  rmarkdown_2.29     compiler_4.5.1    
 ```
 
 

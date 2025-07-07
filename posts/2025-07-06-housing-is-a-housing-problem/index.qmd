@@ -25,8 +25,11 @@ fig-height: 5
 fig-format: png
 format:
   html: default
-  pdf: default
-  markdown: default
+  blog-pdf:
+    fig-format: 'png'
+    fig-width: 8
+    fig-height: 5
+    output-file: 'housing-is-a-housing-problem'
 ---
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/07/06/housing-is-a-housing-problem/" target="_blank">HomeFreeSociology</a>)</i></p>
