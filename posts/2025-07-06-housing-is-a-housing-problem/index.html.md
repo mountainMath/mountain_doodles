@@ -104,7 +104,7 @@ At the systems level we see that collectively these housing aspirations can only
 
 Age-expected households are the number of households one would expect to see if age-specific household formation rates were equal to those in a fixed year, in our case 1981 when household formation peaked in Canada. The ratio of actual observed households to age-expected households based on the 1981 standard for Canada demonstrates where we've seen substantial backsliding since. Toronto and Vancouver really stand out! But really everywhere outside of Quebec (except for metropolitan Ottawa, which of course is partly in Quebec) has seen interruption to their progress in household formation since 1981.
 
-To dive a bit further into the technicalities of assembling this figure, we split the time series into parts where the data was derived from the PUMF and that derived from published census tables and electronic summary tapes, these data series are not strictly comparable because the PUMF data allows for filtering on the population in private households, whereas the older data looks at the total population which is not quite the right metric to use here. In cases where the time series don't overlap we connect them via dashed lines. Moreover, in older censuses the *households* concept was somewhat floating in definition as well as how enumerators coded this. [@wargon.1979; @harris1994]. Misalignment is small if age data as well as households counts are for the entire population, including households in collective dwellings, but larger discrepancies emerge if e.g. ages are reported for the entire population but household counts are only reported for private households, as is the case in the 1976 summary tapes. We adjusted the 1976 ratio to roughly account for this discrepancy. Some of the fields in the [1961](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1961/statistics) and [1966](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1966/statistics) summary tape data have coding issues, we replaced some of the data with manually entered data from the printed tables as appropriate. Consistency of reporting for older censuses is less clear and actual values may differ somewhat from the values we report in the graph, discrepancies because of inconsistencies in the consideration of private vs collective dwellings can result in a roughly 3% deviation from our reported ratios. Our time series for Canada exhibits a large kink in 1941 that we cannot explain, some caution in interpreting data for that year is advisable. The concept of Metropolitan areas (or "greater cities") was introduced in 1941 and is not available prior to that. Metropolitan area boundaries adjust over time.
+To dive a bit further into the technicalities of assembling this figure, we split the time series into parts where the data was derived from the PUMF and that derived from published census tables and electronic summary tapes, these data series are not strictly comparable because the PUMF data allows for filtering on the population in private households, whereas the older data looks at the total population which is not quite the right metric to use here. In cases where the time series don't overlap we connect them via dashed lines. Moreover, in older censuses the *households* concept was somewhat floating in definition as well as how enumerators coded this. [@wargon.1979; @harris1994]. Misalignment is small if age data as well as households counts are for the entire population, including households in collective dwellings, but larger discrepancies emerge if e.g. ages are reported for the entire population but household counts are only reported for private households, as is the case in the 1976 summary tapes. We adjusted the 1976 ratio to roughly account for this discrepancy. Some of the fields in the [1961](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1961/statistics) and [1966](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1966/statistics) summary tape data have coding issues, we replaced some of the data with manually entered data from the printed tables as appropriate. Consistency of reporting for older censuses is less clear and actual values may differ somewhat from the values we report in the graph, discrepancies because of inconsistencies in the consideration of private vs collective dwellings can result in a roughly 3% deviation from our reported ratios. Our time series for Canada exhibits a large kink in 1941, corresponding to a severe housing shortage caused by the great depression, triggering the government to directly participate in housing construction via the crown corporation *Wartime Housing Limited* it created for this purpose. [@wade1986] The concept of Metropolitan areas (or "greater cities") was introduced in 1941 and is not available prior to that. Metropolitan area boundaries adjust over time.
 
 Age-expected households were previously suggested as input for econometric modelling [@dipasquale1994housing] to avoid collider bias when modelling housing demand elasticities, although unfortunately this insight seems to have become forgotten in much of the more recent economics literature, where people too often assume households as fixed and unresponsive to prices and rents, or household formation elasticities are under-estimated. Given the large changes in household formation over time and across metro areas shown in @fig-canada-cma-age-expected-households misspecifying structural equation models by ignoring or under-estimating household formation leads to substantial collider bias.
 
@@ -152,7 +152,7 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-07-06 18:14:56 PDT"
+[1] "2025-07-06 23:11:49 PDT"
 ```
 
 
@@ -163,7 +163,7 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [493b07f] 2025-07-07: housing is a housing problem
+Head:     [9ff9226] 2025-07-07: fix pdf compile
 ```
 
 
@@ -189,27 +189,24 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] mountainmathHelpers_0.1.4 canpumf_0.3.0            
- [3] cansim_0.4.3              lubridate_1.9.4          
- [5] forcats_1.0.0             stringr_1.5.1            
- [7] dplyr_1.1.4               purrr_1.0.4              
- [9] readr_2.1.5               tidyr_1.3.1              
-[11] tibble_3.3.0              ggplot2_3.5.2            
-[13] tidyverse_2.0.0          
-
 loaded via a namespace (and not attached):
- [1] generics_0.1.4     stringi_1.8.7      hms_1.1.3          digest_0.6.37     
- [5] magrittr_2.0.3     evaluate_1.0.4     grid_4.5.1         timechange_0.3.0  
- [9] RColorBrewer_1.1-3 fastmap_1.2.0      rprojroot_2.0.4    jsonlite_2.0.0    
-[13] httr_1.4.7         scales_1.4.0       codetools_0.2-20   cli_3.6.5         
-[17] rlang_1.1.6        bit64_4.6.0-1      withr_3.0.2        yaml_2.3.10       
-[21] tools_4.5.1        tzdb_0.5.0         here_1.0.1         curl_6.4.0        
-[25] assertthat_0.2.1   vctrs_0.6.5        R6_2.6.1           git2r_0.36.2      
-[29] lifecycle_1.0.4    bit_4.6.0          htmlwidgets_1.6.4  arrow_20.0.0.2    
-[33] pkgconfig_2.0.3    pillar_1.10.2      gtable_0.3.6       glue_1.8.0        
-[37] xfun_0.52          tidyselect_1.2.1   rstudioapi_0.17.1  knitr_1.50        
-[41] farver_2.1.2       htmltools_0.5.8.1  rmarkdown_2.29     compiler_4.5.1    
+ [1] vctrs_0.6.5               cli_3.6.5                
+ [3] knitr_1.50                rlang_1.1.6              
+ [5] xfun_0.52                 generics_0.1.4           
+ [7] jsonlite_2.0.0            glue_1.8.0               
+ [9] git2r_0.36.2              htmltools_0.5.8.1        
+[11] mountainmathHelpers_0.1.4 scales_1.4.0             
+[13] rmarkdown_2.29            grid_4.5.1               
+[15] evaluate_1.0.4            tibble_3.3.0             
+[17] fastmap_1.2.0             yaml_2.3.10              
+[19] lifecycle_1.0.4           compiler_4.5.1           
+[21] dplyr_1.1.4               RColorBrewer_1.1-3       
+[23] htmlwidgets_1.6.4         pkgconfig_2.0.3          
+[25] rstudioapi_0.17.1         farver_2.1.2             
+[27] digest_0.6.37             R6_2.6.1                 
+[29] tidyselect_1.2.1          pillar_1.10.2            
+[31] magrittr_2.0.3            tools_4.5.1              
+[33] gtable_0.3.6              ggplot2_3.5.2            
 ```
 
 
