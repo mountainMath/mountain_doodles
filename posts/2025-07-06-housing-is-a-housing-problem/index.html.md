@@ -14,12 +14,19 @@ image: 'index_files/figure-html/fig-canada-cma-age-expected-households-1.png'
 bibliography: ../../common_literature.bib
 pdf_abstract: |
   The main housing problem in Canada is that there is not enough of it. We can see this by looking at prices and rents, but also by looking at people's living arrangements and rates of doubling up. Doubling up is a direct measure of housing hardship that should get tracked on a regular basis. It also serves as an important compliment to traditional affordability metrics used in Canada that suffer from collider bias that makes it difficult to use them to track progress in solving housing problems.
+  
   We also develop long timelines to track household formation and doubling up in Canada over the past 80 years to demonstrate the rapid undoubling during the first half of that time period, followed by a reversal to increased doubling up in most of Canada over the latter half. 
+categories: 
+  - affordability
+  - canpumf
+  - cansim
+  - cancensus
 execute:
   message: false
   warning: false
-  echo: false
   cache: true
+code-tools:
+  toggle: true
 fig-width: 8
 fig-height: 5
 fig-format: png
@@ -37,6 +44,14 @@ format:
 
 ::: {.cell}
 
+```{.r .cell-code}
+library(tidyverse)
+library(cansim)
+library(canpumf)
+library(mountainmathHelpers)
+source(here::here("R/mhr_pumf.R"))
+source(here::here("R/old_census_aehh_hh.R"))
+```
 :::
 
 
@@ -96,6 +111,56 @@ At the systems level we see that collectively these housing aspirations can only
 
 
 ::: {.cell}
+
+```{.r .cell-code}
+hmr_all <- simpleCache(get_phm_timeline(),"hmr_data_all.rds",path=here::here("data"),refresh=FALSE)
+
+cma_colours <- c(setNames(RColorBrewer::brewer.pal(8,"Dark2"),
+                          c("Toronto","Montréal","Vancouver","Ottawa – Gatineau",
+                            "Calgary","Edmonton","Québec City")),
+                          c("Canada"="black"))
+
+hmr_all %>%
+  bind_rows(summarize(.,Count=sum(Count),.by=c(AGEGRP,PRIHM,Year)) |>
+              mutate(CMA="Canada")) %>%
+  bind_rows(summarize(.,Count=sum(Count),.by=c(PR,AGEGRP,PRIHM,Year)) |>
+              rename(CMA=PR)) |>
+  mutate(hmr=Count/sum(Count),.by=c(CMA,AGEGRP,Year)) %>%
+  left_join(filter(.,PRIHM,CMA=="Canada",Year=="1981") |> select(AGEGRP,base_hmr=hmr),by="AGEGRP") |>
+  mutate(Households=ifelse(PRIHM,Count,0),
+         AEHH=base_hmr*Count) |>
+  summarize(across(c(Households,AEHH),\(x)sum(x,na.rm=TRUE)),.by=c(Year,CMA)) |>
+  mutate(Source="PUMF") |>
+  bind_rows(get_1941_1976_aehh_hh() |> 
+              mutate(Source="Summary tapes\nPrinted tables")) |>
+  filter(CMA %in% c("Toronto","Montréal","Vancouver","Ottawa – Gatineau",
+                    "Calgary","Edmonton","Canada","Québec","Alberta","Quebec")) |>
+  mutate(CMA = recode(CMA,"Québec"="Québec City", "Quebec"="Quebec (PR)","Alberta"="Alberta (PR)")) |>
+  filter(!grepl("PR",CMA)) |>
+  mutate(ratio=Households/AEHH) %>%
+  mutate(CMA=factor(CMA,levels=filter(.,Year=="2021") |> arrange(-ratio) |> pull(CMA))) |>
+  mutate(fudge=ratio/lag(ratio,order_by = Source),.by=c(Year,CMA)) |>
+  mutate(fudge=mean(fudge,na.rm=TRUE),.by=Year) |>
+  arrange(Year) |>
+  fill(fudge,.direction="up") |>
+  mutate(fudge=ifelse(Source=="PUMF",NA,fudge)) |>
+  mutate(fudge=coalesce(fudge,1)) |>
+  mutate(fudge=ifelse(Year=="1976",fudge,1)) |> # only fudge 1976
+  ggplot(aes(x=as.integer(Year),y=ratio/fudge,colour=CMA)) +
+  geom_point(aes(shape=Source)) +
+  scale_shape_manual(values=c("PUMF"=21,"Summary tapes\nPrinted tables"=16)) +
+  geom_line(aes(group=interaction(CMA,Source))) +
+  geom_line(data=~filter(.,Year %in% c("1976","1981")) |> mutate(n=n(),.by=CMA) |> filter(n==2), linetype="dashed") +
+  scale_color_manual(values=cma_colours) +
+  scale_y_continuous(breaks=seq(0.1,2,0.1),trans="log") +
+  scale_x_continuous(breaks=seq(1921,2021,5)) +
+  labs(title="Ratio of Actual to Age-expected households (occupied (private) dwellings)",
+       x=NULL,
+       colour="Region/metro",
+       y="Occupied housing units / age-expected households\n(based on 1981 Canadian household maintainer rates, log scale)",
+       caption="StatCan Census 1941-1976, 1971-2021 PUMF (individuals)")
+```
+
 ::: {.cell-output-display}
 ![Ratio of Actual to Age-expected households (occupied (private) dwelling units) in Canada](index_files/figure-html/fig-canada-cma-age-expected-households-1.png){#fig-canada-cma-age-expected-households}
 :::
@@ -149,25 +214,41 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 
 
 ::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-07-06 23:11:49 PDT"
+[1] "2025-07-14 23:39:30 PDT"
 ```
 
 
 :::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
 
 ::: {.cell-output .cell-output-stdout}
 
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [9ff9226] 2025-07-07: fix pdf compile
+Head:     [f53e665] 2025-07-08: update text about wartime housing shortage
 ```
 
 
 :::
+
+```{.r .cell-code}
+## Session info 
+sessionInfo()
+```
 
 ::: {.cell-output .cell-output-stdout}
 

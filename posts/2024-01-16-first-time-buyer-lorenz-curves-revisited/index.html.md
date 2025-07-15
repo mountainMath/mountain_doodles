@@ -1,32 +1,39 @@
 ---
-title: First time buyer Lorenz curves revisited
+title: "First time buyer Lorenz curves revisited"
 author: 
   - name: "Keith Stewart"
+    affiliation: "\\quad"
   - name: "Jens von Bergmann"
-    affiliation: MountainMath
+    affiliation: "MountainMath"
 date: '2024-01-16'
 slug: first-time-buyer-lorenz-curves-revisited
+description: 'Taking another look at first time buyer affordability: updating with 2021 data, accounting for property taxes, and introducing a discretized version of the measure.'
+image: "index_files/figure-html/ftb-discrete-1.png"
+bibliography: ../../common_literature.bib
+pdf_abstract: |
+  First time buyer Lorenz curves offer a way to understand the barriers potential homebuyers face depending on their income. We conceptualize this measure based on families as the relevant decision making unit, and use adjusted after-tax family income deciles matched against adjusted home values. The adjustments allow for a simple comparison matching buyers to relevant homes.
+  
+  We highlight how property tax rates matter when comparing this metric across Canadian metro areas, and introduce a discretized version of this measure that condenses the information into two parameters, making it easier to digest and compare across different housing markets and allows the tracing of change over time.
 categories:
   - affordability
   - cansim
   - Vancouver
   - Toronto
   - PUMF
-tags: []
-description: 'Taking another look at first time buyer affordability: updating with 2021 data, accounting for property taxes, and introducing a discretized version of the measure.'
-featured: ''
-image: "https://doodles.mountainmath.ca/posts/2024-01-16-first-time-buyer-lorenz-curves-revisited/index_files/figure-html/ftb-discrete-1.png"
-bibliography: ../../common_literature.bib 
+execute:
+  message: false
+  warning: false
+  cache: true
 code-tools:
   toggle: true
 fig-width: 8
-execute:
-  cache: true
-  message: false
-  warning: false
+fig-height: 5
+fig-format: png
+format:
+  html: default
+  blog-pdf:
+    output-file: 'first-time-buyer-lorenz-curves-revisited'
 ---
-
-
 
 
 
@@ -39,16 +46,15 @@ Three years ago we [wrote a post on First Time Buyer Lorenz Curves](https://dood
 
 Different families have different housing needs, to simplify this we decided to base our affordability measure on adjusted after-tax family income deciles, which is a person-based measure that assigns each person the after tax family income divided by the square root of the number of members in the family unit. This is a standard Statistics Canada concept, based on the idea that when family members share a household and other expenses there are synergies that make the family unit more efficient than the sum of its parts, with efficiency factor roughly given by the square root of the size of the family unit. In short, a couple making a \$100k and and person living alone making \$71k have similar standards of living $\left(\frac{100}{\sqrt{2}} \approx \frac{71}{\sqrt{1}}\right)$. 
 
-An added advantage is this gives us a person-based measure, so instead of assessing the affordability of family units, where e.g. a single person gets compared to a family of four, we are comparing people and how they are affected by affordability. This is particulary important due to the composition of family types across metropolitan areas not being the same.
+An added advantage is this gives us a person-based measure, so instead of assessing the affordability of family units, where e.g. a single person gets compared to a family of four, we are comparing people and how they are affected by affordability. This is particularly important due to the composition of family types across metropolitan areas not being the same.
 
-On the housing side, we showed we can similarly divide home prices by the square root of the number of bedrooms to get a stable measure of home prices that is comparable across different home sizes, as measured by number of bedrooms. Like the family example above, a \$900k 5 bedroom house is considered to "cost" the same as a \$400k 1 bedroom appartment $\left(\frac{900}{\sqrt{5}} \approx \frac{400}{\sqrt{1}}\right)$. A potentially better measure for scaling would likely be square footage, but that is not available in the census.
+On the housing side, we showed we can similarly divide home prices by the square root of the number of bedrooms to get a stable measure of home prices that is comparable across different home sizes, as measured by number of bedrooms. Like the family example above, a \$900k 5 bedroom house is considered to "cost" the same as a \$400k 1 bedroom apartment $\left(\frac{900}{\sqrt{5}} \approx \frac{400}{\sqrt{1}}\right)$. A potentially better measure for scaling would likely be square footage, but that is not available in the census.
 
 The *adjusted Gini curve* is then a visual representation of affordability of persons in first-time buyer family units. We believe this measure is useful to give an indication of how accessible ownership is in different housing markets. In particular this [avoides the pitfalls of using household-based measures](https://doodles.mountainmath.ca/blog/2023/08/17/housing-outcomes/) that are plaguing much of our housing discussions. Family units are the right kind of decision making units when it comes to buying (or renting) housing, so it's family income that matters.
 
 
 
 ## First-time home buyer Lorenz curves in 2021
-
 
 
 ::: {.cell}
@@ -177,6 +183,8 @@ property_taxes <- bind_rows(property_taxes_2011,property_taxes_2016,property_tax
 ```
 :::
 
+
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -265,6 +273,8 @@ pumf_homeprice_data <- bind_rows(
 ```
 :::
 
+
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -299,6 +309,8 @@ adj_ef_lorenz_data <- adj_ef_income %>%
   filter(!grepl("Other",CMA))
 ```
 :::
+
+
 
 ::: {.cell}
 
@@ -344,9 +356,7 @@ lorenz_theme2 <- function(step=0.1){
 :::
 
 
-
 Let's take a look what such a Lorenz curve for potential first-time buyers (essentially renters aged 20 through 49) looks like. To remind us we show the Lorenz curve for Calgary in 2021.
-
 
 
 ::: {.cell crop='true'}
@@ -369,10 +379,9 @@ calgary_ftbs %>%
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/calgary-ftb-1.png){width=768}
+![](index_files/figure-html/calgary-ftb-1.png)
 :::
 :::
-
 
 
 In Calgary, potential first-time buyers at the bottom end of the renter income can't afford any of the homes. Someone at the 20th income percentile of potential first-time buyers can only afford 12% of Calgary homes. But after that things pick up fast and someone at the 60th percentile can afford 75%, at which point things even out and the Lorenz curve hugs the diagonal.
@@ -380,7 +389,6 @@ In Calgary, potential first-time buyers at the bottom end of the renter income c
 This says nothing about what kind of home someone can afford, or where in the metro area an affordable home may be. It also skirts the discussion about "starter homes" or more generally the question if there is a mismatch between homes first-time buyers are buying and the overall distribution of homes in the metro area in terms of quality or size. Or if there should be such a distinction. What this does is it gives a rough matchup between incomes of (potential) first-time buyers and home values.
 
 With this we can update our Lorenz curves by showing both the 2016 and the new 2021 in the same plot, and adding in 2011 data for good measure, enabling us to see how the affordability distribution has shifted over the last 10 years.
-
 
 
 ::: {.cell crop='true'}
@@ -398,10 +406,9 @@ adj_ef_lorenz_data %>%
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/ftb-updated-1.png){width=768}
+![](index_files/figure-html/ftb-updated-1.png)
 :::
 :::
-
 
 
 This reveals that first time buyer affordability has shifted in different ways. The already largely unaffordable markets of Vancouver and Toronto have become further unaffordable. Hamilton shows the worst deterioration of affordability, as measured by the area between the 2016 and 2021 curve. On the other hand, Québec City has become more affordable.
@@ -409,7 +416,6 @@ This reveals that first time buyer affordability has shifted in different ways. 
 It's important to note that the 2021 census using 2020 income data, and especially low income people benefited from pandemic CERB payments that have lifted them up and explains some of the affordability improvements for the lower income percentiles. We note that this effect is only visible in some metro area, in others increasing home prices have more than offset the temporary pandemic income boost
 
 ## Property taxes
-
 
 
 ::: {.cell}
@@ -422,11 +428,9 @@ q_home_value_bump_3 <- -pv(r=filter(mortgage_rates,Year=="2021")$mortgage_rate, 
 :::
 
 
-
 This view might be overly optimistic, our affordability metric does not include property taxes and utilities. Cost of utilities are fairly uniform across Canada and don't change much over time, but property taxes certainly do. And this matters to affordability, for example Québec City's property tax rates are around 1% of the property value, compared to around 0.3% in Vancouver. Correspondingly people in Vancouver can afford higher-priced homes than people in Québec City on the same income.
 
 Adjusting our affordability metric to include property taxes, for this exercise taken from an [Altus report](https://www.saskatoon.ca/sites/default/files/documents/asset-financial-management/finance-supply/Altus_Group_Canadian_Property_Tax_Benchmark_Report_2022%20%284%29.pdf), shows this effect on affordability quite clearly.
-
 
 
 ::: {.cell crop='true'}
@@ -450,10 +454,9 @@ adj_ef_lorenz_data %>%
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/prop-tax-effect-1.png){width=768}
+![](index_files/figure-html/prop-tax-effect-1.png)
 :::
 :::
-
 
 
 In Vancouver, with it's relatively low property tax rate, this does not make much of a difference, whereas in other metro areas the difference is substantial.
@@ -461,7 +464,6 @@ In Vancouver, with it's relatively low property tax rate, this does not make muc
 This should not be taken to mean that property taxes have a causal effect on affordability in the sense that lowering property taxes will increase affordability of first-time buyers. This is because prices are highly endogenous to property taxes, if Québec City's property tax rates were the same as Vancouver's the net present value of a home in Québec would be around 31% higher, and exogenously changing property tax rates would cause prices to adjust to reflect that to a large extent. In Canada property tax rates are set by the ratio of aggregate home values to municipal budgets, so prices impact property tax rates. On the other hand, property tax rates impact home prices in the same way that interest rates do, with lower property tax rates leading to higher prices.
 
 With this insight we continue by including property taxes in our affordability metric, with an updated graph for all years and metro areas.
-
 
 
 ::: {.cell crop='true'}
@@ -480,10 +482,9 @@ adj_ef_lorenz_data %>%
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/ftb-pt-1.png){width=768}
+![](index_files/figure-html/ftb-pt-1.png)
 :::
 :::
-
 
 
 ## Condensing the Lorenz curve into a discrete metric
@@ -491,7 +492,6 @@ adj_ef_lorenz_data %>%
 An obvious candidate for a discrete metric is the Gini coefficient. The Gini coefficient is just the area between the Lorenz curve and the diagonal. This gives a broad measure of affordability in a metro area, a positive coefficient means housing is less affordable, a negative coefficient means housing is more affordable. Perfect proportional affordability is where every potential first time buyer can access housing up to the percentile that corresponds to their percentile in the income distribution.
 
 High unaffordability is characterized by the Lorenz curve staying under the diagonal, high affordability by a curve staying above the diagonal. In many cases we see curves exhibiting high-income skew where they are crossing the diagonal somewhere in the middle of the income spectrum, with lower income people unable to afford homes corresponding to their income percentile while higher income people able to afford homes above their income percentile.
-
 
 
 ::: {.cell crop='true'}
@@ -553,16 +553,14 @@ ggplot(example, aes(x=percentile, y=`Can afford price percentile`, col=Type))+
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/ftb-synthetic-1.png){width=768}
+![](index_files/figure-html/ftb-synthetic-1.png)
 :::
 :::
 
 
+But there are several problems, the first time buyer Lorenz curves can also take values above the diagonal, and for example the two curves show above with zero Gini coefficient are qualitatively quite different. The *high-income skew* curve models a housing market like Calgary in 2021, where lower income potential first time buyers can't afford housing corresponding to their income percentile, whereas higher income potential first time buyers can access more housing than corresponds to their income percentile. The Gini coefficient can't distinguish between these two cases, both have a Gini of zero, but they represent distinct distributions of (un-)affordability.For analysis and policy making, it is important our metrics summarizing the Lorenz curve retains this information.
 
-But there are several problems, the first time buyer Lorenz curves can also take values above the diagonal, and for example the two curves show above with zero Gini coefficient are qualitatively quite different. The *high-income skew* curve models a housing market like Calgary in 2021, where lower income potential first time buyers can't afford housing corresponding to their income percentile, whereas higher income potential first time buyers can access more housing than corresponds to their income percentile. The Gini coefficient can't distinguish between these two cases, both have a Gini of zero, but they represent distinct distributions of (un-)affordability.For analysis and policy making, it is important our metrics summarizing the lorenz curve retains this information.
-
-Intuitively we can think of the two model cases of high (un)affordability and high-income skew as the first two harmonics relative to the diagonal representing perfect proportional affordability. More formally we discretize the Lorenz curves by taking the first two terms of the Fourier expansion of their difference from the diagonal, the *perfect proportional affordability* lorenz curve . A sine expansion will capture these reasonably well with just a few terms, where the first term is a good approximation of the (scaled) Gini coefficient representing the **aggregate unaffordability** and the second term gives the strength of the main oscillation around the diagonal, interpreted as **high-income skew**.
-
+Intuitively we can think of the two model cases of high (un)affordability and high-income skew as the first two harmonics relative to the diagonal representing perfect proportional affordability. More formally we discretize the Lorenz curves by taking the first two terms of the Fourier expansion of their difference from the diagonal, the *perfect proportional affordability* Lorenz curve . A sine expansion will capture these reasonably well with just a few terms, where the first term is a good approximation of the (scaled) Gini coefficient representing the **aggregate unaffordability** and the second term gives the strength of the main oscillation around the diagonal, interpreted as **high-income skew**.
 
 
 ::: {.cell crop='true'}
@@ -631,16 +629,14 @@ adj_ef_lorenz_data %>%
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/ftb-approx-1.png){width=768}
+![](index_files/figure-html/ftb-approx-1.png)
 :::
 :::
-
 
 
 Except for the highly unaffordable metro areas of Vancouver, Toronto and Hamilton the first two (sine) Fourier coefficients capture the curve quite well, for Vancouver, Toronto and Hamilton the approximation struggles to properly capture how long the curve stays flat and how late it rises. This is yet another way how these city's affordability, or the lack thereof, is extreme compared to the other metro areas.
 
 We can now take these two coefficients and plot their movement over time.
-
 
 
 ::: {.cell}
@@ -716,10 +712,9 @@ ggplot(cutoffs_clean,aes(x=Gini,y=-oscillation,colour=fct_rev(CMA))) +
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/ftb-discrete-1.png){width=768}
+![](index_files/figure-html/ftb-discrete-1.png)
 :::
 :::
-
 
 
 This graph shows that Vancouver, Toronto and Hamilton are in a league of there own when it comes to housing affordability. They exhibit quite similar aggregate unaffordability and high-income skew. Vancouver has been doing quite poorly for the entire decade covered here, whereas Toronto and in particular Hamilton have see their housing affordability radically worsen over the past decade. Ottawa-Gatineau and Montréal are in mildly unaffordable territory, while Calgary, Edmonton and Winnipeg are fairly neutral in terms of affordability. Québec City is the most affordable market considered here, and its affordability has improved significantly.
@@ -729,7 +724,6 @@ We note that the values taken by the CMAs follow a rough frown shape. This is no
 ## Property tax effects
 
 We can revisit what this would look like if we did not account for differences in property tax rates.
-
 
 
 ::: {.cell}
@@ -790,10 +784,9 @@ ggplot(cutoffs2_clean,aes(x=Gini,y=-oscillation,colour=fct_rev(CMA))) +
 ```
 
 ::: {.cell-output-display}
-![](index_files/figure-html/tfb-discrete-npt-1.png){width=768}
+![](index_files/figure-html/tfb-discrete-npt-1.png)
 :::
 :::
-
 
 
 Omitting property taxes decreases aggregate unaffordability, but it also changes the relative position of the cities. For example, when not accounting for property taxes, Vancouver has slightly higher aggregate unaffordability and slightly stronger high-income skew than Toronto, but this reverses after accounting for property taxes.
@@ -809,7 +802,6 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 
 <details><summary>Reproducibility receipt</summary>
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -820,7 +812,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-05-29 12:11:40 PDT"
+[1] "2025-07-14 23:36:32 PDT"
 ```
 
 
@@ -836,7 +828,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [d92cc46] 2025-05-29: fix key image link
+Head:     [f53e665] 2025-07-08: update text about wartime housing shortage
 ```
 
 
@@ -850,7 +842,7 @@ sessionInfo()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-R version 4.5.0 (2025-04-11)
+R version 4.5.1 (2025-06-13)
 Platform: aarch64-apple-darwin20
 Running under: macOS Sequoia 15.5
 
@@ -868,42 +860,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] canpumf_0.2.1   patchwork_1.3.0 FinCal_0.6.3    lubridate_1.9.4
+ [1] canpumf_0.3.0   patchwork_1.3.1 FinCal_0.6.3    lubridate_1.9.4
  [5] forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4     purrr_1.0.4    
- [9] readr_2.1.5     tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.2  
+ [9] readr_2.1.5     tidyr_1.3.1     tibble_3.3.0    ggplot2_3.5.2  
 [13] tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] generics_0.1.4            bitops_1.0-9             
- [3] stringi_1.8.7             hms_1.1.3                
- [5] digest_0.6.37             magrittr_2.0.3           
- [7] evaluate_1.0.3            grid_4.5.0               
- [9] timechange_0.3.0          RColorBrewer_1.1-3       
-[11] fastmap_1.2.0             plyr_1.8.9               
-[13] jsonlite_2.0.0            httr_1.4.7               
-[15] scales_1.4.0              codetools_0.2-20         
-[17] cansim_0.4.2              cli_3.6.5                
-[19] crayon_1.5.3              rlang_1.1.6              
-[21] bit64_4.6.0-1             withr_3.0.2              
-[23] yaml_2.3.10               parallel_4.5.0           
-[25] tools_4.5.0               reshape2_1.4.4           
-[27] tzdb_0.5.0                curl_6.2.2               
-[29] vctrs_0.6.5               R6_2.6.1                 
-[31] git2r_0.36.2              lifecycle_1.0.4          
-[33] bit_4.6.0                 htmlwidgets_1.6.4        
-[35] vroom_1.6.5               pkgconfig_2.0.3          
-[37] pillar_1.10.2             gtable_0.3.6             
-[39] glue_1.8.0                Rcpp_1.0.14              
-[41] xfun_0.52                 tidyselect_1.2.1         
-[43] rstudioapi_0.17.1         knitr_1.50               
-[45] farver_2.1.2              htmltools_0.5.8.1        
-[47] rmarkdown_2.29            mountainmathHelpers_0.1.4
-[49] compiler_4.5.0            RCurl_1.98-1.17          
+ [1] gtable_0.3.6              jsonlite_2.0.0           
+ [3] compiler_4.5.1            Rcpp_1.0.14              
+ [5] tidyselect_1.2.1          git2r_0.36.2             
+ [7] bitops_1.0-9              scales_1.4.0             
+ [9] yaml_2.3.10               fastmap_1.2.0            
+[11] plyr_1.8.9                R6_2.6.1                 
+[13] generics_0.1.4            knitr_1.50               
+[15] htmlwidgets_1.6.4         pillar_1.10.2            
+[17] RColorBrewer_1.1-3        tzdb_0.5.0               
+[19] rlang_1.1.6               stringi_1.8.7            
+[21] xfun_0.52                 timechange_0.3.0         
+[23] cli_3.6.5                 withr_3.0.2              
+[25] magrittr_2.0.3            mountainmathHelpers_0.1.4
+[27] digest_0.6.37             grid_4.5.1               
+[29] rstudioapi_0.17.1         hms_1.1.3                
+[31] lifecycle_1.0.4           vctrs_0.6.5              
+[33] evaluate_1.0.4            glue_1.8.0               
+[35] farver_2.1.2              RCurl_1.98-1.17          
+[37] reshape2_1.4.4            rmarkdown_2.29           
+[39] tools_4.5.1               pkgconfig_2.0.3          
+[41] htmltools_0.5.8.1        
 ```
 
 
 :::
 :::
-
 
 </details>

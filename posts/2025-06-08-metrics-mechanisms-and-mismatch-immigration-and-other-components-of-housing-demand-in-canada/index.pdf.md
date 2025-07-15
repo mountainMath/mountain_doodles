@@ -37,7 +37,6 @@ format:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/06/08/metrics-mechanisms-and-mismatch-immigration-and-other-components-of-housing-demand-in-canada/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
