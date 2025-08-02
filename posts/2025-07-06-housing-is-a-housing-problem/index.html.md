@@ -73,7 +73,7 @@ The first question is how would housing get allocated under such a system? In re
 
 But right off the bat this runs into a major problem: In most metro areas there are already a lot more family units than homes. Some families or unattached individuals will have to share homes and government will have to decide who and how. Some may enjoy sharing a home and one might imagine government setting up a system where people can volunteer to share a home rather than to get one of their own, but that probably requires giving out some perks (or exercising some coercion). To understand how this would play out we first need an estimate how many homes we are short and how many would have to share.
 
-Fortunately that's an easy question to answer since we have worked this out in the past, although the answer depends a bit on what kind of sharing we think is acceptable as a baseline. Our current rules in how we allocate non-market housing might give some guidance to that question. Non-market housing providers generally won't issue lease agreements to doubled-up households and tenants who do share their non-market home with others run the risk of losing their benefits. One exception here is adult children who often are allowed in the parent's household. To get a rough idea how we might distribute housing, we offer two metrics: a) the number of housing units required to avoid all doubling up (with some allowances for collage-aged kids) shown in @fig-no-doubling-up, [@housing_shortages_doubled_up_households.2024] and b) the number of homes needed so that every family unit can have their own home, with more generous allowances of adult children living with parents shown in @fig-doubling-up-families.[^1] [@doubling-up-distinguishing-families-from-households.2024]
+Fortunately that's an easy question to answer since we have worked this out in the past, although the answer depends a bit on what kind of sharing we think is acceptable as a baseline. Our current rules in how we allocate non-market housing might give some guidance to that question. Non-market housing providers generally won't issue lease agreements to doubled-up households and tenants who do share their non-market home with others run the risk of losing their benefits. One exception here is adult children who often are allowed in the parent's household. To get a rough idea how we might distribute housing, we offer two metrics: a) the number of housing units required to avoid all doubling up (with some allowances for college-aged kids) shown in @fig-no-doubling-up, [@housing_shortages_doubled_up_households.2024] and b) the number of homes needed so that every family unit can have their own home, with more generous allowances of adult children living with parents shown in @fig-doubling-up-families.[^1] [@doubling-up-distinguishing-families-from-households.2024]
 
 [^1]: The family unit estimate suffers from under-counts, and it counts all adult children living with parents as part of the parent's family unit irrespective of age.
 
@@ -223,7 +223,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-07-14 23:39:30 PDT"
+[1] "2025-08-01 21:42:29 PDT"
 ```
 
 
@@ -239,7 +239,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [f53e665] 2025-07-08: update text about wartime housing shortage
+Head:     [9d47816] 2025-08-01: Merge pull request #10 from maswiebe/patch-2
 ```
 
 
@@ -255,7 +255,7 @@ sessionInfo()
 ```
 R version 4.5.1 (2025-06-13)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sequoia 15.5
+Running under: macOS Sequoia 15.6
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
@@ -285,7 +285,7 @@ loaded via a namespace (and not attached):
 [23] htmlwidgets_1.6.4         pkgconfig_2.0.3          
 [25] rstudioapi_0.17.1         farver_2.1.2             
 [27] digest_0.6.37             R6_2.6.1                 
-[29] tidyselect_1.2.1          pillar_1.10.2            
+[29] tidyselect_1.2.1          pillar_1.11.0            
 [31] magrittr_2.0.3            tools_4.5.1              
 [33] gtable_0.3.6              ggplot2_3.5.2            
 ```

@@ -9,24 +9,34 @@ author:
     affiliation: "UBC Sociology"
 date: '2025-07-06'
 slug: housing-is-a-housing-problem
-description: 'The main housing problem in Canada is that there is not enough of it.'
-image: 'fig-canada-cma-age-expected-households-1.png'
+description: 'The main housing problem in Canada is that there is not enough of it. A call for elevating household formation and doubling up to a primary metric to monitor housing.'
+image: 'index_files/figure-html/fig-canada-cma-age-expected-households-1.png'
 bibliography: ../../common_literature.bib
 pdf_abstract: |
-  The main housing problem in Canada is that there is not enough of it. We can see this by looking at prices and rents, but also by looking at people's living arrangements and rates of doubling up. Doubling up is a direct measure of housing hardship that should get tracked on a regular bases. It also serves as an important compliment to traditional affordability metrics used in Canada that suffer from collider bias that makes it difficult to use them to track progress in solving housing problems.
+  The main housing problem in Canada is that there is not enough of it. We can see this by looking at prices and rents, but also by looking at people's living arrangements and rates of doubling up. Doubling up is a direct measure of housing hardship that should get tracked on a regular basis. It also serves as an important compliment to traditional affordability metrics used in Canada that suffer from collider bias that makes it difficult to use them to track progress in solving housing problems.
+  
   We also develop long timelines to track household formation and doubling up in Canada over the past 80 years to demonstrate the rapid undoubling during the first half of that time period, followed by a reversal to increased doubling up in most of Canada over the latter half. 
+categories: 
+  - affordability
+  - canpumf
+  - cansim
+  - cancensus
 execute:
   message: false
   warning: false
-  echo: false
   cache: true
+code-tools:
+  toggle: true
 fig-width: 8
 fig-height: 5
 fig-format: png
 format:
   html: default
-  pdf: default
-  markdown: default
+  blog-pdf:
+    fig-format: 'png'
+    fig-width: 8
+    fig-height: 5
+    output-file: 'housing-is-a-housing-problem'
 ---
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/07/06/housing-is-a-housing-problem/" target="_blank">HomeFreeSociology</a>)</i></p>
@@ -34,6 +44,14 @@ format:
 
 ::: {.cell}
 
+```{.r .cell-code}
+library(tidyverse)
+library(cansim)
+library(canpumf)
+library(mountainmathHelpers)
+source(here::here("R/mhr_pumf.R"))
+source(here::here("R/old_census_aehh_hh.R"))
+```
 :::
 
 
@@ -55,7 +73,7 @@ The first question is how would housing get allocated under such a system? In re
 
 But right off the bat this runs into a major problem: In most metro areas there are already a lot more family units than homes. Some families or unattached individuals will have to share homes and government will have to decide who and how. Some may enjoy sharing a home and one might imagine government setting up a system where people can volunteer to share a home rather than to get one of their own, but that probably requires giving out some perks (or exercising some coercion). To understand how this would play out we first need an estimate how many homes we are short and how many would have to share.
 
-Fortunately that's an easy question to answer since we have worked this out in the past, although the answer depends a bit on what kind of sharing we think is acceptable as a baseline. Our current rules in how we allocate non-market housing might give some guidance to that question. Non-market housing providers generally won't issue lease agreements to doubled-up households and tenants who do share their non-market home with others run the risk of losing their benefits. One exception here is adult children who often are allowed in the parent's household. To get a rough idea how we might distribute housing, we offer two metrics: a) the number of housing units required to avoid all doubling up (with some allowances for collage-aged kids) shown in @fig-no-doubling-up, [@housing_shortages_doubled_up_households.2024] and b) the number of homes needed so that every family unit can have their own home, with more generous allowances of adult children living with parents shown in @fig-doubling-up-families.[^1] [@doubling-up-distinguishing-families-from-households.2024]
+Fortunately that's an easy question to answer since we have worked this out in the past, although the answer depends a bit on what kind of sharing we think is acceptable as a baseline. Our current rules in how we allocate non-market housing might give some guidance to that question. Non-market housing providers generally won't issue lease agreements to doubled-up households and tenants who do share their non-market home with others run the risk of losing their benefits. One exception here is adult children who often are allowed in the parent's household. To get a rough idea how we might distribute housing, we offer two metrics: a) the number of housing units required to avoid all doubling up (with some allowances for college-aged kids) shown in @fig-no-doubling-up, [@housing_shortages_doubled_up_households.2024] and b) the number of homes needed so that every family unit can have their own home, with more generous allowances of adult children living with parents shown in @fig-doubling-up-families.[^1] [@doubling-up-distinguishing-families-from-households.2024]
 
 [^1]: The family unit estimate suffers from under-counts, and it counts all adult children living with parents as part of the parent's family unit irrespective of age.
 
@@ -93,19 +111,71 @@ At the systems level we see that collectively these housing aspirations can only
 
 
 ::: {.cell}
+
+```{.r .cell-code}
+hmr_all <- simpleCache(get_phm_timeline(),"hmr_data_all.rds",path=here::here("data"),refresh=FALSE)
+
+cma_colours <- c(setNames(RColorBrewer::brewer.pal(8,"Dark2"),
+                          c("Toronto","Montréal","Vancouver","Ottawa – Gatineau",
+                            "Calgary","Edmonton","Québec City")),
+                          c("Canada"="black"))
+
+hmr_all %>%
+  bind_rows(summarize(.,Count=sum(Count),.by=c(AGEGRP,PRIHM,Year)) |>
+              mutate(CMA="Canada")) %>%
+  bind_rows(summarize(.,Count=sum(Count),.by=c(PR,AGEGRP,PRIHM,Year)) |>
+              rename(CMA=PR)) |>
+  mutate(hmr=Count/sum(Count),.by=c(CMA,AGEGRP,Year)) %>%
+  left_join(filter(.,PRIHM,CMA=="Canada",Year=="1981") |> select(AGEGRP,base_hmr=hmr),by="AGEGRP") |>
+  mutate(Households=ifelse(PRIHM,Count,0),
+         AEHH=base_hmr*Count) |>
+  summarize(across(c(Households,AEHH),\(x)sum(x,na.rm=TRUE)),.by=c(Year,CMA)) |>
+  mutate(Source="PUMF") |>
+  bind_rows(get_1941_1976_aehh_hh() |> 
+              mutate(Source="Summary tapes\nPrinted tables")) |>
+  filter(CMA %in% c("Toronto","Montréal","Vancouver","Ottawa – Gatineau",
+                    "Calgary","Edmonton","Canada","Québec","Alberta","Quebec")) |>
+  mutate(CMA = recode(CMA,"Québec"="Québec City", "Quebec"="Quebec (PR)","Alberta"="Alberta (PR)")) |>
+  filter(!grepl("PR",CMA)) |>
+  mutate(ratio=Households/AEHH) %>%
+  mutate(CMA=factor(CMA,levels=filter(.,Year=="2021") |> arrange(-ratio) |> pull(CMA))) |>
+  mutate(fudge=ratio/lag(ratio,order_by = Source),.by=c(Year,CMA)) |>
+  mutate(fudge=mean(fudge,na.rm=TRUE),.by=Year) |>
+  arrange(Year) |>
+  fill(fudge,.direction="up") |>
+  mutate(fudge=ifelse(Source=="PUMF",NA,fudge)) |>
+  mutate(fudge=coalesce(fudge,1)) |>
+  mutate(fudge=ifelse(Year=="1976",fudge,1)) |> # only fudge 1976
+  ggplot(aes(x=as.integer(Year),y=ratio/fudge,colour=CMA)) +
+  geom_point(aes(shape=Source)) +
+  scale_shape_manual(values=c("PUMF"=21,"Summary tapes\nPrinted tables"=16)) +
+  geom_line(aes(group=interaction(CMA,Source))) +
+  geom_line(data=~filter(.,Year %in% c("1976","1981")) |> mutate(n=n(),.by=CMA) |> filter(n==2), linetype="dashed") +
+  scale_color_manual(values=cma_colours) +
+  scale_y_continuous(breaks=seq(0.1,2,0.1),trans="log") +
+  scale_x_continuous(breaks=seq(1921,2021,5)) +
+  labs(title="Ratio of Actual to Age-expected households (occupied (private) dwellings)",
+       x=NULL,
+       colour="Region/metro",
+       y="Occupied housing units / age-expected households\n(based on 1981 Canadian household maintainer rates, log scale)",
+       caption="StatCan Census 1941-1976, 1971-2021 PUMF (individuals)")
+```
+
 ::: {.cell-output-display}
-![Ratio of Actual to Age-expected households (occupied (private) dwelling units) in Canada](index_files/figure-pdf/fig-canada-cma-age-expected-households-1.png){#fig-canada-cma-age-expected-households}
+![Ratio of Actual to Age-expected households (occupied (private) dwelling units) in Canada](index_files/figure-pdf/fig-canada-cma-age-expected-households-1.png){#fig-canada-cma-age-expected-households fig-pos='H'}
 :::
 :::
 
 
 Age-expected households are the number of households one would expect to see if age-specific household formation rates were equal to those in a fixed year, in our case 1981 when household formation peaked in Canada. The ratio of actual observed households to age-expected households based on the 1981 standard for Canada demonstrates where we've seen substantial backsliding since. Toronto and Vancouver really stand out! But really everywhere outside of Quebec (except for metropolitan Ottawa, which of course is partly in Quebec) has seen interruption to their progress in household formation since 1981.
 
-To dive a bit further into the technicalities of assembling this figure, we split the time series into parts where the data was derived from the PUMF and that derived from published census tables and electronic summary tapes, these data series are not strictly comparable because the PUMF data allows for filtering on the population in private households, whereas the older data looks at the total population which is not quite the right metric to use here. In cases where the time series don't overlap we connect them via dashed lines. Moreover, in older censuses the *households* concept was somewhat floating in definition as well as how enumerators coded this. [@wargon.1979; @harris1994]. Misalignment is small if age data as well as households counts are for the entire population, including households in collective dwellings, but larger discrepancies emerge if e.g. ages are reported for the entire population but household counts are only reported for private households, as is the case in the 1976 summary tapes. We adjusted the 1976 ratio to roughly account for this discrepancy. Some of the fields in the [1961](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1961/statistics) and [1966](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1966/statistics) summary tape data have coding issues, we replaced some of the data with manually entered data from the printed tables as appropriate. Consistency of reporting for older censuses is less clear and actual values may differ somewhat from the values we report in the graph, discrepancies because of inconsistencies in the consideration of private vs collective dwellings can result in a roughly 3% deviation from our reported ratios. Our time series for Canada exhibits a large kink in 1941 that we cannot explain, some caution in interpreting data for that year is advisable. The concept of Metropolitan areas (or "greater cities") was introduced in 1941 and is not available prior to that. Metropolitan area boundaries adjust over time.
+To dive a bit further into the technicalities of assembling this figure, we split the time series into parts where the data was derived from the PUMF and that derived from published census tables and electronic summary tapes, these data series are not strictly comparable because the PUMF data allows for filtering on the population in private households, whereas the older data looks at the total population which is not quite the right metric to use here. In cases where the time series don't overlap we connect them via dashed lines. Moreover, in older censuses the *households* concept was somewhat floating in definition as well as how enumerators coded this. [@wargon.1979; @harris1994]. Misalignment is small if age data as well as households counts are for the entire population, including households in collective dwellings, but larger discrepancies emerge if e.g. ages are reported for the entire population but household counts are only reported for private households, as is the case in the 1976 summary tapes. We adjusted the 1976 ratio to roughly account for this discrepancy. Some of the fields in the [1961](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1961/statistics) and [1966](https://mdl.library.utoronto.ca/collections/numeric-data/census-canada/1966/statistics) summary tape data have coding issues, we replaced some of the data with manually entered data from the printed tables as appropriate. Consistency of reporting for older censuses is less clear and actual values may differ somewhat from the values we report in the graph, discrepancies because of inconsistencies in the consideration of private vs collective dwellings can result in a roughly 3% deviation from our reported ratios. Our time series for Canada exhibits a large kink in 1941, corresponding to a severe housing shortage caused by the great depression, triggering the government to directly participate in housing construction via the crown corporation *Wartime Housing Limited* it created for this purpose. [@wade1986] The concept of Metropolitan areas (or "greater cities") was introduced in 1941 and is not available prior to that. Metropolitan area boundaries adjust over time.
 
-Age-expected households were previously suggested as input for econometric modelling [@dipasquale1994housing] to avoid collider bias when modelling housing demand elasticities, although unfortunately this insight seems to have become forgotten in much of the more recent economics literature, where people too often assume households as fixed and unresponsive to prices and rents, or household formation elasticities are under-estimated. Given the large changes in household formation over time and across metro areas shown in @fig-canada-cma-age-expected-households misspecifying structural equation models by ignoring or under-estimating household formation leads to substantial collider bias. <!-- that permeates the literature. It is not uncommon to see researchers assume that e.g. building five additional housing units will trigger five household moving in from a different region, instead of four units getting occupied up by people already in the region via un-doubling and one taken up by an additional net in-migrant. We are planing to go into detail on this using examples from the recent housing literature in a future post.-->
+Age-expected households were previously suggested as input for econometric modelling [@dipasquale1994housing] to avoid collider bias when modelling housing demand elasticities, although unfortunately this insight seems to have become forgotten in much of the more recent economics literature, where people too often assume households as fixed and unresponsive to prices and rents, or household formation elasticities are under-estimated. Given the large changes in household formation over time and across metro areas shown in @fig-canada-cma-age-expected-households misspecifying structural equation models by ignoring or under-estimating household formation leads to substantial collider bias.
 
 The decline in household formation since 1981 cannot be explained by changes in cultural makeup. Cultural factors do play some small role, but these trends also hold when only looking at the non-immigrant non-visible minority sub-population in Canada and there is strong evidence that the main cause is increasing housing scarcity and, with it, increasing housing costs. [@mhu.2025]
+
+# Doubling Up as a Metric
 
 We are not alone in pointing out that our standard household-based measures we use in Canada to monitor housing, like Core Housing Need, are insufficient, and calling for also tracking household living arrangements. This is particularly clear when looking at the period from 1941 to 1981 when Canada made a lot of progress in improving housing outcomes, while standard affordability measures did not change much. In 1989 John Miron observed:
 
@@ -118,8 +188,6 @@ Miron continues:
 > To focus exclusively on shelter-cost-to-income ratios as an indicator of affordable housing is thus too narrow. Those who point to the declining affordability of housing to the "average" household miss an important point. Given the large income and price elasticities of household formation among nonfamily individuals, each new program to improve affordability may well have the effect merely of increasing the number of newly-forming low-income households paying a high percentage of their income on housing.
 
 We note that people who see their shelter costs to income ratio go up when un-doubling generally form their own household because they feel it improves their overall housing outcomes despite reducing their affordability. Facilitating un-doubling is thus a worthy goal in its own right and leads to material improvement, albeit one that is not captured by commonly used metrics.
-
-# Doubling Up as a Metric
 
 The last sentence of Miron's paper is still very relevant today:
 
@@ -146,32 +214,48 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 
 
 ::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-07-06 17:37:10 PDT"
+[1] "2025-08-01 21:47:05 PDT"
 ```
 
 
 :::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
 
 ::: {.cell-output .cell-output-stdout}
 
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [6f4ad19] 2025-06-09: add categories
+Head:     [9d47816] 2025-08-01: Merge pull request #10 from maswiebe/patch-2
 ```
 
 
 :::
+
+```{.r .cell-code}
+## Session info 
+sessionInfo()
+```
 
 ::: {.cell-output .cell-output-stdout}
 
 ```
 R version 4.5.1 (2025-06-13)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sequoia 15.5
+Running under: macOS Sequoia 15.6
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
@@ -188,7 +272,7 @@ attached base packages:
 
 other attached packages:
  [1] mountainmathHelpers_0.1.4 canpumf_0.3.0            
- [3] cansim_0.4.3              lubridate_1.9.4          
+ [3] cansim_0.4.4              lubridate_1.9.4          
  [5] forcats_1.0.0             stringr_1.5.1            
  [7] dplyr_1.1.4               purrr_1.0.4              
  [9] readr_2.1.5               tidyr_1.3.1              
@@ -204,7 +288,7 @@ loaded via a namespace (and not attached):
 [21] tools_4.5.1        tzdb_0.5.0         here_1.0.1         curl_6.4.0        
 [25] assertthat_0.2.1   vctrs_0.6.5        R6_2.6.1           git2r_0.36.2      
 [29] lifecycle_1.0.4    bit_4.6.0          arrow_20.0.0.2     pkgconfig_2.0.3   
-[33] pillar_1.10.2      gtable_0.3.6       glue_1.8.0         xfun_0.52         
+[33] pillar_1.11.0      gtable_0.3.6       glue_1.8.0         xfun_0.52         
 [37] tidyselect_1.2.1   rstudioapi_0.17.1  knitr_1.50         farver_2.1.2      
 [41] htmltools_0.5.8.1  rmarkdown_2.29     compiler_4.5.1    
 ```
