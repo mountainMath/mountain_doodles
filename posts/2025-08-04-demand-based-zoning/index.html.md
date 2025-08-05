@@ -1,0 +1,400 @@
+---
+title: "Demand based zoning"
+author:
+  - name: Jens von Bergmann
+    affiliation: MountainMath
+  - name: Nathan Lauster
+    affiliation: UBC Sociology
+date: '2025-08-04'
+slug: demand-based-zoning
+description: 'What if zoning was responsive to underlying demand to live in an area? A simple model to estimate demand-based zoning in Vancouver.'
+image: 'index_files/figure-html/fig-min-density-normalized-all'
+categories: 
+  - Vancouver
+  - affordability
+  - density
+pdf_abstract: |
+  What if zoning was responsive to underlying demand to live in an area? That is, rather than reserving parts of the landscape for the exclusive use of those who can afford an entire underlying lot, what if we instead allow people to build enough residential floor space on the lot to share? This exercise sets up a kind of counterfactual, enabling us to get a look at both: a) what underlying demand for floor space on a lot actually looks like, and b) how our current zoning regime sets itself up to protect the most privileged from having to fully compete with this demand. We use data from Vancouver to work through a rough model of what zoning to demand could look like.
+bibliography: ../../common_literature.bib 
+code-tools:
+  toggle: true
+fig-width: 8
+fig-height: 5
+fig-format: png
+execute:
+  cache: true
+  message: false
+  warning: false
+format:
+  html: default
+  blog-pdf:
+    fig-format: 'png'
+    fig-width: 8
+    fig-height: 5
+    output-file: 'demand-based-zoning'
+---
+
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/08/04/demand-based-zoning/" target="_blank">HomeFreeSociology</a>)</i></p>
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+library(tidyverse)
+library(sf)
+library(VancouvR)
+library(mountainmathHelpers)
+```
+:::
+
+
+What if zoning was responsive to underlying demand to live in an area? That is, rather than reserving parts of the landscape for the exclusive use of those who can afford an entire underlying lot, what if we instead allow people to build enough residential floor space on the lot to share? This exercise sets up a kind of counterfactual, enabling us to get a look at both: a) what underlying demand for floor space on a lot actually looks like, and b) how our current zoning regime sets itself up to protect the most privileged from having to fully compete with this demand.
+
+In Vancouver we have recently seen a range of land use reforms, from upzoning (almost) the entire city for multiplexes, to in principle allowing higher density in the Broadway corridor, and in some instances actually zoning for it, to land use plans around the Rupert and Renfrew Skytrain stations that also incorporate some upzoning in the "villages" areas. All these changes trigger a lot of discussions with people bringing arguments for or against land use changes. But one part that rarely enters the arguments is estimates of the underlying demand to live in these areas.
+
+We believe failure to take underlying demand into account is a pretty large oversight. That's because demand mostly reflects people working through competitive constraints on their housing choices. Housing is good, actually. People derive tremendous value from living in housing, in a location that offers them the mix of access to jobs and amenities that fits their needs. To the extent that zoning works against enabling more people to benefit from living in a given location, it's holding people back from better meeting their needs. There are quite a range of justifications for zoning, but where zoning is strongly binding (holding back the addition of more housing), the costs of doing so should be more clearly taken into account.
+
+Zoning in Vancouver has been strongly binding for several decades now. It is very rare that a developer would build below the maximum floor space allowed by outright zoning (usually explicitly governed here by floor space ratio - or FSR - relative to lot size). And there is very little capacity to build within existing outright zoning. [@zoned-capacity-promise-and-pitfalls.2024] In other words, in Vancouver zoning has been used to limit the choices people have, to deny them to live where they would want to live. With the logical consequence that housing has become expensive, and people double up or move further out to make housing work. And in planning discussions we never sit down to quantify the harm that's done in this way, and weigh it against the benefits of keeping densities low.
+
+Quantifying the price of zoning people out is not easy of course, but we can flip this around and ask what it would look like if we zoned for the demand to live in an area. That's complicated too of course, but in this post we will do a very rough first approximation on what that would look like in Vancouver.
+
+The underlying idea is similar to what we have discussed before when trying to estimate useful housing targets. The demand to live in an area gets expressed via prices and rents, prices are information aggregators that combine the diverse drivers of demand into a single number. We can use this mechanism to estimate the demand for housing by how much housing could be profitably built there. We can assume that construction gets more expensive as we build taller, and a profit-maximizing developer will build until the marginal (social) cost of constructions, including profit expectations, equals the price they can sell it for. That's a lot of work to estimate, but we can roughly proxy for it using the heuristic that when new building are constructed in an unconstrained environment, the underlying land value generally makes up about 20% of the total value of the property. [@glaeser_gyourko.2003] This observation was made for single family homes, but work looking at the average vs marginal construction cost of multi-family buildings suggests that this is a reasonable approximation for multi-family buildings as well. [@eriksen2021]
+
+More precisely, with the land value per square foot of land $\overline{LV}$, and the construction cost, including development fees and profit expectations, per square foot $C$, we can estimate the floor space ratio $FSR$ that would be needed achieve a share of land value of $LS$ as follows:
+
+$$
+LS = \frac{\overline{LV}}{\overline{LV}+FSR \cdot C}
+$$
+
+or equivalently
+
+$$
+FSR = \left(\frac{\overline{LV}}{LS} - \overline{LV}\right) \cdot \frac{1}{C}
+$$
+
+
+::: {.cell}
+
+```{.r .cell-code}
+tax_data <- get_cov_data(dataset_id = "property-tax-report",
+                         where="tax_assessment_year='2025'",
+                         select = "zoning_district, zoning_classification, current_land_value, land_coordinate as tax_coord")
+property_polygons <- get_cov_data(dataset_id="property-parcel-polygons") |>
+  sf::st_transform(26910)
+
+schools <- get_cov_data(dataset_id="schools") |>
+  sf::st_transform(26910) |>
+  sf::st_make_valid() 
+
+parks <- get_cov_data(dataset_id="parks-polygon-representation") |>
+  sf::st_transform(26910) |>
+  sf::st_make_valid() 
+```
+:::
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+construction_cost <- 900
+ls <- 0.2
+
+plot_data <- property_polygons |>
+  left_join(tax_data |> summarize(current_land_value=sum(current_land_value),
+                                  across(matches("zoning"), ~first(na.omit(.))),
+                                  .by=tax_coord),by="tax_coord") %>%
+  mutate(area=st_area(.) |> units::set_units(ft^2) |> as.numeric()) |>
+  mutate(lv=current_land_value/area) |>
+  mutate(FSR_floor = (lv/ls-lv)/construction_cost) |>
+  st_join(schools |> select(school=school_name,geometry)) |>
+  st_join(parks |> select(park=park_name,geometry) |> st_buffer(-5)) |>
+  mutate(FSR_floor=case_when(!is.na(school) ~ NA,
+                             !is.na(park) ~ NA,
+                             tax_coord=="17579092" ~ NA, #langara golf course
+                             tax_coord=="64003596" ~ NA, #jericho
+                             tax_coord=="81227904" ~ NA, # Fraserview golf course
+                           TRUE ~ FSR_floor)) |>
+  mutate(FSR_floor_d=pretty_cut(FSR_floor, c(0.1,1,1.5,2,2.5,3,4,5,7.5,10,Inf), include.lowest=TRUE))
+```
+:::
+
+
+In British Columbia the BC Assessment authority estimates land values and building values separately for each property. While this is difficult, estimates are fairly good at least for low density areas where teardowns are common and land value estimates can be anchored to lots that get redeveloped. [@HelsleyRosenthal] We will rely on the BC Assessment estimates made available via the City of Vancouver Open Data portal for the rest of this post.
+
+If we set land share at 20% and calculate FSR for properties in Vancouver, we get a map like @fig-min-density-all providing a rough overview what this metric does.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+fsr_colours <- setNames(c("firebrick",viridis::viridis(9)),plot_data$FSR_floor_d |> levels())
+plot_data |>
+  ggplot() +
+  geom_sf(aes(fill=FSR_floor_d),color=NA) +
+  scale_fill_manual(values=fsr_colours,na.value="darkgrey") +
+  geom_water() +
+  labs(title="Naive demand-based FSR",
+       subtitle="(assuming $900/sqft construction cost and 20% land share)",
+       fill="Demand based FSR\n(lower bound)",caption="CoV Open Data") +
+  coord_sf(datum=NA)
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/fig-min-density-all-1.png){#fig-min-density-all}
+:::
+:::
+
+
+Here we highlight areas where the estimated floor on the FSR limit is below 1 FSR in red. These tend to be special properties that either have industrial zoning, are on leased land, are non-market housing, or come with severe zoning restrictions. Which brings us to an important point limiting the usefulness of this metric:
+
+Land values are affected by what zoning allows to be constructed on the land.
+
+That is, in the map above, land values are downstream of zoning restrictions. The extreme gradients we see, for example, when moving half a block off of an arterial highlights this problem. Under current zoning, land values are a floor on demand estimates, and once we allow more housing, land values will likely also rise, which will in turn increase the FSR we need to allow to make sure not too much of purchaser's money goes toward paying for land instead of the floor space they live in. On the other hand, high land values despite low density zoning are an expression of scarcity, forcing people to bid up housing. And making large scale changes in zoning, as opposed to lot by lot upzoning, reduces the scarcity pressure and thus reduces land values. Or to be more precise, [as Michael Wiebe has pointed out](https://michaelwiebe.com/blog/2025/07/land_model), upzoning from low density to high density increases the value of land zoned for low-density use, but decreases the value of land zoned for higher density use.
+
+This complicates the picture substantially. At the same time, we are assuming a flat \$900/sf cost function, but that's really reasonable up to around 3 FSR. Above that we often move to concrete and everything gets not just more expensive but also more complicated on small lots. On the other hand, construction costs can come down substantially if we eliminate time and risk and allow for standardized buildings that enable modular construction.
+
+# Low-density zoning
+
+We can simplify away a lot of these complications by just looking at low-density zoning. There are still some concerns, for example the city made building multiplexes on the west side more expensive in order to preserve some west-side exclusivity. More importantly minimum lot sizes and frontages vary substantially and have the effect of suppressing land values to subsidize mansions and foster exclusion in some parts of town. But just looking at low-density zoning gives a more level playing field. For this we take R1-1 zoning (formerly mostly RS zoning), RT zoning, and Shaughnessy (FSD) zoning as "low-density", with results shown in @fig-min-density-low-density.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+plot_data2 <- plot_data |>
+  mutate(FSR_floor =case_when(zoning_district %in% c("R1-1","FSD") |grepl("^RT-",zoning_district) ~ FSR_floor,
+                                TRUE ~ NA)) |>
+  mutate(FSR_floor_d=pretty_cut(FSR_floor, c(0.1,1,1.5,2,2.5,3,4,Inf), include.lowest=TRUE))
+
+fsr_colours2 <- setNames(c(viridis::magma(7)),plot_data2$FSR_floor_d |> levels())
+
+ggplot(plot_data2) +
+  geom_sf(aes(fill=FSR_floor_d),color=NA) +
+  scale_fill_manual(values=fsr_colours2,na.value="darkgrey") +
+  geom_water() +
+  labs(title="Naive demand-based FSR in low density zoning",
+       subtitle="(assuming $900/sqft construction cost and 20% land share)",
+       fill="Demand based FSR\n(lower bound)",caption="CoV Open Data") +
+  coord_sf(datum=NA)
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/fig-min-density-low-density-1.png){#fig-min-density-low-density}
+:::
+:::
+
+
+Focusing in on low-density zoning helps, but a new constraint emerges. The effect of minimum lot sizes is very visible, with e.g. sharp gradients around First Shaughnessy and across Blanca Street in the north-west part of Point Grey, where the city's effort to force, and at the same time subsidize large mansion estates for those who can afford them is very visible.
+
+## Lot size adjustment
+
+
+::: {.cell}
+
+```{.r .cell-code}
+beta <- 0.544
+standard_lot = 120*33
+```
+:::
+
+
+We have looked at the effect of minimum lot sizes previously and estimated the subsidy to estate mansion owners, or equivalently the loss of opportunity to Vancouverites due to the City preventing them from sharing land. [@lots-of-opportunity-estimating-the-zoning-tax-in-vancouver.2021] We can leverage that to adjust for the effect of varying the size of (non-subdividable) lots. In that post we fit the random (grouped at the block level) intercept model
+
+$$
+LV = c\cdot A^\beta,
+$$
+
+where $LV=\overline{LV}\cdot A$ is the land value, $A$ is the lot area, $c$ is a constant depending on the group of parcels, and $\beta$ is the scaling exponent that describes the attenuation of land values based on restrictive zoning. We estimated $\beta = 0.544$ for Vancouver, which allows us to scale land values across the city to a standard East Vancouver 33' x 120' lot of area $A_0 = 3,960sf$, the modal lot size in Vancouver. More precisely, we estimate an adjusted land value $LV_0$ for each parcel that normalizes for the lot size effect via
+
+$$
+LV_0 = LV \cdot \left(\frac{A_0}{{A}}\right)^\beta,
+$$ which we then normalize per square foot of standard lot size $\overline{LV_0} = LV_0 / A_0$ for consistency with the work above and map in @fig-min-density-normalized.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+plot_data3 <- plot_data2 |>
+  mutate(lv_adjusted = current_land_value * (standard_lot / area) ^ beta / standard_lot) |>
+  mutate(FSR_floor_adjusted=(lv_adjusted/ls-lv_adjusted)/construction_cost) |>
+  mutate(FSR_floor_adjusted =case_when(!is.na(FSR_floor) ~ FSR_floor_adjusted, TRUE ~ NA)) |>
+  mutate(FSR_floor_adjusted_d=pretty_cut(FSR_floor_adjusted, c(0.1,1,1.5,2,2.5,3,4,Inf), include.lowest=TRUE))
+
+
+ggplot(plot_data3) +
+  geom_sf(aes(fill=FSR_floor_adjusted_d),color=NA) +
+  scale_fill_manual(values=fsr_colours2,na.value="darkgrey") +
+  geom_water() +
+  labs(title="Lot size adjusted demand-based FSR in low-density zoning",
+       subtitle="(assuming $900/sqft construction cost and 20% land share)",
+       fill="Demand based FSR\n(lower bound)",caption="CoV Open Data") +
+  coord_sf(datum=NA)
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/fig-min-density-normalized-1.png){#fig-min-density-normalized}
+:::
+:::
+
+
+We can take that adjustment and mix it in with the estimates from @fig-min-density-all to get a more complete picture of the demand-based FSR across the city, as shown in @fig-min-density-normalized-all.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+plot_data4 <- plot_data |>
+  mutate(lv_adjusted = current_land_value * (standard_lot / area) ^ beta / standard_lot) |>
+  mutate(FSR_floor_adjusted=(lv_adjusted/ls-lv_adjusted)/construction_cost) |>
+  mutate(FSR_floor_adjusted =case_when(zoning_district %in% c("R1-1","FSD") |grepl("^RT-",zoning_district) ~
+                                         FSR_floor_adjusted,
+                                       TRUE ~ FSR_floor)) |>
+  mutate(FSR_floor_adjusted =case_when(!is.na(FSR_floor) ~ FSR_floor_adjusted, TRUE ~ NA)) |>
+  mutate(FSR_floor_adjusted_d=pretty_cut(FSR_floor_adjusted, c(0.1,1,1.5,2,2.5,3,4,Inf), include.lowest=TRUE))
+
+
+ggplot(plot_data4) +
+  geom_sf(aes(fill=FSR_floor_adjusted_d),color=NA) +
+  scale_fill_manual(values=fsr_colours2,na.value="darkgrey") +
+  geom_water() +
+  labs(title="Demand-based FSR",
+       subtitle="(assuming $900/sqft construction cost and 20% land share, lot size adjusted in low-density areas)",
+       fill="Demand based FSR\n(lower bound)",caption="CoV Open Data") +
+  coord_sf(datum=NA)
+```
+
+::: {.cell-output-display}
+![](index_files/figure-html/fig-min-density-normalized-all-1.png){#fig-min-density-normalized-all}
+:::
+:::
+
+
+Having adjusted for low-density residential zoning, the map starts to look much more like we might expect, with job agglomeration and amenity effects driving demand more continuously around downtown and westward along the beachfront of Kitsilano, extending all the way to the border with the UBC Endowment Lands. At the same time, many of the remaining purple blotches on the map now highlight the zoning protections placed around industrial lands, here potentially blended with the disamenity effects of being surrounded by industrial uses. But it's worth noting that even aside from industry, there are still some major issues with our integrated map.
+
+We can clearly see the mixed-commercial zoning along many stretches of arterial roads that has higher (conditional) density limits forming a steep gradient to the lower density off-arterial areas. This gradient might indicate that our lower demand-based FSR estimates are too conservatives, but we also point out that upzoning broadly off-arterial, and thus greatly increasing land zoned for apartments, will decrease the value of the land along arterials that is currently one of the few places zoned for higher density.
+
+Conversely we see parcels with unexpectedly low estimated demand along False Creek and Champlain Heights (likely related to leasehold status) as well as in multi-family zoned areas like the West End. The latter likely stems from how the very low density caps in most RM zones depress land values just like the minimum lot sizes in our low-density zones do. Unfortunately it gets harder to account for these effects given how area plans and (somewhat risky) upzoning expectations are layered on top of zoning. So our estimates are rather conservative outside of the low-density areas. On the other hand, a degree of conservatism might also be good insofar as adding a lot more high density multifamily zoning might be expected to reduce the price pressures on the existing high density multifamily zoning (as noted above). Aside from this, we also skip estimates for both parks and many other especially large properties that are either in the process of being developed (hello Jericho Lands!) or maybe should be (hello big empty golf courses!) Overall, while the adjustment we made for low-density zoning help (i.e. where limits on subdividing are strongly binding and impact land values), we're stopping here for now, and we do not fully adjust for the effects of varying density and use limits across all zones.
+
+## Teardowns
+
+Even based on the limited modelling here, there are several important corollaries for this kind of counterfactual exercise. Setting zoning "too high" so that the floor space allowed exceeds demand has little material consequence for housing construction; developers will simply avoid building out to the maximum allowable zoning if the marginal (social) cost of construction is higher than the price they can get for adding more housing. But when zoning restricts floor space significantly below the demand for housing, it ends up subsidizing the privileged few outbidding the rest at the cost of a range of other negative consequences.
+
+The most immediate consequence of under-zoning land is that less housing gets built, so people get excluded from living in areas where they want to live, or have to double up to live there. [@mhu.2025] But there is a secondary consequence, insofar as under-zoning accelerates what we have called the *teardown cycle*. [@teardowns_data_story.2017] When zoning does not allow new buildings to take full advantage of the value of the location, they start out with land value taking an elevated share of the total value of the property and the relative share of the building value remains artificially low relative to what we might normally expect. The typical share of land value for a typical new built single family home in Vancouver between 2006 and 2016 was 62%, far higher than our stipulated 20% threshold. [@teardowns_data_story.2017]
+
+Low relative building values are generally well understood to be the most important predictor for when a building gets torn down. We usually expect these values to shrink over time as the building depreciates and underlying land values grow (assuming increasing demand over time), resulting in a gradually increasing likelihood of redevelopment. Under-zoning can dramatically speed up this process, leading to buildings that are still in good physical shape getting redeveloped. In Vancouver's single-family zones we have observed this kind of acceleration with the average economic lifespan of buildings decreasing, resulting in a teardown cycle and increased carbon emissions. [@teardown_index.2018] This is a direct negative consequence of planning policies that limit density far below demand, forcing new buildings to start halfway down their economic lifespan from the get-go. In addition to being bad for excluding people from where they want to live, zoning below demand is also a carbon time bomb -- even before accounting for transportation related emissions from people being pushed further out of the city.
+
+# Zoning for Resilience
+
+The best case for zoning is that we should be putting it to work in planning for the future rather than as a straitjacket tying us to the past. In Vancouver we generally expect demand to grow, so zoning should be more generous than current demand estimates, providing us the flexibility we need to adapt. Zoning enforcing low-density or low-rise forms should be more strongly justified in terms of costs to the future. Allowing taller "out of scale" buildings has several advantages. If builders are willing to provide more housing on a given site, that's generally a good thing. Allowing more housing boosts supply and current supply elasticity. But also, allowing taller "out of scale" buildings boosts future supply elasticity by leaving more land for future (re-)development with minimal contribution to the teardown cycle. We see some of this kind of benefit today when we get infill development on sites containing with large setbacks around towers built during the late 60s and early 70s (a zoning requirement for the tower form at the time). Over the past 50 years Vancouver planning has had a high emphasis on uniformity and scaling down to meet existing context, but this backward looking zoning comes at a high cost to not just contemporary but also future supply elasticity. This is a direct cause of current and future unaffordability, and these trade-offs have mostly gone unacknowledged. 
+
+Forward looking zoning should take the costs of both exclusion and teardowns into account. We should be looking to increase resilience by allowing for a wide variety of uses and accommodating a broad range of building heights and forms in order to make it easier to adapt to future changes in demand.
+
+
+# Upshot
+
+It's useful to develop counterfactuals for existing floor space development, both to highlight underlying demand and illustrate the negative effects of zoning constraints. Ideally we would want to build a model that is less sensitive to minimum lot sizes as well as density and unit limits to draw out a price-sensitive demand surface, as we did in our [report on the provincial SSMUH and TOA legislation](https://news.gov.bc.ca/files/bc_SSMUH_TOA_scenarios_Final.pdf#page=63) as visualized there in Figure 29. This approach can be extended to estimate economically optimal densities, with the additional benefit of being able to do away with the somewhat crude 20% land value share assumption.
+
+Even though many complications remain to refined modelling, given both our provincial models and the crude estimates here, it's safe to say that current zoning for residential floor space in the City of Vancouver is still far below demand in most parts of the city. Fundamentally that means official city policy is weighted against allowing people to share land for housing and toward forcing them to compete for it. It is unfortunate that when discussing reforms like multiplex zoning, demand estimates tend to either enter as a force to be countered (e.g. purposefully reducing potential land value to slow redevelopment), or never enter the discussion at all.
+
+Planning necessitates accounting for an uncertain future. We believe that critically involves supporting people to live the lives they choose, without excluding future generations from doing the same. With respect to zoning, that means we should take current demand for housing (and other uses) seriously, and explicitly include it in planning discussions and tradeoffs. We need zoning that is resilient enough to adapt to changes and allow future demand growth to be met. And part of that resilience means taking a hard look at the climate impact of under-zoning, driving carbon emissions through the teardown cycle.
+
+
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2025-08-04-demand-based-zoning/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+
+<details>
+
+<summary>Reproducibility receipt</summary>
+
+
+::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "2025-08-04 17:51:57 PDT"
+```
+
+
+:::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Local:    main /Users/jens/R/mountain_doodles
+Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
+Head:     [3118241] 2025-08-02: fix typo in rendered pages
+```
+
+
+:::
+
+```{.r .cell-code}
+## Session info 
+sessionInfo()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+R version 4.5.1 (2025-06-13)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.6
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Vancouver
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] vctrs_0.6.5               cli_3.6.5                
+ [3] knitr_1.50                rlang_1.1.6              
+ [5] xfun_0.52                 generics_0.1.4           
+ [7] jsonlite_2.0.0            glue_1.8.0               
+ [9] git2r_0.36.2              htmltools_0.5.8.1        
+[11] mountainmathHelpers_0.1.4 scales_1.4.0             
+[13] rmarkdown_2.29            grid_4.5.1               
+[15] evaluate_1.0.4            tibble_3.3.0             
+[17] fastmap_1.2.0             yaml_2.3.10              
+[19] lifecycle_1.0.4           compiler_4.5.1           
+[21] dplyr_1.1.4               RColorBrewer_1.1-3       
+[23] htmlwidgets_1.6.4         pkgconfig_2.0.3          
+[25] rstudioapi_0.17.1         farver_2.1.2             
+[27] digest_0.6.37             R6_2.6.1                 
+[29] tidyselect_1.2.1          pillar_1.11.0            
+[31] magrittr_2.0.3            tools_4.5.1              
+[33] gtable_0.3.6              ggplot2_3.5.2            
+```
+
+
+:::
+:::
+
+
+</details>
+
+### References
+
+::: {#refs}
+:::
+
