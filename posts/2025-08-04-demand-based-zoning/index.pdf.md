@@ -8,7 +8,7 @@ author:
 date: '2025-08-04'
 slug: demand-based-zoning
 description: 'What if zoning was responsive to underlying demand to live in an area? A simple model to estimate demand-based zoning in Vancouver.'
-image: 'index_files/figure-html/fig-min-density-normalized-all'
+image: 'index_files/figure-html/fig-min-density-normalized-all-1.png'
 categories: 
   - Vancouver
   - affordability
@@ -21,6 +21,7 @@ code-tools:
 fig-width: 8
 fig-height: 5
 fig-format: png
+fig-dpi: 300
 execute:
   cache: true
   message: false
@@ -126,7 +127,7 @@ In British Columbia the BC Assessment authority estimates land values and buildi
 If we set land share at 20% and calculate FSR for properties in Vancouver, we get a map like @fig-min-density-all providing a rough overview what this metric does.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 fsr_colours <- setNames(c("firebrick",viridis::viridis(9)),plot_data$FSR_floor_d |> levels())
@@ -160,7 +161,7 @@ This complicates the picture substantially. At the same time, we are assuming a 
 We can simplify away a lot of these complications by just looking at low-density zoning. There are still some concerns, for example the city made building multiplexes on the west side more expensive in order to preserve some west-side exclusivity. More importantly minimum lot sizes and frontages vary substantially and have the effect of suppressing land values to subsidize mansions and foster exclusion in some parts of town. But just looking at low-density zoning gives a more level playing field. For this we take R1-1 zoning (formerly mostly RS zoning), RT zoning, and Shaughnessy (FSD) zoning as "low-density", with results shown in @fig-min-density-low-density.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 plot_data2 <- plot_data |>
@@ -213,7 +214,7 @@ LV_0 = LV \cdot \left(\frac{A_0}{{A}}\right)^\beta,
 $$ which we then normalize per square foot of standard lot size $\overline{LV_0} = LV_0 / A_0$ for consistency with the work above and map in @fig-min-density-normalized.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 plot_data3 <- plot_data2 |>
@@ -242,7 +243,7 @@ ggplot(plot_data3) +
 We can take that adjustment and mix it in with the estimates from @fig-min-density-all to get a more complete picture of the demand-based FSR across the city, as shown in @fig-min-density-normalized-all.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 plot_data4 <- plot_data |>
@@ -300,7 +301,100 @@ Even though many complications remain to refined modelling, given both our provi
 
 Planning necessitates accounting for an uncertain future. We believe that critically involves supporting people to live the lives they choose, without excluding future generations from doing the same. With respect to zoning, that means we should take current demand for housing (and other uses) seriously, and explicitly include it in planning discussions and tradeoffs. We need zoning that is resilient enough to adapt to changes and allow future demand growth to be met. And part of that resilience means taking a hard look at the climate impact of under-zoning, driving carbon emissions through the teardown cycle.
 
-# References
+
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2025-08-04-demand-based-zoning/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+
+<details>
+
+<summary>Reproducibility receipt</summary>
+
+
+::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "2025-08-04 18:18:21 PDT"
+```
+
+
+:::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Local:    main /Users/jens/R/mountain_doodles
+Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
+Head:     [b18fe97] 2025-08-05: demand based zoning
+```
+
+
+:::
+
+```{.r .cell-code}
+## Session info 
+sessionInfo()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+R version 4.5.1 (2025-06-13)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.6
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Vancouver
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] vctrs_0.6.5               cli_3.6.5                
+ [3] knitr_1.50                rlang_1.1.6              
+ [5] xfun_0.52                 generics_0.1.4           
+ [7] jsonlite_2.0.0            glue_1.8.0               
+ [9] git2r_0.36.2              htmltools_0.5.8.1        
+[11] mountainmathHelpers_0.1.4 scales_1.4.0             
+[13] rmarkdown_2.29            grid_4.5.1               
+[15] evaluate_1.0.4            tibble_3.3.0             
+[17] fastmap_1.2.0             yaml_2.3.10              
+[19] lifecycle_1.0.4           compiler_4.5.1           
+[21] dplyr_1.1.4               RColorBrewer_1.1-3       
+[23] pkgconfig_2.0.3           rstudioapi_0.17.1        
+[25] farver_2.1.2              digest_0.6.37            
+[27] R6_2.6.1                  tidyselect_1.2.1         
+[29] pillar_1.11.0             magrittr_2.0.3           
+[31] tools_4.5.1               gtable_0.3.6             
+[33] ggplot2_3.5.2            
+```
+
+
+:::
+:::
+
+
+</details>
+
+### References
 
 ::: {#refs}
 :::

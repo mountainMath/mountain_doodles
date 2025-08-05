@@ -8,7 +8,7 @@ author:
 date: '2025-08-04'
 slug: demand-based-zoning
 description: 'What if zoning was responsive to underlying demand to live in an area? A simple model to estimate demand-based zoning in Vancouver.'
-image: 'index_files/figure-html/fig-min-density-normalized-all'
+image: 'index_files/figure-html/fig-min-density-normalized-all-1.png'
 categories: 
   - Vancouver
   - affordability
@@ -21,6 +21,7 @@ code-tools:
 fig-width: 8
 fig-height: 5
 fig-format: png
+fig-dpi: 300
 execute:
   cache: true
   message: false
@@ -126,7 +127,7 @@ In British Columbia the BC Assessment authority estimates land values and buildi
 If we set land share at 20% and calculate FSR for properties in Vancouver, we get a map like @fig-min-density-all providing a rough overview what this metric does.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 fsr_colours <- setNames(c("firebrick",viridis::viridis(9)),plot_data$FSR_floor_d |> levels())
@@ -160,7 +161,7 @@ This complicates the picture substantially. At the same time, we are assuming a 
 We can simplify away a lot of these complications by just looking at low-density zoning. There are still some concerns, for example the city made building multiplexes on the west side more expensive in order to preserve some west-side exclusivity. More importantly minimum lot sizes and frontages vary substantially and have the effect of suppressing land values to subsidize mansions and foster exclusion in some parts of town. But just looking at low-density zoning gives a more level playing field. For this we take R1-1 zoning (formerly mostly RS zoning), RT zoning, and Shaughnessy (FSD) zoning as "low-density", with results shown in @fig-min-density-low-density.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 plot_data2 <- plot_data |>
@@ -213,7 +214,7 @@ LV_0 = LV \cdot \left(\frac{A_0}{{A}}\right)^\beta,
 $$ which we then normalize per square foot of standard lot size $\overline{LV_0} = LV_0 / A_0$ for consistency with the work above and map in @fig-min-density-normalized.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 plot_data3 <- plot_data2 |>
@@ -242,7 +243,7 @@ ggplot(plot_data3) +
 We can take that adjustment and mix it in with the estimates from @fig-min-density-all to get a more complete picture of the demand-based FSR across the city, as shown in @fig-min-density-normalized-all.
 
 
-::: {.cell}
+::: {.cell crop='true'}
 
 ```{.r .cell-code}
 plot_data4 <- plot_data |>
@@ -319,7 +320,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-08-04 17:51:57 PDT"
+[1] "2025-08-04 18:18:55 PDT"
 ```
 
 
@@ -335,7 +336,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [3118241] 2025-08-02: fix typo in rendered pages
+Head:     [b18fe97] 2025-08-05: demand based zoning
 ```
 
 

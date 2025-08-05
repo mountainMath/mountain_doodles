@@ -8,7 +8,7 @@ author:
 date: '2025-08-04'
 slug: demand-based-zoning
 description: 'What if zoning was responsive to underlying demand to live in an area? A simple model to estimate demand-based zoning in Vancouver.'
-image: 'index_files/figure-html/fig-min-density-normalized-all'
+image: 'index_files/figure-html/fig-min-density-normalized-all-1.png'
 categories: 
   - Vancouver
   - affordability
@@ -21,6 +21,7 @@ code-tools:
 fig-width: 8
 fig-height: 5
 fig-format: png
+fig-dpi: 300
 execute:
   cache: true
   message: false
@@ -112,7 +113,7 @@ In British Columbia the BC Assessment authority estimates land values and buildi
 
 If we set land share at 20% and calculate FSR for properties in Vancouver, we get a map like @fig-min-density-all providing a rough overview what this metric does.
 
-```{r fig-min-density-all}
+```{r fig-min-density-all, crop=TRUE}
 fsr_colours <- setNames(c("firebrick",viridis::viridis(9)),plot_data$FSR_floor_d |> levels())
 plot_data |>
   ggplot() +
@@ -137,7 +138,7 @@ This complicates the picture substantially. At the same time, we are assuming a 
 
 We can simplify away a lot of these complications by just looking at low-density zoning. There are still some concerns, for example the city made building multiplexes on the west side more expensive in order to preserve some west-side exclusivity. More importantly minimum lot sizes and frontages vary substantially and have the effect of suppressing land values to subsidize mansions and foster exclusion in some parts of town. But just looking at low-density zoning gives a more level playing field. For this we take R1-1 zoning (formerly mostly RS zoning), RT zoning, and Shaughnessy (FSD) zoning as "low-density", with results shown in @fig-min-density-low-density.
 
-```{r fig-min-density-low-density}
+```{r fig-min-density-low-density, crop=TRUE}
 plot_data2 <- plot_data |>
   mutate(FSR_floor =case_when(zoning_district %in% c("R1-1","FSD") |grepl("^RT-",zoning_district) ~ FSR_floor,
                                 TRUE ~ NA)) |>
@@ -176,7 +177,7 @@ $$
 LV_0 = LV \cdot \left(\frac{A_0}{{A}}\right)^\beta,
 $$ which we then normalize per square foot of standard lot size $\overline{LV_0} = LV_0 / A_0$ for consistency with the work above and map in @fig-min-density-normalized.
 
-```{r fig-min-density-normalized}
+```{r fig-min-density-normalized, crop=TRUE}
 plot_data3 <- plot_data2 |>
   mutate(lv_adjusted = current_land_value * (standard_lot / area) ^ beta / standard_lot) |>
   mutate(FSR_floor_adjusted=(lv_adjusted/ls-lv_adjusted)/construction_cost) |>
@@ -196,7 +197,7 @@ ggplot(plot_data3) +
 
 We can take that adjustment and mix it in with the estimates from @fig-min-density-all to get a more complete picture of the demand-based FSR across the city, as shown in @fig-min-density-normalized-all.
 
-```{r fig-min-density-normalized-all}
+```{r fig-min-density-normalized-all, crop=TRUE}
 plot_data4 <- plot_data |>
   mutate(lv_adjusted = current_land_value * (standard_lot / area) ^ beta / standard_lot) |>
   mutate(FSR_floor_adjusted=(lv_adjusted/ls-lv_adjusted)/construction_cost) |>
