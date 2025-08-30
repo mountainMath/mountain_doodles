@@ -32,7 +32,7 @@ format:
     output-file: 'multiplex-reforms--the-details-matter'
 ---
 
-<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/08/29/multiplex-reforms----the-details-matter/" target="_blank">HomeFreeSociology</a>)</i></p>
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/08/29/multiplex-reforms-the-details-matter/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
 
@@ -645,7 +645,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-08-29 18:47:36 PDT"
+[1] "2025-08-29 20:48:01 PDT"
 ```
 
 
@@ -661,7 +661,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [3cfa0bb] 2025-08-30: multiplex details post
+Head:     [e2ae55a] 2025-08-30: fix link
 ```
 
 
@@ -699,35 +699,34 @@ other attached packages:
 [13] tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6              xfun_0.52                
- [3] htmlwidgets_1.6.4         websocket_1.4.4          
- [5] processx_3.8.6            tzdb_0.5.0               
- [7] vctrs_0.6.5               tools_4.5.1              
- [9] ps_1.9.1                  generics_0.1.4           
-[11] proxy_0.4-27              pkgconfig_2.0.3          
-[13] KernSmooth_2.23-26        RColorBrewer_1.1-3       
-[15] lifecycle_1.0.4           compiler_4.5.1           
-[17] farver_2.1.2              git2r_0.36.2             
-[19] chromote_0.5.1            mountainmathHelpers_0.1.4
-[21] codetools_0.2-20          htmltools_0.5.8.1        
-[23] class_7.3-23              yaml_2.3.10              
-[25] later_1.4.2               pillar_1.11.0            
-[27] classInt_0.4-11           tidyselect_1.2.1         
-[29] digest_0.6.37             stringi_1.8.7            
-[31] sf_1.0-21                 rprojroot_2.0.4          
-[33] fastmap_1.2.0             grid_4.5.1               
-[35] here_1.0.1                cli_3.6.5                
-[37] magrittr_2.0.3            triebeard_0.4.1          
-[39] e1071_1.7-16              withr_3.0.2              
-[41] scales_1.4.0              promises_1.3.3           
-[43] timechange_0.3.0          rmarkdown_2.29           
-[45] hms_1.1.3                 evaluate_1.0.4           
-[47] knitr_1.50                rlang_1.1.6              
-[49] urltools_1.7.3.1          Rcpp_1.1.0               
-[51] glue_1.8.0                DBI_1.2.3                
-[53] xml2_1.3.8                rstudioapi_0.17.1        
-[55] jsonlite_2.0.0            R6_2.6.1                 
-[57] units_0.8-7              
+ [1] generics_0.1.4            class_7.3-23             
+ [3] xml2_1.3.8                KernSmooth_2.23-26       
+ [5] stringi_1.8.7             hms_1.1.3                
+ [7] digest_0.6.37             magrittr_2.0.3           
+ [9] evaluate_1.0.4            grid_4.5.1               
+[11] timechange_0.3.0          RColorBrewer_1.1-3       
+[13] fastmap_1.2.0             rprojroot_2.0.4          
+[15] jsonlite_2.0.0            processx_3.8.6           
+[17] e1071_1.7-16              DBI_1.2.3                
+[19] chromote_0.5.1            urltools_1.7.3.1         
+[21] ps_1.9.1                  promises_1.3.3           
+[23] scales_1.4.0              cli_3.6.5                
+[25] rlang_1.1.6               units_0.8-7              
+[27] triebeard_0.4.1           withr_3.0.2              
+[29] yaml_2.3.10               tools_4.5.1              
+[31] tzdb_0.5.0                here_1.0.1               
+[33] vctrs_0.6.5               R6_2.6.1                 
+[35] git2r_0.36.2              proxy_0.4-27             
+[37] classInt_0.4-11           lifecycle_1.0.4          
+[39] htmlwidgets_1.6.4         pkgconfig_2.0.3          
+[41] pillar_1.11.0             later_1.4.2              
+[43] gtable_0.3.6              glue_1.8.0               
+[45] Rcpp_1.1.0                sf_1.0-21                
+[47] xfun_0.52                 tidyselect_1.2.1         
+[49] rstudioapi_0.17.1         knitr_1.50               
+[51] farver_2.1.2              htmltools_0.5.8.1        
+[53] websocket_1.4.4           rmarkdown_2.29           
+[55] mountainmathHelpers_0.1.4 compiler_4.5.1           
 ```
 
 
