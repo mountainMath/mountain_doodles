@@ -200,14 +200,8 @@ get_detail_plpos_data <- function(url,cache_path=tempdir(),refresh=FALSE) {
   write_rds(dd,cache_file)
   dd
 }
-```
-:::
 
 
-
-::: {.cell}
-
-```{.r .cell-code}
 start_date <- as.Date("2023-10-01") # date permit data seems to start in the system
 end_date <- as.Date("2025-08-27") # Sys.Date()
 
@@ -651,7 +645,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-08-29 18:44:25 PDT"
+[1] "2025-08-29 18:47:36 PDT"
 ```
 
 
@@ -667,7 +661,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [db1199a] 2025-08-05: better images
+Head:     [3cfa0bb] 2025-08-30: multiplex details post
 ```
 
 
@@ -710,36 +704,30 @@ loaded via a namespace (and not attached):
  [5] processx_3.8.6            tzdb_0.5.0               
  [7] vctrs_0.6.5               tools_4.5.1              
  [9] ps_1.9.1                  generics_0.1.4           
-[11] parallel_4.5.1            curl_7.0.0               
-[13] fansi_1.0.6               proxy_0.4-27             
-[15] pkgconfig_2.0.3           KernSmooth_2.23-26       
-[17] tinytable_0.9.0           RColorBrewer_1.1-3       
-[19] lifecycle_1.0.4           git2r_0.36.2             
-[21] compiler_4.5.1            farver_2.1.2             
-[23] chromote_0.5.1            mountainmathHelpers_0.1.4
-[25] codetools_0.2-20          litedown_0.7             
-[27] htmltools_0.5.8.1         class_7.3-23             
-[29] yaml_2.3.10               crayon_1.5.3             
-[31] later_1.4.2               pillar_1.11.0            
-[33] classInt_0.4-11           wk_0.9.4                 
-[35] tidyselect_1.2.1          digest_0.6.37            
-[37] stringi_1.8.7             sf_1.0-21                
-[39] labeling_0.4.3            rprojroot_2.0.4          
-[41] fastmap_1.2.0             grid_4.5.1               
-[43] here_1.0.1                cli_3.6.5                
-[45] magrittr_2.0.3            triebeard_0.4.1          
-[47] e1071_1.7-16              withr_3.0.2              
-[49] scales_1.4.0              promises_1.3.3           
-[51] bit64_4.6.0-1             timechange_0.3.0         
-[53] rmarkdown_2.29            bit_4.6.0                
-[55] hms_1.1.3                 evaluate_1.0.4           
-[57] knitr_1.50                s2_1.1.9                 
-[59] rlang_1.1.6               urltools_1.7.3.1         
-[61] Rcpp_1.1.0                glue_1.8.0               
-[63] DBI_1.2.3                 geojsonsf_2.0.3          
-[65] xml2_1.3.8                vroom_1.6.5              
-[67] rstudioapi_0.17.1         jsonlite_2.0.0           
-[69] R6_2.6.1                  units_0.8-7              
+[11] proxy_0.4-27              pkgconfig_2.0.3          
+[13] KernSmooth_2.23-26        RColorBrewer_1.1-3       
+[15] lifecycle_1.0.4           compiler_4.5.1           
+[17] farver_2.1.2              git2r_0.36.2             
+[19] chromote_0.5.1            mountainmathHelpers_0.1.4
+[21] codetools_0.2-20          htmltools_0.5.8.1        
+[23] class_7.3-23              yaml_2.3.10              
+[25] later_1.4.2               pillar_1.11.0            
+[27] classInt_0.4-11           tidyselect_1.2.1         
+[29] digest_0.6.37             stringi_1.8.7            
+[31] sf_1.0-21                 rprojroot_2.0.4          
+[33] fastmap_1.2.0             grid_4.5.1               
+[35] here_1.0.1                cli_3.6.5                
+[37] magrittr_2.0.3            triebeard_0.4.1          
+[39] e1071_1.7-16              withr_3.0.2              
+[41] scales_1.4.0              promises_1.3.3           
+[43] timechange_0.3.0          rmarkdown_2.29           
+[45] hms_1.1.3                 evaluate_1.0.4           
+[47] knitr_1.50                rlang_1.1.6              
+[49] urltools_1.7.3.1          Rcpp_1.1.0               
+[51] glue_1.8.0                DBI_1.2.3                
+[53] xml2_1.3.8                rstudioapi_0.17.1        
+[55] jsonlite_2.0.0            R6_2.6.1                 
+[57] units_0.8-7              
 ```
 
 
