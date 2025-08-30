@@ -4,6 +4,7 @@ from_path <- here::here("data/*")
 to_path <- here::here("_site/data/")
 
 system(paste("cp -r",from_path,to_path))
+system("rm -r _site/data/pplos") # don't copy these
 
 # images
 from_path <- here::here("images/*")
