@@ -7,8 +7,8 @@ author:
     affiliation: UBC Sociology
 date: '2025-08-29'
 slug: multiplex-reforms----the-details-matter
-description: ''
-image: ''
+description: 'Canadian cities are allowing multiplexes, implementation details matter.'
+image: 'index_files/figure-html/fig-low-density-building-permits-1.png'
 bibliography: ../../common_literature.bib 
 categories: 
   - Vancouver
@@ -31,6 +31,8 @@ format:
     fig-height: 5
     output-file: 'multiplex-reforms--the-details-matter'
 ---
+
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/08/29/multiplex-reforms-the-details-matter/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
 
@@ -198,14 +200,8 @@ get_detail_plpos_data <- function(url,cache_path=tempdir(),refresh=FALSE) {
   write_rds(dd,cache_file)
   dd
 }
-```
-:::
 
 
-
-::: {.cell}
-
-```{.r .cell-code}
 start_date <- as.Date("2023-10-01") # date permit data seems to start in the system
 end_date <- as.Date("2025-08-27") # Sys.Date()
 
@@ -227,14 +223,7 @@ bp_data <- seq(start_date,end_date,by="1 month") |>
                              permit_type="Building Permit")
   }) |>
   unique()
-```
-:::
 
-
-
-::: {.cell}
-
-```{.r .cell-code}
 recent_dp_details <- dp_data |> 
   filter(`Created Date`>=as.Date('2023-10-17')) %>%
   left_join(.$url |> map_df(\(x){
@@ -246,14 +235,7 @@ recent_bp_details <- bp_data |>
   left_join(.$url |> map_df(\(x){
     get_detail_plpos_data(x,cache_path=pplos_cache_path)
   },.progress=TRUE), by="url")
-```
-:::
 
-
-
-::: {.cell}
-
-```{.r .cell-code}
 multiplexes_dp <- recent_dp_details |>
   filter(grepl("multiplex",`Work Description`,ignore.case = TRUE),
          `Zoning Code`=="R1-1",
@@ -464,7 +446,8 @@ zoning <- get_cov_data("zoning-districts-and-labels")
 zoning_mask <- zoning |> filter(zoning_district %in% eligible_zones)
 building_permits <- get_cov_data("issued-building-permits",
                                  where="typeofwork='New Building' AND propertyuse = 'Dwelling Uses'") |>
-  sf::st_filter(zoning_mask)
+  sf::st_filter(zoning_mask) |>
+  filter(issuedate <= as.Date("2025-08-28")) # pin end date
 
 processed_permits_raw <- building_permits |>
   filter(permitcategory %in% c('New Build - Low Density Housing','New Build - Standalone Laneway') |
@@ -519,4 +502,126 @@ A more successful multiplex reform would see the City actively encouraging multi
 
 More broadly, stepping out of the multiplex fixation, more successful housing reforms would see the City asking what form of housing would match demand to live in different parts of the city and generally work to enable those forms to get built. [@demand-based-zoning.2025] By contrast, the provincial SSMUH initiative just sets a new baseline for zoning, stepping up from single-family detached. The Transit-Oriented Area (TOA) initiative does the same by specifying new baselines near major transit investments. Cities can go beyond these minimums by allowing more people to share land for housing everywhere, and they can get an idea of what the outcomes will be by looking to current demand and proactively planning to let developers build to that demand. That doesn't mean everywhere will look alike (indeed, its often planning constraints that reinforce cookie-cutter designs). Instead, providing greater flexibility for builders is likely to result in more diverse urban landscapes. Working through the implications for that kind of reform would return urban planning to a forward looking activity recognizing the value of city life for everyone rather than a backward looking activity reducing land values to protect the privileges of the select few who can still afford a full lot of their own.
 
+
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2025-08-29-multiplex-reforms----the-details-matter/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+
+<details>
+
+<summary>Reproducibility receipt</summary>
+
+
+::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "2025-10-25 21:41:31 PDT"
+```
+
+
+:::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Local:    main /Users/jens/R/mountain_doodles
+Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
+Head:     [841cf37] 2025-10-26: key image for extra school tax calculator post
+```
+
+
+:::
+
+```{.r .cell-code}
+## Session info 
+sessionInfo()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+R version 4.5.1 (2025-06-13)
+Platform: aarch64-apple-darwin20
+Running under: macOS Tahoe 26.0.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Vancouver
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] VancouvR_0.1.9  rvest_1.0.5     httr_1.4.7      lubridate_1.9.4
+ [5] forcats_1.0.1   stringr_1.5.2   dplyr_1.1.4     purrr_1.1.0    
+ [9] readr_2.1.5     tidyr_1.3.1     tibble_3.3.0    ggplot2_4.0.0  
+[13] tidyverse_2.0.0
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6              xfun_0.53                
+ [3] websocket_1.4.4           processx_3.8.6           
+ [5] tzdb_0.5.0                vctrs_0.6.5              
+ [7] tools_4.5.1               ps_1.9.1                 
+ [9] generics_0.1.4            parallel_4.5.1           
+[11] curl_7.0.0                fansi_1.0.6              
+[13] proxy_0.4-27              pkgconfig_2.0.3          
+[15] KernSmooth_2.23-26        tinytable_0.13.0         
+[17] RColorBrewer_1.1-3        S7_0.2.0                 
+[19] lifecycle_1.0.4           git2r_0.36.2             
+[21] compiler_4.5.1            farver_2.1.2             
+[23] chromote_0.5.1            mountainmathHelpers_0.1.4
+[25] codetools_0.2-20          litedown_0.7             
+[27] htmltools_0.5.8.1         class_7.3-23             
+[29] yaml_2.3.10               crayon_1.5.3             
+[31] later_1.4.4               pillar_1.11.1            
+[33] classInt_0.4-11           wk_0.9.4                 
+[35] tidyselect_1.2.1          digest_0.6.37            
+[37] stringi_1.8.7             sf_1.0-21                
+[39] labeling_0.4.3            rprojroot_2.1.1          
+[41] fastmap_1.2.0             grid_4.5.1               
+[43] here_1.0.2                cli_3.6.5                
+[45] magrittr_2.0.4            triebeard_0.4.1          
+[47] e1071_1.7-16              withr_3.0.2              
+[49] scales_1.4.0              promises_1.4.0           
+[51] bit64_4.6.0-1             timechange_0.3.0         
+[53] rmarkdown_2.30            bit_4.6.0                
+[55] otel_0.2.0                hms_1.1.4                
+[57] evaluate_1.0.5            knitr_1.50               
+[59] s2_1.1.9                  rlang_1.1.6              
+[61] urltools_1.7.3.1          Rcpp_1.1.0               
+[63] glue_1.8.0                DBI_1.2.3                
+[65] geojsonsf_2.0.3           xml2_1.4.0               
+[67] vroom_1.6.6               rstudioapi_0.17.1        
+[69] jsonlite_2.0.0            R6_2.6.1                 
+[71] units_1.0-0              
+```
+
+
+:::
+:::
+
+
+</details>
+
+### References
+
+::: {#refs}
+:::
 

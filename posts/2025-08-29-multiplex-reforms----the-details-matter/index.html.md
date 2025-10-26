@@ -645,7 +645,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-09-02 09:02:39 PDT"
+[1] "2025-10-25 21:35:06 PDT"
 ```
 
 
@@ -661,7 +661,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [d43ad39] 2025-08-30: update render
+Head:     [841cf37] 2025-10-26: key image for extra school tax calculator post
 ```
 
 
@@ -677,7 +677,7 @@ sessionInfo()
 ```
 R version 4.5.1 (2025-06-13)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sequoia 15.6.1
+Running under: macOS Tahoe 26.0.1
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
@@ -693,40 +693,41 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] VancouvR_0.1.9  rvest_1.0.4     httr_1.4.7      lubridate_1.9.4
- [5] forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4     purrr_1.1.0    
- [9] readr_2.1.5     tidyr_1.3.1     tibble_3.3.0    ggplot2_3.5.2  
+ [1] VancouvR_0.1.9  rvest_1.0.5     httr_1.4.7      lubridate_1.9.4
+ [5] forcats_1.0.1   stringr_1.5.2   dplyr_1.1.4     purrr_1.1.0    
+ [9] readr_2.1.5     tidyr_1.3.1     tibble_3.3.0    ggplot2_4.0.0  
 [13] tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] generics_0.1.4            class_7.3-23             
- [3] xml2_1.3.8                KernSmooth_2.23-26       
- [5] stringi_1.8.7             hms_1.1.3                
- [7] digest_0.6.37             magrittr_2.0.3           
- [9] evaluate_1.0.4            grid_4.5.1               
-[11] timechange_0.3.0          RColorBrewer_1.1-3       
-[13] fastmap_1.2.0             rprojroot_2.0.4          
-[15] jsonlite_2.0.0            processx_3.8.6           
-[17] e1071_1.7-16              DBI_1.2.3                
-[19] chromote_0.5.1            urltools_1.7.3.1         
-[21] ps_1.9.1                  promises_1.3.3           
-[23] scales_1.4.0              cli_3.6.5                
-[25] rlang_1.1.6               units_0.8-7              
-[27] triebeard_0.4.1           withr_3.0.2              
-[29] yaml_2.3.10               tools_4.5.1              
-[31] tzdb_0.5.0                here_1.0.1               
-[33] vctrs_0.6.5               R6_2.6.1                 
-[35] git2r_0.36.2              proxy_0.4-27             
-[37] classInt_0.4-11           lifecycle_1.0.4          
-[39] htmlwidgets_1.6.4         pkgconfig_2.0.3          
-[41] pillar_1.11.0             later_1.4.2              
-[43] gtable_0.3.6              glue_1.8.0               
-[45] Rcpp_1.1.0                sf_1.0-21                
-[47] xfun_0.52                 tidyselect_1.2.1         
-[49] rstudioapi_0.17.1         knitr_1.50               
-[51] farver_2.1.2              htmltools_0.5.8.1        
-[53] websocket_1.4.4           rmarkdown_2.29           
-[55] mountainmathHelpers_0.1.4 compiler_4.5.1           
+ [1] gtable_0.3.6              xfun_0.53                
+ [3] htmlwidgets_1.6.4         websocket_1.4.4          
+ [5] processx_3.8.6            tzdb_0.5.0               
+ [7] vctrs_0.6.5               tools_4.5.1              
+ [9] ps_1.9.1                  generics_0.1.4           
+[11] proxy_0.4-27              pkgconfig_2.0.3          
+[13] KernSmooth_2.23-26        RColorBrewer_1.1-3       
+[15] S7_0.2.0                  lifecycle_1.0.4          
+[17] git2r_0.36.2              compiler_4.5.1           
+[19] farver_2.1.2              chromote_0.5.1           
+[21] mountainmathHelpers_0.1.4 htmltools_0.5.8.1        
+[23] class_7.3-23              yaml_2.3.10              
+[25] later_1.4.4               pillar_1.11.1            
+[27] classInt_0.4-11           tidyselect_1.2.1         
+[29] digest_0.6.37             stringi_1.8.7            
+[31] sf_1.0-21                 rprojroot_2.1.1          
+[33] fastmap_1.2.0             grid_4.5.1               
+[35] here_1.0.2                cli_3.6.5                
+[37] magrittr_2.0.4            triebeard_0.4.1          
+[39] e1071_1.7-16              withr_3.0.2              
+[41] scales_1.4.0              promises_1.4.0           
+[43] timechange_0.3.0          rmarkdown_2.30           
+[45] otel_0.2.0                hms_1.1.4                
+[47] evaluate_1.0.5            knitr_1.50               
+[49] rlang_1.1.6               urltools_1.7.3.1         
+[51] Rcpp_1.1.0                glue_1.8.0               
+[53] DBI_1.2.3                 xml2_1.4.0               
+[55] rstudioapi_0.17.1         jsonlite_2.0.0           
+[57] R6_2.6.1                  units_1.0-0              
 ```
 
 
@@ -736,4 +737,8 @@ loaded via a namespace (and not attached):
 
 </details>
 
+### References
+
+::: {#refs}
+:::
 

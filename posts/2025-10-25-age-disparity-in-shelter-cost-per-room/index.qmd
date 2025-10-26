@@ -622,3 +622,8 @@ sessionInfo()
 ```
 
 </details>
+
+### References
+
+::: {#refs}
+:::

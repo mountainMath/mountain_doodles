@@ -691,40 +691,7 @@ What does all of this mean for our understanding of housing pressures faced by d
 
 Household formation and housing costs are connected. Rising housing costs depress household formation, and in turn shortages that mechanically lead to depressed household formation also heighten competition for any housing coming to market. These are two sides of the same coin, as evidenced when directly comparing housing costs to household formation. [@housing-is-a-housing-problem.2025]
 
-At the same time it's important to recognize that this is not a Canada-wide problem. The Québec City metro area has managed to avoid housing shortages, and real prices per room have remained fairly flat. Rising incomes in Québec City have allowed households to form at increasing rates, with the result being improved housing outcomes. This may in part be due to the Québec City metro area not facing the same population pressures as some of the other regions<!-- as can be seen in @fig-metro-pop-growth-->. But we can also see that Calgary, the metro area with the highest population growth among our sample, has done a much better job at keeping up with demand and mitigating housing shortages than some of the lower growth regions.<!--^[Our population estimates don't go as far back as the housing data we looked at above, the shorter time frame allows us to avoid the problem of changing geographic extent of metro areas that skews graphs based on census counts. This is less of an issue for our previous analysis that is based on ratios instead of counts.]-->
-
-
-
-
-::: {.cell}
-
-```{.r .cell-code}
-metro_pop <- get_cansim_connection("17-10-0148") |>
-  filter(Gender=="Total - gender",
-         `Age group`=="All ages") |>
-  collect_and_normalize() |>
-  select(GEO,Date,Population=val_norm)
-
-metro_pop |>
-  filter(grepl(" \\(CMA\\)",GEO),!grepl("part",GEO)) |>
-  mutate(CMA=gsub(" \\(CMA\\), .+","",GEO)) |>
-  filter_metros() |>
-  mutate(index=Population / first(Population,order_by = Date),.by=CMA) %>%
-  mutate(CMA=factor(CMA,levels=filter(.,Date==max(Date)) |> arrange(-index) |> pull(CMA))) |>
-ggplot(aes(x=Date,y=index,colour=CMA)) +
-  geom_line() +
-  scale_y_continuous(labels=\(x)scales::percent(x-1),trans="log") +
-  theme(axis.text.x = element_text(angle=45, hjust=1)) +
-  labs(title="Population growth in major Canadian metro areas",
-       colour="Metro area",
-       y=paste0("Population growth since ",strftime(min(metro_pop$Date),"%Y")," (log scale)"),
-       x=NULL,
-       caption="StatCan Cansim 17-10-0148")
-```
-:::
-
-
-
+At the same time it's important to recognize that this is not a Canada-wide problem. The Québec City metro area has managed to avoid housing shortages, and real prices per room have remained fairly flat. Rising incomes in Québec City have allowed households to form at increasing rates, with the result being improved housing outcomes. This may in part be due to the Québec City metro area not facing the same population pressures as some of the other regions. But we can also see that Calgary, the metro area with the highest population growth among our sample, has done a much better job at keeping up with demand and mitigating housing shortages than some of the lower growth regions.
 
 As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2025-10-25-age-disparity-in-shelter-cost-per-room/index.qmd) for anyone to reproduce or adapt for their own purposes.
 
@@ -744,7 +711,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-10-25 20:59:59 PDT"
+[1] "2025-10-25 21:37:45 PDT"
 ```
 
 
@@ -760,7 +727,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [9a9ab99] 2025-09-02: re-render in hopes to fix meta tags
+Head:     [841cf37] 2025-10-26: key image for extra school tax calculator post
 ```
 
 
@@ -791,31 +758,24 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] cansim_0.4.5    canpumf_0.3.0   lubridate_1.9.4 forcats_1.0.1  
- [5] stringr_1.5.2   dplyr_1.1.4     purrr_1.1.0     readr_2.1.5    
- [9] tidyr_1.3.1     tibble_3.3.0    ggplot2_4.0.0   tidyverse_2.0.0
-
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6              jsonlite_2.0.0           
- [3] compiler_4.5.1            tidyselect_1.2.1         
- [5] git2r_0.36.2              scales_1.4.0             
- [7] yaml_2.3.10               fastmap_1.2.0            
- [9] R6_2.6.1                  labeling_0.4.3           
-[11] generics_0.1.4            knitr_1.50               
-[13] pillar_1.11.1             RColorBrewer_1.1-3       
-[15] tzdb_0.5.0                rlang_1.1.6              
-[17] stringi_1.8.7             xfun_0.53                
-[19] S7_0.2.0                  timechange_0.3.0         
-[21] cli_3.6.5                 withr_3.0.2              
-[23] magrittr_2.0.4            mountainmathHelpers_0.1.4
-[25] digest_0.6.37             grid_4.5.1               
-[27] rstudioapi_0.17.1         hms_1.1.4                
-[29] lifecycle_1.0.4           vctrs_0.6.5              
-[31] evaluate_1.0.5            glue_1.8.0               
-[33] farver_2.1.2              codetools_0.2-20         
-[35] rmarkdown_2.30            tools_4.5.1              
-[37] pkgconfig_2.0.3           htmltools_0.5.8.1        
+ [1] vctrs_0.6.5               cli_3.6.5                
+ [3] knitr_1.50                rlang_1.1.6              
+ [5] xfun_0.53                 generics_0.1.4           
+ [7] S7_0.2.0                  jsonlite_2.0.0           
+ [9] glue_1.8.0                git2r_0.36.2             
+[11] htmltools_0.5.8.1         mountainmathHelpers_0.1.4
+[13] scales_1.4.0              rmarkdown_2.30           
+[15] grid_4.5.1                evaluate_1.0.5           
+[17] tibble_3.3.0              fastmap_1.2.0            
+[19] yaml_2.3.10               lifecycle_1.0.4          
+[21] compiler_4.5.1            dplyr_1.1.4              
+[23] RColorBrewer_1.1-3        pkgconfig_2.0.3          
+[25] rstudioapi_0.17.1         farver_2.1.2             
+[27] digest_0.6.37             R6_2.6.1                 
+[29] tidyselect_1.2.1          pillar_1.11.1            
+[31] magrittr_2.0.4            tools_4.5.1              
+[33] gtable_0.3.6              ggplot2_4.0.0            
 ```
 
 
@@ -825,6 +785,7 @@ loaded via a namespace (and not attached):
 
 </details>
 
+### References
 
-
-
+::: {#refs}
+:::

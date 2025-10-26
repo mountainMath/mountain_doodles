@@ -711,7 +711,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-10-25 21:11:36 PDT"
+[1] "2025-10-25 21:34:42 PDT"
 ```
 
 
@@ -727,7 +727,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [fc96cf8] 2025-10-26: age room post
+Head:     [841cf37] 2025-10-26: key image for extra school tax calculator post
 ```
 
 
@@ -785,3 +785,8 @@ loaded via a namespace (and not attached):
 
 
 </details>
+
+### References
+
+::: {#refs}
+:::

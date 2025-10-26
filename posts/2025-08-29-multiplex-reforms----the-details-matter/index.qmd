@@ -442,4 +442,8 @@ sessionInfo()
 
 </details>
 
+### References
+
+::: {#refs}
+:::
 
