@@ -364,7 +364,7 @@ At the same time the City of Vancouver has several planning initiatives that loo
 
 The price surface in @fig-yvr-price-surface provides a glimpse at the underlying landscape of desire. Residential space in Surrey is painted in blue and green, at much lower price points than the same space in Vancouver, neatly split between the red of Westside and orange of Eastside. People seem to generally want to move toward downtown Vancouver. What holds them back? Primarily the lack of housing. Similarly, CMHC's report on supply constraints highlights spatial differential in unmet demand for housing within Metro Vancouver. [@gensey_condos.2018] This kind of landscape suggests to a liquid demographer that if you divert one set of streams toward downtown Vancouver, like non-permanent resident inflows, they're most likely going to be replaced by other streams that were also headed in that direction, but got backed up to places like Surrey by the competition for limited container space.
 
-@fig-city-work-place gives another view into this by showing workers by whether they commute within our outside of their city of residence for work.
+@fig-city-work-place gives another view into this by showing workers by whether they commute within our outside of their city of residence on their way to work.
 
 
 ::: {.cell crop='true'}
@@ -516,82 +516,7 @@ sur_jobs <- jobs |>
 :::
 
 
-
-This shows the mismatch of work and commute location, the 2021 census recorded that Vancouver had 16% more jobs than workers, while Surrey had 28% fewer jobs than workers.^[This is only counting jobs with a usual place of work people commute to, and estimates from the 2021 census were still somewhat impacted by the COVID pandemic.]
-
-
-
-::: {.cell crop='true'}
-
-```{.r .cell-code}
-duration_vectors_raw <- search_census_vectors("Duration","2021","Total") |>
-  child_census_vectors()
-
-duration_vectors <- setNames(duration_vectors_raw$vector,
-                                 duration_vectors_raw$label)
-
-duration_data <- get_census("2021",regions=list(CMA="59933"), level="DA",
-                           vectors=duration_vectors,
-                           geo_format="sf") |>
-  mutate(van_sur=CSD_UID %in% c("5915022","5915004")) |>
-  mutate(across(all_of(names(duration_vectors)), ~replace_na(.,0))) 
-
-
-random_round <- function(x) {
-    v <- as.integer(x)
-    r <- x-v
-    test <- stats::runif(length(r), 0.0, 1.0)
-    add=rep(as.integer(0),length(r))
-    add[r>test] <- 1L
-    value <- v+add
-    value <- ifelse(is.na(value) | value<0,0,value)
-    return(value)
-}
-
-
-scale <- 50
-duration_data <- duration_data %>%
-      dplyr::mutate(across(all_of(names(duration_vectors)),~(./scale))) %>%
-      dplyr::mutate(across(all_of(names(duration_vectors)),random_round))
-
-dots <- names(duration_vectors) |>
-  lapply(\(cat) {
-    dd <- duration_data |>
-      filter(!!as.name(cat)>0)
-    st_sample(dd,size=dd |> pull(cat),
-              warn_if_not_integer=FALSE) |>
-      st_as_sf() |>
-      mutate(Type=cat)
-  }) |>
-  bind_rows() %>%
-  slice_sample(.,n=nrow(.), replace = FALSE) 
-
-
-cov_sur_geo <- get_census("2021",regions=list(CSD=c("5915022","5915004")),geo_format="sf")
-
-dots |>
-  mutate(Type=recode(Type,
-                     "Less than 15 minutes"="<30 min",
-                     "15 to 29 minutes"="<30 min",
-                     "30 to 44 minutes"="30-45 min",
-                     "45 to 59 minutes"="45+ min",
-                     "60 minutes and over"="45+ min")) |>
-ggplot() +
-  geom_water() +
-  #geom_roads() +
-  geom_sf(aes(colour=Type),size=0.25, alpha=0.5) +
-  geom_sf(data=cov_sur_geo,fill=NA) +
-  coord_bbox(metro_van_bbox("tight")) +
-  theme(legend.position="bottom") +
-  guides(colour=guide_legend(override.aes=list(size=2,alpha=1))) +
-  scale_colour_manual(values=sanzo::trios$c157) +
-  labs(title="Commute duration in Metro Vancouver",
-       colour=NULL,
-       caption="StatCan census 2021")
-```
-:::
-
-
+This shows the mismatch of work and commute location stacking the deck against Surrey. The 2021 census recorded that Vancouver had 16% more jobs than workers, while Surrey had 28% fewer jobs than workers.^[This is only counting jobs with a usual place of work people commute to, and estimates from the 2021 census were likely still impacted by the COVID pandemic and proximity to the likely high point of Work From Home.] This is consistent with data from previous censuses. [@journey-to-work.2017; @commuter-growth.2019]
 
 
 People are, as we keep pointing out, also sloshing around and compressing within containers, where people double up in existing housing when there isn't enough housing to go around. This is an important mechanism for how housing systems adjust in the short term to demand shocks, but doubling up can also become a long term persistent feature of a housing market. The more people are doubling up all across the metro area, the larger the reservoir of people ready to decompress and fill up new containers wherever they may land, but especially if they land in the most desirable places. @fig-doubling-up-by-age shows how people double up by age in Metro Vancouver, and for comparison purposes in select other Canadian metro areas. [@housing_shortages_doubled_up_households.2024]
@@ -717,7 +642,8 @@ We also have good examples of what happens when population projections turn out 
 
 As we noted at the outset, we think people are both liquids and solids. Ultimately we need demographic projections that combine these two forms. But we can go a little further to note that scale matters. At the national level, treating people as solids tends to work out ok. Immigration is subject to controls that really do make people look more like they're coming off an assembly line. But once people land in Canada, the Charter works to preserve their ability to move freely. As a consequence, people become much more liquid as they move internally. This is mirrored in the [reasons people give for moving](https://homefreesociology.com/2019/11/24/why-do-people-move-new-data-mysteries-and-fundamental-rights/). Immigrants don't tend to make the move across borders for reasons like better housing affordability, but within metropolitan areas, housing drives the majority of local moves. Correspondingly, when we get below the metropolitan level, we really need to take into account how people are likely to move in response to where housing is being constructed. In short, at the local level, *liquid* demographics is the name of the game.
 
-For the race between the City of Vancouver and Surrey that means that it's mostly up to Vancouver who wins. Demand to live in Vancouver is much higher, if Vancouver allows more housing people will flow toward Vancouver and Surrey will have a very hard time catching up. If Vancouver swings back and cuts down their development pipeline, or if municipalities decide to continue to follow the solid demographic straitjacket imposed by Metro Vancouver, Surrey will likely overtake Vancouver sometime in the next decade or two. They certainly seem keen to do so as Uytae laid out:
+
+For the race between the City of Vancouver and Surrey that means that it's mostly up to Vancouver who wins. Demand to live in Vancouver is much higher, if Vancouver allows more housing people will flow toward Vancouver and Surrey will have a very hard time catching up. If Vancouver swings back and cuts down their development pipeline, following Metro guidance, then Surrey will likely overtake Vancouver sometime in the next decade or two. As laid out by Uytae Lee, Surrey seems ready to try.
 
 {{< video https://www.youtube.com/watch?v=ybMhTlj-l5s >}}
 
@@ -741,7 +667,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-12-07 22:17:13 PST"
+[1] "2025-12-08 00:30:40 PST"
 ```
 
 
@@ -757,7 +683,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [b58b608] 2025-10-26: references section in pdf
+Head:     [efd3bd5] 2025-12-08: widgets
 ```
 
 
@@ -799,25 +725,19 @@ other attached packages:
 [15] ggplot2_4.0.0             tidyverse_2.0.0          
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.1   farver_2.1.2       arrow_21.0.0.1     S7_0.2.0          
- [5] fastmap_1.2.0      lazyeval_0.2.2     digest_0.6.37      timechange_0.3.0  
- [9] lifecycle_1.0.4    geojsonio_0.11.3   cmhc_0.2.11        sanzo_0.1.0       
-[13] magrittr_2.0.4     compiler_4.5.2     tools_4.5.2        yaml_2.3.10       
-[17] knitr_1.50         labeling_0.4.3     bit_4.6.0          sp_2.2-0          
-[21] classInt_0.4-11    curl_7.0.0         here_1.0.2         RColorBrewer_1.1-3
-[25] KernSmooth_2.23-26 httpcode_0.3.0     tinytable_0.13.0   withr_3.0.2       
-[29] rmapzen_0.5.1      grid_4.5.2         fansi_1.0.6        git2r_0.36.2      
-[33] e1071_1.7-16       scales_1.4.0       crul_1.6.0         tinytex_0.57      
-[37] cli_3.6.5          rmarkdown_2.30     crayon_1.5.3       generics_0.1.4    
-[41] rstudioapi_0.17.1  geojson_0.3.5      httr_1.4.7         tzdb_0.5.0        
-[45] DBI_1.2.3          proxy_0.4-27       assertthat_0.2.1   parallel_4.5.2    
-[49] s2_1.1.9           vctrs_0.6.5        V8_8.0.1           jsonlite_2.0.0    
-[53] geojsonsf_2.0.3    litedown_0.7       hms_1.1.4          bit64_4.6.0-1     
-[57] magick_2.9.0       units_1.0-0        glue_1.8.0         lwgeom_0.2-14     
-[61] codetools_0.2-20   stringi_1.8.7      gtable_0.3.6       pillar_1.11.1     
-[65] htmltools_0.5.8.1  R6_2.6.1           jqr_1.4.0          wk_0.9.4          
-[69] rprojroot_2.1.1    vroom_1.6.6        evaluate_1.0.5     lattice_0.22-7    
-[73] class_7.3-23       Rcpp_1.1.0         xfun_0.53          pkgconfig_2.0.3   
+ [1] gtable_0.3.6       xfun_0.53          tzdb_0.5.0         vctrs_0.6.5       
+ [5] tools_4.5.2        generics_0.1.4     curl_7.0.0         proxy_0.4-27      
+ [9] fansi_1.0.6        pkgconfig_2.0.3    KernSmooth_2.23-26 tinytable_0.13.0  
+[13] RColorBrewer_1.1-3 S7_0.2.0           assertthat_0.2.1   lifecycle_1.0.4   
+[17] compiler_4.5.2     farver_2.1.2       git2r_0.36.2       litedown_0.7      
+[21] htmltools_0.5.8.1  class_7.3-23       yaml_2.3.10        pillar_1.11.1     
+[25] classInt_0.4-11    tidyselect_1.2.1   digest_0.6.37      stringi_1.8.7     
+[29] arrow_21.0.0.1     fastmap_1.2.0      grid_4.5.2         cli_3.6.5         
+[33] magrittr_2.0.4     e1071_1.7-16       withr_3.0.2        scales_1.4.0      
+[37] bit64_4.6.0-1      timechange_0.3.0   rmarkdown_2.30     httr_1.4.7        
+[41] bit_4.6.0          hms_1.1.4          evaluate_1.0.5     knitr_1.50        
+[45] Rcpp_1.1.0         glue_1.8.0         DBI_1.2.3          rstudioapi_0.17.1 
+[49] jsonlite_2.0.0     R6_2.6.1           units_1.0-0       
 ```
 
 

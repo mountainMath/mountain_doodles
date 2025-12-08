@@ -37,7 +37,7 @@ format:
 
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/12/07/the-trouble-with-municipal-level-population-projections/" target="_blank">HomeFreeSociology</a>)</i></p>
 
-```{r setup}
+```{r setup, cache=FALSE}
 library(tidyverse)
 library(cansim)
 library(cancensus)
@@ -145,7 +145,7 @@ Where will people sloshing around Metro Vancouver land? As it turns out, they la
 
 Overall, both Vancouver and Surrey have been adding housing in recent years. To better match housing to population we would want to look more broadly at housing services provided, not just number of housing units. We don't have open data on square footage or number of bedrooms added, but we can use dwelling types, combined with household size estimates for each dwelling type, to derive a rough and imperfect measure of growth in housing capacity and relate the to population growth. We show the household size by type estimates derived from the 2021 census in @tbl-hhsize.
 
-```{r tbl-hhsize}
+```{r tbl-hhsize, cache=FALSE}
 dwelling_types <- c("Single", "Semi-Detached", "Row", "Apartment")
 
 hhsize_data <- get_cansim_connection("98-10-0240") |>
@@ -449,7 +449,7 @@ sur_jobs <- jobs |>
   pull(Workers)
 ```
 
-This shows the mismatch of work and commute location stacking the deck against Surrey. The 2021 census recorded that Vancouver had `r scales::percent(van_jobs/van_workers-1)` more jobs than workers, while Surrey had `r scales::percent(1-sur_jobs/sur_workers)` fewer jobs than workers.^[This is only counting jobs with a usual place of work people commute to, and estimates from the 2021 census were likely still impacted by the COVID pandemic and proximity to the likely high point of Work From Home.]
+This shows the mismatch of work and commute location stacking the deck against Surrey. The 2021 census recorded that Vancouver had `r scales::percent(van_jobs/van_workers-1)` more jobs than workers, while Surrey had `r scales::percent(1-sur_jobs/sur_workers)` fewer jobs than workers.^[This is only counting jobs with a usual place of work people commute to, and estimates from the 2021 census were likely still impacted by the COVID pandemic and proximity to the likely high point of Work From Home.] This is consistent with data from previous censuses. [@journey-to-work.2017; @commuter-growth.2019]
 
 
 People are, as we keep pointing out, also sloshing around and compressing within containers, where people double up in existing housing when there isn't enough housing to go around. This is an important mechanism for how housing systems adjust in the short term to demand shocks, but doubling up can also become a long term persistent feature of a housing market. The more people are doubling up all across the metro area, the larger the reservoir of people ready to decompress and fill up new containers wherever they may land, but especially if they land in the most desirable places. @fig-doubling-up-by-age shows how people double up by age in Metro Vancouver, and for comparison purposes in select other Canadian metro areas. [@housing_shortages_doubled_up_households.2024]

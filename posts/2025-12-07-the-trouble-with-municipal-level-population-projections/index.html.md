@@ -202,8 +202,8 @@ tinytable::tt()
 
     <script>
 
-      function styleCell_t62ufoewc302gfla26ae(i, j, css_id) {
-          var table = document.getElementById("tinytable_t62ufoewc302gfla26ae");
+      function styleCell_ejom6v5py5i8h0h7s6un(i, j, css_id) {
+          var table = document.getElementById("tinytable_ejom6v5py5i8h0h7s6un");
           var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -212,8 +212,8 @@ tinytable::tt()
               console.warn(`Cell at (${i}, ${j}) not found.`);
           }
       }
-      function spanCell_t62ufoewc302gfla26ae(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_t62ufoewc302gfla26ae");
+      function spanCell_ejom6v5py5i8h0h7s6un(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_ejom6v5py5i8h0h7s6un");
         const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
         if (!targetCell) {
           console.warn(`Cell at (${i}, ${j}) not found.`);
@@ -244,14 +244,14 @@ tinytable::tt()
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '3', j: 0 }, { i: '3', j: 1 }, { i: '3', j: 2 }, { i: '3', j: 3 }, { i: '3', j: 4 },  ], css_id: 'tinytable_css_66bjwg3927yru6mo4x8z',}, 
-          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 },  ], css_id: 'tinytable_css_nhj6xv48wf1k2easz6vb',}, 
+          { positions: [ { i: '3', j: 0 }, { i: '3', j: 1 }, { i: '3', j: 2 }, { i: '3', j: 3 }, { i: '3', j: 4 },  ], css_id: 'tinytable_css_fxcyk79zzapoyn6lj47o',}, 
+          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 },  ], css_id: 'tinytable_css_lsdz6ycsadm80l79y99c',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_t62ufoewc302gfla26ae(cell.i, cell.j, group.css_id);
+                  styleCell_ejom6v5py5i8h0h7s6un(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -259,11 +259,11 @@ tinytable::tt()
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_66bjwg3927yru6mo4x8z, .table th.tinytable_css_66bjwg3927yru6mo4x8z { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_nhj6xv48wf1k2easz6vb, .table th.tinytable_css_nhj6xv48wf1k2easz6vb { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_fxcyk79zzapoyn6lj47o, .table th.tinytable_css_fxcyk79zzapoyn6lj47o { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_lsdz6ycsadm80l79y99c, .table th.tinytable_css_lsdz6ycsadm80l79y99c { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_t62ufoewc302gfla26ae" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_ejom6v5py5i8h0h7s6un" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -284,18 +284,18 @@ tinytable::tt()
                   <td data-row="1" data-col="4">1.9</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0">Surrey</td>
-                  <td data-row="2" data-col="1">3.4</td>
-                  <td data-row="2" data-col="2">2.6</td>
-                  <td data-row="2" data-col="3">2.9</td>
-                  <td data-row="2" data-col="4">2.3</td>
+                  <td data-row="2" data-col="0">Vancouver</td>
+                  <td data-row="2" data-col="1">2.9</td>
+                  <td data-row="2" data-col="2">2.7</td>
+                  <td data-row="2" data-col="3">2.6</td>
+                  <td data-row="2" data-col="4">1.7</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">Vancouver</td>
-                  <td data-row="3" data-col="1">2.9</td>
-                  <td data-row="3" data-col="2">2.7</td>
-                  <td data-row="3" data-col="3">2.6</td>
-                  <td data-row="3" data-col="4">1.7</td>
+                  <td data-row="3" data-col="0">Surrey</td>
+                  <td data-row="3" data-col="1">3.4</td>
+                  <td data-row="3" data-col="2">2.6</td>
+                  <td data-row="3" data-col="3">2.9</td>
+                  <td data-row="3" data-col="4">2.3</td>
                 </tr>
         </tbody>
       </table>
@@ -608,7 +608,7 @@ sur_jobs <- jobs |>
 :::
 
 
-This shows the mismatch of work and commute location stacking the deck against Surrey. The 2021 census recorded that Vancouver had 16% more jobs than workers, while Surrey had 28% fewer jobs than workers.^[This is only counting jobs with a usual place of work people commute to, and estimates from the 2021 census were likely still impacted by the COVID pandemic and proximity to the likely high point of Work From Home.]
+This shows the mismatch of work and commute location stacking the deck against Surrey. The 2021 census recorded that Vancouver had 16% more jobs than workers, while Surrey had 28% fewer jobs than workers.^[This is only counting jobs with a usual place of work people commute to, and estimates from the 2021 census were likely still impacted by the COVID pandemic and proximity to the likely high point of Work From Home.] This is consistent with data from previous censuses. [@journey-to-work.2017; @commuter-growth.2019]
 
 
 People are, as we keep pointing out, also sloshing around and compressing within containers, where people double up in existing housing when there isn't enough housing to go around. This is an important mechanism for how housing systems adjust in the short term to demand shocks, but doubling up can also become a long term persistent feature of a housing market. The more people are doubling up all across the metro area, the larger the reservoir of people ready to decompress and fill up new containers wherever they may land, but especially if they land in the most desirable places. @fig-doubling-up-by-age shows how people double up by age in Metro Vancouver, and for comparison purposes in select other Canadian metro areas. [@housing_shortages_doubled_up_households.2024]
@@ -759,7 +759,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2025-12-07 23:57:04 PST"
+[1] "2025-12-08 00:30:33 PST"
 ```
 
 
@@ -775,7 +775,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [b58b608] 2025-10-26: references section in pdf
+Head:     [efd3bd5] 2025-12-08: widgets
 ```
 
 
@@ -806,25 +806,30 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] mountainmathHelpers_0.1.4 sf_1.0-22                
+ [3] dotdensity_0.1.0          rlang_1.1.6              
+ [5] cancensus_0.5.11          cansim_0.4.4             
+ [7] lubridate_1.9.4           forcats_1.0.1            
+ [9] stringr_1.5.2             dplyr_1.1.4              
+[11] purrr_1.1.0               readr_2.1.5              
+[13] tidyr_1.3.1               tibble_3.3.0             
+[15] ggplot2_4.0.0             tidyverse_2.0.0          
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.6.5               cli_3.6.5                
- [3] knitr_1.50                rlang_1.1.6              
- [5] xfun_0.53                 generics_0.1.4           
- [7] S7_0.2.0                  jsonlite_2.0.0           
- [9] glue_1.8.0                git2r_0.36.2             
-[11] htmltools_0.5.8.1         mountainmathHelpers_0.1.4
-[13] scales_1.4.0              rmarkdown_2.30           
-[15] grid_4.5.2                evaluate_1.0.5           
-[17] tibble_3.3.0              fastmap_1.2.0            
-[19] yaml_2.3.10               lifecycle_1.0.4          
-[21] compiler_4.5.2            dplyr_1.1.4              
-[23] RColorBrewer_1.1-3        htmlwidgets_1.6.4        
-[25] pkgconfig_2.0.3           rstudioapi_0.17.1        
-[27] farver_2.1.2              digest_0.6.37            
-[29] R6_2.6.1                  tidyselect_1.2.1         
-[31] pillar_1.11.1             magrittr_2.0.4           
-[33] tools_4.5.2               gtable_0.3.6             
-[35] ggplot2_4.0.0            
+ [1] gtable_0.3.6       xfun_0.53          htmlwidgets_1.6.4  tzdb_0.5.0        
+ [5] vctrs_0.6.5        tools_4.5.2        generics_0.1.4     curl_7.0.0        
+ [9] proxy_0.4-27       fansi_1.0.6        pkgconfig_2.0.3    KernSmooth_2.23-26
+[13] tinytable_0.13.0   RColorBrewer_1.1-3 S7_0.2.0           assertthat_0.2.1  
+[17] lifecycle_1.0.4    git2r_0.36.2       compiler_4.5.2     farver_2.1.2      
+[21] litedown_0.7       htmltools_0.5.8.1  class_7.3-23       yaml_2.3.10       
+[25] pillar_1.11.1      classInt_0.4-11    tidyselect_1.2.1   digest_0.6.37     
+[29] stringi_1.8.7      arrow_21.0.0.1     fastmap_1.2.0      grid_4.5.2        
+[33] cli_3.6.5          magrittr_2.0.4     e1071_1.7-16       withr_3.0.2       
+[37] scales_1.4.0       bit64_4.6.0-1      timechange_0.3.0   rmarkdown_2.30    
+[41] httr_1.4.7         bit_4.6.0          hms_1.1.4          evaluate_1.0.5    
+[45] knitr_1.50         Rcpp_1.1.0         glue_1.8.0         DBI_1.2.3         
+[49] rstudioapi_0.17.1  jsonlite_2.0.0     R6_2.6.1           units_1.0-0       
 ```
 
 
