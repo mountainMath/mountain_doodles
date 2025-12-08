@@ -31,6 +31,15 @@ if (!dir.exists(to_path)) {
 }
 system(paste("cp -r",from_path,to_path))
 
+# widgets
+from_path <- here::here("widgets/*")
+to_path <- here::here("_site/widgets/")
+
+if (!dir.exists(to_path)) {
+  dir.create(to_path)
+}
+system(paste("cp -r",from_path,to_path))
+
 # js
 from_path <- here::here("js/*")
 to_path <- here::here("_site/js/")
