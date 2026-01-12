@@ -14,3 +14,5 @@ data/nz_rents.rds
 data/movers_data.rds
 data/pumf_2021_movers_income_new_housing.rds
 data/pplos/*
+
+**/*.quarto_ipynb
