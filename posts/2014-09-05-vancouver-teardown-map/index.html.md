@@ -19,9 +19,6 @@ aliases:
   - /blog/2014/09/05/vancouver-teardown-map/
 ---
 
-
-
-
 There has been lots of talk about old homes being torn down and replaced in Vancouver. The likeliest targets are houses
 of relatively low value sitting on expensive land. So how many teardown candidates are there in Vancouver, and where
 in Vancouver are they located? 

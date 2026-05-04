@@ -34,7 +34,6 @@ format:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2025/01/16/homelessness-and-rents-in-canada/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

@@ -17,9 +17,6 @@ aliases:
   - /blog/2017/05/16/lifeblood/
 ---
 
-
-
-
  
 Ever since that [Bloomberg article whose claims nobody could reproduce](https://www.bloomberg.com/news/articles/2016-03-14/millennials-flee-vancouver-for-cities-with-more-affordable-homes),
 where the author refused to disclose what data was used, but that

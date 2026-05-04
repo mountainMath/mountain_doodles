@@ -17,9 +17,6 @@ aliases:
   - /blog/2016/01/31/land-use/
 ---
 
-
-
-
 Metro Vancouver has a [fairly good land use dataset](http://www.metrovancouver.org/data) that I imported quite some time
 ago so that [I could take a good look at it](https://mountainmath.ca/land_use/map). But then I forgot about it until
 [@HealthyCityMaps](https://twitter.com/HealthyCityMaps) [reminded me](https://twitter.com/HealthyCityMaps/status/692832946714050564) just

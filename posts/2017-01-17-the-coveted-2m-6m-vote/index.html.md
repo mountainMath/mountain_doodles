@@ -18,9 +18,6 @@ aliases:
   - /blog/2017/01/17/the-coveted-2m-6m-vote/
 ---
 
-
-
-
 Earlier this month the province increased the threshold for the homeowner grant from $1.2 million to $1.6 million dollars.
 It's an election year, and with the BC Assessment data for the City of Vancouver now being available via their
 [open data catalogue](http://vancouver.ca/your-government/open-data-catalogue.aspx)

@@ -23,9 +23,6 @@ aliases:
   - /blog/2022/04/26/planning-for-scarcity/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/04/46/planning-for-scarcity/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

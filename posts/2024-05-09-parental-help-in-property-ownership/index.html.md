@@ -34,7 +34,6 @@ format:
 ---
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/05/09/parental-help-in-property-ownership/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

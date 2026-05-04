@@ -20,7 +20,6 @@ execute:
   warning: false
 ---
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -286,7 +285,6 @@ Another way to bridge the gap is to animate a map that moves between a cartograp
 
 
 
-
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="254" source-offset="0"}
@@ -341,7 +339,6 @@ vote_map_animation = {
 :::
 ::::
 :::::
-
 
 ::: {.cell}
 
@@ -649,7 +646,6 @@ This shows that overall the Liberals flipped 28 seats and the Conservatives flip
 
 
 
-
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="542" source-offset="0"}
@@ -681,6 +677,7 @@ applySimulation = (nodes) => {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="564" source-offset="0"}
@@ -694,6 +691,7 @@ spreadDistricts = applySimulation(districts)
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="568" source-offset="0"}
@@ -706,6 +704,7 @@ maxRadius = 10
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -725,6 +724,7 @@ radiusScale = {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="582" source-offset="0"}
@@ -738,6 +738,7 @@ ratio = 0.8
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="586" source-offset="0"}
@@ -750,6 +751,7 @@ nodePadding = 0.3
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -775,6 +777,7 @@ tooltip = f => {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="607" source-offset="0"}
@@ -799,6 +802,7 @@ party_colors = {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="622" source-offset="0"}
@@ -821,6 +825,7 @@ party_colors2 = {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="637" source-offset="0"}
@@ -838,6 +843,7 @@ format = ({
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="645" source-offset="0"}
@@ -850,6 +856,7 @@ projection =  d3.geoIdentity().reflectY(true).fitSize([960, 600], canada)
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -866,6 +873,7 @@ districts = canada.features.map(f => {
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -920,6 +928,7 @@ canada = {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="701" source-offset="0"}
@@ -932,6 +941,7 @@ d3 = require("d3@5")
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -946,6 +956,7 @@ turf = require("@turf/turf@5")
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="709" source-offset="0"}
@@ -958,7 +969,6 @@ flubber = require('https://unpkg.com/flubber')
 :::
 ::::
 :::::
-
 
 
 

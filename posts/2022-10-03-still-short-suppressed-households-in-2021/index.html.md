@@ -27,9 +27,6 @@ aliases:
   - /blog/2022/10/03/still-short-suppressed-households-in-2021/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/10/03/still-short-suppressed-households-in-2021/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

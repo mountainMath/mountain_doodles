@@ -25,7 +25,6 @@ execute:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/11/08/no-spike-in-foreign-buying/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
@@ -85,7 +84,6 @@ provincial_monthly |>
 ```
 
 ::: {.cell-output-display}
-
 
 ```{=html}
 <!-- preamble start -->
@@ -211,7 +209,6 @@ window.addEventListener('load', function () { styleCell_o1e0et02vzcdg5jk3p17(9, 
     </div>
 <!-- hack to avoid NA insertion in last line -->
 ```
-
 
 :::
 :::

@@ -20,9 +20,6 @@ type: "post"
 aliases:
   - /blog/2016/03/02/property-taxes-and-land-use/
 ---
-
-
-
 Since I started thinking about [tax density](http://doodles.mountainmath.ca/blog/2015/05/31/density-in-vancouver/),
 the amount of property taxes collected per area, I always felt that the data presentation in the map fell short.
 

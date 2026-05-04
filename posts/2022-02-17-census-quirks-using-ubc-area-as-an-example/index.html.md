@@ -19,9 +19,6 @@ aliases:
   - /blog/2022/02/17/census-quirks-using-ubc-area-as-an-example/
 ---
 
-
-
-
  
 
 

@@ -17,9 +17,6 @@ type: "post"
 aliases:
   - /blog/2016/08/04/rt/
 ---
-
-
-
 RT is Vancouver's zoning for duplexes. Over time, various areas have been zoned to allow duplexes. Examples are
 Kits Point, much of Point Grey Road reaching up to Broadway, much of Granview-Woodlands, parts of Mount Pleasant and many
 other areas.

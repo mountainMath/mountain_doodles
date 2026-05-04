@@ -28,10 +28,6 @@ aliases:
   - /blog/2024/04/11/what-if-recent-apartment-buildings-in-vancouver-were-20-taller/
 ---
 
-
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/04/11/what-if-recent-apartment-buildings-in-vancouver-were-20-taller/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

@@ -18,9 +18,6 @@ aliases:
   - /blog/2019/04/15/vsb-x-boundary/
 ---
 
-
-
-
 <link rel="stylesheet" href="/css/custom.css" />
 
 District wide enrolment in VSB schools has been on a steady decline for over a decade. At the same time there are areas within the VSB that have seen strong growth in children requiring new schools to get built. 

@@ -18,9 +18,6 @@ aliases:
   - /blog/2017/01/16/2017-assessment-data/
 ---
 
-
-
-
 The friendly folks at
 [Vancouver Open Data](http://vancouver.ca/your-government/open-data-catalogue.aspx) just
 [updated their property assessment data](https://twitter.com/VanOpenData/status/688060388190097408) with the fresh 2017 property tax assessments. Time to run the script to update the

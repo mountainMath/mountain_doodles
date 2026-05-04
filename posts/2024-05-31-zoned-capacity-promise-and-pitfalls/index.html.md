@@ -33,7 +33,6 @@ format:
 ---
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/05/31/zoned-capacity-promise-and-pitfalls/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
@@ -190,7 +189,6 @@ The starting point of the broader public **zoned capacity** discussions was prob
 ::: {#tbl-development-capacity-2014 .cell tbl-cap='Remaining Development Potential by Type of Capacity in the City of Vancouver (to 2041)'}
 ::: {.cell-output-display}
 
-
 ```{=html}
 <!DOCTYPE html> 
 <html lang="en">
@@ -310,7 +308,6 @@ window.addEventListener('load', function () { styleCell_tinytable_g7lden61s7b2fj
 </html>
 ```
 
-
 :::
 :::
 
@@ -320,7 +317,6 @@ The [2019 report](https://vancouver.ca/files/cov/CAC-coriolis-consulting-final-r
 
 ::: {#tbl-development-capacity-2019 .cell tbl-cap='Remaining Development Potential to 2041 by Type of Capacity in the City of Vancouver'}
 ::: {.cell-output-display}
-
 
 ```{=html}
 <!DOCTYPE html> 
@@ -440,7 +436,6 @@ window.addEventListener('load', function () { styleCell_tinytable_ookqizclqa48as
 
 </html>
 ```
-
 
 :::
 :::

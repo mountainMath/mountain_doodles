@@ -18,9 +18,6 @@ aliases:
   - /blog/2020/03/31/context-for-covid-19-mortality-so-far/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2020/04/01/context-for-covid-19-mortality-so-far/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

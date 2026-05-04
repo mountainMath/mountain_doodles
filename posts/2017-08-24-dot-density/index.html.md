@@ -20,9 +20,6 @@ aliases:
   - /blog/2017/08/24/dot-density/
 ---
 
-
-
-
 I started writing this blog post in December 2015, when CensusMapper quite a bit younger and
 I hacked together some basic dot-density maps. I never much liked the results and have been
 slowly improving and thinking about them. I am still not entirely happy with the current

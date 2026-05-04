@@ -19,9 +19,6 @@ aliases:
   - /blog/2016/03/28/on-mixed-use/
 ---
 
-
-
-
 Redeveloping single storey commercial properties into mixed use is taking off in Vancouver right now. It's a little frustrating
 to see how pretty much every story I have seen on this get the effect this has on property taxes wrong, including one on the generally quite good
 [Price Tags blog](https://pricetags.wordpress.com/2016/01/25/guest-on-retail-and-an-evolving-environment-with-a-short-historic-note/). People

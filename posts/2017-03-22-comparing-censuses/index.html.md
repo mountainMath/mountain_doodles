@@ -18,9 +18,6 @@ aliases:
   - /blog/2017/03/22/comparing-censuses/
 ---
 
-
-
-
 It's great to have fresh census data to play with. Right now we only have
 three variables, population, dwellings and households. There is still lots
 of [interesting information that can be extracted](http://doodles.mountainmath.ca/blog/2017/02/10/2016-census-data/).

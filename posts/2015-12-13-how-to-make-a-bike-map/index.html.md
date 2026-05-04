@@ -19,9 +19,6 @@ aliases:
   - /blog/2015/12/13/how-to-make-a-bike-map/
 ---
 
-
-
-
 Here come some general thoughts on bike maps. Not throught through yet, just jotting down some ideas so that I don't
 forget and maybe to start a discussion.
 

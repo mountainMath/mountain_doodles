@@ -18,9 +18,6 @@ aliases:
   - /blog/2015/12/27/canvas-vs-svg/
 ---
 
-
-
-
 ## CensusMapper Behind the Scenes
 The idea behind [CensusMapper](https://censusmapper.ca) is that it takes away all the technical barriers to dealing with census data. So how does
 CensusMapper work behind the scenes?

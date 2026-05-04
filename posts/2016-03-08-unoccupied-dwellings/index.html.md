@@ -19,9 +19,6 @@ aliases:
   - /blog/2016/03/08/unoccupied-dwellings/
 ---
 
-
-
-
 Today the City of Vancouver [released their report](http://council.vancouver.ca/20160308/documents/rr1presentation.pdf)
 on unoccupied dwelling units in the city. I watched part of the presentation and read through the report, and from all
 that I can see the methodology used is very solid.

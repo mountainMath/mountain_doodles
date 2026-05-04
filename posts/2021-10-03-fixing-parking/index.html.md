@@ -27,9 +27,6 @@ aliases:
   - /blog/2021/10/03/fixing-parking/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/10/04/fixing-parking/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

@@ -18,9 +18,6 @@ aliases:
   - /blog/2016/01/17/updated-vancouver-assessment-data/
 ---
 
-
-
-
 [<img  src="images/relative_land.jpg" style="width:50%;float:right">](https://mountainmath.ca/map/assessment?layer=4)
 The friendly folks at 
 [Vancouver Open Data](http://vancouver.ca/your-government/open-data-catalogue.aspx) just

@@ -17,9 +17,6 @@ aliases:
   - /blog/2016/11/21/street-networks/
 ---
 
-
-
-
 The other day I came across this [handy tool](https://github.com/gboeing/osmnx) built by
 [Geoff Boeing](https://twitter.com/gboeing). Still jet-lagged, I decided to put my odd wake hours to use and played with
 it.

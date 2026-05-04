@@ -8,7 +8,7 @@ categories:
   - Vancouver
 tags: []
 description: 'Apparently 8th grade math ability is inversly proportional to property values, here is a simple calculator for those still suffering from consequences of sub-par math education.'
-image: "index_files/figure-html/school_tax_map-1.png"
+image: "/posts/2018-02-28-extra-school-tax/index_files/figure-html/school_tax_map-1.png"
 featured: ''
 featuredalt: ""
 featuredpath: ""

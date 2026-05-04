@@ -68,9 +68,14 @@ function tweet(args, kwargs)
               end
             end 
         else
-        -- in this case mime_type contains error information if you want to use it to debug
-        -- print(mime_type)
-            error("Could not find contact Twitter to embed tweet. Do you have a working internet connection?")
+        -- pcall failed: network error or Twitter unreachable
+            if isEmpty(status_image) then
+                print("Could not contact Twitter and no fallback image provided, skipping tweet " .. status_id)
+                return pandoc.Null()
+            else
+                print("Could not contact Twitter, substituting tweet image " .. status_image)
+                return pandoc.RawBlock('html', '<img src="' .. status_image .. '" alt="Tweet image" style="max-width:550px;"/>')
+            end
         end
     else
         return pandoc.Null()

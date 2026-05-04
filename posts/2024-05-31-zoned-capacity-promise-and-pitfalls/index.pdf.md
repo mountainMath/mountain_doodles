@@ -32,7 +32,6 @@ format:
 
 
 
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2024/05/35/zoned-capacity-promise-and-pitfalls/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

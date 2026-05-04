@@ -18,9 +18,6 @@ aliases:
   - /blog/2016/04/01/on-dirt-and-houses/
 ---
 
-
-
-
 The story of Vancouver real estate is mostly a story of dirt. After spending a bit of time to collect relevant data I
 am now wondering how to make better visualizations to make that data more accessible.
 

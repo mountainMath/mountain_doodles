@@ -18,9 +18,6 @@ aliases:
   - /blog/2017/10/15/vsb-vulnerable-students/
 ---
 
-
-
-
 Recently there was some discussion at my son's school about the hot lunch program, and who should pay for those who need a subsidy. Which made me curious how that works. Here is what I learned.
 
 # Student Vulnerability

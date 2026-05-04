@@ -23,9 +23,6 @@ aliases:
   - /blog/2020/05/25/projections-and-self-fulfilling-prophecies/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2020/05/25/projections-and-self-fulfilling-prophecies/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

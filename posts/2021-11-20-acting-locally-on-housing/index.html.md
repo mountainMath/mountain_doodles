@@ -22,9 +22,6 @@ aliases:
   - /blog/2021/11/20/acting-locally-on-housing/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/11/21/acting-locally-on-housing/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

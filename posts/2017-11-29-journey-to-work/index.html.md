@@ -18,9 +18,6 @@ aliases:
   - /blog/2017/11/29/journey-to-work/
 ---
 
-
-
-
 The last larger dump of census data arrived today with lots of interesting variables. We wanted to have a quick look at commuting data.
 
 

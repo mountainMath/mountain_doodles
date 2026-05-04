@@ -22,9 +22,6 @@ aliases:
   - /blog/2020/08/27/keeping-the-leavers/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2020/08/28/keeping-the-leavers/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
@@ -74,15 +71,7 @@ Here in Vancouver, those resisting making room for more people to stay and arriv
 So given the endogeneity issues: how should we be doing future population projections? In high demand areas like Metro Vancouver we should start from housing growth. That's what cities can control. How many condos will be built? How many rental homes? How many non-market homes? How many infill homes? And given a scenario of housing growth, we can model what population growth might look like. How many people would move here from elsewhere in BC? How many from elsewhere in Canada? How many from outside the country? How many people would move away? It's not an exact science, but demographers can build decent models once we know how much housing is being built and how cities are trying to select their residents. And the public can look at different scenarios of housing growth and the resulting scenarios of population change and use that to have a more informed discussion about where they want the city to go as well as who they want to enable to stay.
 
 
-
-
-
 {{< youtube id="9Z_H11F7WDI" autoplay="true" >}}
-
-
-
-
-
 
 As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2020-08-27-keeping-the-leavers.Rmarkdown) for anyone to reproduce or adapt for their own purposes.
 

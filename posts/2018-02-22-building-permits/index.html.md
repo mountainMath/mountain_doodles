@@ -23,19 +23,8 @@ aliases:
 
 
 
-
-
-
 The City of Vancouver has [put up building permit data](http://data.vancouver.ca/datacatalogue/issuedBuildingPermits.htm) yesterday, and [Aaron Licker](https://twitter.com/LGeospatial) swiftly took a look at the data and teased out some interesting bits.
-
-
-
 {{< tweet 966469537909493760 >}}
-
-
-
-
-
 
 We have been asking for this data for quite a while, so we had to take a look too. We wrapped the nasty download, geocoding and general data wrangling into convenience functions, so importing the data into a tidy data frame is pretty simple now. The complete code that made this post is, as always, [available on GitHub](https://github.com/mountainMath/doodles/blob/master/content/posts/2018-02-22-building-permits.Rmarkdown).
 

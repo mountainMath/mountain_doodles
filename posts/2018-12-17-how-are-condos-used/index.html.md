@@ -21,9 +21,6 @@ aliases:
   - /blog/2018/12/17/how-are-condos-used/
 ---
 
-
-
-
 <p style="size:small;text-align:right;padding-bottom:10px;">(Cross-posted at <a href="https://homefreesociology.com/2018/12/18/how-are-condos-used/" target ="_blank">HomeFreeSociology</a>)</p>
 
 

@@ -20,7 +20,6 @@ execute:
   warning: false
 ---
 
-
 ::: {.cell}
 
 ```{.r .cell-code  code-fold="true"}

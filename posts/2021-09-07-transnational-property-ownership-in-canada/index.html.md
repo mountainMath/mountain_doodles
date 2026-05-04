@@ -24,9 +24,6 @@ aliases:
   - /blog/2021/09/07/transnational-property-ownership-in-canada/
 ---
 
-
-
-
 <p style="text-align:center;">
 <i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2021/09/08/transnational-property-ownership-in-canada/" target="_blank">HomeFreeSociology</a>)</i>
 </p>

@@ -22,7 +22,6 @@ execute:
 
 
 
-
 We don't yet have the final results for the 2024 BC provincial election, we are still waiting on the count of the vote-by-mail ballots that have not arrived yet. Some ridings are still in limbo, as is the overall outcome and who will form government.
 
 But most ridings have been called and we wanted to take this opportunity to replicate a map highlighting the difference between land and people as we have done for earlier federal elections, following the idea [implemented for the 2016 US presidential elections](https://observablehq.com/@karimdouieb/try-to-impeach-this-challenge-accepted) by [Karim Douïeb](http://twitter.com/karim_douieb). [@elections-fun.2019; @elections-fun-2021-edition.2021]
@@ -137,7 +136,6 @@ With the data in hand^[We placed the data separately online to not interfere wit
 
 
 
-
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="129" source-offset="0"}
@@ -202,7 +200,6 @@ vote_map_animation = {
 Land does not vote, people do
 ::::
 :::::
-
 
 
 
@@ -774,7 +771,6 @@ simpleCache({},"bc_elections_2024_results-2024-10-25.rds") |>
 
 
 
-
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="572" source-offset="0"}
@@ -806,6 +802,7 @@ applySimulation = (nodes) => {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="594" source-offset="0"}
@@ -818,6 +815,7 @@ spreadDistricts = applySimulation(districts)
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -832,6 +830,7 @@ maxRadius = 15
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="602" source-offset="0"}
@@ -845,6 +844,7 @@ ratio = 1
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="606" source-offset="0"}
@@ -857,6 +857,7 @@ nodePadding = 0.3
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -878,6 +879,7 @@ party_colors = {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="621" source-offset="0"}
@@ -898,6 +900,7 @@ party_colors2 = {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="634" source-offset="0"}
@@ -915,6 +918,7 @@ format = ({
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="642" source-offset="0"}
@@ -928,6 +932,7 @@ projection = d3.geoIdentity().reflectY(true).fitSize([960, 600], {type: "Feature
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="646" source-offset="0"}
@@ -940,6 +945,7 @@ districts = bc_districts.features
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -987,6 +993,7 @@ bc_districts = {
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="688" source-offset="0"}
@@ -999,6 +1006,7 @@ d3 = require("d3@5")
 :::
 ::::
 :::::
+
 
 :::::{.cell}
 
@@ -1013,6 +1021,7 @@ turf = require("@turf/turf@5")
 ::::
 :::::
 
+
 :::::{.cell}
 
 ```{.js .cell-code code-fold="undefined" startFrom="696" source-offset="0"}
@@ -1025,7 +1034,6 @@ flubber = require('https://unpkg.com/flubber')
 :::
 ::::
 :::::
-
 
 
 

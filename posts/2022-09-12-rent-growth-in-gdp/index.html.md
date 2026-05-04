@@ -23,9 +23,6 @@ aliases:
   - /blog/2022/09/12/rent-growth-in-gdp/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2022/09/12/rent-growth-in-gdp/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 

@@ -26,20 +26,9 @@ aliases:
 
 
 
-
-
-
 Almost three years ago I ran the numbers to identify "Vancouver's most lucrative fire hydrant".
 
-
-
-
 {{< tweet 826883926614421507 >}}
-
-
-
-
-
 
 <img src="https://raw.githubusercontent.com/mountainMath/VancouvR/master/images/VancouvR-sticker.png" style="float:right;width:40%;">
 Being a card-carrying Shoupista it's high time for me to do an update. And looking back I can't help but realize how my approach to data analysis, even about such trivial things as parking tickets, has changed since then. Back then I scripted makeshift analysis in a general purpose language. Nowadays I work in R or Python and am much more structured in my approach, with emphasis on reproducibility and transparency. And this included the entire pipeline, from data acquisition, to data cleaning, data analysis and visualization.

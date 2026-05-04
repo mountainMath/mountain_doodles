@@ -28,9 +28,6 @@ aliases:
   - /blog/2019/07/14/taxing-toxic-demand-early-results/
 ---
 
-
-
-
 <p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2019/07/15/taxing-toxic-demand-early-results/" target="_blank">HomeFreeSociology</a>)</i></p>
 
 
