@@ -7,7 +7,7 @@ author:
     affiliation: UBC CS, MountainMath
 date: '2026-05-04'
 slug: censusmapper-20
-description: 'After eleven years, we rebuilt CensusMapper to make it even either to make and narrate rich interactive maps based on Canadaian census data.'
+description: 'After eleven years, we rebuilt CensusMapper to make it even easier to make and narrate rich interactive maps based on Canadaian census data.'
 image: 'images/cm-logo.png'
 categories: 
   - CensusMapper
