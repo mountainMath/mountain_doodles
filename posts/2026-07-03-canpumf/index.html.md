@@ -518,7 +518,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-07-03 09:03:38 PDT"
+[1] "2026-07-03 09:19:32 PDT"
 ```
 
 
@@ -534,7 +534,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [293ca08] 2026-05-25: spelling
+Head:     [62f53a9] 2026-07-03: canpumf post
 ```
 
 
@@ -571,21 +571,35 @@ other attached packages:
  [9] tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] utf8_1.2.6         generics_0.1.4     xml2_1.6.0         stringi_1.8.7     
- [5] hms_1.1.4          digest_0.6.39      magrittr_2.0.5     evaluate_1.0.5    
- [9] grid_4.6.0         timechange_0.4.0   RColorBrewer_1.1-3 blob_1.3.0        
-[13] fastmap_1.2.0      jsonlite_2.0.0     DBI_1.3.0          httr_1.4.8        
-[17] rvest_1.0.5        selectr_0.6-0      scales_1.4.0       collections_0.3.12
-[21] duckdb_1.5.4       cli_3.6.6          crayon_1.5.3       rlang_1.2.0       
-[25] dbplyr_2.6.0       bit64_4.8.2        withr_3.0.3        cachem_1.1.0      
-[29] yaml_2.3.12        otel_0.2.0         parallel_4.6.0     tools_4.6.0       
-[33] tzdb_0.5.0         memoise_2.0.1      duckplyr_1.2.1     curl_7.1.0        
-[37] vctrs_0.7.3        R6_2.6.1           git2r_0.36.2       lifecycle_1.0.5   
-[41] bit_4.6.0          htmlwidgets_1.6.4  vroom_1.7.1        pkgconfig_2.0.3   
-[45] pillar_1.11.1      gtable_0.3.6       glue_1.8.1         xfun_0.59         
-[49] tidyselect_1.2.1   rstudioapi_0.19.0  knitr_1.51         farver_2.1.2      
-[53] htmltools_0.5.9    labeling_0.4.3     rmarkdown_2.31     compiler_4.6.0    
-[57] S7_0.2.2          
+ [1] gtable_0.3.6              xfun_0.59                
+ [3] htmlwidgets_1.6.4         tzdb_0.5.0               
+ [5] vctrs_0.7.3               tools_4.6.0              
+ [7] generics_0.1.4            curl_7.1.0               
+ [9] parallel_4.6.0            blob_1.3.0               
+[11] pkgconfig_2.0.3           dbplyr_2.6.0             
+[13] RColorBrewer_1.1-3        S7_0.2.2                 
+[15] lifecycle_1.0.5           compiler_4.6.0           
+[17] farver_2.1.2              git2r_0.36.2             
+[19] duckplyr_1.2.1            mountainmathHelpers_0.1.4
+[21] htmltools_0.5.9           yaml_2.3.12              
+[23] pillar_1.11.1             crayon_1.5.3             
+[25] cachem_1.1.0              tidyselect_1.2.1         
+[27] rvest_1.0.5               digest_0.6.39            
+[29] stringi_1.8.7             duckdb_1.5.4             
+[31] labeling_0.4.3            fastmap_1.2.0            
+[33] grid_4.6.0                cli_3.6.6                
+[35] magrittr_2.0.5            utf8_1.2.6               
+[37] withr_3.0.3               scales_1.4.0             
+[39] bit64_4.8.2               timechange_0.4.0         
+[41] rmarkdown_2.31            httr_1.4.8               
+[43] bit_4.6.0                 otel_0.2.0               
+[45] hms_1.1.4                 memoise_2.0.1            
+[47] evaluate_1.0.5            knitr_1.51               
+[49] rlang_1.2.0               glue_1.8.1               
+[51] DBI_1.3.0                 selectr_0.6-0            
+[53] xml2_1.6.0                collections_0.3.12       
+[55] rstudioapi_0.19.0         vroom_1.7.1              
+[57] jsonlite_2.0.0            R6_2.6.1                 
 ```
 
 
