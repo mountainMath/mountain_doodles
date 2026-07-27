@@ -137,7 +137,7 @@ lfs_pumf <- get_pumf("LFS",refresh="auto")
 
 
 
-And it's blazing fast. Having the data in a database means that one can very quickly cross-tabulate and aggregate data. For example, right now there are 25,287,947 rows in the LFS PUMF. In @fig-youth-unemployment we showcase a typical LFS query, calculating the unemployment rate for various age groups split by whether they have been unemployed for less than a year or a year or more. It takes less than half a second to run that and extract the timeline data. All with a very low memory footprint. Gone are the times where we take a long time to load all data into memory, cut down on the number of variables early in the process, have variable labels (not just column names) hard-wired in our brain just so we can work with the data. Now we have properly labelled variables, optionally labelled variables (column names), and fast access to the entire PUMF data.
+And it's blazing fast. Having the data in a database means that one can very quickly cross-tabulate and aggregate data. For example, right now there are 25,401,981 rows in the LFS PUMF. In @fig-youth-unemployment we showcase a typical LFS query, calculating the unemployment rate for various age groups split by whether they have been unemployed for less than a year or a year or more. It takes less than half a second to run that and extract the timeline data. All with a very low memory footprint. Gone are the times where we take a long time to load all data into memory, cut down on the number of variables early in the process, have variable labels (not just column names) hard-wired in our brain just so we can work with the data. Now we have properly labelled variables, optionally labelled variables (column names), and fast access to the entire PUMF data.
 
 
 ::: {.cell}
@@ -518,7 +518,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-07-03 10:38:34 PDT"
+[1] "2026-07-26 20:45:27 PDT"
 ```
 
 
@@ -534,7 +534,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [078c6cf] 2026-07-03: themed images
+Head:     [14a2d4a] 2026-07-03: updated images with mm theme
 ```
 
 
@@ -550,7 +550,7 @@ sessionInfo()
 ```
 R version 4.6.0 (2026-04-24)
 Platform: aarch64-apple-darwin23
-Running under: macOS Tahoe 26.5.1
+Running under: macOS Tahoe 26.5.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
@@ -566,7 +566,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] canpumf_0.5.2   lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0  
+ [1] canpumf_0.5.3   lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0  
  [5] dplyr_1.2.1     purrr_1.2.2     readr_2.2.0     tidyr_1.3.2    
  [9] tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0
 
@@ -578,28 +578,27 @@ loaded via a namespace (and not attached):
  [9] grid_4.6.0                timechange_0.4.0         
 [11] RColorBrewer_1.1-3        blob_1.3.0               
 [13] fastmap_1.2.0             jsonlite_2.0.0           
-[15] DBI_1.3.0                 httr_1.4.8               
-[17] rvest_1.0.5               scales_1.4.0             
-[19] collections_0.3.12        duckdb_1.5.4             
-[21] cli_3.6.6                 crayon_1.5.3             
-[23] rlang_1.2.0               dbplyr_2.6.0             
-[25] bit64_4.8.2               withr_3.0.3              
-[27] cachem_1.1.0              yaml_2.3.12              
+[15] zip_3.0.0                 DBI_1.3.0                
+[17] httr_1.4.8                rvest_1.0.5              
+[19] selectr_0.6-0             scales_1.4.0             
+[21] duckdb_1.5.4.2            cli_3.6.6                
+[23] crayon_1.5.3              rlang_1.2.0              
+[25] dbplyr_2.6.0              bit64_4.8.2              
+[27] withr_3.0.3               yaml_2.3.12              
 [29] otel_0.2.0                parallel_4.6.0           
 [31] tools_4.6.0               tzdb_0.5.0               
-[33] memoise_2.0.1             duckplyr_1.2.1           
-[35] curl_7.1.0                vctrs_0.7.3              
-[37] R6_2.6.1                  git2r_0.36.2             
-[39] lifecycle_1.0.5           bit_4.6.0                
-[41] htmlwidgets_1.6.4         vroom_1.7.1              
-[43] pkgconfig_2.0.3           pillar_1.11.1            
-[45] gtable_0.3.6              glue_1.8.1               
-[47] xfun_0.59                 tidyselect_1.2.1         
-[49] rstudioapi_0.19.0         knitr_1.51               
-[51] farver_2.1.2              htmltools_0.5.9          
-[53] labeling_0.4.3            rmarkdown_2.31           
-[55] mountainmathHelpers_0.1.4 compiler_4.6.0           
-[57] S7_0.2.2                 
+[33] curl_7.1.0                vctrs_0.7.3              
+[35] R6_2.6.1                  git2r_0.36.2             
+[37] lifecycle_1.0.5           bit_4.6.0                
+[39] htmlwidgets_1.6.4         vroom_1.7.1              
+[41] pkgconfig_2.0.3           pillar_1.11.1            
+[43] gtable_0.3.6              glue_1.8.1               
+[45] xfun_0.59                 tidyselect_1.2.1         
+[47] rstudioapi_0.19.0         knitr_1.51               
+[49] farver_2.1.2              htmltools_0.5.9          
+[51] labeling_0.4.3            rmarkdown_2.31           
+[53] mountainmathHelpers_0.1.4 compiler_4.6.0           
+[55] S7_0.2.2                 
 ```
 
 

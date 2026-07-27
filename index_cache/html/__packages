@@ -9,3 +9,6 @@ stringr
 forcats
 lubridate
 canpumf
+canivt
+httr2
+cansim
