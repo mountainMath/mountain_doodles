@@ -13,6 +13,7 @@ categories:
 bibliography: ../../common_literature.bib 
 code-tools:
   toggle: true
+code-fold: show
 fig-width: 8
 execute:
   cache: true
@@ -30,7 +31,6 @@ That matters because IVT is a closed format adopted by (the census division of) 
 
 ```{r message=FALSE}
 library(tidyverse)
-
 # remotes::install_github("mountainmath/canivt")
 library(canivt)
 

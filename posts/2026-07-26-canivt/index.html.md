@@ -13,6 +13,7 @@ categories:
 bibliography: ../../common_literature.bib 
 code-tools:
   toggle: true
+code-fold: show
 fig-width: 8
 execute:
   cache: true
@@ -33,7 +34,6 @@ That matters because IVT is a closed format adopted by (the census division of) 
 
 ```{.r .cell-code}
 library(tidyverse)
-
 # remotes::install_github("mountainmath/canivt")
 library(canivt)
 
@@ -416,7 +416,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-07-26 23:01:49 PDT"
+[1] "2026-07-26 23:20:47 PDT"
 ```
 
 
@@ -432,7 +432,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [33e6bfd] 2026-07-27: canivt post
+Head:     [f018316] 2026-07-27: condense post a bit
 ```
 
 
@@ -463,25 +463,36 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] cansim_0.4.4    httr2_1.2.2     canivt_0.4.3    lubridate_1.9.5
+ [5] forcats_1.0.1   stringr_1.6.0   dplyr_1.2.1     purrr_1.2.2    
+ [9] readr_2.2.0     tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.3  
+[13] tidyverse_2.0.0
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.7.3               cli_3.6.6                
- [3] knitr_1.51                rlang_1.2.0              
- [5] xfun_0.59                 otel_0.2.0               
- [7] generics_0.1.4            S7_0.2.2                 
- [9] jsonlite_2.0.0            glue_1.8.1               
-[11] git2r_0.36.2              htmltools_0.5.9          
-[13] mountainmathHelpers_0.1.4 scales_1.4.0             
-[15] rmarkdown_2.31            grid_4.6.0               
-[17] evaluate_1.0.5            tibble_3.3.1             
-[19] fastmap_1.2.0             yaml_2.3.12              
-[21] lifecycle_1.0.5           compiler_4.6.0           
-[23] dplyr_1.2.1               RColorBrewer_1.1-3       
-[25] htmlwidgets_1.6.4         pkgconfig_2.0.3          
-[27] rstudioapi_0.19.0         digest_0.6.39            
-[29] farver_2.1.2              R6_2.6.1                 
-[31] tidyselect_1.2.1          pillar_1.11.1            
-[33] magrittr_2.0.5            tools_4.6.0              
-[35] gtable_0.3.6              ggplot2_4.0.3            
+ [1] utf8_1.2.6                rappdirs_0.3.4           
+ [3] generics_0.1.4            stringi_1.8.7            
+ [5] hms_1.1.4                 digest_0.6.39            
+ [7] magrittr_2.0.5            evaluate_1.0.5           
+ [9] grid_4.6.0                timechange_0.4.0         
+[11] RColorBrewer_1.1-3        fastmap_1.2.0            
+[13] jsonlite_2.0.0            scales_1.4.0             
+[15] codetools_0.2-20          cli_3.6.6                
+[17] rlang_1.2.0               bit64_4.8.2              
+[19] withr_3.0.3               yaml_2.3.12              
+[21] otel_0.2.0                tools_4.6.0              
+[23] tzdb_0.5.0                assertthat_0.2.1         
+[25] vctrs_0.7.3               R6_2.6.1                 
+[27] git2r_0.36.2              lifecycle_1.0.5          
+[29] bit_4.6.0                 htmlwidgets_1.6.4        
+[31] arrow_24.0.0              pkgconfig_2.0.3          
+[33] pillar_1.11.1             gtable_0.3.6             
+[35] glue_1.8.1                xfun_0.59                
+[37] tidyselect_1.2.1          rstudioapi_0.19.0        
+[39] knitr_1.51                farver_2.1.2             
+[41] htmltools_0.5.9           rmarkdown_2.31           
+[43] mountainmathHelpers_0.1.4 compiler_4.6.0           
+[45] S7_0.2.2                 
 ```
 
 
