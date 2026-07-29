@@ -112,39 +112,24 @@ As we have [noted before](https://doodles.mountainmath.ca/canpumf) in relation t
 
 # What to do about Beyond 20/20
 
-For standard census products IVT is not always the only option. There is SDMX for data from the early 2000s onward, and before that an HTML interface where the data can be viewed one slice at a time and scraped with enough effort and patience. Both are annoying and time-consuming, but they exist. For custom tabulations they generally do not: IVT has traditionally been the only way StatCan would distribute them, with no alternative format at all.
+For standard census products IVT is not always the only option. Modern releases also offer data in CSV format, earlier data back to the early 2000s comes in SDMX format, and before that there is at least an HTML interface where the data can be viewed one slice at a time and scraped with enough effort and patience. The latter two are annoying and time-consuming, but they exist. For custom tabulations they generally do not: IVT has traditionally been the only way StatCan would distribute them, with no alternative format at all. These custom tabulations have been released to specific individuals and organizations, and once released it's logistically challenging to re-release it in a different format.
 
-So researchers wanting the data have to bite the bullet, find a Windows machine, fiddle with the Beyond 20/20 browser, extract what they need by hand. Or in a lot of cases, simply don't bother, and bump the research that would have needed Beyond 20/20 data to some other time. It is hard to know how much work never happens for this reason, which is its own kind of cost. Either way, fully reproducible research on Beyond 20/20 data is impossible, because the manual extraction process is highly idiosyncratic.
+So researchers wanting the data have to bite the bullet, find a Windows machine, fiddle with the Beyond 20/20 browser, extract what they need by hand. Or in a lot of cases, simply don't bother, and bump the research that would have used Beyond 20/20 data to some other time. It is hard to know how much work never happens for this reason. Either way, fully reproducible research on Beyond 20/20 data is impossible, because the manual extraction process is highly idiosyncratic.
 
 Using the browser is painful in ways anyone with even passing exposure to modern data practices will recognize, and extracting a dataset in bulk is surprisingly difficult. In many cases it's impossible to extract the geographic data, the geo codes, and the quality flags at the same time. And it is a manual step that breaks reproducibility: chances are high that the next person extracts the data differently. Modern data practices require a more principled and programmatic way to get at the data and the metadata. Which would be straightforward, except that the format is proprietary and undocumented. Additionally, the export of large tables can cut short due to memory constraints, leading to silent data loss at export.
 
 # Reverse engineering Beyond 20/20 IVT tables
 
-This is the tricky part. We did give this a try a couple of years back but gave up. Recently we had another need to look at IVT tables and decided to give it another go, this time bringing our sidekick Claude along to help out with the more repetitive and brute-force pieces of cracking the encoding.
+This is the tricky part. We did give this a try a couple of years back but gave up. Recently we had another need for data locked up in IVT tables and decided to give it another go, this time bringing our sidekick Claude along to help out with the more repetitive and brute-force pieces of cracking the encoding.
 
-We know that the format was formalized sometime in the very early 1990s. That takes more modern data compression and encoding algorithms out of the picture and lets us focus on fairly simple ways someone might have coded something like this around 1990. From some of the performance issues we can also conclude that the encoding is likely not terribly sophisticated. This gives us a starting point and some hope that decoding this is possible.
+We know that the format was formalized sometime in the very early 1990s. That takes modern data compression and encoding algorithms out of the picture and lets us focus on fairly simple ways someone might have coded something like this around 1990. From some of the performance issues we can also conclude that the encoding is likely not terribly sophisticated. This gives us a starting point and some hope that decoding this is possible.
 
 The other reason for why this might be doable is that we have data to validate against, either the scraped HTML for older data, or the SDMX or CSV for modern data. In essence this is attempting a *Known-Plaintext Attack*, trying to break the IVT cipher.
 
 A firm rule kept the whole thing honest: parsing has to be driven by metadata and markers found in the file itself. The validation data is for *checking* a hypothesis, never for encoding an answer. A parser that special-cases the tables it has already seen is not a parser, and the corpus is full of vintages the next file will not resemble.
 
-A handful of quirks account for most of the difficulty, and they are more interesting than the process of finding them.
+We won't go into details here, for those interested a detailed account and decoded file specifications can be found in the **canivt** package and accompanying documentation. The byte-level account -- page geometry, the header slot table, the codebook blocks, the bit-level slot records -- is written up as the [file format article](https://mountainmath.github.io/canivt/articles/ivt-format.html), which also ships with the package as `vignette("ivt-format", package = "canivt")`. Underneath it sit the working notes the parser was built from and is still checked against: a [byte-marker catalog](https://github.com/mountainMath/canivt/blob/main/inst/notes/markers.md), which the test suite verifies against the code so the documentation cannot drift from the recognizer, and a [decode history](https://github.com/mountainMath/canivt/blob/main/inst/notes/decode-history.md) recording how each vintage was cracked and why each invariant is worded the way it is. Both are in the repository and both ship inside the package, via `system.file("notes", package = "canivt")`.
 
-The first is how the cells are laid out. A table nests its dimensions positionally, innermost to outermost, into fixed 256-byte pages. Exactly one dimension straddles a page boundary: as much of it as fits stays in the page, and the remainder becomes windows addressed through a directory.
-
-Everything in that nesting is padded to powers of two. A dimension with five members will typically occupy eight slots, and one with ten members can occupy thirty-two. A format that goes to real lengths to avoid storing zeros is perfectly happy to leave two thirds of its addressing space empty, because power-of-two strides turn address arithmetic into bit shifts. Disk space was expensive in the 1990s and modern compression was not available, and IVT pays close attention to that.
-
-Then there is byte order. Whether a given cell was written at all is recorded in a bitmap, and the bitmap's bytes are stored in swapped pairs (byte 0 and byte 1 exchanged, 2 and 3, and so on) while the values that follow are stored in file order. It's an artifact of whatever 16-bit machine the format was designed on around 1990. Read straight through, the bitmap *almost* lines up, which is the awkward part: it's off by a bit here and a byte there, never consistently enough to look like a byte-order problem rather than a subtly wrong addressing scheme.
-
-The same 16-bit heritage shows up in the file's own pointers. The header stores the location of the page directory in two bytes, which stops working the moment a table grows past 64 kilobytes, and essentially all of them do. The high bits are simply gone. You recover the real location by adding multiples of 65,536 to the stored value until one of them lands on something that reads as a valid directory. The format outgrew its own address space and nobody widened the field.
-
-The quirk with the most consequences is that the presence bitmap addresses members by *slot* rather than by position. Each dimension declares a fixed number of slots, and every slot is flagged as live, deleted, or never used. A deleted one still carries the member's code, just without the length prefix a live one gets. So the file records not only the categories a table has but the ones somebody removed while building it: one Business Patterns industry axis carries 929 industries across 949 used slots, with 20 deleted. This is the clearest sign that IVT was never really an export format. It is a live, editable database file that happens to get shipped. It also has teeth, because a hole is invisible if you assume members are contiguous: read them positionally and every member after the gap is silently attached to the wrong data.
-
-Last, the hierarchy among members is stored as whitespace. Census dimensions are deeply nested, "Total income" contains "With income" contains "Under $10,000", and the format encodes that nesting as leading spaces in the display label. There is no parent field, no depth field. The tree exists only as indentation inside a string meant for a table header, which makes the structure exactly as durable as the presentation. And the indent width is not even constant across files: most tables use two spaces per level, but the census of agriculture tables use one, running Canada, province, agricultural region, census division and subdivision across zero to four spaces.
-
-Nothing about the format is sophisticated. That is exactly what makes it hard -- there is no elegant structure to reason your way toward, just a pile of small decisions someone made thirty-five years ago and never made public.
-
-That is a tour rather than a specification. The byte-level account -- page geometry, the header slot table, the codebook blocks, the bit-level slot records -- is written up as the [file format article](https://mountainmath.github.io/canivt/articles/ivt-format.html), which also ships with the package as `vignette("ivt-format", package = "canivt")`. Underneath it sit the working notes the parser was built from and is still checked against: a [byte-marker catalog](https://github.com/mountainMath/canivt/blob/main/inst/notes/markers.md), which the test suite verifies against the code so the documentation cannot drift from the recognizer, and a [decode history](https://github.com/mountainMath/canivt/blob/main/inst/notes/decode-history.md) recording how each vintage was cracked and why each invariant is worded the way it is. Both are in the repository and both ship inside the package, via `system.file("notes", package = "canivt")`.
 
 # canivt
 
@@ -156,9 +141,7 @@ Ideally these custom tabulations on Borealis are unique extracts that are not av
 
 There are many people who have pulled custom tabulations and never made them publicly available, if you have IVT files that could be of value to others, please consider adding them to the Borealis dataverse, whether they were funded via Tri-Council grants or not.
 
-The **canivt** package is fairly mature at this point. Every release runs against an extensive test suite. Virtually every part of the IVT files has been decoded with only very short sections without a clear meaning assigned to them, the most compact summary is in the [coverage tracker](https://github.com/mountainMath/canivt/blob/main/inst/notes/coverage.md).
-
-The package documentation has a [getting-started guide](https://mountainmath.github.io/canivt/articles/getting-started.html), an article on searching and pulling tables off [Borealis](https://mountainmath.github.io/canivt/articles/borealis.html), and one on [onboarding an IVT that came from neither index](https://mountainmath.github.io/canivt/articles/custom-files.html), e.g. a custom order someone emailed you, or a file you downloaded by hand.
+The **canivt** package is fairly mature at this point. Every release runs against an extensive test suite. Virtually every part of the IVT files has been decoded with only very short sections without a clear meaning assigned to them, the most compact summary is in the [coverage tracker](https://github.com/mountainMath/canivt/blob/main/inst/notes/coverage.md). The package documentation has a [getting-started guide](https://mountainmath.github.io/canivt/articles/getting-started.html), an article on searching and pulling tables off [Borealis](https://mountainmath.github.io/canivt/articles/borealis.html), and one on [onboarding an IVT that came from neither index](https://mountainmath.github.io/canivt/articles/custom-files.html), e.g. a custom order someone emailed you, or a file you downloaded by hand.
 
 That said, it may well still choke on some IVT files or emit a loud warning. If it does, please [open an issue](https://github.com/mountainMath/canivt/issues) with a link to the offending IVT and a brief description of the failure.
 
@@ -167,7 +150,7 @@ That said, it may well still choke on some IVT files or emit a loud warning. If 
 
 An interesting by-product of this decoding exercise has been understanding the echoes of the format in modern release data. The New Dissemination Model (NDM) is the standard way Statistics Canada releases data today, and it is well thought out and broadly aligned with modern practices. But the census division was quite late to it, disseminating via the NDM only from the 2021 census, and without re-releasing older data on the new standard.
 
-And importantly, the census data only gets disseminated through an amended NDM that degraded the NDM standard in several key ways. Census data arrives in semi-wide form, aligning with standard IVT display and export settings instead of modem practices of distributing data in tidy long-form. To make things worse, the meaning of variables can't be derived from column names alone. Some column names are duplicated, and the meaning of these has to be inferred by column order. This is a big red flag, a major failure of data governance. And really surprising, given how well-structured and thought out the core NDM standard is. And there is absolutely no reason why the data could not be distributed in tidy long form, which would avoid this. Whoever forced this degradation of the NDM standard and though it a good idea to disseminate data this way needs to give their head a shake.
+And importantly, the census data only gets disseminated through an amended NDM that degraded the NDM standard in several key ways. Census data is released via the NDM in semi-wide form, aligning with IVT storage formatting and the Beyond 20/20 browser display and export settings, instead of modem practices of distributing data in tidy long-form that the NDM adheres to all for non-census data releases. To make things worse, the meaning of variables can't be derived from column names alone. Some column names are duplicated, and the meaning of these has to be inferred by column order. This is a big red flag, a major failure of data governance. And really surprising, given how well-structured and thought out the core NDM standard is. And there is absolutely no reason why the data could not be distributed in tidy long form, which would avoid this. Whoever forced this degradation of the NDM standard and though it a good idea to disseminate data this way needs to give their head a shake.
 
 The other important way in which Beyond 20/20 IVT files shine through is how zeros are handled. IVT skips encoding all zero values, but reveals their presence later in a sequence of bitmaps that mark the position of missing/present data in the dimensions grid and then further distinguishes zeros from truly missing data points and, in modern versions, the reason for which data is missing (e.g. suppressed, not applicable, ...). In principle these IVT internals should be completely opaque to data disseminated via the NDM, and in the bulk CSV download it is indeed handled in such a way with zeros filled in and missing data markers as appropriate. But something goes wrong with the NDM endpoint for pinpointed data query by table and coordinate. This can probably be best seen when looking at an example.
 
@@ -327,7 +310,24 @@ In the **cansim** package we have noticed this issue a couple of years ago and e
 cansim_pull <-  get_cansim_data_for_table_coord_periods(
   list("98100040"=paste("3.7", seq(1,9), sep = "."))) |>
   select(COORDINATE,`Household size (8)`, VALUE)
+
+cansim_pull
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 4 × 3
+  COORDINATE `Household size (8)`                    VALUE
+  <chr>      <fct>                                   <dbl>
+1 3.7.1      Total - Household size                      5
+2 3.7.3      2 persons                                   5
+3 3.7.7      Number of persons in private households     5
+4 3.7.8      Average household size                     NA
+```
+
+
+:::
 :::
 
 
@@ -358,7 +358,7 @@ attr(cansim_pull,"failed_coordinates_census")
 :::
 
 
-At the time we were lacking the context of the connection to the IVT file format.^[I reported this issue to StatCan at the time, and the answer I got was that this behaviour was "requested by the Census team". The underlying mechanism is different from the IVT files though, the underlying database has the data and it serves it when it's requested as CSV. But the census division requested the API use a ‘Default replacement symbol’ of 0 instead of the usual ‘Not available’, and this is what drops zeros from the API response.]
+At the time we were lacking the context of the connection to the IVT file format.^[We reported this issue to StatCan at the time, and the answer we got was that this behaviour was "requested by the Census team". The underlying mechanism is different from the IVT files though, the underlying database has the data and it serves it when it's requested as CSV. But the census division requested the API use a ‘Default replacement symbol’ of 0 instead of the usual ‘Not available’, and this is what drops zeros from the API response.]
 
 The NDM whole table download recovers the full data, and the **canivt** package does the same and adds the zeros back into the data file, as well as markers for suppressed data or data missing for other reasons. But the table and coordinate NDM endpoints mirrors the narrow IVT data handling that drops zeros, and does not use the auxiliary information available in the IVT, as well as in the whole table download of the NDM, to add the zeros back in.
 
@@ -441,7 +441,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-07-28 22:20:37 PDT"
+[1] "2026-07-29 08:59:25 PDT"
 ```
 
 
@@ -457,7 +457,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [b9a6796] 2026-07-29: canivt post
+Head:     [19027ed] 2026-07-29: footnote and spelling
 ```
 
 
@@ -488,25 +488,35 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] httr2_1.2.2     cansim_0.4.4    canivt_0.5.0    lubridate_1.9.5
+ [5] forcats_1.0.1   stringr_1.6.0   dplyr_1.2.1     purrr_1.2.2    
+ [9] readr_2.2.0     tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.3  
+[13] tidyverse_2.0.0
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.7.3               cli_3.6.6                
- [3] knitr_1.51                rlang_1.2.0              
- [5] xfun_0.59                 otel_0.2.0               
- [7] generics_0.1.4            S7_0.2.2                 
- [9] jsonlite_2.0.0            glue_1.8.1               
-[11] git2r_0.36.2              htmltools_0.5.9          
-[13] mountainmathHelpers_0.1.4 scales_1.4.0             
-[15] rmarkdown_2.31            grid_4.6.0               
-[17] evaluate_1.0.5            tibble_3.3.1             
-[19] fastmap_1.2.0             yaml_2.3.12              
-[21] lifecycle_1.0.5           compiler_4.6.0           
-[23] dplyr_1.2.1               RColorBrewer_1.1-3       
-[25] htmlwidgets_1.6.4         pkgconfig_2.0.3          
-[27] rstudioapi_0.19.0         digest_0.6.39            
-[29] farver_2.1.2              R6_2.6.1                 
-[31] tidyselect_1.2.1          pillar_1.11.1            
-[33] magrittr_2.0.5            tools_4.6.0              
-[35] gtable_0.3.6              ggplot2_4.0.3            
+ [1] rappdirs_0.3.4            utf8_1.2.6               
+ [3] generics_0.1.4            stringi_1.8.7            
+ [5] hms_1.1.4                 digest_0.6.39            
+ [7] magrittr_2.0.5            evaluate_1.0.5           
+ [9] grid_4.6.0                timechange_0.4.0         
+[11] RColorBrewer_1.1-3        fastmap_1.2.0            
+[13] jsonlite_2.0.0            httr_1.4.8               
+[15] scales_1.4.0              codetools_0.2-20         
+[17] cli_3.6.6                 rlang_1.2.0              
+[19] withr_3.0.3               yaml_2.3.12              
+[21] otel_0.2.0                tools_4.6.0              
+[23] tzdb_0.5.0                curl_7.1.0               
+[25] vctrs_0.7.3               R6_2.6.1                 
+[27] git2r_0.36.2              lifecycle_1.0.5          
+[29] htmlwidgets_1.6.4         pkgconfig_2.0.3          
+[31] pillar_1.11.1             gtable_0.3.6             
+[33] glue_1.8.1                xfun_0.59                
+[35] tidyselect_1.2.1          rstudioapi_0.19.0        
+[37] knitr_1.51                farver_2.1.2             
+[39] htmltools_0.5.9           rmarkdown_2.31           
+[41] mountainmathHelpers_0.1.4 compiler_4.6.0           
+[43] S7_0.2.2                 
 ```
 
 
