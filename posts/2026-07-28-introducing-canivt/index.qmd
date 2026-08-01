@@ -176,7 +176,7 @@ The last one, `3.7.9`, which asks for a household size this table does not have,
 
 In the **cansim** package we have noticed this issue a couple of years ago and emit a loud warning, dropping data points that are marked as "failed" from the table but keeping track of them in a sidecar for inspection if desired. 
 
-```{r}
+```{r message=TRUE, warning=TRUE}
 cansim_pull <-  get_cansim_data_for_table_coord_periods(
   list("98100040"=paste("3.7", seq(1,9), sep = "."))) |>
   select(COORDINATE,`Household size (8)`, VALUE)

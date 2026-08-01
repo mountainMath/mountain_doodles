@@ -310,7 +310,30 @@ In the **cansim** package we have noticed this issue a couple of years ago and e
 cansim_pull <-  get_cansim_data_for_table_coord_periods(
   list("98100040"=paste("3.7", seq(1,9), sep = "."))) |>
   select(COORDINATE,`Household size (8)`, VALUE)
+```
 
+::: {.cell-output .cell-output-stderr}
+
+```
+Accessing CANSIM NDM coordinates from Statistics Canada
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+There were 5 coordinates from Census data tables that were not available, this generally means that
+the corresponding data values are zero. This is due to the fact that Census data tables do not conform to usual NDM standards.
+Hopefully this will get fixed on StatCan servers in the future so data can be accessed more reliably.
+See attr(<result>, 'failed_coordinates_census') for details on which coordinates had failed data download and likely zero value.
+```
+
+
+:::
+
+```{.r .cell-code}
 cansim_pull
 ```
 
@@ -441,7 +464,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-07-29 08:59:25 PDT"
+[1] "2026-07-29 09:01:39 PDT"
 ```
 
 
@@ -457,7 +480,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [19027ed] 2026-07-29: footnote and spelling
+Head:     [1cce5f1] 2026-07-29: shorten canivt post
 ```
 
 
