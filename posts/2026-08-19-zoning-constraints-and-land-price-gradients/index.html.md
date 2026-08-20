@@ -1,0 +1,495 @@
+---
+title: "Zoning Constraints and Land Price Gradients"
+author:
+  - name: Jens von Bergmann
+    affiliation: MountainMath
+  - name: Nathan Lauster
+    affiliation: UBC Sociology
+date: '2026-08-19'
+slug: zoning-constraints-and-land-price-gradients
+description: 'Steep land price gradients across zoning boundaries are an indication of zoning restrictions being binding. We take a look at what this looks like for the City of Vancouver.'
+image: 'images/land_value_zoning.png'
+bibliography: ../../common_literature.bib 
+code-tools:
+  toggle: true
+fig-width: 8
+execute:
+  cache: true
+  message: false
+  warning: false
+---
+
+<p style="text-align:center;"><i>(Joint with Nathan Lauster and cross-posted at <a href="https://homefreesociology.com/2026/08/19/zoning-constraints-and-land-price-gradients/" target="_blank">HomeFreeSociology</a>)</i></p>
+
+
+::: {.cell}
+
+```{.r .cell-code}
+library(tidyverse)
+library(VancouvR)
+library(sf)
+library(mountainmathHelpers)
+```
+:::
+
+
+How much should urban land cost? Generally we can think of the price being determined by the agglomeration effects of the city itself. That is, how easy is it to access all of the places one needs to go in the city? There's your price. 
+
+We can break this down further for different users, but the basic principle holds. For industry, how easy is it to bring together what you need to make stuff and then move your products around afterward? For residents, in particular, we're most interested in how easy is it to access all the jobs, though access to amenities also matter. For corporate interests, how easy is it to access your clients? For commercial enterprises, we can flip this a bit. How easy is it for all of your customers to see you're there and access you? For a more academic review, see [@koster2024understanding].
+
+Because we're mostly interested in agglomeration effects, we expect the city to end up with a pretty smooth price surface, where land downtown, in the centre of agglomeration effects, is most expensive, and price diminishes as one moves out from the centre. Of course, accessibility is also about transportation mode and speed. We can think about different modes of getting around (driving, transit, walk, bike, etc.) and the options they provide. So we're effectively left with one chief determinant of land pricing: agglomeration, followed by two add-on considerations: amenity and transportation infrastructure.
+
+That effectively sets up how we should expect land price to vary across the urban landscape. But does it? Well, kind of. 
+
+There's another chief determinant of land price of great interest to us as researchers, and that's regulation. In particular, what's allowed to be built on land? Mostly this is handled via zoning powers of various sorts. Hence we can draw upon zoning codes to see how this matters. What's useful here is that observing price surfaces of land by zoning codes really allows us to see interesting cracks in the more even price surface we might otherwise expect; fault lines, if you will, illustrating how regulations operate under the surface,
+
+This is a point highlighted recently by the excellent [Yimby Country podcast](https://podcasts.apple.com/ca/podcast/the-nerds/id1896861076?i=1000777020813), with some choice parts being re-hosted at the [UCL Housing Voice Podcast](https://lewis.ucla.edu/2026/08/05/yimby-country-with-michael-andersen/). The show focused mostly on developments in New Zealand, where reforms aimed at getting a lot more housing built have successfully boosted construction and lowered rents. But guest Benno Blaschke teased that further reforms might require municipalities to "monitor land prices and land price differentials between zones".^[They also point to monitoring the price differential at the urban-rural boundary, which is a much-studied sub-case of this.] There's lots to play with in these podcast episodes, but in this post we want to focus exclusively on monitoring for differentials - cracks between zones - and how it might work.
+
+# Information between the zones
+
+Why would housing reforms require municipalities to look for land price differentials between zones? A large land value differential across zone boundaries is a strong indication that zoning (in the lower land value zone) is binding. That means that zoning is acting as a restriction on housing. In effect, people are being prevented from pooling their resources to share land for housing themselves as we move across the crack. Restrictions on the low land value side of the crack operate to reduce values by reducing buildable living space at the same time as they drive up values on the other side of the crack where buildable space is more available to developers. More broadly, the differentials in land values provide evidence of regional housing restriction, increasing prices and rents and forcing people to double up or otherwise keeping people out of the region. This fits into the [broader concept of the zoning tax in the economics literature](https://www.buildingabundance.ca/p/the-zoning-tax).
+
+In short, the land value differential between zones gives us some measure of the potential harm produced by the zoning restriction. Upzoning to the (higher land value) neighbouring zone would unlock value -- removing the constraint increases housing supply, lowering prices and rents, and consequently allowing people to undouble and stay in the region.
+
+As pointed out in the podcast, there might be some externalities to upzoning, including some good reasons why zoning boundaries are placed where they are. But how important are these reasons in relation to the value of loosening the zoning? The podcast asks:
+
+>   In any of these boundaries, just what is the multiple you are willing to withstand as a polity saying, okay, well, it's valuable enough that land prices should be able to be like 2x, one and a half x, 3x.^[[From YIMBY Country: The Nerds, Jul 15, 2026](https://podcasts.apple.com/ca/podcast/the-nerds/id1896861076?i=1000777020813&r=2263.56)]
+
+How big we should allow the cracks to become is a political question.
+
+# City of Vancouver
+
+
+::: {.cell}
+
+```{.r .cell-code}
+zoning <- get_cov_data("zoning-districts-and-labels")
+```
+:::
+
+
+
+
+The City of Vancouver is simultaneously a great and a terrible place to look at what lies in the cracks between zones. It's great because we have decent data on zoning and on land value estimates at the parcel level. But it's terrible because zoning is often not indicative of what has been built in the past, or what might get built in the future. [@a-brief-history-of-vancouver-planning-development-regimes.2023; @zoned-capacity-promise-and-pitfalls.2024] Additionally, the highly fragmented nature of our zoning, with currently 964 different zones, creates so many boundaries that it's almost impossible to make sense of them all. Moreover there is differentiation even within these zones, for example our now-unified low-density zone (R1-1), which allows for single family and duplexes outright, and conditionally for multiplexes, still has a host of sub-zones with separate minimum lot size and frontage regulations and separate fee schedules. Conversely, our broad Downtown (DD) zoning also includes a host of sub-schedules.
+
+We also need to explain one important detail about how assessments in BC work to estimate land values. Most properties are marked to market using combinations of *direct comparison* and *cost* approaches, which look at sales of comparable properties to assess the value of a property, and leverages redevelopments, when they happen, to estimate land values. But industrial, commercial, and purpose-built rental properties are also assessed using the [*income approach*](https://info.bcassessment.ca/about/Pages/industrial-commercial-investment.aspx), effectively based on the market investment value of the rents they supply. Differences in rents can produce different overall valuations that ultimately have to be split out to different land valuations after applying basic discounts to the building value. Which is to say, current rent estimates - ideally also marked to market - drive more of the variation in land values for these properties, producing more of the variation we see overall on a lot by lot level.^[As we understand it, when splitting the total value into land and building values, the zoning, and associated potential future uses, is taken into consideration for the land value. But estimating this is difficult and can be constrained by having to sum up with building estimates to total rent-based estimates of total value for properties, in turn generating a fair amount of variation in land value assessments. In particular, where the total value of the building is connected to the rental income it generates, e.g. via built floor area (and prevailing rents can cap rates), this can disconnect the value further from a stable underlying value related to location and zoning.]
+
+This matters in our context because very similar parcels of land having the same zoning can generate very different incomes depending on what has been built on the land. And while we might think that both should have similar land values, the income approach can lead to very different total and also different land values. To add to the complexity, mixed use properties commonly split provincial [taxation classifications](https://www.bclaws.gov.bc.ca/civix/document/id/crbc/crbc/438_81), requiring further calculations about underlying land values. This is something to keep in mind, in addition to differences in taxation rates where Vancouver charges about four times higher property tax rate on commercial and industrial properties compared to rental, and that can also directly affect land values depending on the use of a property.^[We have explained how that drives mixed use redevelopment of single storey commercial properties. [@on-mixed-use.2016]]
+
+We won't go into full details in this post, and to make things manageable we will aggregate zones into rough categories as pre-aggregated in the Vancouver Open Data. This misses a lot of nuance in the data, but we retain this in the interactive map on hover. The idea here is to show some high-level boundaries between zones to get a feel for how large the land value differential between some of these zones are. We also top-code the data to mute some outliers.
+
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="72" source-offset="0"}
+deckMap = {
+  const container = html`<div style="height:600px;position:relative;"></div>`;
+
+  const layer = new deck.GeoJsonLayer({
+    id: "relative-land-value",
+    data: land_value_geo,
+    extruded: true,
+    wireframe: true,
+    filled: true,
+    stroked: false,
+    getElevation: f => f.properties.relative_land_value,
+    elevationScale: 1 / 100,
+    getFillColor: f => hexToRgb(zoningColours[f.properties.zoning_classification] ?? "#808080"),
+    pickable: true,
+    autoHighlight: true
+  });
+
+  mapboxgl.accessToken = mapboxToken;
+
+  // Mapbox owns the camera/controls here; deck.gl is added as a synced
+  // overlay control so that zooming/rotating via the map's own controls
+  // (or mouse/touch) moves the deck.gl layer along with the base map.
+  const map = new mapboxgl.Map({
+    container,
+    style: "mapbox://styles/mapbox/dark-v10",
+    center: [-123.12, 49.25],
+    zoom: 11,
+    pitch: 45,
+    bearing: 0,
+    customAttribution: "Vancouver Open Data"
+  });
+
+  const deckOverlay = new deck.MapboxOverlay({
+    layers: [layer],
+    getTooltip: ({ object }) => object && { html: object.properties.info }
+  });
+
+  map.addControl(deckOverlay);
+  map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), "top-left");
+  map.addControl(new mapboxgl.FullscreenControl({ container }), "top-left");
+  map.addControl(new mapboxgl.ScaleControl(), "bottom-left");
+
+  // The container is detached from the document at the moment the map is
+  // constructed (Observable inserts it into the DOM only after this cell
+  // returns), so mapboxgl measures a zero-size canvas initially. A
+  // ResizeObserver fires as soon as the container gets its real layout,
+  // triggering a resize so the map renders correctly on first load.
+  const resizeObserver = new ResizeObserver(() => map.resize());
+  resizeObserver.observe(container);
+
+  invalidation.then(() => {
+    resizeObserver.disconnect();
+    map.remove();
+  });
+  return container;
+}
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-1 nodetype="declaration"}
+:::
+::::
+:::::
+
+Overall, the map does look kind of like we would expect, showing off those agglomeration effects whereby downtown land values are far and away the highest, if especially spiky due to assessment approaches. Prices fall off as we move away from downtown. We can also see amenity and transportation infrastructure effects if we look for them. What about cracks?
+
+One of the most striking features of the map is the way the gradient unexpectedly falls off a cliff to the southwest of downtown, where the Green of RM-3 meets a big square block of Yellow FSD (First Shaughnessy District), a highly regulated mansion zoned district intentionally full of circuitous streets that make it difficult to navigate. That's a sharp crack, and also a very clear political choice.
+
+Across the map, land values mostly range between \$3.5k/m² and \$6k/m² in lowest density zoning (R1-1, RT, and special FSD Shaughnessy zones), depending on location and lot size and sub-zones. Gradients within these zones caused by minimum lot size and frontage regulations can be observed across Blanca Street in West Point Grey, we have written in detail about this type of gradient before. [@lots-of-opportunity-estimating-the-zoning-tax-in-vancouver.2021] Even starker effects can be seen across zoning categories, e.g. in nearby West Point Grey Village where some taller RM-3 buildings that sneak in before later downzonings show a large gradient to the neighbouring RM-3 buildings as well as the adjacent R1-1, with about double the land value. The same effect can be seen along the neighbouring commercial strip.
+
+The sharp gradient in land price from commercial streets, which generally allow ground floor commercial with another 3 to 5 stories of housing on top, to neighbouring low density zoning can be observed throughout. Some of this might be transportation effects driven by the arterials, especially for commercial uses. But these effects are strongest when there is resiential development above the ground floor commercial, and quite muted for single storey commercial developments. And many of the residents above those businesses would likely rather live off the arterials, where zoning prevents them from doing so, driving a separate effects we can see in the cracks. All that said, it's good to remember that rental and commercial properties are assessed using the *income approach*, which can lead to large variations in assessed land value between properties on similar parcels even if the zoning is the same.
+
+The Comprehensive Development zones vary a lot in their land value and land value gradient, which is in the nature of these highly individualized zones that each come with their own particular rules. As they run in a line south of downtown, they follow the Skytrain's Canada Line along the Cambie Corridor, where Transit-Oriented Development (TOD) has been enabled, driving the large cracks with surrounding low-density lots. Again, and by design, the cracks here mix transportation infrastructure effects with zoning-driven effects. But a simple comparison with the Kerrisdale neighbourhood to the southwest, where there is no TOD, indicates zoning probably explains most of the cracks.
+
+Some gradients are purely amenity-driven, like the very high land values right along the water to the west of downtown (mostly along Point Grey Road) that drop off significantly immediately to the south. These land values are the most comparable to higher-density zones, but the exclusionary zoning keeps out all but the wealthiest of those who might enjoy waterfront living. Unlike in the West End, across the water on the downtown peninsula, there's no beachfront land sharing allowed!^[In some cases, property values are also boosted by unusually small lot sizes in this area, carved out in recognition of the value of being on the water prior to planners setting in place minimum lot size regulations more common in mansion-oriented districts.]
+
+
+
+## Upshot
+
+It's fun to look for zoning cracks in the land price surface! Everyone should give it a go. But there remain a few caveats to interpretation. In addition to those discussed above, the general problem with this approach is that the exploration for cracks only looks at relative differences across zoning boundaries. If all zoning is overly restrictive it under-estimates the overall problem. For example, if the entire city were zoned for low-density housing with some slight differentiation in what kind of housing was allowed, the differences between these zones would be small and hide the overall restrictiveness. We explored a different way to directly quantify the restrictiveness of housing in each zone in a previous post. [@demand-based-zoning.2025] This problem of cracks failing to get at the full measure of overall restrictiveness won't go away until our zoning catches up to the realities of housing demand.
+
+Relatedly, zoning has generally failed to catch the full impact of planning. Often in Vancouver, matching development to plans has still required lot by lot rezoning (and attendant costs and uncertainties). This is changing, and as we are slowly bringing back predictability by zoning for the housing we want, using zoning to measure restrictiveness becomes more useful and observing cracks provides - at least in theory - a more robust measure of actual restrictions. And looking for large land price differentials can shine a light on where zoning is most restrictive relative to what's happening overall in the city.
+
+As a final note, there is some similarity of this kind of analysis with that of [property tax density](https://mountainmath.ca/assessment_gl/map/), but property tax rates differ across uses. In particular, commercial and industrial uses paying about 4 times the residential rate, which compounds the high land values downtown to make an even starker contrast with the lightly taxed low-density residential land.
+
+<details>
+ <summary>Additional Observable code</summary>
+ 
+ ### Data processing code
+ 
+
+::: {.cell}
+
+```{.r .cell-code}
+library(osmdata)
+
+parcels <- get_cov_data("property-parcel-polygons")
+subdivisions <- get_cov_data("subdivision-category-areas")
+land_values <- get_cov_data("property-tax-report", 
+                            where = "tax_assessment_year = 2026",
+                            select="land_coordinate, pid, zoning_district, zoning_classification, current_land_value")
+parks <- get_cov_data("parks-polygon-representation")
+schools <- get_cov_data("schools")
+
+cov_boundary <- zoning |> st_union() |> st_transform(4326)
+
+golf_courses <- opq(bbox = st_bbox(cov_boundary)) |>
+  add_osm_feature(key = "leisure", value = "golf_course") |>
+  osmdata_sf()
+
+golf_courses_cov <- golf_courses$osm_polygons |>
+  bind_rows(golf_courses$osm_multipolygons) |>
+  st_make_valid() |>
+  st_filter(cov_boundary) |>
+  select(osm_id, name, geometry)
+```
+:::
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+land_parcels <- parcels |>
+  filter(!is.na(tax_coord)) |>
+  summarise(across(geometry, st_union), .by=tax_coord) |>
+  mutate(area=st_area(geometry) |> units::set_units("m^2") |> units::drop_units()) |> 
+  left_join(land_values |> 
+              summarise(land_value=sum(current_land_value),
+                        zoning_district=first(na.omit(zoning_district)),
+                        zoning_classification=first(na.omit(zoning_classification)),
+                        .by=land_coordinate),
+            by=c("tax_coord"="land_coordinate")) |>
+  mutate(relative_land_value=land_value/area)
+
+plot_data <- land_parcels  |>
+  st_collection_extract("POLYGON") |>
+  st_transform("ESRI:102002") |>
+  st_filter(parks |> 
+              st_transform("ESRI:102002") |> 
+              st_buffer(-10) |>
+              st_union(), 
+            .predicate = st_disjoint) |>
+  st_filter(golf_courses_cov |> 
+              st_transform("ESRI:102002") |> 
+              st_buffer(-10) |>
+              st_union(), 
+            .predicate = st_disjoint) |>
+  st_transform(4326) |>
+  st_filter(schools |> st_union(), .predicate = st_disjoint) |>
+  filter(!is.na(relative_land_value),
+         relative_land_value>100,
+         area>100,
+         !is.na(zoning_classification)) |>
+  mutate(v=log(relative_land_value))  |>
+  mutate(zoning_classification=case_when(
+    zoning_classification=="Residential Inclusive" | 
+      zoning_district=="FSD" |
+      grepl("^RT-",zoning_district) ~ "Low density residential", 
+    TRUE ~ zoning_classification)) |>
+  mutate(info=paste0(#tax_coord,"<br>",
+    "<h3>",zoning_classification,"</h3>",
+    "Zoning ",zoning_district,"<br>",
+    "Land value: ",
+    scales::dollar(relative_land_value),
+    "/m²"))
+```
+:::
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+plot_data |>
+  select(relative_land_value,zoning_classification,info) |>
+  mountainmathHelpers::sf_to_s3_gzip("mountainmath","relative_land_value_zone.geojson.gz")
+```
+:::
+
+ ### Observable code
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="236" source-offset="0"}
+d3 = require("d3@7")
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-2 nodetype="declaration"}
+:::
+::::
+:::::
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="240" source-offset="0"}
+deck = require("deck.gl@8.9.33/dist.min.js")
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-3 nodetype="declaration"}
+:::
+::::
+:::::
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="244" source-offset="0"}
+mapboxgl = require("mapbox-gl@2.15.0/dist/mapbox-gl.js")
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-4 nodetype="declaration"}
+:::
+::::
+:::::
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="248" source-offset="0"}
+mapboxglCss = html`<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />`
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-5 nodetype="declaration"}
+:::
+::::
+:::::
+
+
+:::::{.cell}
+
+```{.js .cell-code .hidden code-fold="undefined" startFrom="253" source-offset="0"}
+mapboxToken = 'pk.eyJ1IjoiamVucy1tb3VudGFpbm1hdGgiLCJhIjoiTmJ2Z3FHNCJ9.ifMzNW0vPH1Yc6As93HP9A'
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-6 nodetype="declaration"}
+:::
+::::
+:::::
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="257" source-offset="0"}
+land_value_geo = d3.json("https://mountainmath.s3.ca-central-1.amazonaws.com/relative_land_value_zone.geojson.gz")
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-7 nodetype="declaration"}
+:::
+::::
+:::::
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="261" source-offset="0"}
+zoningColours = ({
+  "Commercial": "#dd1111",
+  "Low density residential": "#dddd11",
+  "Industrial": "#dd8800",
+  "Residential": "#33ee11",
+  "Comprehensive Development": "#11aadd",
+  "Limited Agriculture": "#116611",
+  "Historical Area": "#441188",
+  "Residential Rental": "#33ee88"
+})
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-8 nodetype="declaration"}
+:::
+::::
+:::::
+
+
+:::::{.cell}
+
+```{.js .cell-code code-fold="undefined" startFrom="274" source-offset="0"}
+hexToRgb = hex => {
+  const h = hex.replace("#", "");
+  return [parseInt(h.substring(0, 2), 16), parseInt(h.substring(2, 4), 16), parseInt(h.substring(4, 6), 16)];
+}
+```
+
+::::{.cell-output .cell-output-display}
+
+:::{#ojs-cell-9 nodetype="declaration"}
+:::
+::::
+:::::
+</details>
+
+As usual, the code for this post is [available on GitHub](https://github.com/mountainMath/mountain_doodles/blob/main/posts/2026-08-18-zoning-constraints-and-land-price-gradients/index.qmd) for anyone to reproduce or adapt for their own purposes.
+
+
+<details>
+
+<summary>Reproducibility receipt</summary>
+
+
+::: {.cell}
+
+```{.r .cell-code}
+## datetime
+Sys.time()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "2026-08-19 17:48:15 PDT"
+```
+
+
+:::
+
+```{.r .cell-code}
+## repository
+git2r::repository()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Local:    main /Users/jens/R/mountain_doodles
+Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
+Head:     [3558640] 2026-08-01: typos
+```
+
+
+:::
+
+```{.r .cell-code}
+## Session info 
+sessionInfo()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+R version 4.6.0 (2026-04-24)
+Platform: aarch64-apple-darwin23
+Running under: macOS Tahoe 26.6.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Vancouver
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] mountainmathHelpers_0.1.4 sf_1.1-1                 
+ [3] VancouvR_0.1.11           lubridate_1.9.5          
+ [5] forcats_1.0.1             stringr_1.6.0            
+ [7] dplyr_1.2.1               purrr_1.2.2              
+ [9] readr_2.2.0               tidyr_1.3.2              
+[11] tibble_3.3.1              ggplot2_4.0.3            
+[13] tidyverse_2.0.0          
+
+loaded via a namespace (and not attached):
+ [1] rappdirs_0.3.4     generics_0.1.4     class_7.3-23       KernSmooth_2.23-26
+ [5] stringi_1.8.7      hms_1.1.4          digest_0.6.39      magrittr_2.0.5    
+ [9] evaluate_1.0.5     grid_4.6.0         timechange_0.4.0   RColorBrewer_1.1-3
+[13] fastmap_1.2.0      jsonlite_2.0.0     e1071_1.7-17       DBI_1.3.0         
+[17] scales_1.4.0       httr2_1.2.2        cli_3.6.6          rlang_1.2.0       
+[21] units_1.0-1        withr_3.0.3        yaml_2.3.12        otel_0.2.0        
+[25] tools_4.6.0        tzdb_0.5.0         vctrs_0.7.3        R6_2.6.1          
+[29] git2r_0.36.2       proxy_0.4-29       lifecycle_1.0.5    classInt_0.4-11   
+[33] htmlwidgets_1.6.4  pkgconfig_2.0.3    pillar_1.11.1      gtable_0.3.6      
+[37] Rcpp_1.1.1-1.1     glue_1.8.1         xfun_0.59          tidyselect_1.2.1  
+[41] rstudioapi_0.19.0  knitr_1.51         farver_2.1.2       htmltools_0.5.9   
+[45] rmarkdown_2.31     compiler_4.6.0     S7_0.2.2          
+```
+
+
+:::
+:::
+
+
+</details>
+
+### References
+
+::: {#refs}
+:::
+
