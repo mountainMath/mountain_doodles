@@ -473,7 +473,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-10-17 12:56:12 PDT"
+[1] "2026-10-17 13:00:26 PDT"
 ```
 
 
@@ -489,7 +489,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [4da4c4c] 2026-08-20: zoning constraints and land price gradients
+Head:     [5c13dcb] 2026-10-17: coutnerfactual kitislano
 ```
 
 
