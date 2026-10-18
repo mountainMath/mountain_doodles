@@ -8,7 +8,7 @@ author:
 date: '2026-10-17'
 slug: counterfactual-kitsilano
 description: 'Towermare on Maple Street - The Kitsilano downzonings, and hypothetical alternative scenarios'
-image: 'images/Rezoning_Cheered_Warnings_1974.png'
+image: 'images/Rezoning_Cheered_Warnings_1974-preview.png'
 bibliography: ../../common_literature.bib 
 pdf_abstract: "Much of the apartment areas in Vancouver were downzoned in the 1970s. Kitsilano was the flashpoint of the anti-tower movement of the time and we walk through the history behind a quirk in its streetscape to discuss the anti-tower backlash and the political movements that emerged from it. These led led to downzonings across the city and ushered in a new development regime in Vancouver. We outline plausible alternative scenarios of what could have been in Kitsilano without the downzonings, as well as with continued proactive upzoning to accommodate growing demand."
 categories: 
@@ -473,7 +473,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-10-17 13:00:26 PDT"
+[1] "2026-10-17 19:52:46 PDT"
 ```
 
 
@@ -489,7 +489,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [5c13dcb] 2026-10-17: coutnerfactual kitislano
+Head:     [ad92561] 2026-10-17: git stamp
 ```
 
 
