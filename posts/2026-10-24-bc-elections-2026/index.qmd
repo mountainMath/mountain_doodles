@@ -127,10 +127,16 @@ status = {
   const polls = d3.sum(ridings, d => d.pollsReported);
   const total_polls = d3.sum(ridings, d => d.totalPolls);
   const called = ridings.filter(d => d.called).length;
+  const votes = d3.sum(ridings, d => d.Total);
   const enr_ridings = ridings.filter(d => d.source === "Elections BC").length;
-  const enr_updated = enr.length ? ` Elections BC results updated ${new Date(enr[0].updated).toLocaleTimeString()}, used for ${enr_ridings} ridings.` : "";
-  return md`**${fmt.comma(polls)} of ${fmt.comma(total_polls)} polls reported, ${called} of ${ridings.length} ridings called.**
-CBC data last updated ${live.json.data.config.electionLastUpdated}, fetched at ${live.fetched.toLocaleTimeString()}, refreshing every ${refresh_seconds} seconds.${enr_updated}`
+  // show times in BC time whatever the reader's timezone
+  const pacific = date => date.toLocaleString("en-CA", {timeZone: "America/Vancouver", month: "short", day: "numeric",
+                                                        hour: "numeric", minute: "2-digit", timeZoneName: "short"});
+  // CBC sends UTC without a timezone, like "2026-10-25 02:58:56"
+  const cbc_time = pacific(new Date(live.json.data.config.electionLastUpdated.replace(" ", "T") + "Z"));
+  const enr_updated = enr.length ? ` Elections BC results as of ${pacific(new Date(enr[0].updated))}, used for ${enr_ridings} ridings.` : "";
+  return md`**${fmt.comma(votes)} votes counted, ${fmt.comma(polls)} of ${fmt.comma(total_polls)} polls reported, ${called} of ${ridings.length} ridings called.**
+CBC data last updated ${cbc_time}, fetched at ${live.fetched.toLocaleTimeString()}, refreshing every ${refresh_seconds} seconds.${enr_updated}`
 }
 ```
 

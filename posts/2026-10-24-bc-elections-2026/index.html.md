@@ -140,10 +140,16 @@ status = {
   const polls = d3.sum(ridings, d => d.pollsReported);
   const total_polls = d3.sum(ridings, d => d.totalPolls);
   const called = ridings.filter(d => d.called).length;
+  const votes = d3.sum(ridings, d => d.Total);
   const enr_ridings = ridings.filter(d => d.source === "Elections BC").length;
-  const enr_updated = enr.length ? ` Elections BC results updated ${new Date(enr[0].updated).toLocaleTimeString()}, used for ${enr_ridings} ridings.` : "";
-  return md`**${fmt.comma(polls)} of ${fmt.comma(total_polls)} polls reported, ${called} of ${ridings.length} ridings called.**
-CBC data last updated ${live.json.data.config.electionLastUpdated}, fetched at ${live.fetched.toLocaleTimeString()}, refreshing every ${refresh_seconds} seconds.${enr_updated}`
+  // show times in BC time whatever the reader's timezone
+  const pacific = date => date.toLocaleString("en-CA", {timeZone: "America/Vancouver", month: "short", day: "numeric",
+                                                        hour: "numeric", minute: "2-digit", timeZoneName: "short"});
+  // CBC sends UTC without a timezone, like "2026-10-25 02:58:56"
+  const cbc_time = pacific(new Date(live.json.data.config.electionLastUpdated.replace(" ", "T") + "Z"));
+  const enr_updated = enr.length ? ` Elections BC results as of ${pacific(new Date(enr[0].updated))}, used for ${enr_ridings} ridings.` : "";
+  return md`**${fmt.comma(votes)} votes counted, ${fmt.comma(polls)} of ${fmt.comma(total_polls)} polls reported, ${called} of ${ridings.length} ridings called.**
+CBC data last updated ${cbc_time}, fetched at ${live.fetched.toLocaleTimeString()}, refreshing every ${refresh_seconds} seconds.${enr_updated}`
 }
 ```
 
@@ -159,7 +165,7 @@ CBC data last updated ${live.json.data.config.electionLastUpdated}, fetched at $
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="139" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="145" source-offset="0"}
 seat_chart = {
   const seats = d3.rollups(ridings.filter(d => d.Total > 0), v => v.length, d => d.Party, d => d.called)
     .flatMap(([Party, s]) => s.map(([called, n]) => ({Party, called, n})))
@@ -197,7 +203,7 @@ seat_chart = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="167" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="173" source-offset="0"}
 bc_map = Plot.plot({
   title: "BC provincial election 2026",
   width,
@@ -225,7 +231,7 @@ bc_map = Plot.plot({
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="185" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="191" source-offset="0"}
 metro_map = {
   // Metro Vancouver zoom-in where the map view is unreadable
   const {xmin, ymin, xmax, ymax} = metro_bbox;
@@ -258,7 +264,7 @@ metro_map = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="208" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="214" source-offset="0"}
 // geometry only, so the animation keeps running across data updates, vote_map_update restyles it
 vote_map_animation = {
   const svg = d3.create("svg")
@@ -327,7 +333,7 @@ vote_map_animation = {
 
 :::::{.cell .hidden}
 
-```{.js .cell-code code-fold="undefined" startFrom="268" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="274" source-offset="0"}
 vote_map_update = {
   const voteMax = d3.max(ridings, d => d.Total) || 1;
   const radiusScale = d3.scaleSqrt().domain([0, voteMax]).range([1, maxRadius]);
@@ -362,7 +368,7 @@ vote_map_update = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="293" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="299" source-offset="0"}
 close_chart = {
   const close = ridings.filter(d => d.Total > 0 && (!d.called || d.lead_share < 0.05));
   if (!close.length) return md`*No close or uncalled races with results*`;
@@ -397,7 +403,7 @@ close_chart = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="318" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="324" source-offset="0"}
 lead_chart = {
   const rs = ridings.filter(d => d.Total > 0);
   if (!rs.length) return md`*Waiting for results*`;
@@ -430,7 +436,7 @@ lead_chart = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="341" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="347" source-offset="0"}
 winning_share_chart = {
   const rs = ridings.filter(d => d.Total > 0);
   if (!rs.length) return md`*Waiting for results*`;
@@ -464,7 +470,7 @@ winning_share_chart = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="365" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="371" source-offset="0"}
 vote_distribution_chart = {
   const rs = ridings.filter(d => d.Total > 0);
   if (!rs.length) return md`*Waiting for results*`;
@@ -502,7 +508,7 @@ vote_distribution_chart = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="387" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="393" source-offset="0"}
 flip_chart = {
   // CBC's previous winner is based on the 2024 results, on the same boundaries
   const flips = ridings.filter(d => d.Total > 0 && d.Party !== d.previousParty);
@@ -539,7 +545,7 @@ flip_chart = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="415" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="421" source-offset="0"}
 swing_chart = {
   const rs = ridings.filter(d => d.Total > 0);
   if (!rs.length) return md`*Waiting for results*`;
@@ -595,7 +601,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-10-24 19:49:41 PDT"
+[1] "2026-10-24 21:04:43 PDT"
 ```
 
 
@@ -611,7 +617,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [f55ac2d] 2026-10-18: crop key image
+Head:     [1fd27c1] 2026-10-25: live 2026 BC elections map
 ```
 
 
@@ -679,7 +685,7 @@ loaded via a namespace (and not attached):
 
 ::::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="445" source-offset="-0"}
+```{.js .cell-code code-fold="undefined" startFrom="451" source-offset="-0"}
 cbc_url = "https://canopy.cbc.ca/live/elections/prov/BC2026/all/"
 s3_url = "https://mountainmath.s3.ca-central-1.amazonaws.com/bc_2026_elections/"
 refresh_seconds = 30
@@ -716,7 +722,7 @@ refresh_seconds = 30
 
 :::::{.cell .hidden}
 
-```{.js .cell-code code-fold="undefined" startFrom="472" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="478" source-offset="0"}
 // re-fetches the CBC feed, every cell depending on `live` re-runs on each update
 live = {
   while (true) {
@@ -741,7 +747,7 @@ live = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="526" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="532" source-offset="0"}
 party_meta = [
   ...live.json.data.parties
     .filter(p => p.e && p.e.colourLightElected)
@@ -763,7 +769,7 @@ party_meta = [
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="532" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="538" source-offset="0"}
 party_codes = party_meta.map(d => d.Party)
 ```
 
@@ -777,7 +783,7 @@ party_codes = party_meta.map(d => d.Party)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="548" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="554" source-offset="0"}
 colour_scale = ({domain: party_codes, range: party_meta.map(d => d.colour), legend: true})
 ```
 
@@ -791,7 +797,7 @@ colour_scale = ({domain: party_codes, range: party_meta.map(d => d.colour), lege
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="560" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="566" source-offset="0"}
 leading_opacity = 0.4
 ```
 
@@ -805,7 +811,7 @@ leading_opacity = 0.4
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="564" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="570" source-offset="0"}
 riding_opacity = d => d.called || d.Total === 0 ? 1 : leading_opacity
 ```
 
@@ -819,7 +825,7 @@ riding_opacity = d => d.called || d.Total === 0 ? 1 : leading_opacity
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="568" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="574" source-offset="0"}
 fill_colour = d => {
   const c = party_meta.find(p => p.Party === d.Party).colour;
   return d.called || d.Total === 0 ? c : d3.interpolateRgb(c, "white")(1 - leading_opacity);
@@ -836,7 +842,7 @@ fill_colour = d => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="572" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="578" source-offset="0"}
 // CBC party codes, candidates without affiliation come through as "NA"
 clean_party = p => !p || p === "NA" ? "IND" : (party_codes.includes(p) ? p : "Other")
 ```
@@ -851,7 +857,7 @@ clean_party = p => !p || p === "NA" ? "IND" : (party_codes.includes(p) ? p : "Ot
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="576" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="582" source-offset="0"}
 ridings = live.json.data.ridings.map(r => {
   const cbc_results = r.parties
     .map(p => ({Candidate: `${p.firstName} ${p.lastName}`, Party: clean_party(p.partyCode), Votes: p.votes}));
@@ -889,7 +895,7 @@ ridings = live.json.data.ridings.map(r => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="583" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="589" source-offset="0"}
 // Elections BC candidate results pulled to S3, polled independently of the CBC feed
 enr = {
   while (true) {
@@ -915,7 +921,7 @@ enr = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="588" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="594" source-offset="0"}
 enr_by_riding = d3.group(enr, d => d.ED_NAME)
 ```
 
@@ -929,7 +935,7 @@ enr_by_riding = d3.group(enr, d => d.ED_NAME)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="616" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="622" source-offset="0"}
 riding_lookup = new Map(ridings.map(d => [d.ED_NAME, d]))
 ```
 
@@ -943,7 +949,7 @@ riding_lookup = new Map(ridings.map(d => [d.ED_NAME, d]))
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="632" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="638" source-offset="0"}
 // one floating tooltip for the hand-rolled hovers, shown immediately and following the pointer
 tooltip_div = {
   const div = d3.select(document.body).append("div")
@@ -974,7 +980,7 @@ tooltip_div = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="636" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="642" source-offset="0"}
 hover_tooltip = (selection, text) => {
   const div = d3.select(tooltip_div);
   const move = event => {
@@ -1010,7 +1016,7 @@ hover_tooltip = (selection, text) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="640" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="646" source-offset="0"}
 // hover on the actual riding shapes, Plot's own tip snaps to the nearest centroid which misses on large ridings
 map_hover = features => (index, scales, values, dimensions, context, next) => {
   const g = next(index, scales, values, dimensions, context);
@@ -1031,7 +1037,7 @@ map_hover = features => (index, scales, values, dimensions, context, next) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="661" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="667" source-offset="0"}
 tooltip = d => {
   if (d.Total === 0) return `${d.ED_NAME}\nNo results yet`;
   return [
@@ -1055,7 +1061,7 @@ tooltip = d => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="687" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="693" source-offset="0"}
 fmt = ({
   percent: d3.format(".1%"),
   comma: d3.format(",.0f")
@@ -1072,7 +1078,7 @@ fmt = ({
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="698" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="704" source-offset="0"}
 pp = d => `${d3.format(".0f")(d * 100)}pp`
 ```
 
@@ -1086,7 +1092,7 @@ pp = d => `${d3.format(".0f")(d * 100)}pp`
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="712" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="718" source-offset="0"}
 boundaries = JSON.parse(Array.isArray(boundaries_json) ? boundaries_json[0] : boundaries_json)
 ```
 
@@ -1100,7 +1106,7 @@ boundaries = JSON.parse(Array.isArray(boundaries_json) ? boundaries_json[0] : bo
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="719" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="725" source-offset="0"}
 districts = boundaries.features
 ```
 
@@ -1114,7 +1120,7 @@ districts = boundaries.features
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="723" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="729" source-offset="0"}
 metro_districts = JSON.parse(Array.isArray(metro_json) ? metro_json[0] : metro_json).features
 ```
 
@@ -1128,7 +1134,7 @@ metro_districts = JSON.parse(Array.isArray(metro_json) ? metro_json[0] : metro_j
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="727" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="733" source-offset="0"}
 // leave a margin around the map so bubbles pushed out by the collision force stay on the canvas
 anim_size = ({width: 960, height: 640, margin: 20})
 ```
@@ -1143,7 +1149,7 @@ anim_size = ({width: 960, height: 640, margin: 20})
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="731" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="737" source-offset="0"}
 projection = d3.geoIdentity().reflectY(true)
   .fitExtent([[anim_size.margin, anim_size.margin], [anim_size.width - anim_size.margin, anim_size.height - anim_size.margin]], boundaries)
 ```
@@ -1158,7 +1164,7 @@ projection = d3.geoIdentity().reflectY(true)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="735" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="741" source-offset="0"}
 path = d3.geoPath(projection)
 ```
 
@@ -1172,7 +1178,7 @@ path = d3.geoPath(projection)
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="740" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="746" source-offset="0"}
 district_paths = new Map(districts.map(d => [d, path(d)]))
 ```
 
@@ -1186,7 +1192,7 @@ district_paths = new Map(districts.map(d => [d, path(d)]))
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="745" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="751" source-offset="0"}
 // screen space outer rings of the main shapes, with sub-pixel detail removed to keep the morphs light
 district_rings = {
   const rdp = (pts, eps) => {
@@ -1222,7 +1228,7 @@ district_rings = {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="749" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="755" source-offset="0"}
 // flubber's own path strings carry full precision, which is most of the per-frame cost
 morph_path = pts => "M" + pts.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join("L") + "Z"
 ```
@@ -1237,7 +1243,7 @@ morph_path = pts => "M" + pts.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="753" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="759" source-offset="0"}
 maxRadius = 15
 ```
 
@@ -1251,7 +1257,7 @@ maxRadius = 15
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="779" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="785" source-offset="0"}
 nodePadding = 0.3
 ```
 
@@ -1265,7 +1271,7 @@ nodePadding = 0.3
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="784" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="790" source-offset="0"}
 applySimulation = (nodes) => {
   const simulation = d3.forceSimulation(nodes)
     .force("cx", d3.forceX().x(d => anim_size.width / 2).strength(0.02))
@@ -1302,7 +1308,7 @@ applySimulation = (nodes) => {
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="788" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="794" source-offset="0"}
 d3 = import("https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm")
 ```
 
@@ -1316,7 +1322,7 @@ d3 = import("https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="792" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="798" source-offset="0"}
 Plot = import("https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.16/+esm")
 ```
 
@@ -1330,7 +1336,7 @@ Plot = import("https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.16/+esm")
 
 :::::{.cell}
 
-```{.js .cell-code code-fold="undefined" startFrom="819" source-offset="0"}
+```{.js .cell-code code-fold="undefined" startFrom="825" source-offset="0"}
 flubber = require("flubber@0.4.2")
 ```
 
