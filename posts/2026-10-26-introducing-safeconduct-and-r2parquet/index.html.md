@@ -42,7 +42,7 @@ Neither of these are on CRAN right now, if you find these packages useful or hav
 # **safeconduct** {#sec-safeconduct}
 
 ![safeconduct](https://mountainmath.github.io/safeconduct/logo.png){.image-float-right}
-**safeconduct** is meant to be a drop-in replacement for `file.download` or `curl` requests. It's `fetch(url, desination_path)` fetches the remote file, slowly escalating it's methods. It starts with a simple curl request, then escalates to headless chrome, chrome with spoofed user agent, an interactive chrome session, and finally a live chrome session where users have to solve a captcha to get to the file download. 
+[**safeconduct**](https://mountainmath.github.io/safeconduct/) is meant to be a drop-in replacement for `file.download` or `curl` requests. It's `fetch(url, desination_path)` fetches the remote file, slowly escalating it's methods. It starts with a simple curl request, then escalates to headless chrome, chrome with spoofed user agent, an interactive chrome session, and finally a live chrome session where users have to solve a captcha to get to the file download. 
 
 This is cumbersome, but it gets the job done in situations where user interaction is acceptable. It may still fail in environments that require full automations, e.g. a replication project in a docker environment.
 
@@ -253,12 +253,12 @@ safeconduct::probe(rnf_overview)
 
 
 
-In summary, `safeconduct::fetch` provides a drop-in solution for data download in an environment where data is blocked from programmatic access.
+In summary, `safeconduct::fetch` provides a drop-in solution for data download in an environment where data is blocked from programmatic access. For more information [consult the documentation](https://mountainmath.github.io/safeconduct/).
 
 # **r2parquet** {#sec-r2parquet}
 
 ![r2parquet](https://mountainmath.github.io/r2parquet/logo.png){.image-float-right}
-Another way around blocked download is to self-host the data. When considering self-hosting on faces two fundamental question:
+[**r2parquet**](https://mountainmath.github.io/r2parquet/) takes a different approach to the problem of data becoming inaccessible for programmatic download, it facilitates self-hosting the data. When considering self-hosting one faces two fundamental question:
 
 * What data format should be used?
 * Where should the data be hosted?
@@ -745,9 +745,11 @@ There are also a couple of custom under the hood refinements in **r2parquet** th
 
 It also adds some little tweaks that are provably better implemented in DuckDB directly, in particular how [filtering of integer columns works when using (whole-number) doubles](https://github.com/mountainMath/r2parquet/issues/3), which is quite common in R and can lead to whole parquet files getting downloaded to preform the filtering when only a small portion is needed.
 
+For more information on how to use **r2parquet** [consult the documentation](https://mountainmath.github.io/r2parquet/).
+
 ## Upshot
 
-Both of these packages are born out of necessity. **safeconduct** is a package I would have rather not written, but circumstance necessitated it. **r2parquet** is a package that I probably would not have written if not for the immediate need for more a principled way to host data, but I am glad I did write it. It will remain genuinely useful to me even after the immediate triggers, StatCan and City of Vancouver Open Data, fix the issues on their side. 
+Both of these packages are born out of necessity. [**safeconduct**](https://mountainmath.github.io/safeconduct/) is a package I would have rather not written, but circumstance necessitated it. [**r2parquet**](https://mountainmath.github.io/r2parquet/) is a package that I probably would not have written if not for the immediate need for more a principled way to host data, but I am glad I did write it. It will remain genuinely useful to me even after the immediate triggers, StatCan and City of Vancouver Open Data, fix the issues on their side. 
 
 Having a principled way to host data on a highly available and cost-effective service in a format with proper schema specifications and standardized multi-lingual metadata with defaults geared toward remotely querying the data in a quasi-database fashion is genuinely useful. And **r2parquet** has opened up new ways to work with data and build applications on top of data for me. I already have some exciting products in the pipeline that leverage this and I am hoping to share soon.
 
