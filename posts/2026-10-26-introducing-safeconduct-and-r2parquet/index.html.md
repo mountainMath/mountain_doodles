@@ -349,7 +349,7 @@ Connecting to the remote parquet files is easy and fast. It fetches just the met
 tic("Opening parquet connection, reading metadata")
 db_table <- parquet_tbl(census_db_url)
 toc()
-## Opening parquet connection, reading metadata: 0.717 sec elapsed
+## Opening parquet connection, reading metadata: 0.649 sec elapsed
 ```
 :::
 
@@ -450,7 +450,7 @@ tic("Fetching DB data for CoV")
 plot_data <- data_csd |>
   collect_parquet()
 toc()
-## Fetching DB data for CoV: 0.696 sec elapsed
+## Fetching DB data for CoV: 0.706 sec elapsed
 
 ggplot(plot_data) +
   geom_sf() +
@@ -495,7 +495,7 @@ cov_pop <- data_csd |>
   inner_join(geo_attributes, by="DBUID") |>
   collect_parquet() 
 toc()
-## Collecting joined data: 0.881 sec elapsed
+## Collecting joined data: 0.707 sec elapsed
 
 ggplot(cov_pop, aes(fill=Population/area)) +
   geom_sf(colour=NA) +
@@ -537,7 +537,7 @@ data_mask <- db_table |>
   inner_join(geo_attributes, by="DBUID") |>
   collect_parquet()
 toc()
-## Complex spatial plus join query: 1.227 sec elapsed
+## Complex spatial plus join query: 1.268 sec elapsed
 
 data_mask |>
   st_intersection(mask |> st_transform(st_crs(data_mask))) |>
@@ -569,7 +569,7 @@ The queries would run faster if we had the data cached locally. To cache files l
 tic("Opening parquet connection, downloading the data for local caching")
 db_table_local <- parquet_tbl(census_db_url, cache = TRUE)
 toc()
-## Opening parquet connection, downloading the data for local caching: 12.479 sec elapsed
+## Opening parquet connection, downloading the data for local caching: 10.987 sec elapsed
 ```
 :::
 
@@ -586,7 +586,7 @@ data_csd_local <- db_table_local |>
   select(DBUID, area=LANDAREA, geometry) |>
   collect_parquet()
 toc()
-## Reading local DB data for CoV: 0.067 sec elapsed
+## Reading local DB data for CoV: 0.059 sec elapsed
 ```
 :::
 
@@ -603,9 +603,9 @@ remove_parquet_from_cache(census_db_url)
 
 
 
-## Local parquet files
+## Creating parquet files
 
-The package can also be used to access or write local parquet file. While there are many alternative ways to work with local parquet data, **r2parquet** adds principled metadata support, handling of in-place rewriting of data, as well as convenience functions when dealing with geoparquet, makes this package a good candidate for working with local parquet files too.
+The package can also be used to create local or remote parquet file. While there are many alternative ways to work with local parquet data, **r2parquet** adds principled metadata support, handling of in-place rewriting of data, as well as convenience functions when dealing with geoparquet, makes this package a good candidate for working with local parquet files too.
 
 For example, we can write the `iris` dataset to parquet. We also use this opportunity to showcase how metadata can be added to parquet files in **r2parquet**.
 
@@ -634,7 +634,7 @@ iris |>
 :::
 
 
-We can now read the dataset from parquet. The metadata is used to enrich the data, it adds labels to the column names and we can retried other metadata attributes, in particular the attribution.
+If `parquet_test` points to an R2 or S3 bucket and file, and appropriate credentials exist in the environment variables, the files will get written to the remote location. We can now read the dataset from parquet. The metadata is used to enrich the data, it adds labels to the column names and we can retried other metadata attributes, in particular the attribution.
 
 
 ::: {.cell}
@@ -770,13 +770,13 @@ As usual, the code for this post is [available on GitHub](https://github.com/mou
 ```{.r .cell-code}
 ## datetime
 Sys.time()
-## [1] "2026-10-26 06:31:04 PDT"
+## [1] "2026-10-26 06:56:34 PDT"
 
 ## repository
 git2r::repository()
 ## Local:    main /Users/jens/R/mountain_doodles
 ## Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-## Head:     [1a14d36] 2026-10-26: update styles for float images
+## Head:     [64e512f] 2026-10-26: safeconduct and r2parquet
 
 ## Session info 
 sessionInfo()
@@ -805,39 +805,34 @@ sessionInfo()
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] gtable_0.3.6              xfun_0.62                
-##  [3] htmlwidgets_1.6.4         websocket_1.4.4          
-##  [5] processx_3.9.0            tzdb_0.5.0               
-##  [7] vctrs_0.7.3               tools_4.6.1              
-##  [9] generics_0.1.4            curl_8.1.0               
-## [11] proxy_0.4-29              blob_1.3.0               
-## [13] pkgconfig_2.0.3           KernSmooth_2.23-26       
-## [15] dbplyr_2.6.0              RColorBrewer_1.1-3       
-## [17] S7_0.2.2                  lifecycle_1.0.5          
-## [19] git2r_0.36.2              compiler_4.6.1           
-## [21] farver_2.1.2              tinytex_0.61             
-## [23] safeconduct_0.1.0         chromote_0.5.1           
-## [25] mountainmathHelpers_0.1.6 codetools_0.2-20         
-## [27] class_7.3-23              htmltools_0.5.9          
-## [29] yaml_2.3.12               later_1.4.8              
-## [31] pillar_1.11.1             classInt_0.4-11          
-## [33] wk_0.9.5                  magick_2.9.1             
-## [35] tidyselect_1.2.1          rvest_1.0.5              
-## [37] digest_0.6.39             stringi_1.8.9            
-## [39] duckdb_1.5.6              labeling_0.4.3           
-## [41] fastmap_1.2.0             grid_4.6.1               
-## [43] cli_3.6.6                 magrittr_2.0.5           
-## [45] e1071_1.7-17              withr_3.0.3              
-## [47] scales_1.4.0              promises_1.5.0           
-## [49] timechange_0.4.0          rmarkdown_2.32           
-## [51] httr_1.4.9                otel_0.2.0               
-## [53] sanzo_0.1.0               hms_1.1.4                
-## [55] evaluate_1.0.5            knitr_1.52               
-## [57] viridisLite_0.4.3         s2_1.1.13                
-## [59] rlang_1.3.0               Rcpp_1.1.2               
-## [61] glue_1.8.1                DBI_1.3.0                
-## [63] xml2_1.6.0                rstudioapi_0.19.0        
-## [65] jsonlite_2.0.0            R6_2.6.1                 
-## [67] units_1.0-1
+##  [3] htmlwidgets_1.6.4         tzdb_0.5.0               
+##  [5] vctrs_0.7.3               tools_4.6.1              
+##  [7] generics_0.1.4            curl_8.1.0               
+##  [9] proxy_0.4-29              blob_1.3.0               
+## [11] pkgconfig_2.0.3           KernSmooth_2.23-26       
+## [13] dbplyr_2.6.0              RColorBrewer_1.1-3       
+## [15] S7_0.2.2                  lifecycle_1.0.5          
+## [17] git2r_0.36.2              compiler_4.6.1           
+## [19] farver_2.1.2              tinytex_0.61             
+## [21] mountainmathHelpers_0.1.6 htmltools_0.5.9          
+## [23] class_7.3-23              yaml_2.3.12              
+## [25] pillar_1.11.1             classInt_0.4-11          
+## [27] wk_0.9.5                  magick_2.9.1             
+## [29] tidyselect_1.2.1          digest_0.6.39            
+## [31] stringi_1.8.9             duckdb_1.5.6             
+## [33] labeling_0.4.3            fastmap_1.2.0            
+## [35] grid_4.6.1                cli_3.6.6                
+## [37] magrittr_2.0.5            e1071_1.7-17             
+## [39] withr_3.0.3               scales_1.4.0             
+## [41] timechange_0.4.0          rmarkdown_2.32           
+## [43] httr_1.4.9                otel_0.2.0               
+## [45] sanzo_0.1.0               hms_1.1.4                
+## [47] evaluate_1.0.5            knitr_1.52               
+## [49] viridisLite_0.4.3         s2_1.1.13                
+## [51] rlang_1.3.0               Rcpp_1.1.2               
+## [53] glue_1.8.1                DBI_1.3.0                
+## [55] rstudioapi_0.19.0         jsonlite_2.0.0           
+## [57] R6_2.6.1                  units_1.0-1
 ```
 :::
 

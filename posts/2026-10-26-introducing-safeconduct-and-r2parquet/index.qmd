@@ -337,9 +337,9 @@ remove_parquet_from_cache(census_db_url)
 ```
 
 
-## Local parquet files
+## Creating parquet files
 
-The package can also be used to access or write local parquet file. While there are many alternative ways to work with local parquet data, **r2parquet** adds principled metadata support, handling of in-place rewriting of data, as well as convenience functions when dealing with geoparquet, makes this package a good candidate for working with local parquet files too.
+The package can also be used to create local or remote parquet file. While there are many alternative ways to work with local parquet data, **r2parquet** adds principled metadata support, handling of in-place rewriting of data, as well as convenience functions when dealing with geoparquet, makes this package a good candidate for working with local parquet files too.
 
 For example, we can write the `iris` dataset to parquet. We also use this opportunity to showcase how metadata can be added to parquet files in **r2parquet**.
 
@@ -363,7 +363,7 @@ iris |>
   ))
 ```
 
-We can now read the dataset from parquet. The metadata is used to enrich the data, it adds labels to the column names and we can retried other metadata attributes, in particular the attribution.
+If `parquet_test` points to an R2 or S3 bucket and file, and appropriate credentials exist in the environment variables, the files will get written to the remote location. We can now read the dataset from parquet. The metadata is used to enrich the data, it adds labels to the column names and we can retried other metadata attributes, in particular the attribution.
 
 ```{r fig-iris-1, cache=FALSE}
 iris_parquet <- parquet_tbl(parquet_test)
