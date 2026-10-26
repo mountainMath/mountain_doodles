@@ -129,7 +129,7 @@ ojs_define(boundaries_json=geojsonsf::sf_geojson(district_polygons,digits=0),
 :::
 
 
-The graphs are self-updating as the data comes in, the page does not need refreshing. (On 2026-10-25 has been reduced to every 10 minutes.)
+<strike>The graphs are self-updating as the data comes in, the page does not need refreshing.</strike> Starting Monday Oct 26 the data only gets updated occasionally.
 
 
 
@@ -601,7 +601,7 @@ Sys.time()
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] "2026-10-25 10:43:48 PDT"
+[1] "2026-10-26 07:01:18 PDT"
 ```
 
 
@@ -617,7 +617,7 @@ git2r::repository()
 ```
 Local:    main /Users/jens/R/mountain_doodles
 Remote:   main @ origin (https://github.com/mountainMath/mountain_doodles.git)
-Head:     [cecd334] 2026-10-25: tweaks and the bc elections script
+Head:     [64e512f] 2026-10-26: safeconduct and r2parquet
 ```
 
 
@@ -688,7 +688,7 @@ loaded via a namespace (and not attached):
 ```{.js .cell-code code-fold="undefined" startFrom="451" source-offset="-0"}
 cbc_url = "https://canopy.cbc.ca/live/elections/prov/BC2026/all/"
 s3_url = "https://mountainmath.s3.ca-central-1.amazonaws.com/bc_2026_elections/"
-refresh_seconds = 600
+refresh_seconds = 1800
 ```
 
 :::::{.cell-output .cell-output-display}
