@@ -26,6 +26,22 @@ img {
   max-width: 100%;
 }
 
+.image-float-right{
+  display:inline-block;
+  float:right;
+  padding-left:10px;
+  width:30%;
+  min-width:150px;
+}
+
+.image-float-left{
+  display:inline-block;
+  float:left;
+  padding-right:10px;
+  width:30%;
+  min-width:150px;
+}
+
 .navbar-brand.navbar-brand-logo img.navbar-logo{
   max-height: 34px;
 }
