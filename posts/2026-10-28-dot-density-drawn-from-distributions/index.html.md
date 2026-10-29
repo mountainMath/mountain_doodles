@@ -152,7 +152,7 @@ Instead we ship dots wholesale, not for the entire country because that's quite 
 
 That covers the dots, to get the census data we additionally do targeted range requests to the full census profile data parquet files, targeted at the variables we need for a given map. We could use a proper database setup here, but that's not going to save us much download bandwidth and adds complexity that really isn't needed for this. Parquet is amazingly efficient at this, especially if tuned for this purpose. We make an exception for the *base selection* vectors and ship these in a separate parquet file for efficiency.
 
-All these data downloads are cached in OPFS, if we need more variables we grab just the ones we don't have and store them in a separate parquet file. If too many parquet files accumulate we consolidate them in the browser OPFS. If too much data accumulates over time we evict data that we haven't used for the longest.
+All these data downloads are cached in OPFS, if we need more variables we grab just the ones we don't have and store them in a separate parquet file. If too many parquet files accumulate we consolidate them in the browser OPFS. If too much data accumulates over time we evict data that we haven't used for the longest. Cloud-hosted parquet and geoparquet is very effective in delivering this data. [@introducing-safeconduct-and-r2parquet.2026]
 
 For managing that data and fetching data for the locations in the map window we use DuckDB-WASM, a fast implementation of DuckDB in the browser. It has some rough edges, but works well for this.
 
