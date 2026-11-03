@@ -29,7 +29,7 @@ We have grappled with this over the years, the old CensusMapper had an implement
 
 Now we have built a new prototype that we feel a lot better about. We leverage advances in technology, advances in data and data processing capabilities, and some new ideas. And we want to share this approach to get some feedback before integrating it into the new CensusMapper.
 
-If you are interested to hear about how the map was done, continue reading.
+Building this map crossed many of our interests, involving data analysis, data processing, modern data pipelines, and data visualization. If you are interested to hear about how the map was done, continue reading.
 
 
 [Just show me the map already.](https://mountainmath.ca/dots/?spec=visible_minority&layout=synthetic#10.2/49.247/-122.9841){.btn .btn-primary}
@@ -84,7 +84,7 @@ One important note is how we treat apartment buildings, seen in our address-base
 
 That enables us to draw maps based on dwellings.
 
-{{< video images/dwelling-top.mp4 >}}
+{{< video https://s3.ca-central-1.amazonaws.com/mountainmath/mountaindoodles/dwelling-top.mp4 >}}
 
 ### Households {#sec-households}
 
@@ -122,7 +122,7 @@ If we show traits that aren't captured in the PUMF we still use the synthetic ho
 
 The end result is a much more realistic representation of how people, and their traits, distribute over households in a given DA.
 
-{{< video images/viz-minority-dots.mp4 >}}
+{{< video https://s3.ca-central-1.amazonaws.com/mountainmath/mountaindoodles/viz-minority-dots.mp4 >}}
 
 
 ### How does the EI model work?
