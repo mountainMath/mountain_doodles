@@ -3,7 +3,8 @@
 #   source("bc_elections_2026_pull.R"); pull_loop(minutes = 5) # until interrupted
 #
 # Uploads (public, gzipped) to s3://mountainmath/bc_2026_elections/enr_results.csv the candidate votes
-# from the Elections BC unofficial results (header only until posted). The CBC results are read live by the page.
+# from the Elections BC unofficial results (header only until posted). After all races were called
+# freeze_cbc() uploaded the final CBC feed to s3://mountainmath/bc_2026_elections/cbc_final.json, which the page reads.
 
 library(tidyverse)
 library(mountainmathHelpers)
@@ -83,6 +84,21 @@ get_enr_results <- function(file=get_enr_file()) {
            Party=recode_affiliation(Affiliation),
            updated=format(as_of,"%Y-%m-%dT%H:%M:%SZ",tz="UTC")) |>
     select(names(empty))
+}
+
+# CBC ----
+
+# Uploads the final CBC feed to s3://mountainmath/bc_2026_elections/cbc_final.json, the page reads this copy
+# now that all ridings are called instead of the live CBC feed
+freeze_cbc <- function(cbc_url="https://canopy.cbc.ca/live/elections/prov/BC2026/all/") {
+  path <- file.path(tempdir(), "cbc_final.json")
+  download.file(cbc_url, path, quiet=TRUE)
+  ridings <- jsonlite::read_json(path)$data$ridings
+  called <- sum(map_int(ridings, \(r) as.integer(r$isCandidateElected)))
+  if (length(ridings)!=93 || called!=93) stop("CBC feed has ", called, " of ", length(ridings), " ridings called")
+  file_to_s3_gzip(path, s3_bucket, paste0(s3_dir, "cbc_final.json"), content_type="application/json")
+  unlink(path)
+  message("Uploaded final CBC results, ", called, " of ", length(ridings), " ridings called")
 }
 
 # Pull ----

@@ -27,9 +27,9 @@ library(sf)
 
 <!--
 R prepares the static inputs, the district boundaries and the 2024 results. All graphs are rendered in the
-browser and re-fetch their data every `refresh_seconds`: the live CBC feed (it sends CORS headers), plus the
-Elections BC results that `bc_elections_2026_pull.R` uploads to S3. Ridings use the
-Elections BC vote counts when they are at least as far along as CBC's, the CBC feed for everything else.
+browser from data on S3: the final CBC feed, uploaded by `freeze_cbc()` in `bc_elections_2026_pull.R` once all
+ridings were called, plus the Elections BC results that `bc_elections_2026_pull.R` uploads. Ridings use the
+Elections BC vote counts, the CBC feed only fills in ridings missing from the Elections BC results.
 -->
 
 This is a simple post that tracks live election results with a couple of graphs and minimal commentary, it leans on [our previous post on the 2024 BC provincial election](https://doodles.mountainmath.ca/posts/2024-10-20-bc-election-2024/).
@@ -119,7 +119,7 @@ ojs_define(boundaries_json=geojsonsf::sf_geojson(district_polygons,digits=0),
            previous_results=previous_results)
 ```
 
-<strike>The graphs are self-updating as the data comes in, the page does not need refreshing.</strike> Starting Monday Oct 26 the data only gets updated occasionally.
+<strike>The graphs are self-updating as the data comes in, the page does not need refreshing.</strike> <strike>Starting Monday Oct 26 the data only gets updated occasionally.</strike> Final results are in and this post won't update any more as of Nov 9.
 
 
 ```{ojs}
@@ -129,14 +129,15 @@ status = {
   const called = ridings.filter(d => d.called).length;
   const votes = d3.sum(ridings, d => d.Total);
   const enr_ridings = ridings.filter(d => d.source === "Elections BC").length;
-  // show times in BC time whatever the reader's timezone
-  const pacific = date => date.toLocaleString("en-CA", {timeZone: "America/Vancouver", month: "short", day: "numeric",
-                                                        hour: "numeric", minute: "2-digit", timeZoneName: "short"});
+  // show times in BC's Pacific Time, UTC-7 since BC stopped changing clocks, whatever the reader's timezone.
+  // Fixed offset so readers with outdated timezone data don't see UTC-8, and the browser would label it "PDT"
+  const pacific = date => date.toLocaleString("en-CA", {timeZone: "Etc/GMT+7", month: "short", day: "numeric",
+                                                        hour: "numeric", minute: "2-digit"}) + " Pacific Time";
   // CBC sends UTC without a timezone, like "2026-10-25 02:58:56"
   const cbc_time = pacific(new Date(live.json.data.config.electionLastUpdated.replace(" ", "T") + "Z"));
   const enr_updated = enr.length ? ` Elections BC results as of ${pacific(new Date(enr[0].updated))}, used for ${enr_ridings} ridings.` : "";
   return md`**${fmt.comma(votes)} votes counted, ${fmt.comma(polls)} of ${fmt.comma(total_polls)} polls reported, ${called} of ${ridings.length} ridings called.**
-CBC data last updated ${cbc_time}${live.archived ? " (final archived copy)" : ""}, fetched at ${live.fetched.toLocaleTimeString()}, refreshing every ${refresh_seconds/60} minutes.${enr_updated}`
+Final CBC data as of ${cbc_time}.${enr_updated}`
 }
 ```
 
@@ -530,33 +531,13 @@ sessionInfo()
 <summary>Remaining Observable code</summary>
 
 ```{ojs}
-cbc_url = "https://canopy.cbc.ca/live/elections/prov/BC2026/all/"
 s3_url = "https://mountainmath.s3.ca-central-1.amazonaws.com/bc_2026_elections/"
-refresh_seconds = 1800
 ```
 
 ```{ojs}
 //| output: false
-// re-fetches the CBC feed, every cell depending on `live` re-runs on each update
-live = {
-  // CBC feed first, then the final copy uploaded to S3 by freeze_cbc() for when the CBC feed goes dark
-  const sources = [{url: cbc_url, archived: false}, {url: `${s3_url}cbc_final.json`, archived: true}];
-  while (true) {
-    for (const {url, archived} of sources) {
-      try {
-        const response = await fetch(url, {cache: "no-store"});
-        const json = response.ok ? await response.json() : null;
-        if (json?.data?.ridings?.length) {
-          yield {json, fetched: new Date(), archived};
-          break;
-        }
-      } catch (e) {
-        console.warn(`Could not load ${url}`, e);
-      }
-    }
-    await Promises.delay(refresh_seconds * 1000);
-  }
-}
+// final copy of the CBC feed with all ridings called, uploaded to S3 by freeze_cbc()
+live = ({json: await (await fetch(`${s3_url}cbc_final.json`)).json()})
 ```
 
 ```{ojs}
@@ -605,8 +586,8 @@ ridings = live.json.data.ridings.map(r => {
     .map(p => ({Candidate: `${p.firstName} ${p.lastName}`, Party: clean_party(p.partyCode), Votes: p.votes}));
   const enr_results = (enr_by_riding.get(r.englishName) || [])
     .map(c => ({Candidate: c.Candidate, Party: clean_party(c.Party), Votes: c.Votes}));
-  // Elections BC is the authoritative count, use it unless CBC is further along
-  const use_enr = enr_results.length > 0 && d3.sum(enr_results, d => d.Votes) >= d3.sum(cbc_results, d => d.Votes);
+  // Elections BC is the authoritative count, its final counts include corrections CBC did not pick up
+  const use_enr = enr_results.length > 0;
   const results = (use_enr ? enr_results : cbc_results).sort((a, b) => b.Votes - a.Votes);
   const Total = d3.sum(results, d => d.Votes);
   const lead = results[0].Votes - (results.length > 1 ? results[1].Votes : 0);
@@ -628,19 +609,8 @@ ridings = live.json.data.ridings.map(r => {
 ```
 
 ```{ojs}
-// Elections BC candidate results pulled to S3, polled independently of the CBC feed
-enr = {
-  while (true) {
-    try {
-      const response = await fetch(`${s3_url}enr_results.csv?t=${Date.now()}`, {cache: "no-store"});
-      yield response.ok ? d3.csvParse(await response.text(), d3.autoType) : [];
-    } catch (e) {
-      console.warn("Could not load Elections BC results", e);
-      yield [];
-    }
-    await Promises.delay(refresh_seconds * 1000);
-  }
-}
+// final Elections BC candidate results pulled to S3
+enr = d3.csv(`${s3_url}enr_results.csv`, d3.autoType)
 ```
 
 ```{ojs}
