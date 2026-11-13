@@ -42,7 +42,7 @@ Neither of these are on CRAN right now, if you find these packages useful or hav
 # **safeconduct** {#sec-safeconduct}
 
 ![safeconduct](https://mountainmath.github.io/safeconduct/logo.png){.image-float-right}
-[**safeconduct**](https://mountainmath.github.io/safeconduct/) is meant to be a drop-in replacement for `file.download` or `curl` requests. It's `fetch(url, desination_path)` fetches the remote file, slowly escalating it's methods. It starts with a simple curl request, then escalates to headless chrome, chrome with spoofed user agent, an interactive chrome session, and finally a live chrome session where users have to solve a captcha to get to the file download. 
+[**safeconduct**](https://mountainmath.github.io/safeconduct/) is meant to be a drop-in replacement for `file.download` or `curl` requests. It's `fetch(url, destination_path)` fetches the remote file, slowly escalating it's methods. It starts with a simple curl request, then escalates to headless chrome, chrome with spoofed user agent, an interactive chrome session, and finally a live chrome session where users have to solve a captcha to get to the file download. 
 
 This is cumbersome, but it gets the job done in situations where user interaction is acceptable. It may still fail in environments that require full automations, e.g. a replication project in a docker environment.
 
