@@ -5,7 +5,7 @@ author:
     affiliation: MountainMath
 date: '2026-11-19'
 slug: censusmapper-cancensus-and-tongfen-update
-description: ''
+description: 'Bilingual support, data for three more censuses, and other goodies.'
 image: 'images/cm_cancensus_tf.png'
 bibliography: ../../common_literature.bib 
 code-tools:
